@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, ChevronRight, Settings } from 'lucide-react';
+import { Bell, ChevronRight, Settings, MessageCircle, ScanLine, PlusCircle, X } from 'lucide-react';
 import { useStore, monthTotals } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { fmtDT, fmtDate, daysUntil, todayISO } from '../../lib/format.js';
@@ -14,8 +14,16 @@ import { AGENTS } from '../../lib/agents.js';
 
 export default function Home() {
   const navigate = useNavigate();
-  const { state } = useStore();
+  const { state, patch } = useStore();
   const { t, lang } = useT();
+  const showTour = !state.settings.tourDone;
+  const dismissTour = () => patch('settings', { tourDone: true });
+  const tourStep = (to) => { dismissTour(); navigate(to); };
+  const TOUR = [
+    { icon: MessageCircle, key: 'tourAsk', to: '/chat' },
+    { icon: ScanLine, key: 'tourScan', to: '/scanner' },
+    { icon: PlusCircle, key: 'tourTrack', to: '/income/add' },
+  ];
   const ym = new Date().toISOString().slice(0, 7);
   const hour = new Date().getHours();
   const greetKey = hour < 12 ? 'greetingMorning' : hour < 18 ? 'greetingAfternoon' : 'greetingEvening';
@@ -54,6 +62,24 @@ export default function Home() {
           </button>
         </div>
       </div>
+
+      {showTour && (
+        <div className="card tint-teal" style={{ position: 'relative' }}>
+          <button className="icon-btn" style={{ position: 'absolute', top: 8, insetInlineEnd: 8, width: 32, height: 32, background: 'transparent' }} onClick={dismissTour} title={t('common.later')}>
+            <X size={16} />
+          </button>
+          <span className="small" style={{ fontWeight: 700 }}>{t('home.tourTitle')}</span>
+          <div className="col" style={{ gap: 8, marginTop: 10 }}>
+            {TOUR.map(({ icon: Icon, key, to }, i) => (
+              <button key={key} className="row" style={{ gap: 10, width: '100%', textAlign: 'start' }} onClick={() => tourStep(to)}>
+                <span className="icon-wrap teal" style={{ width: 34, height: 34, flexShrink: 0 }}>{i + 1}</span>
+                <span className="small grow" style={{ fontWeight: 600 }}>{t(`home.${key}`)}</span>
+                <ChevronRight size={16} color="var(--teal-700)" />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <HeroCard>
         <div className="row between">

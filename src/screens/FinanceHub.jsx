@@ -44,6 +44,15 @@ function Section({ title, items, navigate, view }) {
   );
 }
 
+const ESSENTIALS = [
+  { to: '/income', icon: TrendingUp, key: 'eIncome' },
+  { to: '/expenses', icon: TrendingDown, key: 'eExpense' },
+  { to: '/income/invoice', icon: Receipt, key: 'eInvoice' },
+  { to: '/tax/vat', icon: Calculator, key: 'eVat' },
+  { to: '/tax/investment', icon: BarChart3, key: 'eInvest' },
+  { to: '/tax', icon: Landmark, key: 'eTax' },
+];
+
 export default function FinanceHub() {
   const navigate = useNavigate();
   const { state, patch } = useStore();
@@ -52,6 +61,8 @@ export default function FinanceHub() {
   const totals = useMemo(() => monthTotals(state.transactions, ym), [state.transactions, ym]);
   const view = state.settings.financeView || 'list';
   const setView = (v) => patch('settings', { financeView: v });
+  const showAll = state.settings.financeAll || false;
+  const toggleAll = () => patch('settings', { financeAll: !showAll });
 
   return (
     <div className="screen stagger">
@@ -77,6 +88,31 @@ export default function FinanceHub() {
         <StatCard label={t('common.profit')} value={fmtDT(totals.profit, { sign: true, decimals: 0 })} tone="indigo" onClick={() => navigate('/overview')} />
       </div>
 
+      {/* Essentiel — the 6 things most users need, each with a plain subtitle */}
+      <div className="col" style={{ gap: 8 }}>
+        <h3>{t('finhub.essential')}</h3>
+        <div className="grid-2">
+          {ESSENTIALS.map(({ to, icon: Icon, key }) => (
+            <button
+              key={key}
+              className="card inner"
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, textAlign: 'start' }}
+              onClick={() => navigate(to)}
+            >
+              <span className="icon-wrap teal"><Icon size={18} /></span>
+              <span className="small" style={{ fontWeight: 700 }}>{t(`finhub.${key}`)}</span>
+              <span className="tiny muted">{t(`finhub.${key}Sub`)}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <button className="btn btn-ghost btn-block" onClick={toggleAll}>
+        {showAll ? t('finhub.hide') : t('finhub.advanced')}
+      </button>
+
+      {showAll && (
+      <>
       <Section view={view} title={t('common.incomes') + ' & ' + t('common.expenses')} navigate={navigate} items={[
         { to: '/income', icon: TrendingUp, label: t('money.incomeList') },
         { to: '/expenses', icon: TrendingDown, label: t('money.expenseList') },
@@ -142,6 +178,8 @@ export default function FinanceHub() {
         { to: '/experts', icon: Users, label: t('experts.find') },
         { to: '/team', icon: Users, label: t('team.title') },
       ]} />
+      </>
+      )}
     </div>
   );
 }
