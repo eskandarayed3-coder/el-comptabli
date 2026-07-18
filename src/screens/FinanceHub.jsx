@@ -90,6 +90,8 @@ export default function FinanceHub() {
         { to: '/tax/irpp', icon: Calculator, label: t('tax.irppCalcTitle') },
         { to: '/tax/calendar', icon: CalendarClock, label: t('tax.calendarTitle') },
         { to: '/tax/estimate', icon: Receipt, label: t('tax.estimTitle') },
+        { to: '/tax/cnss', icon: Landmark, label: t('cnss.title') },
+        { to: '/tax/investment', icon: TrendingUp, label: t('invest.title') },
         { to: '/tax/history', icon: FileSpreadsheet, label: t('tax.historyTitle') },
       ]} />
 

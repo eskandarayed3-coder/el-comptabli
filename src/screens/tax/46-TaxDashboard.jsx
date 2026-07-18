@@ -28,6 +28,7 @@ export default function TaxDashboard() {
     { label: t('tax.quickVat'), to: '/tax/vat' },
     { label: t('tax.quickIrpp'), to: '/tax/irpp' },
     { label: t('tax.quickCnss'), to: '/tax/cnss' },
+    { label: t('invest.title'), to: '/tax/investment' },
     { label: t('tax.quickCalendar'), to: '/tax/calendar' },
   ];
 

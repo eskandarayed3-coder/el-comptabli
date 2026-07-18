@@ -95,6 +95,7 @@ export const manifest = [
   { path: '/tax/estimate', Component: L('tax/51-TaxEstimation'), label: '51. Tax Estimation', module: 'Tax', mvp: true },
   { path: '/tax/history', Component: L('tax/52-TaxHistory'), label: '52. Tax History', module: 'Tax', mvp: true },
   { path: '/tax/cnss', Component: L('tax/CnssCalculator'), label: 'CNSS Calculator', module: 'Tax' },
+  { path: '/tax/investment', Component: L('tax/InvestmentCalculator'), label: 'Investment (VAN/TRI/DRCI)', module: 'Tax' },
 
   // ---- Module 8 — Accounting ----
   { path: '/accounting', Component: L('accounting/40-AccountingDashboard'), label: '40. Accounting Dashboard', module: 'Accounting' },

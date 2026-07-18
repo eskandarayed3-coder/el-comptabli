@@ -27,10 +27,13 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (_req, res) => res.sendFile(path.join(dist, 'index.html')));
 }
 
-// Locally, PORT=5173 is reserved for the Vite dev server, so the API listens on
-// API_PORT instead. In production (Render, etc.) there's no Vite process — the
-// host injects PORT and expects the app to bind to it, so that takes priority.
-const port = process.env.PORT || process.env.API_PORT || 3001;
+// Port selection differs by environment:
+//  - Production (Render, etc.): the host injects PORT and the single Node process
+//    serves both the built client and the API, so bind to PORT.
+//  - Local dev: the dev harness injects PORT=5173 for the Vite client, so the API
+//    must avoid it and use API_PORT (Vite proxies /api → this port) instead.
+const isProd = process.env.NODE_ENV === 'production';
+const port = (isProd ? process.env.PORT : process.env.API_PORT) || process.env.API_PORT || 3001;
 app.listen(port, () => {
   const info = providerInfo();
   console.log(`El Comptabli server on http://localhost:${port} — IA: ${info.provider} (${info.model || 'n/a'})`);
