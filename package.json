@@ -3,12 +3,15 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "concurrently -k \"npm:dev:server\" \"npm:dev:client\"",
     "dev:server": "node --use-system-ca server/index.js",
     "dev:client": "vite",
     "build": "vite build",
-    "start": "cross-env NODE_ENV=production node --use-system-ca server/index.js"
+    "start": "node server/index.js"
   },
   "dependencies": {
     "@fontsource/inter": "^5.0.18",
@@ -24,7 +27,6 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
     "concurrently": "^8.2.2",
-    "cross-env": "^7.0.3",
     "vite": "^5.4.0"
   }
 }
