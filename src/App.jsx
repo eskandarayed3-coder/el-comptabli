@@ -1,9 +1,11 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect, useReducer } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import BottomNav from './components/BottomNav.jsx';
 import Toast from './components/Toast.jsx';
+import LockScreen from './components/LockScreen.jsx';
 import Sidebar from './components/admin/Sidebar.jsx';
-import { useStore } from './lib/store.jsx';
+import { useStore, isPremium } from './lib/store.jsx';
+import { isPaywallAllowed } from './lib/paywall.js';
 import { manifest, adminManifest } from './routes.js';
 import ScreensIndex from './screens/ScreensIndex.jsx';
 
@@ -11,18 +13,39 @@ const NAV_PATHS = ['/home', '/chat', '/scanner', '/finance', '/knowledge', '/pro
 
 function MobileShell({ onboarded }) {
   const location = useLocation();
-  const showNav = NAV_PATHS.some((p) => location.pathname.startsWith(p));
+  const { state } = useStore();
+  const premiumUntil = state.settings.premiumUntil;
+
+  // The instant the pass runs out, wake the shell so the lock screen takes
+  // over immediately — even if the user is mid-screen and never navigates.
+  const [, wake] = useReducer((x) => x + 1, 0);
+  useEffect(() => {
+    if (!premiumUntil) return undefined;
+    const ms = new Date(premiumUntil).getTime() - Date.now();
+    if (ms <= 0) return undefined;
+    const id = setTimeout(wake, ms + 250);
+    return () => clearTimeout(id);
+  }, [premiumUntil]);
+
+  // Once onboarding is done, using the app requires an active pass — except
+  // for the screens that let you buy/activate one (see paywall.js).
+  const locked = onboarded && !isPremium(state.settings) && !isPaywallAllowed(location.pathname);
+  const showNav = !locked && NAV_PATHS.some((p) => location.pathname.startsWith(p));
   return (
     <div className="phone-frame">
-      <Suspense fallback={<div className="screen"><p className="muted">Chargement…</p></div>}>
-        <Routes>
-          {manifest.map(({ path, Component }) => (
-            <Route key={path} path={path} element={<Component />} />
-          ))}
-          <Route path="/" element={<Navigate to={onboarded ? '/home' : '/splash'} replace />} />
-          <Route path="*" element={<Navigate to={onboarded ? '/home' : '/splash'} replace />} />
-        </Routes>
-      </Suspense>
+      {locked ? (
+        <LockScreen />
+      ) : (
+        <Suspense fallback={<div className="screen"><p className="muted">Chargement…</p></div>}>
+          <Routes>
+            {manifest.map(({ path, Component }) => (
+              <Route key={path} path={path} element={<Component />} />
+            ))}
+            <Route path="/" element={<Navigate to={onboarded ? '/home' : '/splash'} replace />} />
+            <Route path="*" element={<Navigate to={onboarded ? '/home' : '/splash'} replace />} />
+          </Routes>
+        </Suspense>
+      )}
       {showNav && <BottomNav />}
       <Toast />
     </div>

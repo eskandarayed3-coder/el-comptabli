@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { Check, Sparkles } from 'lucide-react';
-import { useStore, isPremium, premiumDaysLeft } from '../../lib/store.jsx';
+import { useStore, isPremium } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import TopBar from '../../components/TopBar.jsx';
+import PremiumTimer from '../../components/PremiumTimer.jsx';
 
 const PLANS = [
   { id: 'jour', price: 1, popular: false },
@@ -15,7 +16,6 @@ export default function Pricing() {
   const { state } = useStore();
   const { t } = useT();
   const premium = isPremium(state.settings);
-  const daysLeft = premiumDaysLeft(state.settings);
 
   return (
     <div className="screen stagger">
@@ -23,10 +23,14 @@ export default function Pricing() {
 
       {premium && (
         <div className="card tint-teal">
-          <div className="row" style={{ gap: 8 }}>
+          <div className="row" style={{ gap: 8, marginBottom: 10 }}>
             <Sparkles size={18} color="var(--teal-700)" />
-            <span className="small" style={{ fontWeight: 700 }}>{t('pricing.activeNow', { n: daysLeft })}</span>
+            <span className="small" style={{ fontWeight: 700 }}>{t('pricing.activeTitle')}</span>
           </div>
+          <PremiumTimer
+            premiumUntil={state.settings.premiumUntil}
+            labels={{ days: t('premium.days'), hours: t('premium.hours'), minutes: t('premium.minutes'), seconds: t('premium.seconds') }}
+          />
         </div>
       )}
 

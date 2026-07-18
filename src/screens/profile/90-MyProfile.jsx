@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Languages, Building2, Bell, Download, Shield, FileText, UserCog, LogOut, ChevronRight, Settings, CreditCard, LayoutGrid, Activity } from 'lucide-react';
-import { useStore } from '../../lib/store.jsx';
+import { useStore, isPremium as checkPremium, premiumDaysLeft } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 
 const REGIME_KEY = { forfaitaire: 'regimeForfait', reel: 'regimeReel', unknown: 'regimeUnknown' };
@@ -10,7 +10,8 @@ export default function MyProfile() {
   const navigate = useNavigate();
   const { state, patch, toast } = useStore();
   const { t } = useT();
-  const isPremium = state.settings.plan === 'premium';
+  const isPremium = checkPremium(state.settings);
+  const daysLeft = premiumDaysLeft(state.settings);
 
   const ROWS = [
     { icon: Languages, label: t('profile.language'), to: '/profile/language', trailing: state.settings.lang === 'ar' ? 'عربي' : 'FR' },
@@ -43,9 +44,10 @@ export default function MyProfile() {
         <div className="row between">
           <div className="col">
             <span style={{ fontWeight: 700 }}>{t('profile.plan')} : {isPremium ? 'Premium' : t('common.free')}</span>
+            {isPremium && state.settings.premiumUntil && <span className="tiny muted">{t('profile.daysLeft', { n: daysLeft })}</span>}
             {!isPremium && <span className="tiny muted">{t('profile.questionsLeft', { n: Math.max(0, 10 - (state.settings.aiQuestionsUsed || 0)) })}</span>}
           </div>
-          {!isPremium && <button className="pill premium" onClick={() => navigate('/pricing')}>{t('sub.upgrade')}</button>}
+          <button className="pill premium" onClick={() => navigate('/pricing')}>{isPremium ? t('lock.cta') : t('sub.upgrade')}</button>
         </div>
       </div>
 

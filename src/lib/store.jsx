@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
+import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { seedState } from './seed.js';
 import { uid } from './format.js';
 
@@ -32,6 +32,28 @@ export function isPremium(settings = {}) {
 export function premiumDaysLeft(settings = {}) {
   if (!isPremium(settings) || !settings.premiumUntil) return 0;
   return Math.max(0, Math.ceil((new Date(settings.premiumUntil) - new Date()) / 86400000));
+}
+
+// Live, second-by-second countdown to a plan's expiry. Returns null while
+// there's no time-limited plan to count down; ticks every second otherwise.
+export function usePremiumCountdown(premiumUntil) {
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    if (!premiumUntil) return undefined;
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, [premiumUntil]);
+  if (!premiumUntil) return null;
+  const msLeft = Math.max(0, new Date(premiumUntil).getTime() - now);
+  const totalSec = Math.floor(msLeft / 1000);
+  return {
+    msLeft,
+    expired: msLeft <= 0,
+    days: Math.floor(totalSec / 86400),
+    hours: Math.floor((totalSec % 86400) / 3600),
+    minutes: Math.floor((totalSec % 3600) / 60),
+    seconds: totalSec % 60,
+  };
 }
 
 function reducer(state, action) {
