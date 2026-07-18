@@ -45,7 +45,7 @@ export default function MyProfile() {
             <span style={{ fontWeight: 700 }}>{t('profile.plan')} : {isPremium ? 'Premium' : t('common.free')}</span>
             {!isPremium && <span className="tiny muted">{t('profile.questionsLeft', { n: Math.max(0, 10 - (state.settings.aiQuestionsUsed || 0)) })}</span>}
           </div>
-          {!isPremium && <button className="pill premium" onClick={() => navigate('/upgrade')}>{t('sub.upgrade')}</button>}
+          {!isPremium && <button className="pill premium" onClick={() => navigate('/pricing')}>{t('sub.upgrade')}</button>}
         </div>
       </div>
 

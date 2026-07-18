@@ -9,9 +9,29 @@ function init() {
   try {
     const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
     // `ui` is deliberately excluded from persistence (toasts shouldn't survive reload).
-    if (saved && saved.__v === 1) return { ...saved, ui: { toast: null } };
+    if (saved && saved.__v === 1) {
+      // A time-limited Premium plan that has run out reverts to Free on load.
+      if (saved.settings?.premiumUntil && new Date(saved.settings.premiumUntil) < new Date()) {
+        saved.settings.plan = 'free';
+        saved.settings.premiumUntil = null;
+      }
+      return { ...saved, ui: { toast: null } };
+    }
   } catch { /* corrupt storage — reseed */ }
   return seedState();
+}
+
+// True while a paid plan is still within its validity window.
+export function isPremium(settings = {}) {
+  if (settings.plan !== 'premium') return false;
+  if (!settings.premiumUntil) return true; // legacy / unlimited
+  return new Date(settings.premiumUntil) > new Date();
+}
+
+// Days left on the current plan (0 if none / expired).
+export function premiumDaysLeft(settings = {}) {
+  if (!isPremium(settings) || !settings.premiumUntil) return 0;
+  return Math.max(0, Math.ceil((new Date(settings.premiumUntil) - new Date()) / 86400000));
 }
 
 function reducer(state, action) {
@@ -83,6 +103,13 @@ export function StoreProvider({ children }) {
     },
     importData: (json) => dispatch({ type: 'REPLACE', data: json }),
     reset: () => dispatch({ type: 'RESET' }),
+    // Unlock Premium for `days`, stacking on any time already left.
+    activatePlan: (days) => {
+      const now = Date.now();
+      const current = state.settings.premiumUntil ? new Date(state.settings.premiumUntil).getTime() : 0;
+      const until = new Date(Math.max(now, current) + days * 86400000).toISOString();
+      dispatch({ type: 'PATCH', slice: 'settings', data: { plan: 'premium', premiumUntil: until } });
+    },
   }), [state]);
 
   return <StoreContext.Provider value={api}>{children}</StoreContext.Provider>;

@@ -6,6 +6,7 @@ import chatRouter from './routes/chat.js';
 import scanRouter from './routes/scan.js';
 import insightsRouter from './routes/insights.js';
 import examRouter from './routes/exam.js';
+import activateRouter from './routes/activate.js';
 import { providerInfo } from './ai.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -20,6 +21,7 @@ app.use('/api/chat', chatRouter);
 app.use('/api/scan', scanRouter);
 app.use('/api/insights', insightsRouter);
 app.use('/api/exam', examRouter);
+app.use('/api/activate', activateRouter);
 
 if (process.env.NODE_ENV === 'production') {
   const dist = path.join(__dirname, '..', 'dist');

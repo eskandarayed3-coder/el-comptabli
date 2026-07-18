@@ -1,59 +1,74 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Check } from 'lucide-react';
-import { useStore } from '../../lib/store.jsx';
+import { Check, Sparkles } from 'lucide-react';
+import { useStore, isPremium, premiumDaysLeft } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import TopBar from '../../components/TopBar.jsx';
-import SegmentedControl from '../../components/SegmentedControl.jsx';
 
-const FREE_FEATURES = ['Questions IA limitées', 'Calendrier fiscal', 'Guides de base'];
-const PREMIUM_FEATURES = ['IA illimitée', 'Scanner de factures', 'Exports Excel/PDF', 'Dashboard avancé', 'Rappels intelligents'];
+const PLANS = [
+  { id: 'jour', price: 1, popular: false },
+  { id: 'semaine', price: 5, popular: true },
+  { id: 'mois', price: 20, popular: false },
+];
 
 export default function Pricing() {
   const navigate = useNavigate();
   const { state } = useStore();
   const { t } = useT();
-  const [cycle, setCycle] = useState('monthly');
-
-  const isPremium = state.settings.plan === 'premium';
+  const premium = isPremium(state.settings);
+  const daysLeft = premiumDaysLeft(state.settings);
 
   return (
     <div className="screen stagger">
-      <TopBar title={t('sub.pricing')} />
-      <SegmentedControl
-        options={[{ id: 'monthly', label: 'Mensuel' }, { id: 'yearly', label: 'Annuel (-20%)' }]}
-        value={cycle} onChange={setCycle}
-      />
+      <TopBar title={t('pricing.title')} />
 
-      <div className="card" style={{ border: '1.5px solid var(--hairline)' }}>
-        <div className="col" style={{ gap: 10 }}>
-          <div className="row between"><h3>{t('common.free')}</h3><span className="num" style={{ fontWeight: 700 }}>0 DT</span></div>
-          {FREE_FEATURES.map((f) => <span key={f} className="small row" style={{ gap: 8 }}><Check size={14} color="var(--text-2)" /> {f}</span>)}
-          <button className="btn btn-ghost btn-block" disabled={!isPremium}>{!isPremium ? 'Plan actuel' : 'Rétrograder'}</button>
-        </div>
-      </div>
-
-      <div className="card" style={{ background: 'linear-gradient(160deg, #fff, var(--tint-indigo))', border: '2px solid #7C3AED', position: 'relative' }}>
-        <span className="pill premium" style={{ position: 'absolute', top: -12, insetInlineStart: 20 }}>{t('common.popular')}</span>
-        <div className="col" style={{ gap: 10 }}>
-          <div className="row between">
-            <h3>Premium</h3>
-            <span className="num" style={{ fontWeight: 700 }}>{cycle === 'monthly' ? '20 DT/mois' : '192 DT/an'}</span>
+      {premium && (
+        <div className="card tint-teal">
+          <div className="row" style={{ gap: 8 }}>
+            <Sparkles size={18} color="var(--teal-700)" />
+            <span className="small" style={{ fontWeight: 700 }}>{t('pricing.activeNow', { n: daysLeft })}</span>
           </div>
-          {PREMIUM_FEATURES.map((f) => <span key={f} className="small row" style={{ gap: 8 }}><Check size={14} color="var(--teal-700)" /> {f}</span>)}
-          <button className="btn btn-primary btn-block" onClick={() => navigate('/payment')}>{isPremium ? 'Plan actuel' : 'Passer Premium'}</button>
+        </div>
+      )}
+
+      <p className="muted small">{t('pricing.intro')}</p>
+
+      <div className="col" style={{ gap: 12 }}>
+        {PLANS.map((p) => (
+          <button
+            key={p.id}
+            className="card"
+            style={{
+              width: '100%', textAlign: 'start', position: 'relative',
+              border: p.popular ? '2px solid var(--teal-700)' : '1.5px solid var(--hairline)',
+              background: p.popular ? 'linear-gradient(160deg, var(--bg), var(--tint-teal))' : 'var(--bg)',
+            }}
+            onClick={() => navigate(`/payment?plan=${p.id}`)}
+          >
+            {p.popular && <span className="pill teal" style={{ position: 'absolute', top: -12, insetInlineStart: 20 }}>{t('pricing.best')}</span>}
+            <div className="row between" style={{ alignItems: 'center' }}>
+              <div className="col" style={{ gap: 4 }}>
+                <span style={{ fontWeight: 700, fontSize: 17 }}>{t(`pricing.${p.id}`)}</span>
+                <span className="tiny muted">{t(`pricing.${p.id}Pay`)}</span>
+              </div>
+              <div className="col" style={{ alignItems: 'flex-end', gap: 0 }}>
+                <span className="num" style={{ fontWeight: 800, fontSize: 26, color: 'var(--teal-700)' }}>{p.price} DT</span>
+                <span className="tiny muted">{t(`pricing.${p.id}Per`)}</span>
+              </div>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      <div className="card">
+        <span className="small" style={{ fontWeight: 700 }}>{t('pricing.included')}</span>
+        <div className="col" style={{ gap: 6, marginTop: 8 }}>
+          {['inclAi', 'inclScan', 'inclExam', 'inclExport', 'inclInvoice'].map((k) => (
+            <span key={k} className="small row" style={{ gap: 8 }}><Check size={14} color="var(--teal-700)" /> {t(`pricing.${k}`)}</span>
+          ))}
         </div>
       </div>
 
-      <div className="card" style={{ opacity: 0.6 }}>
-        <div className="row between">
-          <h3>Comptable Pro</h3>
-          <span className="pill teal">Bientôt</span>
-        </div>
-        <p className="small muted">Sur devis</p>
-      </div>
-
-      <p className="tiny center muted">Annulable à tout moment</p>
+      <p className="tiny center muted">{t('pricing.howItWorks')}</p>
     </div>
   );
 }

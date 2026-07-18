@@ -80,6 +80,18 @@ export async function solveExam({ system, prompt, image, maxTokens }) {
   return json.text;
 }
 
+// Confirm an activation code with the server → { planId, days, price }.
+export async function activateCode(code) {
+  const res = await fetch('/api/activate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code }),
+  });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) throw Object.assign(new Error(json?.error?.message || 'Code invalide'), { friendly: json?.error });
+  return json;
+}
+
 export async function generateInsight({ prompt, data, profile, system, maxTokens }) {
   const res = await fetch('/api/insights', {
     method: 'POST',
