@@ -7,6 +7,10 @@ import crypto from 'node:crypto';
 
 const SALT = process.env.CODE_SALT || 'elcomptabli-change-this-salt-in-env';
 
+// Owner's evergreen code: always valid, grants a month pass. Overridable via
+// MASTER_CODE in .env; set it to "off" to disable entirely.
+const MASTER_CODE = (process.env.MASTER_CODE || '88888888').trim().toUpperCase();
+
 export const PLANS = {
   jour:    { id: 'jour',    letter: 'J', days: 1,  price: 1 },
   semaine: { id: 'semaine', letter: 'S', days: 7,  price: 5 },
@@ -26,7 +30,12 @@ export function generateCode(planId) {
 }
 
 export function validateCode(raw) {
-  const m = /^EC-([JSM])(\d{4})([0-9A-F]{4})$/.exec(String(raw || '').trim().toUpperCase());
+  const input = String(raw || '').trim().toUpperCase();
+  if (MASTER_CODE !== 'OFF' && input === MASTER_CODE) {
+    const p = PLANS.mois;
+    return { planId: p.id, days: p.days, price: p.price };
+  }
+  const m = /^EC-([JSM])(\d{4})([0-9A-F]{4})$/.exec(input);
   if (!m) return null;
   const [, letter, digits, chk] = m;
   const body = `${letter}${digits}`;

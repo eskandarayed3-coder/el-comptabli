@@ -1,0 +1,20 @@
+# Pings the Render free instance so it never goes to sleep — without this,
+# Render idles the app after 15 min and the next visitor waits ~40s.
+# Render free tier includes 750 instance-hours/month; one always-on service
+# uses ~720h, so staying awake 24/7 fits inside the free allowance.
+name: Keep El Comptabli awake
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping health endpoint
+        run: |
+          curl -sS --max-time 60 --retry 3 --retry-delay 10 \
+            https://el-comptabli.onrender.com/api/health || true
+          echo "pinged at $(date -u)"
