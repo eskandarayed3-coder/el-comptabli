@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli - Admin Content Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#191c1d",
+                    "on-primary": "#ffffff",
+                    "surface": "#f8fafa",
+                    "on-primary-fixed-variant": "#00504a",
+                    "background": "#f8fafa",
+                    "on-secondary-fixed": "#00201c",
+                    "inverse-surface": "#2e3131",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#0f766e",
+                    "tertiary-fixed": "#abefe7",
+                    "secondary-container": "#6df5e1",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#eff1f1",
+                    "on-error-container": "#93000a",
+                    "inverse-primary": "#80d5cb",
+                    "text-primary": "#1A1A1A",
+                    "surface-container-high": "#e6e8e8",
+                    "status-premium": "#7C3AED",
+                    "on-tertiary-fixed": "#00201d",
+                    "tint-info": "#EEF2FF",
+                    "outline": "#6e7977",
+                    "on-primary-container": "#a3faef",
+                    "primary-fixed-dim": "#80d5cb",
+                    "on-tertiary-container": "#b3f7ee",
+                    "tint-warning": "#FEF3E2",
+                    "tertiary-container": "#2f746d",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#006b5f",
+                    "status-danger": "#DC2626",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "surface-bright": "#f8fafa",
+                    "primary": "#005c55",
+                    "on-primary-fixed": "#00201d",
+                    "surface-container": "#eceeee",
+                    "on-error": "#ffffff",
+                    "status-warning": "#D97706",
+                    "tint-success": "#E6F5F3",
+                    "text-secondary": "#6B7280",
+                    "on-background": "#191c1d",
+                    "surface-dim": "#d8dada",
+                    "surface-container-highest": "#e1e3e3",
+                    "primary-fixed": "#9cf2e8",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "surface-container-low": "#f2f4f4",
+                    "surface-variant": "#e1e3e3",
+                    "outline-variant": "#bdc9c6",
+                    "error": "#ba1a1a",
+                    "tint-danger": "#FDE8E6",
+                    "on-surface-variant": "#3e4947",
+                    "surface-tint": "#006a63",
+                    "status-success": "#16A34A",
+                    "secondary-fixed": "#71f8e4",
+                    "tertiary": "#0d5b55",
+                    "on-secondary-container": "#006f64",
+                    "on-secondary-fixed-variant": "#005048"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-xs": "4px",
+                    "element-gap": "16px",
+                    "container-padding": "20px",
+                    "base": "8px",
+                    "stack-sm": "12px"
+            },
+            "fontFamily": {
+                    "stat-display": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafa; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .scroll-hide::-webkit-scrollbar { display: none; }
+        .scroll-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        .mobile-frame {
+            width: 390px;
+            height: 780px;
+            border: 12px solid #191c1d;
+            border-radius: 48px;
+            position: relative;
+            background: #ffffff;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        .mobile-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #191c1d;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            z-index: 50;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Sidebar (SideNavBar) -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-surface-container-lowest border-r border-outline-variant flex flex-col p-6 z-40">
+<div class="flex items-center gap-3 mb-10">
+<img alt="El Comptabli Logo" class="w-10 h-10 rounded-xl object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUo0GwmjPD5U7-8za00e0ZZ1xZ_BjVv-YOLNq8uUuGXsum1mmRrqEBmrTWIvxbulEnnJkKKY8t_ynLBuN3YeKM2lGrEQZ3WOVcECVWiCK8wE5vgEOWa07tVdv2twDD_c6gX-k8CUWJ3VaLGjMEB7OyC5FvpyHrrvlSrCTMJVDxKZax5t3D39QewaLYDVd_kaoAj0aDETF4XxTDUoghiU5dWuEBnRYUtjcpdEnF7q0pQAQ4Z6Q8OWZNpc_lnyPLuetSnvPHchjXdA"/>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary leading-tight">El Comptabli</h1>
+<p class="text-label-sm text-secondary font-medium">Admin Pro</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-xl font-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Tableau de bord
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-xl font-bold font-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+                Déclarations
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-xl font-label-md" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+                Documents
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-xl font-label-md" href="#">
+<span class="material-symbols-outlined">group</span>
+                Clients
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-xl font-label-md" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Paramètres
+            </a>
+</nav>
+<div class="mt-auto pt-6 space-y-2 border-t border-outline-variant">
+<button class="w-full flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-xl active:scale-95">
+<span class="material-symbols-outlined">help</span>
+                Aide
+            </button>
+<button class="w-full flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-xl active:scale-95">
+<span class="material-symbols-outlined">logout</span>
+                Déconnexion
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="h-20 bg-surface flex justify-between items-center px-10 sticky top-0 z-30">
+<div class="flex items-center gap-8">
+<nav class="flex gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md" href="#">Guides</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md" href="#">FAQ</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md" href="#">Lois</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md" href="#">Annonces</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full focus:ring-2 focus:ring-primary-container text-label-md w-64" placeholder="Rechercher un article..." type="text"/>
+</div>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-label-md font-bold">Admin User</p>
+<p class="text-label-sm text-secondary">Expert Comptable</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">AU</div>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-10">
+<!-- Bento Stats / Actions -->
+<div class="grid grid-cols-12 gap-6 mb-10">
+<div class="col-span-8 bg-surface-container-lowest p-8 rounded-2xl shadow-sm border border-outline-variant/30">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="font-headline-sm text-headline-sm mb-1">Gestion des Contenus</h2>
+<p class="text-text-secondary text-label-md">Éditez et publiez vos guides fiscaux pour les entrepreneurs.</p>
+</div>
+<button class="bg-primary hover:bg-primary-container text-white px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all active:scale-95 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">add</span>
+                            Nouvel Article
+                        </button>
+</div>
+<!-- Content Table -->
+<div class="overflow-hidden border border-outline-variant/50 rounded-xl">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-label-sm uppercase tracking-wider text-on-surface-variant">
+<tr>
+<th class="px-6 py-4 font-semibold">Titre</th>
+<th class="px-6 py-4 font-semibold">Domaine</th>
+<th class="px-6 py-4 font-semibold">Statut</th>
+<th class="px-6 py-4 font-semibold">Vues</th>
+<th class="px-6 py-4 font-semibold">MAJ le</th>
+<th class="px-6 py-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30 text-label-md">
+<tr class="hover:bg-surface-container-lowest/50 transition-colors cursor-pointer group">
+<td class="px-6 py-4 font-bold text-on-surface group-hover:text-primary">Guide de l'auto-entrepreneur 2024</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-tint-info text-primary rounded-full text-label-sm font-bold">Fiscalité</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-tint-success text-status-success rounded-full text-label-sm font-bold">Publié</span>
+</td>
+<td class="px-6 py-4">12.4k</td>
+<td class="px-6 py-4 text-text-secondary">12 Mars 2024</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest/50 transition-colors cursor-pointer group">
+<td class="px-6 py-4 font-bold text-on-surface group-hover:text-primary">TVA sur services digitaux</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-tint-warning text-status-warning rounded-full text-label-sm font-bold">Compta</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-surface-container-high text-text-secondary rounded-full text-label-sm font-bold">Brouillon</span>
+</td>
+<td class="px-6 py-4">0</td>
+<td class="px-6 py-4 text-text-secondary">Hier, 18:45</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-surface-container rounded-full"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="col-span-4 space-y-6">
+<div class="bg-primary-container p-6 rounded-2xl text-on-primary-container relative overflow-hidden h-full">
+<div class="relative z-10">
+<div class="w-12 h-12 bg-on-primary-container/20 rounded-xl flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-on-primary-container">trending_up</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-2">Performance globale</h3>
+<p class="text-on-primary-container/80 text-label-md mb-6">Vos articles ont été consultés par +15k entrepreneurs ce mois-ci.</p>
+<div class="flex items-end gap-2">
+<span class="font-stat-display text-stat-display leading-none">84%</span>
+<span class="text-label-sm bg-on-primary-container/20 px-2 py-0.5 rounded-md mb-1">+5.2%</span>
+</div>
+</div>
+<!-- Abstract shape -->
+<div class="absolute -right-10 -bottom-10 w-40 h-40 bg-on-primary-container/10 rounded-full blur-3xl"></div>
+</div>
+</div>
+</div>
+<!-- Content Editor Panel -->
+<div class="grid grid-cols-12 gap-8 items-start">
+<!-- Left: Editor Interface -->
+<div class="col-span-7 bg-surface-container-lowest p-8 rounded-[24px] shadow-sm border border-outline-variant/30">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline-sm text-headline-sm">Éditeur d'Article</h3>
+<div class="flex items-center gap-4">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="ml-3 text-label-md font-bold text-primary">Vérifié 2026</span>
+</label>
+</div>
+</div>
+<div class="space-y-6">
+<div>
+<label class="block text-label-md font-bold mb-2">Titre de l'article</label>
+<input class="w-full px-4 py-4 bg-surface rounded-2xl border-outline-variant focus:border-primary focus:ring-primary font-headline-sm" type="text" value="Guide de l'auto-entrepreneur 2024"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-label-md font-bold mb-2">Domaine</label>
+<select class="w-full px-4 py-3 bg-surface rounded-2xl border-outline-variant focus:border-primary focus:ring-primary text-label-md">
+<option>Fiscalité</option>
+<option>Comptabilité</option>
+<option>Juridique</option>
+</select>
+</div>
+<div>
+<label class="block text-label-md font-bold mb-2">Planifier la publication</label>
+<input class="w-full px-4 py-3 bg-surface rounded-2xl border-outline-variant focus:border-primary focus:ring-primary text-label-md" type="datetime-local"/>
+</div>
+</div>
+<div>
+<label class="block text-label-md font-bold mb-2">Corps de l'article</label>
+<div class="border border-outline-variant rounded-2xl overflow-hidden">
+<div class="bg-surface-container-low p-2 border-b border-outline-variant flex gap-2">
+<button class="p-2 hover:bg-white rounded-lg transition-colors"><span class="material-symbols-outlined text-label-md">format_bold</span></button>
+<button class="p-2 hover:bg-white rounded-lg transition-colors"><span class="material-symbols-outlined text-label-md">format_italic</span></button>
+<button class="p-2 hover:bg-white rounded-lg transition-colors"><span class="material-symbols-outlined text-label-md">format_list_bulleted</span></button>
+<div class="w-px h-6 bg-outline-variant mx-1 my-auto"></div>
+<button class="p-2 hover:bg-white rounded-lg transition-colors"><span class="material-symbols-outlined text-label-md">link</span></button>
+<button class="p-2 hover:bg-white rounded-lg transition-colors"><span class="material-symbols-outlined text-label-md">image</span></button>
+</div>
+<textarea class="w-full h-80 p-6 border-none focus:ring-0 bg-white text-body-lg" placeholder="Rédigez votre contenu ici...">En tant qu'auto-entrepreneur en Tunisie, la gestion de votre fiscalité est cruciale. Ce guide vous accompagne pas à pas dans vos déclarations mensuelles et annuelles.
+
+L'année 2024 apporte de nouvelles modifications au régime forfaitaire que vous devez connaître...</textarea>
+</div>
+</div>
+<div class="flex justify-end gap-4 pt-4">
+<button class="px-8 py-3 text-on-surface-variant font-bold rounded-full hover:bg-surface-container transition-all">Sauvegarder Brouillon</button>
+<button class="px-8 py-3 bg-primary text-white font-bold rounded-full hover:shadow-lg hover:shadow-primary/30 transition-all active:scale-95">Publier Maintenant</button>
+</div>
+</div>
+</div>
+<!-- Right: Mobile Preview -->
+<div class="col-span-5 flex flex-col items-center">
+<p class="text-label-md font-bold mb-6 text-secondary flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+                        Aperçu Live Mobile (390px)
+                    </p>
+<div class="mobile-frame">
+<div class="mobile-notch"></div>
+<!-- Mobile App Screen Content -->
+<div class="h-full w-full bg-white flex flex-col">
+<!-- Mobile Header -->
+<div class="pt-12 px-6 pb-4 flex items-center justify-between border-b border-surface-container">
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</button>
+<span class="font-bold text-label-md">Guide</span>
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+</div>
+<!-- Mobile Content Area -->
+<div class="flex-1 overflow-y-auto scroll-hide p-6 space-y-6">
+<!-- Status Badge -->
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-tint-success text-status-success rounded-full text-[10px] font-bold uppercase tracking-wider">Vérifié 2026</span>
+<span class="px-3 py-1 bg-tint-info text-primary rounded-full text-[10px] font-bold uppercase tracking-wider">Fiscalité</span>
+</div>
+<h1 class="font-headline-md text-[24px] leading-tight text-primary">Guide de l'auto-entrepreneur 2024</h1>
+<div class="flex items-center gap-3 text-secondary text-label-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container-high"></div>
+<div>
+<p class="font-bold text-on-surface">Équipe El Comptabli</p>
+<p>Mis à jour le 12 Mars</p>
+</div>
+</div>
+<!-- Article Image Placeholder -->
+<div class="w-full aspect-video bg-surface-container rounded-2xl relative overflow-hidden" data-alt="A serene and professional workspace scene in a modern Tunisian office. A light-mode aesthetic with soft daylight hitting a white desk with a laptop, a notebook, and a small green plant. The color palette is dominated by whites, deep teals, and soft pastels, evoking a sense of calm productivity and financial clarity." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAJyb1dNYJYeIemvc6N_9Ju4ifXr2zV6r9ftv8k1j1NtNV1MEb0hErNWyiLX-x7NopFceiIvz5WAZBNND6Gicy-6u0QD91VCOMGnfYGy9LxlXweIOyHbu1bRBvDhbOkyWTsgiYTm8rKwSwkCuOxQ1mDKR77RKZ1Zh_90pZOcnZnSOkhnwvmTvn9xWF-nn38S1RpPSBOvXV9nAegasj7_L5fmu5ekB1GEXom31eq4H9v7PSws-cPZC7cH9A941_AeJMMm5JkLwxYcw')">
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+<div class="space-y-4 text-on-surface leading-relaxed text-[15px]">
+<p class="font-bold">Introduction</p>
+<p>En tant qu'auto-entrepreneur en Tunisie, la gestion de votre fiscalité est cruciale. Ce guide vous accompagne pas à pas dans vos déclarations mensuelles et annuelles.</p>
+<p>L'année 2024 apporte de nouvelles modifications au régime forfaitaire que vous devez connaître pour optimiser vos charges.</p>
+</div>
+<!-- Floating Bottom Nav (Simulated in preview) -->
+<div class="mt-8 p-4 bg-tint-info rounded-2xl border border-primary-container/20">
+<p class="text-label-sm text-primary font-bold mb-2">Besoin d'aide ?</p>
+<p class="text-label-sm text-on-surface-variant">Notre assistant IA peut répondre à vos questions spécifiques sur ce guide.</p>
+<button class="mt-3 w-full py-2 bg-primary text-white rounded-full text-label-sm font-bold">Poser une question</button>
+</div>
+</div>
+<!-- Mobile Footer Disclaimer -->
+<div class="p-6 bg-surface-container-low">
+<p class="text-[10px] text-text-secondary text-center leading-tight">
+                                    Ceci est un outil pédagogique. El Comptabli n'est pas un cabinet d'expertise comptable agréé. Consultez un professionnel pour vos décisions fiscales finales.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for quick actions -->
+<button class="fixed bottom-10 right-10 flex items-center gap-3 px-6 py-4 bg-primary text-white rounded-full shadow-2xl shadow-primary/40 hover:scale-105 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-bold">Assistant Admin</span>
+</button>
+<script>
+        // Micro-interaction for sidebar items
+        document.querySelectorAll('aside nav a').forEach(item => {
+            item.addEventListener('click', (e) => {
+                document.querySelectorAll('aside nav a').forEach(i => {
+                    i.classList.remove('bg-secondary-container', 'text-on-secondary-container', 'font-bold');
+                    i.classList.add('text-on-surface-variant');
+                });
+                item.classList.add('bg-secondary-container', 'text-on-secondary-container', 'font-bold');
+                item.classList.remove('text-on-surface-variant');
+            });
+        });
+
+        // Simple sync simulation for title
+        const titleInput = document.querySelector('input[value="Guide de l\'auto-entrepreneur 2024"]');
+        const previewTitle = document.querySelector('.mobile-frame h1');
+        
+        titleInput.addEventListener('input', (e) => {
+            previewTitle.textContent = e.target.value;
+        });
+    </script>
+</body></html>

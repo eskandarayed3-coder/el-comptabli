@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "status-warning": "#D97706",
+                    "secondary": "#006b5f",
+                    "secondary-fixed": "#71f8e4",
+                    "secondary-container": "#6df5e1",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-dim": "#d8dada",
+                    "on-surface": "#191c1d",
+                    "outline-variant": "#bdc9c6",
+                    "surface-variant": "#e1e3e3",
+                    "tint-danger": "#FDE8E6",
+                    "surface-container": "#eceeee",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "outline": "#6e7977",
+                    "text-primary": "#1A1A1A",
+                    "status-danger": "#DC2626",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#9cf2e8",
+                    "tertiary": "#0d5b55",
+                    "on-primary-fixed-variant": "#00504a",
+                    "primary-fixed-dim": "#80d5cb",
+                    "inverse-primary": "#80d5cb",
+                    "tertiary-container": "#2f746d",
+                    "on-primary-fixed": "#00201d",
+                    "on-tertiary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "tint-info": "#EEF2FF",
+                    "surface-bright": "#f8fafa",
+                    "inverse-on-surface": "#eff1f1",
+                    "on-secondary-fixed-variant": "#005048",
+                    "surface-container-highest": "#e1e3e3",
+                    "surface-container-low": "#f2f4f4",
+                    "surface": "#f8fafa",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2e3131",
+                    "on-secondary-container": "#006f64",
+                    "primary": "#005c55",
+                    "background": "#f8fafa",
+                    "on-secondary-fixed": "#00201c",
+                    "tertiary-fixed": "#abefe7",
+                    "status-success": "#16A34A",
+                    "on-primary-container": "#a3faef",
+                    "surface-container-high": "#e6e8e8",
+                    "on-background": "#191c1d",
+                    "tint-success": "#E6F5F3",
+                    "on-tertiary-fixed": "#00201d",
+                    "on-secondary": "#ffffff",
+                    "tint-warning": "#FEF3E2",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "surface-tint": "#006a63",
+                    "on-surface-variant": "#3e4947",
+                    "error-container": "#ffdad6",
+                    "status-premium": "#7C3AED",
+                    "text-secondary": "#6B7280",
+                    "primary-container": "#0f766e",
+                    "on-tertiary-container": "#b3f7ee",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-xs": "4px",
+                    "element-gap": "16px",
+                    "container-padding": "20px",
+                    "base": "8px",
+                    "stack-sm": "12px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .card-shadow { shadow-[0_4px_16px_rgba(15,92,86,0.08)] }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-lg min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md flex justify-between items-center px-container-padding py-base w-full max-w-[600px] mx-auto left-0 right-0">
+<div class="flex items-center gap-element-gap">
+<img alt="EC Logo" class="w-8 h-8 rounded-lg object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi7J9YOwCiKlaibWU4HxsW-uoqzigssYwaB4N1q-I5l8SHHwcSc0ehqG7Mn80YJPb4mFxM-yTe3lLsm2JwWI9AgSF-B6FDMU9ikGDVkJQLTbv-Z_J_1NkR6cO7MkP0YcZmfgwjfl3N5zukYPfNXIK3Qg5Z7vLp887kdvrfY3NKUGRQsuszV1NF8S7ngn5wt8pW_4zX4Zn6Vzk4IwqhzwRpM6AuyKWnsohNDpvWvqurPaLre87f-2uPt4y0PNJxFHkl11JVpKhiqg"/>
+<h1 class="font-headline-sm text-headline-sm text-primary">Fiscanomics</h1>
+</div>
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-variant/50 rounded-full cursor-pointer transition-all">notifications</span>
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold text-xs">UB</div>
+</div>
+</header>
+<main class="pt-20 px-container-padding max-w-[600px] mx-auto space-y-element-gap">
+<!-- Search Section -->
+<section class="space-y-stack-sm">
+<h2 class="font-headline-md text-headline-md text-text-primary">Trouver un expert-comptable 👨‍💼</h2>
+<div class="flex gap-stack-sm items-center">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-low border-none rounded-2xl text-label-md focus:ring-2 focus:ring-primary/20" placeholder="Nom ou spécialité..." type="text"/>
+</div>
+<div class="flex items-center bg-tint-info px-4 py-3 rounded-2xl gap-stack-xs cursor-pointer active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary text-sm">location_on</span>
+<span class="text-label-md font-bold text-primary">Nabeul</span>
+</div>
+</div>
+</section>
+<!-- Filters -->
+<section class="flex overflow-x-auto no-scrollbar gap-stack-sm -mx-container-padding px-container-padding">
+<div class="px-5 py-2 bg-primary text-on-primary rounded-full text-label-sm font-bold whitespace-nowrap">Tout</div>
+<div class="px-5 py-2 bg-surface-container text-on-surface-variant rounded-full text-label-sm font-medium whitespace-nowrap hover:bg-surface-variant transition-colors cursor-pointer">TVA</div>
+<div class="px-5 py-2 bg-surface-container text-on-surface-variant rounded-full text-label-sm font-medium whitespace-nowrap hover:bg-surface-variant transition-colors cursor-pointer">Création société</div>
+<div class="px-5 py-2 bg-surface-container text-on-surface-variant rounded-full text-label-sm font-medium whitespace-nowrap hover:bg-surface-variant transition-colors cursor-pointer">Forfaitaire</div>
+<div class="px-5 py-2 bg-surface-container text-on-surface-variant rounded-full text-label-sm font-medium whitespace-nowrap hover:bg-surface-variant transition-colors cursor-pointer">Audit</div>
+</section>
+<!-- Expert Cards -->
+<section class="space-y-element-gap">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-container-padding rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex flex-col gap-element-gap relative border border-outline-variant/10">
+<div class="flex gap-element-gap">
+<img class="w-16 h-16 rounded-2xl object-cover shrink-0" data-alt="A professional headshot of a middle-aged male expert-comptable with a friendly smile, wearing a modern dark teal blazer. The lighting is bright and airy with a soft blur in the background of a modern minimalist office. The style is professional, warm, and highly trustworthy, reflecting a high-end Tunisian fintech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDLTRMygxHeoclnDemdYX2NYU-rGSZa8RZYMst_KFffLynEirkqz0I4WJkN014YbIvlYNhu9oeuWt5OQu1bWFx4nVUKctjmFdk7-pLNFf-dGCgqkGA47V6MhGdRy7Tn7rR2osLhACZGqWJh_xxyzo4WdU4G24JVEjFzB6cwvmK7jfTeakjrVUbFxXsdRl2hs23FqzQM1Tozet0pnmKSiOTYmNe9YYBebVymUMkkhetf3rxrG0Sch81TBnlfFgDPtiRgHmZ2pk_Vw"/>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Mounir B.</h3>
+<div class="flex items-center gap-1 bg-tint-warning px-2 py-0.5 rounded-lg">
+<span class="material-symbols-outlined text-status-warning text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm font-bold text-status-warning">4,8 (127 avis)</span>
+</div>
+</div>
+<p class="text-label-md text-text-secondary">Expert-comptable certifié · Nabeul</p>
+<div class="flex flex-wrap gap-stack-xs pt-1">
+<span class="px-3 py-1 bg-tint-info text-primary rounded-full text-label-sm font-medium">TVA</span>
+<span class="px-3 py-1 bg-tint-info text-primary rounded-full text-label-sm font-medium">Conseil</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-base border-t border-surface-variant/30">
+<div class="flex flex-col">
+<span class="text-label-sm text-text-secondary">Consultation dès</span>
+<span class="text-headline-sm text-primary font-bold">60 DT</span>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full text-label-md font-bold active:scale-95 transition-transform hover:opacity-90">Voir profil</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-container-padding rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex flex-col gap-element-gap relative border border-outline-variant/10">
+<div class="flex gap-element-gap">
+<img class="w-16 h-16 rounded-2xl object-cover shrink-0" data-alt="A professional headshot of a Tunisian female financial expert in her 30s, looking confident and approachable. She is wearing professional attire with a subtle cultural touch. The background is a clean, well-lit contemporary coworking space in Tunisia. The overall aesthetic is minimalist, bright, and pedagogical, using soft teal and neutral tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsWbvSQiylKXY7pMD_t2bJyODin1AJkJerVwh-a5SR1bwdHqn9ZlihE17m5E0kN58oYo2CUCv0v4rwMG5FTmc1qoCziKvBtTQV9-EbMt3K4NNn5mjoHiXx37xJ-vutezd01xGVeIZfvwe8Bvv6hPSQxIy0c1mwHPmpqA1Fd85yxJEIPFbv0L_pjeu6mhg1Pc_odl2V7IhDgzUjc4voMKJTJy_nE1iaHD0j5OeAfI-tFO2i766vFCTmgtajPq0x6jXT5VEDUqrwfg"/>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Selma K.</h3>
+<div class="flex items-center gap-1 bg-tint-warning px-2 py-0.5 rounded-lg">
+<span class="material-symbols-outlined text-status-warning text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm font-bold text-status-warning">4,9 (85 avis)</span>
+</div>
+</div>
+<p class="text-label-md text-text-secondary">Spécialiste Création · Nabeul</p>
+<div class="flex flex-wrap gap-stack-xs pt-1">
+<span class="px-3 py-1 bg-tint-info text-primary rounded-full text-label-sm font-medium">Création</span>
+<span class="px-3 py-1 bg-tint-info text-primary rounded-full text-label-sm font-medium">Forfaitaire</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-base border-t border-surface-variant/30">
+<div class="flex flex-col">
+<span class="text-label-sm text-text-secondary">Consultation dès</span>
+<span class="text-headline-sm text-primary font-bold">50 DT</span>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full text-label-md font-bold active:scale-95 transition-transform hover:opacity-90">Voir profil</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-container-padding rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex flex-col gap-element-gap relative border border-outline-variant/10">
+<div class="flex gap-element-gap">
+<img class="w-16 h-16 rounded-2xl object-cover shrink-0" data-alt="Close-up professional portrait of a senior Tunisian male accountant with glasses, showing expertise and wisdom. Soft directional lighting highlights a calm and professional expression. The image feels high-end and premium, with a palette of deep teals and warm greys, set in a blurred luxury office environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSACkvVgPLSiEWbyDP8LhwIkvTN9z4WHTiA1hTYIpWxlcDrs4e_4JbzzzvQNwhhlgZFjPN48iMEsbOzyoXOb29jGFDEoqEXc_L9uZ5JIotUlcTVHpQ03tgTK2ZwauIc80nNT_WN5BFobcGfmJ06OgzVRjd_rjkqOf7NsEojuhT8-PtGOoqKLfnQEpvyoRad1twdwqOjmuxYf69HBfbreIgz18ozyQALMtw5Snf2FgQtKNqTIIcMc70NxvNHA1WbDH7gMxiPfO_Yw"/>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Hedi R.</h3>
+<div class="flex items-center gap-1 bg-tint-warning px-2 py-0.5 rounded-lg">
+<span class="material-symbols-outlined text-status-warning text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm font-bold text-status-warning">4,7 (210 avis)</span>
+</div>
+</div>
+<p class="text-label-md text-text-secondary">Expert Audit &amp; Commissaire · Nabeul</p>
+<div class="flex flex-wrap gap-stack-xs pt-1">
+<span class="px-3 py-1 bg-tint-info text-primary rounded-full text-label-sm font-medium">Audit</span>
+<span class="px-3 py-1 bg-tint-info text-primary rounded-full text-label-sm font-medium">Export</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-base border-t border-surface-variant/30">
+<div class="flex flex-col">
+<span class="text-label-sm text-text-secondary">Consultation dès</span>
+<span class="text-headline-sm text-primary font-bold">85 DT</span>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full text-label-md font-bold active:scale-95 transition-transform hover:opacity-90">Voir profil</button>
+</div>
+</div>
+</section>
+<!-- Verification Caption -->
+<div class="flex items-center justify-center gap-1 py-4">
+<span class="text-label-sm text-text-secondary">Vérifiés par El Comptabli</span>
+<span class="material-symbols-outlined text-status-success text-[14px]">check_circle</span>
+</div>
+<!-- Disclaimer Banner -->
+<div class="bg-surface-container-low p-element-gap rounded-2xl">
+<p class="text-label-sm text-on-surface-variant leading-relaxed text-center italic">
+                Ceci est une plateforme pédagogique. Fiscanomics vous aide à comprendre vos obligations, mais ne remplace pas les conseils d'un expert-comptable certifié pour vos déclarations officielles.
+            </p>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-6 left-0 right-0 mx-auto w-[90%] flex justify-around items-center py-stack-sm px-element-gap bg-surface-container/90 backdrop-blur-md rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.12)] z-50 max-w-[560px]">
+<button class="flex flex-col items-center justify-center text-on-surface-variant transition-transform duration-300 active:scale-90 hover:bg-surface-variant/50 rounded-full p-2">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm">Accueil</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant transition-transform duration-300 active:scale-90 hover:bg-surface-variant/50 rounded-full p-2">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-label-sm">IA</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant transition-transform duration-300 active:scale-90 hover:bg-surface-variant/50 rounded-full p-2">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-label-sm">Scanner</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant transition-transform duration-300 active:scale-90 hover:bg-surface-variant/50 rounded-full p-2">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-label-sm">Finance</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary font-bold relative after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 transition-transform duration-300 active:scale-90 hover:bg-surface-variant/50 rounded-full p-2">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-label-sm">Savoir</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction for filter pills
+        const pills = document.querySelectorAll('.filter-pill');
+        pills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                pills.forEach(p => p.classList.remove('bg-primary', 'text-on-primary'));
+                pills.forEach(p => p.classList.add('bg-surface-container', 'text-on-surface-variant'));
+                pill.classList.remove('bg-surface-container', 'text-on-surface-variant');
+                pill.classList.add('bg-primary', 'text-on-primary');
+            });
+        });
+    </script>
+</body></html>

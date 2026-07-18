@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ajouter une dépense - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-surface": "#191c1d",
+                "primary-fixed-dim": "#80d5cb",
+                "surface-tint": "#006a63",
+                "text-secondary": "#6B7280",
+                "status-danger": "#DC2626",
+                "text-primary": "#1A1A1A",
+                "primary-container": "#0f766e",
+                "outline-variant": "#bdc9c6",
+                "tint-danger": "#FDE8E6",
+                "on-tertiary": "#ffffff",
+                "tertiary-container": "#2f746d",
+                "surface": "#f8fafa",
+                "tint-info": "#EEF2FF",
+                "surface-bright": "#f8fafa",
+                "on-tertiary-fixed-variant": "#00504a",
+                "inverse-surface": "#2e3131",
+                "inverse-primary": "#80d5cb",
+                "inverse-on-surface": "#eff1f1",
+                "on-secondary-fixed-variant": "#005048",
+                "surface-container-lowest": "#ffffff",
+                "error-container": "#ffdad6",
+                "on-secondary-container": "#006f64",
+                "primary": "#005c55",
+                "on-primary-container": "#a3faef",
+                "on-tertiary-container": "#b3f7ee",
+                "tertiary-fixed-dim": "#90d3cb",
+                "outline": "#6e7977",
+                "tint-success": "#E6F5F3",
+                "on-primary-fixed-variant": "#00504a",
+                "tertiary": "#0d5b55",
+                "secondary-fixed": "#71f8e4",
+                "on-error": "#ffffff",
+                "secondary-fixed-dim": "#4fdbc8",
+                "on-tertiary-fixed": "#00201d",
+                "tertiary-fixed": "#abefe7",
+                "status-warning": "#D97706",
+                "status-success": "#16A34A",
+                "surface-container": "#eceeee",
+                "on-secondary-fixed": "#00201c",
+                "surface-container-highest": "#e1e3e3",
+                "on-primary-fixed": "#00201d",
+                "surface-container-high": "#e6e8e8",
+                "tint-warning": "#FEF3E2",
+                "surface-dim": "#d8dada",
+                "secondary-container": "#6df5e1",
+                "on-error-container": "#93000a",
+                "error": "#ba1a1a",
+                "background": "#f8fafa",
+                "status-premium": "#7C3AED",
+                "on-primary": "#ffffff",
+                "surface-container-low": "#f2f4f4",
+                "on-background": "#191c1d",
+                "surface-variant": "#e1e3e3",
+                "secondary": "#006b5f",
+                "primary-fixed": "#9cf2e8",
+                "on-surface-variant": "#3e4947",
+                "on-secondary": "#ffffff"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "stack-sm": "12px",
+                "container-padding": "20px",
+                "stack-xs": "4px",
+                "element-gap": "16px",
+                "base": "8px"
+            },
+            "fontFamily": {
+                "headline-md": ["Inter"],
+                "headline-sm": ["Inter"],
+                "label-md": ["Inter"],
+                "body-lg": ["Inter"],
+                "stat-display": ["Inter"],
+                "label-sm": ["Inter"],
+                "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bottom-sheet-transition {
+            transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        .custom-shadow {
+            shadow-[0_8px_24px_rgba(0,0,0,0.12)];
+        }
+        .dimmed-overlay {
+            background-color: rgba(25, 28, 29, 0.4);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-lg overflow-hidden">
+<!-- Background Content (Simulating 'Suivi' list view dimmed) -->
+<main class="fixed inset-0 p-container-padding z-0 opacity-40">
+<div class="flex flex-col gap-element-gap">
+<header class="flex justify-between items-center py-stack-sm">
+<h1 class="font-headline-md text-headline-md text-primary">Suivi des Dépenses</h1>
+<span class="material-symbols-outlined text-on-surface-variant">filter_list</span>
+</header>
+<!-- Dummy List Cards -->
+<div class="bg-surface-container-low p-container-padding rounded-xl flex justify-between items-center">
+<div>
+<div class="font-label-md text-primary">Achat Fourniture</div>
+<div class="text-label-sm text-on-surface-variant">Hier, 14:20</div>
+</div>
+<div class="font-headline-sm text-status-danger">-120 DT</div>
+</div>
+<div class="bg-surface-container-low p-container-padding rounded-xl flex justify-between items-center">
+<div>
+<div class="font-label-md text-primary">Paiement Internet</div>
+<div class="text-label-sm text-on-surface-variant">15 Juillet</div>
+</div>
+<div class="font-headline-sm text-status-danger">-45 DT</div>
+</div>
+<div class="bg-surface-container-low p-container-padding rounded-xl flex justify-between items-center">
+<div>
+<div class="font-label-md text-primary">Loyer Bureau</div>
+<div class="text-label-sm text-on-surface-variant">01 Juillet</div>
+</div>
+<div class="font-headline-sm text-status-danger">-850 DT</div>
+</div>
+</div>
+</main>
+<!-- Modal Backdrop -->
+<div class="fixed inset-0 dimmed-overlay z-10"></div>
+<!-- Bottom Sheet Modal -->
+<div class="fixed bottom-0 left-0 right-0 z-20 bg-white rounded-t-[24px] shadow-[0_-8px_32px_rgba(0,0,0,0.08)] bottom-sheet-transition max-h-[813px] overflow-y-auto">
+<!-- Drag Handle & Header -->
+<div class="flex flex-col items-center pt-stack-sm pb-stack-xs sticky top-0 bg-white z-30">
+<div class="w-12 h-1 bg-surface-container-highest rounded-full mb-4"></div>
+<div class="flex items-center justify-between w-full px-container-padding">
+<h2 class="font-headline-sm text-headline-sm text-primary">Ajouter une dépense</h2>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</button>
+</div>
+</div>
+<div class="px-container-padding pb-32 flex flex-col gap-element-gap">
+<!-- Amount Display -->
+<div class="flex flex-col items-center py-stack-sm mt-stack-sm">
+<div class="bg-tint-danger px-6 py-4 rounded-3xl flex items-center justify-center">
+<span class="font-stat-display text-stat-display text-status-danger">420 DT</span>
+</div>
+<p class="text-label-sm text-on-surface-variant mt-2">Dépense à comptabiliser</p>
+</div>
+<!-- Category Chips -->
+<div class="flex flex-col gap-stack-xs">
+<span class="text-label-md text-on-surface-variant ml-1">Catégorie</span>
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-1 px-1">
+<button class="flex-shrink-0 bg-primary text-white px-container-padding py-2 rounded-full font-label-md transition-all active:scale-95 shadow-sm">
+                        Carburant
+                    </button>
+<button class="flex-shrink-0 bg-surface-container-high text-on-surface-variant px-container-padding py-2 rounded-full font-label-md hover:bg-surface-container-highest transition-all">
+                        Loyers
+                    </button>
+<button class="flex-shrink-0 bg-surface-container-high text-on-surface-variant px-container-padding py-2 rounded-full font-label-md hover:bg-surface-container-highest transition-all">
+                        Achats
+                    </button>
+<button class="flex-shrink-0 bg-surface-container-high text-on-surface-variant px-container-padding py-2 rounded-full font-label-md hover:bg-surface-container-highest transition-all">
+                        Services
+                    </button>
+<button class="flex-shrink-0 bg-surface-container-high text-on-surface-variant px-container-padding py-2 rounded-full font-label-md hover:bg-surface-container-highest transition-all">
+                        Autres
+                    </button>
+</div>
+</div>
+<!-- Form Fields -->
+<div class="space-y-4">
+<!-- Fournisseur -->
+<div class="flex flex-col gap-stack-xs">
+<label class="text-label-md text-on-surface-variant ml-1">Fournisseur</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-2xl px-4 py-4 text-body-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" type="text" value="Station Agil"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant">store</span>
+</div>
+</div>
+<!-- Date -->
+<div class="flex flex-col gap-stack-xs">
+<label class="text-label-md text-on-surface-variant ml-1">Date</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-2xl px-4 py-4 text-body-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" type="text" value="18 juillet 2026"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant">calendar_today</span>
+</div>
+</div>
+<!-- Note -->
+<div class="flex flex-col gap-stack-xs">
+<label class="text-label-md text-on-surface-variant ml-1">Note</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-2xl px-4 py-4 text-body-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" type="text" value="Plein gasoil"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant">edit_note</span>
+</div>
+</div>
+</div>
+<!-- TVA Section -->
+<div class="bg-tint-info p-container-padding rounded-[24px] flex flex-col gap-stack-xs">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-primary">TVA récupérable 19%</span>
+<span class="text-label-sm text-on-surface-variant">TVA : 67 DT</span>
+</div>
+<!-- Toggle Switch -->
+<button class="relative inline-flex h-6 w-11 items-center rounded-full bg-primary transition-colors focus:outline-none" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('bg-surface-container-highest')">
+<span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-6"></span>
+</button>
+</div>
+</div>
+<!-- Disclaimer -->
+<div class="bg-surface-container-low p-stack-sm rounded-xl">
+<p class="text-[10px] text-on-surface-variant leading-relaxed text-center opacity-70">
+                    Cette application est un outil pédagogique et ne remplace pas les conseils d'un expert-comptable agréé. Les calculs de TVA sont indicatifs.
+                </p>
+</div>
+</div>
+<!-- Sticky Actions at Bottom -->
+<div class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md px-container-padding pt-stack-sm pb-8 flex flex-col gap-3 z-40">
+<button class="w-full bg-primary text-white py-4 rounded-full font-headline-sm text-headline-sm shadow-lg active:scale-95 transition-all">
+                Enregistrer
+            </button>
+<button class="w-full flex items-center justify-center gap-2 text-primary font-label-md py-2 active:opacity-60 transition-opacity">
+<span class="material-symbols-outlined">photo_camera</span>
+                Scanner une facture à la place
+            </button>
+</div>
+</div>
+<!-- Persistent Bottom NavBar from Shared Components (Visual guide only, suppressed by modal context but kept for shell reference as required by guidelines) -->
+<nav class="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-[500px] z-5 flex justify-around items-center py-stack-sm px-element-gap bg-surface/90 backdrop-blur-md rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.12)] opacity-20 pointer-events-none">
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px]">Accueil</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-[10px]">Échéances</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">document_scanner</span>
+<span class="text-[10px]">Scanner</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px]">Suivi</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px]">Profil</span>
+</div>
+</nav>
+<script>
+        // Simple micro-interactions
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('touchstart', () => {
+                btn.style.transform = 'scale(0.95)';
+            });
+            btn.addEventListener('touchend', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+
+        // Prevention of pull-to-refresh
+        document.body.addEventListener('touchmove', function(e) {
+            if (e.target.closest('.overflow-y-auto')) return;
+            e.preventDefault();
+        }, { passive: false });
+    </script>
+</body></html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modifier le revenu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#0d5b55",
+                    "tertiary-fixed": "#abefe7",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#00201d",
+                    "text-secondary": "#6B7280",
+                    "secondary": "#006b5f",
+                    "on-tertiary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#d8dada",
+                    "inverse-on-surface": "#eff1f1",
+                    "surface-tint": "#006a63",
+                    "primary-container": "#0f766e",
+                    "on-primary-fixed": "#00201d",
+                    "inverse-primary": "#80d5cb",
+                    "tint-success": "#E6F5F3",
+                    "on-surface": "#191c1d",
+                    "error-container": "#ffdad6",
+                    "status-success": "#16A34A",
+                    "inverse-surface": "#2e3131",
+                    "primary": "#005c55",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#71f8e4",
+                    "primary-fixed-dim": "#80d5cb",
+                    "outline": "#6e7977",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#3e4947",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "status-danger": "#DC2626",
+                    "on-primary-container": "#a3faef",
+                    "on-background": "#191c1d",
+                    "surface-container-low": "#f2f4f4",
+                    "on-tertiary-container": "#b3f7ee",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-primary-fixed-variant": "#00504a",
+                    "status-warning": "#D97706",
+                    "secondary-container": "#6df5e1",
+                    "text-primary": "#1A1A1A",
+                    "status-premium": "#7C3AED",
+                    "on-secondary-fixed-variant": "#005048",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "tint-warning": "#FEF3E2",
+                    "surface-container-highest": "#e1e3e3",
+                    "outline-variant": "#bdc9c6",
+                    "tertiary-container": "#2f746d",
+                    "surface-container": "#eceeee",
+                    "surface": "#f8fafa",
+                    "tint-info": "#EEF2FF",
+                    "background": "#f8fafa",
+                    "tint-danger": "#FDE8E6",
+                    "surface-bright": "#f8fafa",
+                    "surface-variant": "#e1e3e3",
+                    "on-secondary-fixed": "#00201c",
+                    "on-secondary-container": "#006f64",
+                    "surface-container-high": "#e6e8e8",
+                    "primary-fixed": "#9cf2e8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "element-gap": "16px",
+                    "stack-xs": "4px",
+                    "base": "8px",
+                    "stack-sm": "12px",
+                    "container-padding": "20px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .active-tab-indicator {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full h-16 z-50 bg-surface flex items-center justify-between px-container-padding">
+<div class="flex items-center gap-4">
+<button aria-label="Retour" class="w-10 h-10 flex items-center justify-center rounded-full active:scale-95 transition-transform text-primary">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Modifier le revenu</h1>
+</div>
+<div class="w-10 h-10"></div> <!-- Placeholder for symmetry -->
+</header>
+<main class="pt-24 px-container-padding max-w-[600px] mx-auto space-y-8">
+<!-- Large Centered Amount -->
+<section class="text-center space-y-2 py-4">
+<span class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Montant total</span>
+<h2 class="text-[48px] font-bold text-primary flex items-baseline justify-center gap-1">
+                850 <span class="text-headline-md font-headline-md">DT</span>
+</h2>
+</section>
+<!-- Form Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 soft-shadow space-y-6">
+<!-- Client Field -->
+<div class="space-y-2">
+<label class="text-label-sm font-label-md text-on-surface-variant ml-1">Client</label>
+<div class="w-full p-4 rounded-xl border border-outline-variant bg-surface-container-low flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="business">business</span>
+<span class="text-body-lg font-body-lg text-on-surface">Wafa Trading</span>
+</div>
+</div>
+<!-- Catégorie Horizontal Chips -->
+<div class="space-y-3">
+<label class="text-label-sm font-label-md text-on-surface-variant ml-1">Catégorie</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md transition-all">
+                        Ventes
+                    </button>
+<button class="px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant transition-all">
+                        Services
+                    </button>
+<button class="px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant transition-all">
+                        Formation
+                    </button>
+<button class="px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant transition-all">
+                        Autre
+                    </button>
+</div>
+</div>
+<!-- Date Field -->
+<div class="space-y-2">
+<label class="text-label-sm font-label-md text-on-surface-variant ml-1">Date du revenu</label>
+<div class="w-full p-4 rounded-xl border border-outline-variant bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="calendar_today">calendar_today</span>
+<span class="text-body-lg font-body-lg text-on-surface">16 juillet 2026</span>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Statut Segmented Control -->
+<div class="space-y-3">
+<label class="text-label-sm font-label-md text-on-surface-variant ml-1">Statut du paiement</label>
+<div class="grid grid-cols-2 p-1 bg-surface-container-high rounded-xl relative">
+<div class="absolute inset-y-1 left-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm"></div>
+<button class="relative z-10 py-2.5 text-center font-label-md text-label-md text-primary flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Payé
+                    </button>
+<button class="relative z-10 py-2.5 text-center font-label-md text-label-md text-on-surface-variant">
+                        En attente
+                    </button>
+</div>
+</div>
+<!-- TVA Toggle Section -->
+<div class="pt-2 border-t border-surface-container-high">
+<div class="flex items-center justify-between py-2">
+<div class="flex flex-col">
+<span class="text-body-lg font-headline-sm text-on-surface">Facturé avec TVA 19%</span>
+<span class="text-label-sm text-secondary font-label-md">TVA : 135,7 DT</span>
+</div>
+<button class="w-12 h-6 bg-primary rounded-full relative flex items-center transition-colors">
+<div class="absolute right-1 w-4 h-4 bg-white rounded-full transition-transform"></div>
+</button>
+</div>
+</div>
+</div>
+<!-- Historique Section -->
+<div class="flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-text-secondary" data-icon="history">history</span>
+<p class="text-label-sm font-label-sm text-text-secondary">Créé le 16/07 · Modifié jamais</p>
+</div>
+<!-- Actions -->
+<div class="space-y-4 pt-4">
+<button class="w-full py-4 bg-primary text-white rounded-full font-headline-sm text-body-lg soft-shadow active:scale-[0.98] transition-transform">
+                Enregistrer les modifications
+            </button>
+<button class="w-full py-3 text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high rounded-full transition-colors">
+                Annuler
+            </button>
+</div>
+<!-- Disclaimer Banner -->
+<div class="p-4 bg-[#F5F7F7] rounded-xl mt-8">
+<p class="text-[11px] leading-relaxed text-on-surface-variant text-center italic opacity-70">
+                Cet outil est pédagogique pour vous aider à suivre votre comptabilité. Il ne remplace pas l'avis d'un expert-comptable agréé.
+            </p>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-surface-container-lowest shadow-[0_-8px_24px_rgba(0,0,0,0.12)] rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-2 active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="add_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+</nav>
+<script>
+        // Micro-interactions for form elements
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Handle ripple or scale if needed
+            });
+        });
+
+        // Simple toggle state simulation
+        const tvaToggle = document.querySelector('button.w-12.h-6');
+        if(tvaToggle) {
+            tvaToggle.addEventListener('click', () => {
+                tvaToggle.classList.toggle('bg-primary');
+                tvaToggle.classList.toggle('bg-surface-container-highest');
+                const dot = tvaToggle.querySelector('div');
+                dot.classList.toggle('right-1');
+                dot.classList.toggle('left-1');
+            });
+        }
+    </script>
+</body></html>

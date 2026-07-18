@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Double sécurité - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#2f746d",
+                      "on-surface-variant": "#3e4947",
+                      "tertiary-fixed": "#abefe7",
+                      "status-premium": "#7C3AED",
+                      "on-tertiary-fixed": "#00201d",
+                      "on-secondary-fixed-variant": "#005048",
+                      "on-primary-fixed-variant": "#00504a",
+                      "surface-tint": "#006a63",
+                      "surface-bright": "#f8fafa",
+                      "on-tertiary-container": "#b3f7ee",
+                      "tint-success": "#E6F5F3",
+                      "status-warning": "#D97706",
+                      "surface-dim": "#d8dada",
+                      "error": "#ba1a1a",
+                      "secondary-container": "#6df5e1",
+                      "on-primary-container": "#a3faef",
+                      "primary-fixed-dim": "#80d5cb",
+                      "on-tertiary-fixed-variant": "#00504a",
+                      "tertiary": "#0d5b55",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "surface-container": "#eceeee",
+                      "outline-variant": "#bdc9c6",
+                      "inverse-primary": "#80d5cb",
+                      "tint-warning": "#FEF3E2",
+                      "status-success": "#16A34A",
+                      "on-background": "#191c1d",
+                      "surface-container-high": "#e6e8e8",
+                      "inverse-surface": "#2e3131",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#006b5f",
+                      "tint-danger": "#FDE8E6",
+                      "text-primary": "#1A1A1A",
+                      "on-error": "#ffffff",
+                      "background": "#f8fafa",
+                      "primary-container": "#0f766e",
+                      "on-primary": "#ffffff",
+                      "secondary-fixed": "#71f8e4",
+                      "surface-container-highest": "#e1e3e3",
+                      "primary": "#005c55",
+                      "on-secondary-fixed": "#00201c",
+                      "surface-variant": "#e1e3e3",
+                      "status-danger": "#DC2626",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#90d3cb",
+                      "on-tertiary": "#ffffff",
+                      "outline": "#6e7977",
+                      "surface": "#f8fafa",
+                      "on-surface": "#191c1d",
+                      "inverse-on-surface": "#eff1f1",
+                      "text-secondary": "#6B7280",
+                      "primary-fixed": "#9cf2e8",
+                      "on-error-container": "#93000a",
+                      "tint-info": "#EEF2FF",
+                      "surface-container-low": "#f2f4f4",
+                      "on-secondary-container": "#006f64",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed": "#00201d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "20px",
+                      "element-gap": "16px",
+                      "stack-sm": "12px",
+                      "stack-xs": "4px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "label-md": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "stat-display": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Inter"]
+              },
+              "fontSize": {
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .otp-input:focus {
+            outline: none;
+            border-color: #0F766E;
+            box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.2);
+        }
+        .toggle-checked {
+            background-color: #0F766E;
+        }
+        .toggle-dot {
+            transition: transform 0.2s ease-in-out;
+        }
+        .toggle-checked .toggle-dot {
+            transform: translateX(100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col items-center">
+<!-- Top Navigation Bar -->
+<header class="bg-surface docked full-width top-0 flex justify-between items-center w-full px-container-padding py-base max-w-[600px] mx-auto">
+<button class="flex items-center justify-center w-10 h-10 hover:bg-surface-container-low rounded-full transition-transform active:scale-95 duration-150" onclick="window.history.back()">
+<span class="material-symbols-outlined text-primary" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary">Double sécurité</h1>
+<button class="flex items-center justify-center w-10 h-10 hover:bg-surface-container-low rounded-full">
+<span class="material-symbols-outlined text-primary" data-icon="help">help</span>
+</button>
+</header>
+<main class="flex-grow flex flex-col items-center justify-center w-full max-w-[390px] px-container-padding space-y-8 py-10">
+<!-- Illustration/Icon Area -->
+<div class="flex flex-col items-center space-y-4">
+<div class="w-24 h-24 bg-tint-success rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-[48px]" data-icon="shield" data-weight="fill" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<p class="text-label-md font-label-md text-text-secondary text-center max-w-[240px]">
+                Entre le code de ton app d'authentification
+            </p>
+</div>
+<!-- OTP Input Field -->
+<div class="flex justify-between w-full space-x-2">
+<input autofocus="" class="otp-input w-12 h-14 text-center text-headline-md font-headline-md border-2 border-outline-variant bg-surface-container-lowest rounded-xl" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center text-headline-md font-headline-md border-2 border-outline-variant bg-surface-container-lowest rounded-xl" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center text-headline-md font-headline-md border-2 border-outline-variant bg-surface-container-lowest rounded-xl" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center text-headline-md font-headline-md border-2 border-outline-variant bg-surface-container-lowest rounded-xl" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center text-headline-md font-headline-md border-2 border-outline-variant bg-surface-container-lowest rounded-xl" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center text-headline-md font-headline-md border-2 border-outline-variant bg-surface-container-lowest rounded-xl" maxlength="1" type="text"/>
+</div>
+<!-- Toggle Row -->
+<div class="w-full flex items-center justify-between py-2">
+<span class="text-label-md font-label-md text-on-surface-variant">Se souvenir de cet appareil 30 jours</span>
+<button class="relative inline-flex items-center h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none toggle-checked" id="device-toggle">
+<span class="sr-only">Remember device</span>
+<span class="toggle-dot pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</div>
+<!-- Primary Action -->
+<div class="w-full pt-4">
+<button class="w-full bg-primary-container text-on-primary py-4 rounded-full font-headline-sm text-headline-sm transition-transform active:scale-95 duration-200 shadow-[0_4px_16px_rgba(15,92,86,0.15)]">
+                Confirmer
+            </button>
+</div>
+<!-- Atmosphere/Context Visual -->
+<div class="w-full h-32 relative overflow-hidden rounded-[24px]">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container to-secondary opacity-10"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary/20 text-[120px]" data-icon="lock">lock</span>
+</div>
+</div>
+</main>
+<!-- Pedagogical Footer Disclaimer -->
+<footer class="w-full bg-[#F5F7F7] py-4 px-container-padding text-center">
+<p class="text-label-sm font-label-sm text-on-surface-variant leading-tight max-w-[350px] mx-auto opacity-70">
+            Cette application est un outil pédagogique destiné à l'apprentissage de la gestion fiscale et comptable en Tunisie. Elle ne remplace pas les conseils d'un expert-comptable certifié.
+        </p>
+</footer>
+<script>
+        // Simple micro-interaction for the toggle
+        const toggle = document.getElementById('device-toggle');
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('toggle-checked');
+            toggle.classList.toggle('bg-outline-variant');
+        });
+
+        // Simple OTP Focus Management
+        const inputs = document.querySelectorAll('.otp-input');
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+</body></html>

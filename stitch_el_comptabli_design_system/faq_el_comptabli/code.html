@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .accordion-content { transition: max-height 0.3s ease-out, opacity 0.2s ease-in; }
+        .accordion-item.active .accordion-content { max-height: 500px; opacity: 1; margin-top: 12px; }
+        .accordion-item:not(.active) .accordion-content { max-height: 0; opacity: 0; overflow: hidden; }
+        .accordion-item.active .icon-chevron { transform: rotate(180deg); }
+        .glass-nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#006a63",
+                        "on-surface": "#191c1d",
+                        "primary-fixed-dim": "#80d5cb",
+                        "status-danger": "#DC2626",
+                        "text-secondary": "#6B7280",
+                        "text-primary": "#1A1A1A",
+                        "primary-container": "#0f766e",
+                        "tint-danger": "#FDE8E6",
+                        "outline-variant": "#bdc9c6",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#2f746d",
+                        "surface": "#f8fafa",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "inverse-surface": "#2e3131",
+                        "inverse-primary": "#80d5cb",
+                        "tint-info": "#EEF2FF",
+                        "surface-bright": "#f8fafa",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-secondary-container": "#006f64",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#a3faef",
+                        "primary": "#005c55",
+                        "on-tertiary-container": "#b3f7ee",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "outline": "#6e7977",
+                        "tint-success": "#E6F5F3",
+                        "secondary-fixed": "#71f8e4",
+                        "on-primary-fixed-variant": "#00504a",
+                        "tertiary": "#0d5b55",
+                        "on-tertiary-fixed": "#00201d",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "tertiary-fixed": "#abefe7",
+                        "status-warning": "#D97706",
+                        "status-success": "#16A34A",
+                        "on-secondary-fixed": "#00201c",
+                        "surface-container": "#eceeee",
+                        "on-primary-fixed": "#00201d",
+                        "surface-container-high": "#e6e8e8",
+                        "surface-container-highest": "#e1e3e3",
+                        "secondary-container": "#6df5e1",
+                        "tint-warning": "#FEF3E2",
+                        "surface-dim": "#d8dada",
+                        "background": "#f8fafa",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "status-premium": "#7C3AED",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f2f4f4",
+                        "primary-fixed": "#9cf2e8",
+                        "on-surface-variant": "#3e4947",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#191c1d",
+                        "surface-variant": "#e1e3e3",
+                        "secondary": "#006b5f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "12px",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "container-padding": "20px",
+                        "stack-xs": "4px",
+                        "element-gap": "16px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 right-0 z-40 bg-background dark:bg-on-surface-fixed">
+<div class="flex justify-between items-center px-container-padding py-base w-full max-w-[600px] mx-auto">
+<h1 class="font-headline-sm text-headline-sm-mobile md:text-headline-sm text-primary dark:text-primary-fixed">Questions fréquentes</h1>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-16 px-container-padding max-w-[600px] mx-auto space-y-element-gap">
+<!-- Search Bar -->
+<div class="relative mt-4">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</div>
+<input class="w-full h-14 pl-12 pr-4 rounded-2xl bg-surface-container-low border-none focus:ring-2 focus:ring-primary/20 font-body-lg text-on-surface placeholder:text-on-surface-variant transition-all" placeholder="Rechercher une question..." type="text"/>
+</div>
+<!-- FAQ Categories -->
+<div class="space-y-4 pt-4">
+<!-- Category 1 -->
+<div class="accordion-item rounded-2xl bg-surface-container shadow-[0_4px_16px_rgba(15,92,86,0.04)] overflow-hidden transition-all duration-200">
+<button class="w-full flex items-center justify-between p-5 text-left active:bg-surface-variant/50 transition-colors" onclick="toggleAccordion(this)">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">account_circle</span>
+<span class="font-headline-sm-mobile text-headline-sm-mobile text-on-surface">Compte &amp; abonnement</span>
+</div>
+<span class="material-symbols-outlined icon-chevron transition-transform duration-300 text-on-surface-variant">expand_more</span>
+</button>
+<div class="accordion-content px-5 pb-5">
+<p class="font-body-lg text-on-surface-variant">Vous pouvez gérer votre abonnement directement depuis les paramètres de votre profil. Les changements sont effectifs immédiatement.</p>
+</div>
+</div>
+<!-- Category 2 (Expanded by default) -->
+<div class="accordion-item active rounded-2xl bg-tint-info border border-indigo-100 shadow-[0_4px_16px_rgba(15,92,86,0.06)] overflow-hidden transition-all duration-200">
+<button class="w-full flex items-center justify-between p-5 text-left active:bg-indigo-50 transition-colors" onclick="toggleAccordion(this)">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-indigo-600">smart_toy</span>
+<span class="font-headline-sm-mobile text-headline-sm-mobile text-on-surface">IA &amp; fiabilité</span>
+</div>
+<span class="material-symbols-outlined icon-chevron transition-transform duration-300 text-on-surface-variant">expand_more</span>
+</button>
+<div class="accordion-content px-5 pb-5">
+<div class="space-y-4">
+<div class="p-4 bg-white/60 rounded-xl border border-indigo-50">
+<h4 class="font-label-md text-label-md text-primary mb-1">L'IA peut-elle se tromper ?</h4>
+<p class="font-body-lg text-on-surface-variant">Oui, c'est un outil pédagogique adossé à une base vérifiée ; en cas de doute consulte un expert.</p>
+</div>
+<div class="p-4 bg-white/60 rounded-xl border border-indigo-50">
+<h4 class="font-label-md text-label-md text-primary mb-1">Comment sont mises à jour les données ?</h4>
+<p class="font-body-lg text-on-surface-variant">Nos bases fiscales sont synchronisées chaque semaine avec les dernières publications officielles tunisiennes.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Category 3 -->
+<div class="accordion-item rounded-2xl bg-surface-container shadow-[0_4px_16px_rgba(15,92,86,0.04)] overflow-hidden transition-all duration-200">
+<button class="w-full flex items-center justify-between p-5 text-left active:bg-surface-variant/50 transition-colors" onclick="toggleAccordion(this)">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">document_scanner</span>
+<span class="font-headline-sm-mobile text-headline-sm-mobile text-on-surface">Scanner</span>
+</div>
+<span class="material-symbols-outlined icon-chevron transition-transform duration-300 text-on-surface-variant">expand_more</span>
+</button>
+<div class="accordion-content px-5 pb-5">
+<p class="font-body-lg text-on-surface-variant">Le scanner reconnaît automatiquement vos factures et extraits. Assurez-vous d'avoir une bonne luminosité lors de la prise de photo.</p>
+</div>
+</div>
+<!-- Category 4 -->
+<div class="accordion-item rounded-2xl bg-surface-container shadow-[0_4px_16px_rgba(15,92,86,0.04)] overflow-hidden transition-all duration-200">
+<button class="w-full flex items-center justify-between p-5 text-left active:bg-surface-variant/50 transition-colors" onclick="toggleAccordion(this)">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">security</span>
+<span class="font-headline-sm-mobile text-headline-sm-mobile text-on-surface">Données &amp; sécurité</span>
+</div>
+<span class="material-symbols-outlined icon-chevron transition-transform duration-300 text-on-surface-variant">expand_more</span>
+</button>
+<div class="accordion-content px-5 pb-5">
+<p class="font-body-lg text-on-surface-variant">Toutes vos données sont chiffrées de bout en bout et hébergées sur des serveurs sécurisés conformes aux normes tunisiennes de protection des données.</p>
+</div>
+</div>
+</div>
+<!-- Contact Section -->
+<div class="mt-8 mb-12 p-6 rounded-2xl bg-tint-info border border-indigo-100 flex flex-col items-center text-center space-y-4">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary">mail</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm-mobile text-on-surface">Pas trouvé ? Écris-nous</h3>
+<p class="font-body-lg text-on-surface-variant mt-1">Notre équipe de support est disponible de 9h à 18h.</p>
+</div>
+<button class="w-full bg-primary text-on-primary py-3 px-6 rounded-full font-label-md text-label-md active:scale-95 transition-transform shadow-md">
+                Contacter le support
+            </button>
+</div>
+<!-- Disclaimer -->
+<div class="py-4 px-6 bg-surface-container-low rounded-xl mb-8">
+<p class="text-[11px] leading-relaxed text-on-surface-variant opacity-70 text-center italic">
+                Avertissement : Cette application est un outil pédagogique destiné à l'orientation fiscale. Elle ne remplace en aucun cas les services d'un expert-comptable certifié.
+            </p>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-6 left-0 right-0 z-50 flex justify-center items-center px-6">
+<div class="bg-surface-container-lowest/90 backdrop-blur-md w-full max-w-[560px] rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.12)] flex justify-around items-center py-3">
+<!-- Accueil -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high/50 rounded-full p-2 transition-all active:scale-90">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-0.5">Accueil</span>
+</button>
+<!-- IA -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high/50 rounded-full p-2 transition-all active:scale-90">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm mt-0.5">IA</span>
+</button>
+<!-- Scanner -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high/50 rounded-full p-2 transition-all active:scale-90">
+<span class="material-symbols-outlined">document_scanner</span>
+<span class="font-label-sm text-label-sm mt-0.5">Scanner</span>
+</button>
+<!-- Finance -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high/50 rounded-full p-2 transition-all active:scale-90">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-0.5">Finance</span>
+</button>
+<!-- Savoir (ACTIVE) -->
+<button class="flex flex-col items-center justify-center text-primary dark:text-secondary-fixed font-bold relative after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 active:scale-90 transition-all">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-sm text-label-sm">Savoir</span>
+</button>
+</div>
+</nav>
+<script>
+        function toggleAccordion(button) {
+            const item = button.closest('.accordion-item');
+            const isActive = item.classList.contains('active');
+            
+            // Close all others
+            document.querySelectorAll('.accordion-item').forEach(el => {
+                el.classList.remove('active');
+                el.classList.remove('bg-tint-info', 'border', 'border-indigo-100');
+                el.classList.add('bg-surface-container');
+                const icon = el.querySelector('.material-symbols-outlined:first-child');
+                if (icon) icon.classList.replace('text-indigo-600', 'text-primary');
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                item.classList.remove('bg-surface-container');
+                item.classList.add('bg-tint-info', 'border', 'border-indigo-100');
+                const icon = item.querySelector('.material-symbols-outlined:first-child');
+                if (icon) icon.classList.replace('text-primary', 'text-indigo-600');
+            }
+        }
+
+        // Micro-interaction: Focus search bar on "/" key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+                e.preventDefault();
+                document.querySelector('input[type="text"]').focus();
+            }
+        });
+    </script>
+</body></html>

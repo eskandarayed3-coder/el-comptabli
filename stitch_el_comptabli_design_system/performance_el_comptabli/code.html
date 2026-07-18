@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#b3f7ee",
+                    "surface-container-low": "#f2f4f4",
+                    "on-primary-fixed-variant": "#00504a",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "status-premium": "#7C3AED",
+                    "text-primary": "#1A1A1A",
+                    "secondary-container": "#6df5e1",
+                    "status-warning": "#D97706",
+                    "tint-warning": "#FEF3E2",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "on-secondary-fixed-variant": "#005048",
+                    "on-error-container": "#93000a",
+                    "on-error": "#ffffff",
+                    "outline": "#6e7977",
+                    "error": "#ba1a1a",
+                    "on-surface-variant": "#3e4947",
+                    "status-danger": "#DC2626",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "on-primary-container": "#a3faef",
+                    "on-background": "#191c1d",
+                    "tint-danger": "#FDE8E6",
+                    "surface-bright": "#f8fafa",
+                    "background": "#f8fafa",
+                    "tint-info": "#EEF2FF",
+                    "surface-variant": "#e1e3e3",
+                    "on-secondary-fixed": "#00201c",
+                    "surface-container-high": "#e6e8e8",
+                    "primary-fixed": "#9cf2e8",
+                    "on-secondary-container": "#006f64",
+                    "surface-container-highest": "#e1e3e3",
+                    "outline-variant": "#bdc9c6",
+                    "tertiary-container": "#2f746d",
+                    "surface-container": "#eceeee",
+                    "surface": "#f8fafa",
+                    "inverse-on-surface": "#eff1f1",
+                    "surface-dim": "#d8dada",
+                    "on-tertiary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#006a63",
+                    "tertiary": "#0d5b55",
+                    "tertiary-fixed": "#abefe7",
+                    "surface-container-lowest": "#ffffff",
+                    "text-secondary": "#6B7280",
+                    "on-tertiary-fixed": "#00201d",
+                    "secondary": "#006b5f",
+                    "status-success": "#16A34A",
+                    "inverse-surface": "#2e3131",
+                    "secondary-fixed": "#71f8e4",
+                    "primary": "#005c55",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#80d5cb",
+                    "on-primary-fixed": "#00201d",
+                    "primary-container": "#0f766e",
+                    "inverse-primary": "#80d5cb",
+                    "on-surface": "#191c1d",
+                    "tint-success": "#E6F5F3",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "12px",
+                    "2xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-xs": "4px",
+                    "base": "8px",
+                    "stack-sm": "12px",
+                    "container-padding": "20px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "stat-display": ["Inter", "sans-serif"],
+                    "headline-sm": ["Inter", "sans-serif"],
+                    "headline-lg": ["Inter", "sans-serif"],
+                    "body-lg": ["Inter", "sans-serif"],
+                    "label-sm": ["Inter", "sans-serif"],
+                    "headline-md": ["Inter", "sans-serif"],
+                    "label-md": ["Inter", "sans-serif"]
+            },
+            "fontSize": {
+                    "stat-display": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                    "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                    "headline-sm-mobile": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                    "headline-md-mobile": ["22px", { "lineHeight": "28px", "fontWeight": "700" }]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Inter', sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .kpi-card-shadow {
+        box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+      }
+      .bottom-nav-shadow {
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      }
+      .glass-effect {
+        backdrop-filter: blur(8px);
+        background: rgba(255, 255, 255, 0.85);
+      }
+      /* Simple Sparkline simulation */
+      .sparkline-svg {
+        width: 100%;
+        height: 32px;
+        stroke-width: 2;
+        fill: none;
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky z-40 bg-surface dark:bg-on-background">
+<div class="flex items-center justify-between px-container-padding h-16 w-full max-w-[600px] mx-auto">
+<div class="flex items-center gap-3">
+<img alt="Fiscalla Logo" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD45oHlzUAKRbzgU5XbrjuqB2Ah7FQ0T1mhcl8_1Cm9aVC4nRZtS1xqGLcAZ-M_dlCeldMnNQ8bLKuqn-7E8dYm7DC8vJNAqEbBMbMMOR5Islh45B3L6V2m0mT4vDhy3TJ_IKCPtsF6FeAw9lWlJSkS5fskxlgqn1bMoQiWnqdDja3M_i3QWsU-vDyVuMAH0s-O8Wa2VWWkg0hMxzFhgaVmskU6t-EpD1Lj53r3APjhyAMx1x2jLKXXQ2bKbyPKuwwyoreg_d8C2A"/>
+<span class="font-headline-md-mobile text-headline-md-mobile text-primary dark:text-primary-fixed">Fiscalla</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">search</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="A professional close-up headshot of a smiling young Tunisian entrepreneur in a minimalist office setting, warm natural lighting, high-end photography, soft bokeh background, representing a friendly and successful modern professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJqtTPH2YE2ZUWtgp4jscrK5-r6Um404TnF1XAakC78zD1yPd5DLDaU9o5bMSmIN-6eF-Sc24iFiVQ0e0YmKVO-A_Kn4Xq8hDQHUWEfL3DN6CKOm46ZWBsIJTTyJlVq5emLEVlNTSHJ0gZbvCcFSD5dl2ovuHOXBSC-8ox3mewoL4tu08xyxTVUI7k8bcQo8ENc90ItQ5cxBsGgxXnGLOcziBuqPw3V5HbwSQs7vaEmyobqxsZAexqx7ebs9_ABsWRr-Kxm-wqHw"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding pt-4">
+<!-- Title & Premium Tag -->
+<div class="flex items-center gap-2 mb-6">
+<h1 class="font-headline-md-mobile text-headline-md-mobile text-text-primary">Performance</h1>
+<span class="px-2 py-0.5 bg-status-premium text-white text-[10px] font-bold rounded-full tracking-wider uppercase">Premium</span>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+<button class="px-5 py-2 rounded-full bg-primary text-white font-label-md text-label-md whitespace-nowrap active:scale-95 transition-all">Mois</button>
+<button class="px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md whitespace-nowrap hover:bg-surface-container-highest transition-all">Trimestre</button>
+<button class="px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md whitespace-nowrap hover:bg-surface-container-highest transition-all">Année</button>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-2 gap-4">
+<!-- CA Mensuel -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 kpi-card-shadow border border-outline-variant/20 flex flex-col justify-between aspect-square">
+<div>
+<span class="text-text-secondary font-label-sm text-label-sm uppercase tracking-wide">CA Mensuel</span>
+<h2 class="text-stat-display font-stat-display text-primary mt-1">3 200 <span class="text-base font-medium">DT</span></h2>
+</div>
+<div>
+<svg class="sparkline-svg stroke-status-success" viewbox="0 0 100 30">
+<path d="M0,25 Q10,15 20,20 T40,10 T60,15 T80,5 T100,8"></path>
+</svg>
+<div class="flex justify-end mt-2">
+<span class="px-2 py-1 bg-tint-success text-status-success text-xs font-bold rounded-full">+12%</span>
+</div>
+</div>
+</div>
+<!-- Marge -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 kpi-card-shadow border border-outline-variant/20 flex flex-col justify-between aspect-square">
+<div>
+<span class="text-text-secondary font-label-sm text-label-sm uppercase tracking-wide">Marge</span>
+<h2 class="text-stat-display font-stat-display text-primary mt-1">39%</h2>
+</div>
+<div>
+<svg class="sparkline-svg stroke-status-success" viewbox="0 0 100 30">
+<path d="M0,20 Q15,10 30,18 T60,12 T90,5 T100,2"></path>
+</svg>
+<div class="flex justify-end mt-2">
+<span class="px-2 py-1 bg-tint-success text-status-success text-xs font-bold rounded-full">+2pts</span>
+</div>
+</div>
+</div>
+<!-- Panier Moyen -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 kpi-card-shadow border border-outline-variant/20 flex flex-col justify-between aspect-square">
+<div>
+<span class="text-text-secondary font-label-sm text-label-sm uppercase tracking-wide">Panier moyen</span>
+<h2 class="text-stat-display font-stat-display text-primary mt-1">640 <span class="text-base font-medium">DT</span></h2>
+</div>
+<div>
+<svg class="sparkline-svg stroke-status-warning" viewbox="0 0 100 30">
+<path d="M0,15 Q20,15 40,18 T60,16 T80,20 T100,18"></path>
+</svg>
+<div class="flex justify-end mt-2">
+<span class="px-2 py-1 bg-tint-warning text-status-warning text-xs font-bold rounded-full">Stable</span>
+</div>
+</div>
+</div>
+<!-- Délai Paiement -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 kpi-card-shadow border border-outline-variant/20 flex flex-col justify-between aspect-square">
+<div>
+<span class="text-text-secondary font-label-sm text-label-sm uppercase tracking-wide">Paiement clients</span>
+<h2 class="text-stat-display font-stat-display text-primary mt-1">12j</h2>
+</div>
+<div>
+<svg class="sparkline-svg stroke-status-success" viewbox="0 0 100 30">
+<path d="M0,5 Q25,8 50,20 T75,25 T100,28"></path>
+</svg>
+<div class="flex justify-end mt-2">
+<span class="px-2 py-1 bg-tint-success text-status-success text-xs font-bold rounded-full">-3j</span>
+</div>
+</div>
+</div>
+<!-- TVA Récupérée -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 kpi-card-shadow border border-outline-variant/20 flex flex-col justify-between aspect-square">
+<div>
+<span class="text-text-secondary font-label-sm text-label-sm uppercase tracking-wide">TVA récupérée</span>
+<h2 class="text-stat-display font-stat-display text-primary mt-1">245 <span class="text-base font-medium">DT</span></h2>
+</div>
+<div>
+<svg class="sparkline-svg stroke-primary" viewbox="0 0 100 30">
+<path d="M0,28 Q20,25 40,20 T60,15 T80,10 T100,5"></path>
+</svg>
+<div class="flex justify-end mt-2">
+<span class="px-2 py-1 bg-primary-fixed text-primary text-xs font-bold rounded-full">En cours</span>
+</div>
+</div>
+</div>
+<!-- Clients Actifs -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 kpi-card-shadow border border-outline-variant/20 flex flex-col justify-between aspect-square">
+<div>
+<span class="text-text-secondary font-label-sm text-label-sm uppercase tracking-wide">Clients actifs</span>
+<h2 class="text-stat-display font-stat-display text-primary mt-1">5</h2>
+</div>
+<div>
+<div class="flex -space-x-2 mt-2">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Minimalist abstract portrait of a person, soft teal and gray tones, modern flat design style for a professional app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPMudI8kBJ_LoZedQImXovdkzF-pXoYNnXblC85uA0hhZavBFdnURvqiIsY7CGJDa7PSaGQy3ZgAfKFCiZY8Cg_yLV1N5Ql_u7P-mP8qQoUZu09Dp8NMzgznEG7sRBbx5qlFiQpK9x26jkobaWZ7Y8AJVPn72GSc4mVOEeb919Xn-PJdsdx8Lg6_hTSU4dkc3g5oK9NMFUNBCWZRM7hehvs9U6R3fqIOIB-k7F_Mb0oYtill7jXRyCmUNDPD70uJY7mjLvvyqzUg"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Minimalist abstract portrait of a person, warm terracotta and cream tones, modern flat design style for a professional app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLP4LVbNGdatDM6XNMo6i0MyUbpZBCcY-vODDZynR7EaD48jty1hal_Q-oSD37gMQHfFMsYzG9Ssu2GJs92uV-JStCM5bfOXHKHXqPHNxAqT7OSna1AYIcP5tS2YgmpBdQi_Ve8oGUkkt3zoKmCx0YRMWXuBWRDCv2089U6Q4dpc00Y5VbcqeW3fOKHKIb3bdsJ-VZYrfmad-cyJo-pH-WlGKSRkvf3Pw4bJFhKHcWW2OOkxItqzr_u81Yb8OpCxya0tscpfpnjQ"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-on-surface-variant">
+                            +3
+                        </div>
+</div>
+<div class="flex justify-end mt-2">
+<span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-xs font-bold rounded-full">+1</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Disclaimer Banner -->
+<div class="mt-8 mb-4 p-4 bg-surface-container-low rounded-xl text-center">
+<p class="text-on-surface-variant font-label-sm text-label-sm leading-relaxed">
+<span class="font-bold">Note Pédagogique :</span> Ces indicateurs sont basés sur vos saisies actuelles. Fiscalla est un outil d'accompagnement et ne remplace pas l'expertise d'un comptable certifié.
+            </p>
+</div>
+</main>
+<!-- Floating Bottom Navigation -->
+<nav class="fixed bottom-6 left-0 right-0 z-50 flex justify-around items-center px-6 py-3 w-[90%] max-w-[400px] mx-auto rounded-full bg-surface-container-lowest dark:bg-on-background border border-outline-variant/30 shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:bg-surface-container-high rounded-full transition-all p-2" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:bg-surface-container-high rounded-full transition-all p-2" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:bg-surface-container-high rounded-full transition-all p-2" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 p-2" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:bg-surface-container-high rounded-full transition-all p-2" href="#">
+<span class="material-symbols-outlined">person</span>
+</a>
+</nav>
+<!-- Interactions Script -->
+<script>
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('click', function(e) {
+                // Subtle feedback for mobile feel
+                if (window.navigator && window.navigator.vibrate) {
+                    window.navigator.vibrate(5);
+                }
+            });
+        });
+        
+        // Animation for KPI cards appearing
+        const cards = document.querySelectorAll('.kpi-card-shadow');
+        cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                card.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100 * index);
+        });
+    </script>
+</body></html>

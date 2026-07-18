@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli - Inventaire</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#0d5b55",
+                        "tertiary-fixed": "#abefe7",
+                        "surface-container-lowest": "#ffffff",
+                        "text-secondary": "#6B7280",
+                        "on-tertiary-fixed": "#00201d",
+                        "secondary": "#006b5f",
+                        "surface-dim": "#d8dada",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#006a63",
+                        "on-primary-fixed": "#00201d",
+                        "primary-container": "#0f766e",
+                        "inverse-primary": "#80d5cb",
+                        "on-surface": "#191c1d",
+                        "tint-success": "#E6F5F3",
+                        "error-container": "#ffdad6",
+                        "status-success": "#16A34A",
+                        "inverse-surface": "#2e3131",
+                        "secondary-fixed": "#71f8e4",
+                        "primary": "#005c55",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#80d5cb",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "outline": "#6e7977",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#3e4947",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "status-danger": "#DC2626",
+                        "on-primary-container": "#a3faef",
+                        "on-background": "#191c1d",
+                        "surface-container-low": "#f2f4f4",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "on-primary-fixed-variant": "#00504a",
+                        "text-primary": "#1A1A1A",
+                        "status-premium": "#7C3AED",
+                        "status-warning": "#D97706",
+                        "secondary-container": "#6df5e1",
+                        "tint-warning": "#FEF3E2",
+                        "on-secondary-fixed-variant": "#005048",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "surface-container-highest": "#e1e3e3",
+                        "outline-variant": "#bdc9c6",
+                        "tertiary-container": "#2f746d",
+                        "surface-container": "#eceeee",
+                        "surface": "#f8fafa",
+                        "tint-danger": "#FDE8E6",
+                        "surface-bright": "#f8fafa",
+                        "tint-info": "#EEF2FF",
+                        "background": "#f8fafa",
+                        "surface-variant": "#e1e3e3",
+                        "on-secondary-fixed": "#00201c",
+                        "surface-container-high": "#e6e8e8",
+                        "primary-fixed": "#9cf2e8",
+                        "on-secondary-container": "#006f64"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "stack-sm": "12px",
+                        "container-padding": "20px",
+                        "stack-xs": "4px",
+                        "element-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "stat-display": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .squishy-active:active {
+            transform: scale(0.96);
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .fab-shadow {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Top Navigation Anchor -->
+<header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md px-container-padding h-16 flex justify-between items-center w-full">
+<div class="flex items-center gap-3">
+<img alt="Logo" class="w-8 h-8 rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMetEsKziLPh5VOeQKztUWxVj3Qs2LmsvOGxfGoGF9gcxmb2jOU_FwscyCg1V1Hzka7Fy7ziV7v_GJObFaHPT8EhXY-_h6nLIA7KyJHGj5RBMM44HmWyctMDwr8JGB1FxdrL0S0XcwFyyMXh_RxQRRqL68zK0khqbPC0IQTUiMotBTfiWCbtKD7RL6mIDPmFoU9WS_5AN9pZ_1eYg1VRHtGltwvl8BGDaOgWIcjM1pFozfrzIvN8FVVybuHoawYXEAy8PkbBmMGQ"/>
+<h1 class="font-headline-md text-headline-md text-primary">Inventaire</h1>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary" data-icon="search">search</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+</button>
+</div>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding pb-32 pt-4 flex flex-col gap-element-gap">
+<!-- Search & Filter Pills -->
+<section class="flex flex-col gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full bg-white border-none rounded-2xl py-4 pl-12 pr-4 soft-shadow focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="Rechercher un produit..." type="text"/>
+</div>
+<div class="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+<button class="px-5 py-2 rounded-full bg-primary text-white font-label-md text-label-md whitespace-nowrap squishy-active">Tous</button>
+<button class="px-5 py-2 rounded-full bg-white text-on-surface-variant font-label-md text-label-md whitespace-nowrap soft-shadow squishy-active">Électronique</button>
+<button class="px-5 py-2 rounded-full bg-white text-on-surface-variant font-label-md text-label-md whitespace-nowrap soft-shadow squishy-active">Fournitures</button>
+<button class="px-5 py-2 rounded-full bg-white text-on-surface-variant font-label-md text-label-md whitespace-nowrap soft-shadow squishy-active">Alimentation</button>
+</div>
+</section>
+<!-- Valuation Card -->
+<section class="bg-tint-success rounded-2xl p-container-padding relative overflow-hidden border border-primary/5">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-primary/5 rounded-full blur-2xl"></div>
+<div class="relative z-10 flex flex-col gap-1">
+<span class="text-secondary font-label-sm text-label-sm uppercase tracking-wider">Valeur totale</span>
+<h2 class="font-stat-display text-stat-display text-primary">8 420 DT</h2>
+<div class="flex items-center gap-1 mt-2 text-primary/70">
+<span class="material-symbols-outlined text-[18px]" data-icon="trending_up">trending_up</span>
+<span class="font-label-sm text-label-sm">+12% vs mois dernier</span>
+</div>
+</div>
+</section>
+<!-- Low Stock Banner -->
+<div class="bg-tint-danger border border-error/10 rounded-2xl p-4 flex items-center gap-3 squishy-active cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-error" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-error font-bold">Alerte stock</p>
+<p class="text-on-surface-variant text-label-sm font-label-sm">3 produits sous le seuil critique</p>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Product List Header -->
+<div class="flex justify-between items-end mt-2">
+<h3 class="font-headline-sm text-headline-sm text-primary">Produits</h3>
+<span class="text-label-sm font-label-sm text-outline">48 articles au total</span>
+</div>
+<!-- Product Cards -->
+<div class="flex flex-col gap-4">
+<!-- Card 1: Laptop (Success Stock) -->
+<div class="bg-white p-container-padding rounded-2xl soft-shadow flex gap-4 squishy-active">
+<div class="w-16 h-16 rounded-xl bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional studio product shot of a sleek modern silver laptop on a clean white desk. The lighting is soft and bright, using a high-key light mode aesthetic. The background is a minimalist office space with a hint of deep teal branding in the corner. The overall mood is clean, professional, and tech-oriented for a modern fintech inventory application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmWW263FkB41piS7ZhYw44qk5_Tup6nR1eCF6dVSns6ot1reir3r0FPS0oq9xt7XzcusnvYuCx5NagZjQrxr8iEv9ZMPzUMwkTXa8cVDc6MYA5w0nTGbMc5io9swmTvcl8oMUdgr3ZW6WF0t9gm6ya805F3KJVtzs6g-KA2lZIt_gx-WFc9DT6Tfsi85IDGL4325ToNMFbvwr6cxssxUA2PJ4dQjbiP8lYVTdGTRTgD0uaIPqDRYFahDxvbG-PI1JEMjGcP1cjDQ"/>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-[16px] text-on-surface">Ordinateur Portable</h4>
+<span class="text-[10px] bg-surface-container-low text-outline-variant px-2 py-0.5 rounded font-mono uppercase tracking-tighter">SKU-001</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-status-success"></div>
+<span class="text-label-sm font-label-sm text-status-success font-medium">En stock (12)</span>
+</div>
+<div class="mt-2 text-label-sm font-label-sm text-on-surface-variant flex gap-3">
+<span><span class="text-outline">Achat:</span> 1 200 DT</span>
+<span class="text-outline">|</span>
+<span><span class="text-outline">Vente:</span> 1 800 DT</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Paper (Warning Stock) -->
+<div class="bg-white p-container-padding rounded-2xl soft-shadow flex gap-4 squishy-active">
+<div class="w-16 h-16 rounded-xl bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A stack of premium high-quality A4 white paper reams in a minimalist bright warehouse setting. The lighting is bright and even, highlighting the clean white texture of the paper. Soft teal accents are present in the environmental details. The visual style is modern, pedagogical, and clean, consistent with a high-end financial management dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADFVJzC-hiZd3z_oUNtMkVceGxFdjv5f6ToMEzuzVUM-RuCGP4LzPFzSh-naLwqrdCOu8AnwhI4gDoS8BtRX0avLyBK8-LBb2PeKYKEnJg2IPaj5dERnHLhy3NGovtEDxe6E1qjTryCdXbi179Dt8N4J4V9YEvdn4Hi3YewjUU81w3CDeoP204Q7ZvhAI1O9G4h0KUHVkkpmYv9dMGY2VWPjqTkKsuU2liJ5ynhVy8FUenU4jtsMA5AyBRorGVzJrhnuDAxK0YTQ"/>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-[16px] text-on-surface">Papier A4 (Ramette)</h4>
+<span class="text-[10px] bg-surface-container-low text-outline-variant px-2 py-0.5 rounded font-mono uppercase tracking-tighter">SKU-024</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-status-warning"></div>
+<span class="text-label-sm font-label-sm text-status-warning font-medium">Stock faible (3)</span>
+</div>
+<div class="mt-2 text-label-sm font-label-sm text-on-surface-variant flex gap-3">
+<span><span class="text-outline">Achat:</span> 15 DT</span>
+<span class="text-outline">|</span>
+<span><span class="text-outline">Vente:</span> 22 DT</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Toner (Danger Stock) -->
+<div class="bg-white p-container-padding rounded-2xl soft-shadow flex gap-4 squishy-active">
+<div class="w-16 h-16 rounded-xl bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A black laser printer toner cartridge placed on a white marble surface in a minimalist office setting. The lighting is soft and focused, creating a high-end professional atmosphere. Subtle teal and indigo shadows ground the object. The style is clean and functional, designed for a modern business inventory interface with a soft tactile feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2DCeVnCRG0AYErastyctpBY1hwtyBC5prByERuZc32PTYVDO6E6zjIP1yM1yXQrpZV02HiwdUrlhQH0Y0jVai1ajnho5KNp_PbUGQkpSFMBire9wrBK74ApCBz8rof0mJZ8CMoZKRJOyyJ8wJ9mHhVYO-9gARW7mre_cySBEVhZqrZRq2G5HaMLeSGUPsPdU7GTPw2jRLupzCqfdtyA3EYWdD4y41VyVX8s9yZACIbXJTdfW6Rq_uNMnFRIMYNKrYH_oh3X3HoQ"/>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-[16px] text-on-surface">Toner Laser Jet</h4>
+<span class="text-[10px] bg-surface-container-low text-outline-variant px-2 py-0.5 rounded font-mono uppercase tracking-tighter">SKU-089</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-status-danger"></div>
+<span class="text-label-sm font-label-sm text-status-danger font-medium">Rupture (0)</span>
+</div>
+<div class="mt-2 text-label-sm font-label-sm text-on-surface-variant flex gap-3">
+<span><span class="text-outline">Achat:</span> 145 DT</span>
+<span class="text-outline">|</span>
+<span><span class="text-outline">Vente:</span> 210 DT</span>
+</div>
+</div>
+</div>
+<!-- Disclaimer Banner -->
+<div class="bg-surface-container-low rounded-xl p-4 mt-4">
+<p class="text-[11px] text-outline text-center leading-relaxed">
+                    Les informations d'inventaire sont fournies à titre indicatif pour votre gestion quotidienne. El Comptabli n'est pas un cabinet d'expertise comptable agréé.
+                </p>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-28 right-6 bg-primary text-white flex items-center gap-2 px-6 py-4 rounded-full fab-shadow squishy-active z-50">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="font-label-md text-label-md font-bold">+ Produit</span>
+</button>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-2 bg-surface-container/90 backdrop-blur-md">
+<!-- Accueil -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Accueil</span>
+</a>
+<!-- Stocks (ACTIVE) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim font-bold after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label-sm text-label-sm">Stocks</span>
+</a>
+<!-- Ventes -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
+<span class="font-label-sm text-label-sm">Ventes</span>
+</a>
+<!-- Achats -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-label-sm text-label-sm">Achats</span>
+</a>
+<!-- Profil -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profil</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for search bar
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.style.transform = 'translateY(-2px)';
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.style.transform = 'translateY(0)';
+        });
+
+        // Simple animation for the fab on scroll
+        let lastScroll = 0;
+        const fab = document.querySelector('button.fixed');
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                fab.style.transform = 'scale(0.8) translateY(20px)';
+                fab.style.opacity = '0.5';
+            } else {
+                fab.style.transform = 'scale(1) translateY(0)';
+                fab.style.opacity = '1';
+            }
+            lastScroll = currentScroll;
+        });
+    </script>
+</body></html>

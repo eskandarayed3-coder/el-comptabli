@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "tertiary-fixed": "#abefe7",
+                "on-tertiary-fixed": "#00201d",
+                "status-premium": "#7C3AED",
+                "surface-tint": "#006a63",
+                "surface-bright": "#f8fafa",
+                "on-secondary-fixed-variant": "#005048",
+                "on-primary-fixed-variant": "#00504a",
+                "on-tertiary-container": "#b3f7ee",
+                "tertiary-container": "#2f746d",
+                "on-surface-variant": "#3e4947",
+                "inverse-primary": "#80d5cb",
+                "surface-container": "#eceeee",
+                "outline-variant": "#bdc9c6",
+                "tint-warning": "#FEF3E2",
+                "status-success": "#16A34A",
+                "on-background": "#191c1d",
+                "surface-container-high": "#e6e8e8",
+                "inverse-surface": "#2e3131",
+                "surface-container-lowest": "#ffffff",
+                "secondary": "#006b5f",
+                "tint-danger": "#FDE8E6",
+                "tint-success": "#E6F5F3",
+                "status-warning": "#D97706",
+                "surface-dim": "#d8dada",
+                "error": "#ba1a1a",
+                "secondary-container": "#6df5e1",
+                "on-primary-container": "#a3faef",
+                "primary-fixed-dim": "#80d5cb",
+                "secondary-fixed-dim": "#4fdbc8",
+                "on-tertiary-fixed-variant": "#00504a",
+                "tertiary": "#0d5b55",
+                "status-danger": "#DC2626",
+                "on-secondary-fixed": "#00201c",
+                "surface-variant": "#e1e3e3",
+                "tertiary-fixed-dim": "#90d3cb",
+                "on-secondary": "#ffffff",
+                "outline": "#6e7977",
+                "surface": "#f8fafa",
+                "on-tertiary": "#ffffff",
+                "inverse-on-surface": "#eff1f1",
+                "on-surface": "#191c1d",
+                "on-error": "#ffffff",
+                "background": "#f8fafa",
+                "text-primary": "#1A1A1A",
+                "on-primary": "#ffffff",
+                "primary-container": "#0f766e",
+                "primary": "#005c55",
+                "secondary-fixed": "#71f8e4",
+                "surface-container-highest": "#e1e3e3",
+                "tint-info": "#EEF2FF",
+                "surface-container-low": "#f2f4f4",
+                "on-secondary-container": "#006f64",
+                "error-container": "#ffdad6",
+                "on-primary-fixed": "#00201d",
+                "text-secondary": "#6B7280",
+                "primary-fixed": "#9cf2e8",
+                "on-error-container": "#93000a"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "xxl": "24px",
+                "full": "9999px"
+            },
+            "spacing": {
+                "container-padding": "20px",
+                "element-gap": "16px",
+                "stack-sm": "12px",
+                "stack-xs": "4px",
+                "base": "8px"
+            },
+            "fontFamily": {
+                "label-md": ["Inter"],
+                "headline-sm": ["Inter"],
+                "stat-display": ["Inter"],
+                "headline-lg": ["Inter"],
+                "body-lg": ["Inter"],
+                "headline-md": ["Inter"],
+                "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafa; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-tab-indicator::after {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background-color: #005c55;
+            border-radius: 50%;
+            margin-top: 4px;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        .input-focus-ring:focus-within {
+            box-shadow: 0 0 0 2px #005c55;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col items-center">
+<!-- Top AppBar (Mobile Style as per JSON Logic) -->
+<header class="bg-background dark:bg-on-background fixed top-0 w-full z-50 flex justify-between items-center px-container-padding py-base h-16 max-w-[600px]">
+<div class="flex items-center gap-3">
+<button class="transition-all duration-200 active:scale-95 text-on-surface-variant flex items-center justify-center p-2 rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm-mobile text-primary dark:text-primary-fixed">Calcul TVA</h1>
+</div>
+<div class="flex items-center gap-2">
+<img alt="El Comptabli Logo" class="w-8 h-8 rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHSvRZBLuXQdETHRWzo_jOMBR94ghzAiA-xL1R4doZ0pYmFD_5mzeXW_54VTh6DHl0fjnJzTiV4d3TjP6lKrMsffjt6dk12ONo3UMw-oG5x-wDii-m7a0Vd0ORE8b7HR9xF2ohyUqXtGxmeXB3BUOyImnbFRmC61KUTAM13FULdcHv2lR_eUiUl-siZuNk-n1dErM-Dhx8-Z9SbC3OOqJqavogXazcQLJ2VFb6qiiz4Atwfn6nflomvYc7KylF-C1rKFZa7UoAPg"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-[600px] mt-16 px-container-padding pb-32 pt-6 flex flex-col gap-6">
+<!-- Mode Selector -->
+<div class="bg-surface-container-low p-1.5 rounded-xxl flex w-full">
+<button class="flex-1 py-2.5 rounded-full text-label-md font-label-md bg-primary text-on-primary shadow-sm transition-all duration-200">
+                HT → TTC
+            </button>
+<button class="flex-1 py-2.5 rounded-full text-label-md font-label-md text-on-surface-variant hover:bg-surface-container transition-all">
+                TTC → HT
+            </button>
+</div>
+<!-- Input Section -->
+<div class="flex flex-col gap-element-gap">
+<div class="flex flex-col gap-stack-xs">
+<label class="text-label-sm font-label-sm text-outline px-1">Montant</label>
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xxl input-focus-ring transition-shadow flex items-center justify-between">
+<input class="bg-transparent border-none outline-none text-headline-md font-headline-md text-primary w-full p-0" placeholder="1 000" type="text" value="1 000"/>
+<span class="text-headline-md font-headline-md text-outline">DT</span>
+</div>
+</div>
+<!-- Rate Pills -->
+<div class="flex flex-col gap-stack-xs">
+<label class="text-label-sm font-label-sm text-outline px-1">Taux de TVA</label>
+<div class="flex gap-3">
+<button class="flex-1 py-3 px-4 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-md transition-transform active:scale-95">19%</button>
+<button class="flex-1 py-3 px-4 rounded-full bg-surface-container-highest text-on-surface-variant font-label-md text-label-md transition-all hover:bg-outline-variant">13%</button>
+<button class="flex-1 py-3 px-4 rounded-full bg-surface-container-highest text-on-surface-variant font-label-md text-label-md transition-all hover:bg-outline-variant">7%</button>
+</div>
+</div>
+</div>
+<!-- Result Card -->
+<section class="bg-tint-success p-6 rounded-xxl border border-primary/10 flex flex-col gap-4 shadow-[0_4px_16px_rgba(15,92,86,0.08)]">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center text-on-secondary-fixed-variant opacity-80 font-label-md text-label-md">
+<span>HT</span>
+<span>1 000,000</span>
+</div>
+<div class="flex justify-between items-center text-on-secondary-fixed-variant opacity-80 font-label-md text-label-md border-b border-primary/10 pb-2">
+<span>TVA (19%)</span>
+<span>190,000</span>
+</div>
+<div class="flex justify-between items-end pt-2">
+<span class="font-label-md text-label-md text-primary">Total TTC</span>
+<div class="flex flex-col items-end">
+<span class="font-stat-display text-stat-display text-primary leading-none">1 190,000 DT</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest/50 p-3 rounded-xl border border-primary/5">
+<p class="text-label-sm font-label-sm text-outline text-center">Formule : 1 000 × 1,19 = 1 190</p>
+</div>
+<button class="w-full flex items-center justify-center gap-2 py-3 text-primary font-label-md text-label-md hover:bg-primary/5 transition-colors rounded-xl">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+                Copier le résultat
+            </button>
+</section>
+<!-- History Section -->
+<section class="flex flex-col gap-stack-sm">
+<h3 class="font-headline-sm text-headline-sm-mobile text-on-surface px-1">Historique récent</h3>
+<div class="flex flex-col gap-3">
+<!-- Slim Card 1 -->
+<div class="bg-surface-container-lowest p-4 rounded-xxl flex justify-between items-center shadow-sm border border-transparent hover:border-outline-variant transition-all cursor-pointer">
+<div class="flex flex-col">
+<span class="text-label-md font-label-md text-on-surface">HT 500 → TTC 595</span>
+<span class="text-label-sm font-label-sm text-outline">Taux 19%</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<!-- Slim Card 2 -->
+<div class="bg-surface-container-lowest p-4 rounded-xxl flex justify-between items-center shadow-sm border border-transparent hover:border-outline-variant transition-all cursor-pointer">
+<div class="flex flex-col">
+<span class="text-label-md font-label-md text-on-surface">TTC 1 130 → HT 1 000</span>
+<span class="text-label-sm font-label-sm text-outline">Taux 13%</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<!-- Slim Card 3 -->
+<div class="bg-surface-container-lowest p-4 rounded-xxl flex justify-between items-center shadow-sm border border-transparent hover:border-outline-variant transition-all cursor-pointer">
+<div class="flex flex-col">
+<span class="text-label-md font-label-md text-on-surface">HT 2 000 → TTC 2 140</span>
+<span class="text-label-sm font-label-sm text-outline">Taux 7%</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Pedagogical Disclaimer -->
+<div class="bg-surface-container-low p-4 rounded-xl mt-4">
+<p class="text-[10px] text-outline text-center leading-relaxed">
+                Ce calculateur est un outil pédagogique destiné à faciliter vos estimations. Pour toute déclaration fiscale officielle, veuillez consulter un expert-comptable agréé ou utiliser les plateformes officielles du ministère des Finances.
+            </p>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Fixed as per JSON Logic) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.12)] max-w-[600px] rounded-t-3xl">
+<div class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary-container transition-transform duration-300 active:scale-90">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Accueil</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary-container transition-transform duration-300 active:scale-90">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm">IA</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary-container transition-transform duration-300 active:scale-90">
+<span class="material-symbols-outlined">document_scanner</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</div>
+<!-- Active Tab: Finance -->
+<div class="flex flex-col items-center justify-center text-primary dark:text-secondary-fixed-dim after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 transition-transform duration-300 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm">Finance</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary-container transition-transform duration-300 active:scale-90">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-sm text-label-sm">Savoir</span>
+</div>
+</nav>
+<script>
+        // Simple micro-interaction for rate pills
+        document.querySelectorAll('button.rounded-full').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(this.parentElement.classList.contains('flex-1') || this.parentElement.classList.contains('flex')) {
+                    const siblingButtons = this.parentElement.querySelectorAll('button');
+                    if (this.innerText.includes('%') || this.innerText.includes('HT')) {
+                         siblingButtons.forEach(b => {
+                            b.classList.remove('bg-primary', 'text-on-primary', 'shadow-md');
+                            b.classList.add('bg-surface-container-highest', 'text-on-surface-variant');
+                        });
+                        this.classList.remove('bg-surface-container-highest', 'text-on-surface-variant');
+                        this.classList.add('bg-primary', 'text-on-primary', 'shadow-md');
+                    }
+                }
+            });
+        });
+
+        // Toggle HT/TTC Logic Mockup
+        const modeButtons = document.querySelectorAll('.bg-surface-container-low button');
+        modeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modeButtons.forEach(b => {
+                    b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+                    b.classList.add('text-on-surface-variant');
+                });
+                btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+                btn.classList.remove('text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html>

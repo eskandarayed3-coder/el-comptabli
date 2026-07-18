@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli - Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "status-danger": "#DC2626",
+                    "primary": "#005c55",
+                    "secondary-fixed": "#71f8e4",
+                    "tint-success": "#E6F5F3",
+                    "surface-container-low": "#f2f4f4",
+                    "on-surface-variant": "#3e4947",
+                    "background": "#f8fafa",
+                    "on-tertiary-container": "#b3f7ee",
+                    "on-primary-container": "#a3faef",
+                    "primary-fixed": "#9cf2e8",
+                    "surface-container-high": "#e6e8e8",
+                    "on-secondary-fixed": "#00201c",
+                    "tertiary": "#0d5b55",
+                    "secondary-container": "#6df5e1",
+                    "tint-danger": "#FDE8E6",
+                    "surface-tint": "#006a63",
+                    "surface-container": "#eceeee",
+                    "secondary": "#006b5f",
+                    "text-secondary": "#6B7280",
+                    "text-primary": "#1A1A1A",
+                    "tint-info": "#EEF2FF",
+                    "tertiary-fixed": "#abefe7",
+                    "tertiary-container": "#2f746d",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "on-secondary-fixed-variant": "#005048",
+                    "outline": "#6e7977",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#80d5cb",
+                    "on-primary-fixed": "#00201d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#eff1f1",
+                    "tint-warning": "#FEF3E2",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "surface": "#f8fafa",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#00201d",
+                    "surface-variant": "#e1e3e3",
+                    "inverse-surface": "#2e3131",
+                    "surface-container-highest": "#e1e3e3",
+                    "status-premium": "#7C3AED",
+                    "on-primary-fixed-variant": "#00504a",
+                    "on-background": "#191c1d",
+                    "surface-dim": "#d8dada",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "inverse-primary": "#80d5cb",
+                    "status-success": "#16A34A",
+                    "on-error": "#ffffff",
+                    "primary-container": "#0f766e",
+                    "outline-variant": "#bdc9c6",
+                    "on-surface": "#191c1d",
+                    "on-secondary-container": "#006f64",
+                    "status-warning": "#D97706",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#f8fafa",
+                    "on-tertiary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "card": "24px"
+            },
+            "spacing": {
+                    "element-gap": "16px",
+                    "container-padding": "20px",
+                    "stack-sm": "12px",
+                    "base": "8px",
+                    "stack-xs": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .selected-card {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+            border: 2px solid #005c55;
+        }
+        .card-transition {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .floating-fab-shadow {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen text-on-surface">
+<!-- Top Navigation Header -->
+<header class="w-full top-0 sticky bg-background z-50 px-container-padding h-16 flex items-center justify-between">
+<button class="w-10 h-10 flex items-center justify-start text-on-surface hover:bg-surface-container-low rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex flex-col items-center gap-1">
+<div class="flex items-center gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Étape 3 sur 4</span>
+</div>
+<div class="w-32 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-3/4 rounded-full"></div>
+</div>
+</div>
+<div class="w-10"></div> <!-- Spacer for symmetry -->
+</header>
+<main class="flex-1 w-full max-w-[600px] mx-auto px-container-padding py-8 flex flex-col">
+<!-- Welcome/Hero Text -->
+<div class="mb-10">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Ton régime fiscal</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                Choisis le cadre qui correspond le mieux à ton activité actuelle.
+            </p>
+</div>
+<!-- Selection List -->
+<div class="flex flex-col gap-element-gap">
+<!-- Option 1: Forfaitaire -->
+<label class="relative block cursor-pointer group">
+<input class="peer absolute opacity-0" name="regime" type="radio"/>
+<div class="card-transition bg-surface-container-lowest p-5 rounded-card border-2 border-transparent peer-checked:border-primary peer-checked:bg-tint-success hover:bg-surface-container-low">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<div class="flex-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Régime forfaitaire</h3>
+<p class="font-label-md text-label-md text-on-surface-variant mt-1">Petites structures, impôt simplifié</p>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant peer-checked:border-primary peer-checked:bg-primary flex items-center justify-center shrink-0">
+<div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+</div>
+</div>
+</div>
+</label>
+<!-- Option 2: Réel (Selected State) -->
+<label class="relative block cursor-pointer group">
+<input checked="" class="peer absolute opacity-0" name="regime" type="radio"/>
+<div class="card-transition bg-tint-success p-5 rounded-card border-2 border-primary selected-card">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-on-primary shrink-0">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Régime réel</h3>
+<span class="px-2 py-0.5 bg-primary/10 text-primary rounded-full text-[10px] font-bold uppercase tracking-wider">Recommandé</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant mt-1">TVA, comptabilité détaillée</p>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-primary bg-primary flex items-center justify-center shrink-0">
+<div class="w-2 h-2 bg-white rounded-full"></div>
+</div>
+</div>
+</div>
+</label>
+<!-- Option 3: Je ne sais pas -->
+<label class="relative block cursor-pointer group">
+<input class="peer absolute opacity-0" name="regime" type="radio"/>
+<div class="card-transition bg-tint-info p-5 rounded-card border-2 border-transparent peer-checked:border-primary hover:bg-[#E0E7FF]">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-[#818CF8]/20 flex items-center justify-center text-[#4F46E5] shrink-0">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div class="flex-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Je ne sais pas</h3>
+<p class="font-label-md text-label-md text-on-surface-variant mt-1">L'IA t'aidera à choisir</p>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant peer-checked:border-primary flex items-center justify-center shrink-0">
+</div>
+</div>
+</div>
+</label>
+</div>
+<!-- Pedadogical Note -->
+<div class="mt-8 bg-surface-container-low p-4 rounded-xl flex items-start gap-3">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">info</span>
+<p class="text-[11px] font-label-sm text-on-surface-variant leading-relaxed uppercase tracking-wide">
+                Ce choix impacte tes obligations mensuelles. Tu pourras le modifier plus tard après consultation avec l'assistant.
+            </p>
+</div>
+</main>
+<!-- Fixed Bottom Action -->
+<footer class="sticky bottom-0 w-full max-w-[600px] mx-auto p-container-padding bg-background/80 backdrop-blur-md">
+<button class="w-full bg-primary text-on-primary h-14 rounded-full font-headline-sm text-headline-sm flex items-center justify-center gap-2 floating-fab-shadow active:scale-95 transition-transform">
+            Continuer
+            <span class="material-symbols-outlined">chevron_right</span>
+</button>
+</footer>
+<!-- Small Disclaimer at bottom -->
+<div class="w-full pb-4 text-center">
+<p class="text-[10px] text-on-surface-variant px-container-padding italic">
+            El Comptabli est un outil pédagogique, non un expert-comptable certifié.
+        </p>
+</div>
+<script>
+        // Simple Interaction logic for demo
+        document.querySelectorAll('input[name="regime"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                // Reset all cards
+                document.querySelectorAll('label > div').forEach(card => {
+                    card.classList.remove('border-primary', 'selected-card', 'bg-tint-success');
+                    card.classList.add('border-transparent');
+                    
+                    // Reset radio dot
+                    const dotWrapper = card.querySelector('.w-6.h-6');
+                    dotWrapper.classList.remove('bg-primary', 'border-primary');
+                    dotWrapper.classList.add('border-outline-variant');
+                    const dot = dotWrapper.querySelector('.w-2.h-2');
+                    if(dot) dot.classList.add('opacity-0');
+                });
+
+                // Style the selected one
+                const card = e.target.nextElementSibling;
+                card.classList.remove('border-transparent');
+                card.classList.add('border-primary', 'selected-card');
+                
+                // Special color handling
+                if(e.target.parentNode.innerText.includes("Régime forfaitaire") || e.target.parentNode.innerText.includes("Régime réel")) {
+                    card.classList.add('bg-tint-success');
+                }
+
+                // Style active radio
+                const dotWrapper = card.querySelector('.w-6.h-6');
+                dotWrapper.classList.add('bg-primary', 'border-primary');
+                dotWrapper.classList.remove('border-outline-variant');
+                const dot = dotWrapper.querySelector('.w-2.h-2');
+                if(dot) dot.classList.remove('opacity-0');
+            });
+        });
+    </script>
+</body></html>

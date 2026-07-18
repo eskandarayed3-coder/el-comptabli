@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Détails du document - FiscAssist</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#d8dada",
+                    "on-secondary": "#ffffff",
+                    "text-primary": "#1A1A1A",
+                    "on-error-container": "#93000a",
+                    "primary": "#005c55",
+                    "on-primary-container": "#a3faef",
+                    "tint-warning": "#FEF3E2",
+                    "tint-success": "#E6F5F3",
+                    "tint-danger": "#FDE8E6",
+                    "on-secondary-fixed": "#00201c",
+                    "tertiary-fixed": "#abefe7",
+                    "secondary-fixed": "#71f8e4",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-tertiary-fixed": "#00201d",
+                    "on-surface-variant": "#3e4947",
+                    "tertiary-container": "#2f746d",
+                    "surface-container": "#eceeee",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#f2f4f4",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#00504a",
+                    "inverse-surface": "#2e3131",
+                    "primary-container": "#0f766e",
+                    "surface-bright": "#f8fafa",
+                    "tint-info": "#EEF2FF",
+                    "secondary-container": "#6df5e1",
+                    "inverse-primary": "#80d5cb",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "on-secondary-fixed-variant": "#005048",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#e6e8e8",
+                    "status-premium": "#7C3AED",
+                    "on-tertiary": "#ffffff",
+                    "status-success": "#16A34A",
+                    "status-danger": "#DC2626",
+                    "primary-fixed-dim": "#80d5cb",
+                    "outline-variant": "#bdc9c6",
+                    "text-secondary": "#6B7280",
+                    "surface-container-highest": "#e1e3e3",
+                    "outline": "#6e7977",
+                    "primary-fixed": "#9cf2e8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface": "#f8fafa",
+                    "on-primary-fixed": "#00201d",
+                    "status-warning": "#D97706",
+                    "secondary": "#006b5f",
+                    "surface-variant": "#e1e3e3",
+                    "on-secondary-container": "#006f64",
+                    "on-surface": "#191c1d",
+                    "on-background": "#191c1d",
+                    "inverse-on-surface": "#eff1f1",
+                    "surface-tint": "#006a63",
+                    "tertiary": "#0d5b55",
+                    "on-tertiary-container": "#b3f7ee",
+                    "background": "#f8fafa"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "12px",
+                    "2xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "element-gap": "16px",
+                    "stack-xs": "4px",
+                    "stack-sm": "12px",
+                    "container-padding": "20px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        -webkit-tap-highlight-color: transparent;
+        background-color: #f8fafa;
+        font-family: 'Inter', sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-nav {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .card-shadow {
+        box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+      }
+      .floating-nav-shadow {
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      }
+      .invoice-preview {
+        transition: transform 0.3s ease;
+      }
+      .invoice-preview:active {
+        transform: scale(0.98);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen text-on-surface">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-container-padding py-stack-sm w-full max-w-[600px] mx-auto">
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-95">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-sm-mobile text-headline-sm-mobile text-primary">Détails du document</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-20 pb-32 px-container-padding w-full max-w-[600px] mx-auto space-y-6">
+<!-- Invoice Preview Card -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden card-shadow">
+<div class="relative w-full aspect-[3/4] bg-surface-dim overflow-hidden group">
+<img class="w-full h-full object-cover invoice-preview cursor-pointer" data-alt="A high-quality, professional photograph of a Tunisian electricity utility bill (STEG) resting on a clean white desk. The lighting is soft and natural, emphasizing the document's textures. The overall aesthetic is clean, minimalist, and modern, using a soft teal and white color palette to match a professional fintech mobile application interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCVQ1poKZCag_y23Cgi-AWDT23p8_ePZiFHDWtDtA3REHsiPsTth9_9jkAV7bMAjiwmLy7I_KhHTBIv02939soYfT7nqP4Sn1bWpJdYT3A2yqCIm7s_riDsgHdWOhZ8iOIh9u0sJpD4z04239uE03lY4TQi4RUTWuJC73oeSa5Knz_drNwDCBYbzXPVb4ZX0kMJ_VhfFkc3_k0yIVHyRQAtArnwgfktVR2CM6yCCWki138Y10yDIJ-n-85diSswyOmQjEWZDDXzA"/>
+<div class="absolute bottom-4 right-4 bg-primary/90 text-white p-2 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-[20px]">zoom_in</span>
+</div>
+</div>
+<div class="p-5 space-y-4">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<h3 class="font-headline-md text-headline-sm text-text-primary">Facture STEG — Juillet</h3>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-label-sm font-medium bg-tint-success text-secondary">
+                                Validée
+                            </span>
+<span class="text-label-sm text-text-secondary">Réf: #F-2026-07-001</span>
+</div>
+</div>
+</div>
+<!-- Information Grid -->
+<div class="grid grid-cols-1 gap-y-4 pt-4 border-t border-outline-variant/30">
+<div class="flex justify-between items-center">
+<span class="text-label-md text-text-secondary">TTC</span>
+<span class="font-headline-sm text-primary">141,134 DT</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-label-md text-text-secondary">TVA (19%)</span>
+<span class="text-label-md font-semibold text-text-primary">22,534 DT</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-label-md text-text-secondary">Catégorie</span>
+<div class="flex items-center gap-2 text-text-primary">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span class="text-label-md font-medium">Électricité</span>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-label-md text-text-secondary">Ajoutée le</span>
+<span class="text-label-md font-medium text-text-primary">16/07/2026</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-label-md text-text-secondary">Liée à</span>
+<a class="text-label-md font-semibold text-primary underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-all" href="#">
+                            Dépense #D-0182
+                        </a>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Row -->
+<div class="flex items-center justify-between gap-3 px-2">
+<button class="flex-1 flex flex-col items-center gap-2 py-3 px-2 rounded-xl text-primary hover:bg-tint-success transition-colors active:scale-95 group">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-low group-hover:bg-primary/10">
+<span class="material-symbols-outlined">download</span>
+</div>
+<span class="text-label-sm font-medium">Télécharger</span>
+</button>
+<button class="flex-1 flex flex-col items-center gap-2 py-3 px-2 rounded-xl text-primary hover:bg-tint-success transition-colors active:scale-95 group">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-low group-hover:bg-primary/10">
+<span class="material-symbols-outlined">share</span>
+</div>
+<span class="text-label-sm font-medium">Partager</span>
+</button>
+<button class="flex-1 flex flex-col items-center gap-2 py-3 px-2 rounded-xl text-error hover:bg-tint-danger transition-colors active:scale-95 group">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-low group-hover:bg-error/10">
+<span class="material-symbols-outlined">delete</span>
+</div>
+<span class="text-label-sm font-medium">Supprimer</span>
+</button>
+</div>
+<!-- Disclaimer Banner -->
+<div class="p-4 rounded-xl bg-surface-container-low text-center">
+<p class="text-label-sm text-text-secondary leading-relaxed">
+                FiscAssist est un outil pédagogique d'aide à la gestion fiscale. Ce document n'a pas été certifié par un expert-comptable agréé.
+            </p>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Scanner Active) -->
+<nav class="fixed bottom-6 left-0 right-0 z-50 flex justify-around items-center px-4 py-2 mx-auto pointer-events-none">
+<div class="flex justify-around items-center bg-surface-container-lowest/80 dark:bg-surface-dim/80 backdrop-blur-md w-[90%] max-w-[400px] rounded-full floating-nav-shadow border border-outline-variant/30 py-2 px-4 pointer-events-auto">
+<!-- Home -->
+<button class="flex items-center justify-center text-on-surface-variant p-3 hover:bg-surface-variant/50 rounded-full transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">home</span>
+</button>
+<!-- Wallet -->
+<button class="flex items-center justify-center text-on-surface-variant p-3 hover:bg-surface-variant/50 rounded-full transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</button>
+<!-- Chat / Assistant -->
+<button class="flex items-center justify-center text-on-surface-variant p-3 hover:bg-surface-variant/50 rounded-full transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+<!-- Documents (Active: Scanner/Description) -->
+<button class="flex items-center justify-center bg-primary-container text-on-primary-container rounded-full p-3 transition-all active:scale-90 duration-150 relative">
+<span class="material-symbols-outlined">description</span>
+<span class="absolute -bottom-1 w-1 h-1 bg-primary rounded-full"></span>
+</button>
+<!-- Profile -->
+<button class="flex items-center justify-center text-on-surface-variant p-3 hover:bg-surface-variant/50 rounded-full transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</nav>
+<script>
+        // Simple ripple-like effect on document click
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('button')) {
+                const button = e.target.closest('button');
+                button.classList.add('scale-95');
+                setTimeout(() => button.classList.remove('scale-95'), 150);
+            }
+        });
+    </script>
+</body></html>

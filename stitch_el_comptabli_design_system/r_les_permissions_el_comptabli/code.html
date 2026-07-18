@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli - Rôles &amp; Permissions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#6df5e1",
+                        "tint-info": "#EEF2FF",
+                        "primary-fixed": "#9cf2e8",
+                        "inverse-surface": "#2e3131",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#80d5cb",
+                        "surface-container-highest": "#e1e3e3",
+                        "on-background": "#191c1d",
+                        "outline": "#6e7977",
+                        "error": "#ba1a1a",
+                        "status-success": "#16A34A",
+                        "outline-variant": "#bdc9c6",
+                        "on-surface": "#191c1d",
+                        "tint-warning": "#FEF3E2",
+                        "on-secondary": "#ffffff",
+                        "tint-success": "#E6F5F3",
+                        "surface": "#f8fafa",
+                        "on-primary-container": "#a3faef",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e1e3e3",
+                        "on-primary-fixed": "#00201d",
+                        "text-secondary": "#6B7280",
+                        "on-error-container": "#93000a",
+                        "tint-danger": "#FDE8E6",
+                        "status-premium": "#7C3AED",
+                        "on-tertiary-fixed": "#00201d",
+                        "status-warning": "#D97706",
+                        "on-tertiary-container": "#b3f7ee",
+                        "inverse-primary": "#80d5cb",
+                        "on-secondary-container": "#006f64",
+                        "surface-dim": "#d8dada",
+                        "on-primary-fixed-variant": "#00504a",
+                        "primary": "#005c55",
+                        "primary-container": "#0f766e",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#3e4947",
+                        "secondary": "#006b5f",
+                        "tertiary": "#0d5b55",
+                        "surface-container-low": "#f2f4f4",
+                        "status-danger": "#DC2626",
+                        "tertiary-container": "#2f746d",
+                        "tertiary-fixed": "#abefe7",
+                        "background": "#f8fafa",
+                        "surface-container": "#eceeee",
+                        "text-primary": "#1A1A1A",
+                        "on-secondary-fixed": "#00201c",
+                        "secondary-fixed": "#71f8e4",
+                        "surface-bright": "#f8fafa",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "surface-tint": "#006a63",
+                        "surface-container-high": "#e6e8e8",
+                        "on-tertiary-fixed-variant": "#00504a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "12px",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "element-gap": "16px",
+                        "stack-sm": "12px",
+                        "stack-xs": "4px",
+                        "container-padding": "20px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-md-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .permission-card { box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08); transition: transform 0.2s ease; }
+        .toggle-checkbox:checked + .toggle-track { background-color: #005c55; }
+        .toggle-checkbox:checked + .toggle-track .toggle-dot { transform: translateX(20px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- Top App Bar (Shared Component Strategy) -->
+<header class="bg-surface sticky top-0 z-40 w-full max-w-[600px] mx-auto flex justify-between items-center px-container-padding py-base">
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-highest transition-colors active:scale-90">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm-mobile md:text-headline-sm text-on-surface font-bold">Rôles &amp; permissions</h1>
+</div>
+<div class="text-primary font-headline-md text-headline-md-mobile font-bold">Fisky</div>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding pt-6 space-y-6">
+<!-- Role Selector -->
+<section class="w-full">
+<h2 class="text-on-surface-variant font-label-md text-label-md mb-4 uppercase tracking-wider">Sélectionner un rôle</h2>
+<div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+<button class="px-6 py-2.5 rounded-full border border-outline-variant text-on-surface-variant bg-white font-label-md text-label-md whitespace-nowrap active:scale-95 transition-all">Propriétaire</button>
+<button class="px-6 py-2.5 rounded-full bg-primary text-white font-label-md text-label-md whitespace-nowrap shadow-md active:scale-95 transition-all">Comptable</button>
+<button class="px-6 py-2.5 rounded-full border border-outline-variant text-on-surface-variant bg-white font-label-md text-label-md whitespace-nowrap active:scale-95 transition-all">Assistant</button>
+</div>
+</section>
+<!-- Permission Groups -->
+<div class="space-y-4">
+<!-- Group: Finance -->
+<section class="permission-card bg-white rounded-2xl p-5">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">account_balance</span>
+<h3 class="font-headline-sm text-[18px] text-on-surface">Finance</h3>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-body-lg">Voir les transactions</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="toggle-track w-11 h-6 bg-outline-variant rounded-full p-1 transition-colors">
+<div class="toggle-dot bg-white w-4 h-4 rounded-full shadow-sm transition-transform"></div>
+</div>
+</label>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-body-lg">Modifier les entrées</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="toggle-track w-11 h-6 bg-outline-variant rounded-full p-1 transition-colors">
+<div class="toggle-dot bg-white w-4 h-4 rounded-full shadow-sm transition-transform"></div>
+</div>
+</label>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-body-lg">Supprimer des relevés</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="toggle-track w-11 h-6 bg-outline-variant rounded-full p-1 transition-colors">
+<div class="toggle-dot bg-white w-4 h-4 rounded-full shadow-sm transition-transform"></div>
+</div>
+</label>
+</div>
+</div>
+</section>
+<!-- Group: Documents -->
+<section class="permission-card bg-white rounded-2xl p-5">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">description</span>
+<h3 class="font-headline-sm text-[18px] text-on-surface">Documents</h3>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-body-lg">Voir l'archive</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="toggle-track w-11 h-6 bg-outline-variant rounded-full p-1 transition-colors">
+<div class="toggle-dot bg-white w-4 h-4 rounded-full shadow-sm transition-transform"></div>
+</div>
+</label>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-body-lg">Ajouter des pièces jointes</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="toggle-track w-11 h-6 bg-outline-variant rounded-full p-1 transition-colors">
+<div class="toggle-dot bg-white w-4 h-4 rounded-full shadow-sm transition-transform"></div>
+</div>
+</label>
+</div>
+</div>
+</section>
+<!-- Group: Fiscalité -->
+<section class="permission-card bg-white rounded-2xl p-5">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">gavel</span>
+<h3 class="font-headline-sm text-[18px] text-on-surface">Fiscalité</h3>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-body-lg">Déclarer les impôts</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="toggle-track w-11 h-6 bg-outline-variant rounded-full p-1 transition-colors">
+<div class="toggle-dot bg-white w-4 h-4 rounded-full shadow-sm transition-transform"></div>
+</div>
+</label>
+</div>
+</div>
+</section>
+<!-- Group: Abonnement -->
+<section class="permission-card bg-white rounded-2xl p-5">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">loyalty</span>
+<h3 class="font-headline-sm text-[18px] text-on-surface">Abonnement</h3>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-body-lg">Gérer le forfait</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="toggle-track w-11 h-6 bg-outline-variant rounded-full p-1 transition-colors">
+<div class="toggle-dot bg-white w-4 h-4 rounded-full shadow-sm transition-transform"></div>
+</div>
+</label>
+</div>
+</div>
+</section>
+</div>
+<!-- Info Banner -->
+<section class="bg-tint-info rounded-2xl p-4 flex gap-3 items-start border border-indigo-100">
+<span class="material-symbols-outlined text-status-premium text-[20px]">info</span>
+<p class="text-on-surface-variant font-label-md text-label-md leading-relaxed">
+                Le comptable ne voit jamais tes identifiants. Toutes les transactions sont chiffrées pour garantir ta confidentialité.
+            </p>
+</section>
+<!-- Save Action -->
+<div class="pt-4 pb-12">
+<button class="w-full bg-primary-container text-white py-4 rounded-full font-headline-sm text-headline-sm shadow-lg active:scale-[0.98] transition-transform hover:opacity-90">
+                Enregistrer les permissions
+            </button>
+<p class="mt-4 text-center text-on-surface-variant font-label-sm text-[11px] opacity-60">
+                Fisky est un outil pédagogique et ne remplace pas un avis d'expert-comptable certifié.
+            </p>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Shared Component Logic) -->
+<nav class="fixed bottom-0 left-0 right-0 w-full flex justify-around items-center px-4 pb-4 pt-2 max-w-[600px] mx-auto bg-surface-container shadow-[0_8px_24px_rgba(0,0,0,0.12)] z-50 rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest rounded-full transition-transform active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Accueil</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest rounded-full transition-transform active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm">IA</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest rounded-full transition-transform active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">document_scanner</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest rounded-full transition-transform active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-label-sm text-label-sm">Finance</span>
+</a>
+<!-- Active: Profil/Management equivalent for "Finance/Savoir" context or "More" -->
+<a class="flex flex-col items-center justify-center text-primary font-bold after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 hover:bg-surface-container-highest rounded-full transition-transform active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label-sm text-label-sm">Savoir</span>
+</a>
+</nav>
+<!-- Decorative Micro-interactions -->
+<script>
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const h3 = this.closest('section').querySelector('h3');
+                if (this.checked) {
+                    h3.classList.add('text-primary');
+                }
+            });
+        });
+
+        // Simple haptic-like scaling feedback
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => el.style.transform = 'scale(0.96)');
+            el.addEventListener('mouseup', () => el.style.transform = 'scale(1)');
+            el.addEventListener('mouseleave', () => el.style.transform = 'scale(1)');
+        });
+    </script>
+</body></html>

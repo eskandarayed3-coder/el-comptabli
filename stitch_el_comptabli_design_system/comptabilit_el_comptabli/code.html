@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli - Comptabilité</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tint-warning": "#FEF3E2",
+                    "status-premium": "#7C3AED",
+                    "inverse-on-surface": "#eff1f1",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#006f64",
+                    "status-danger": "#DC2626",
+                    "surface-container-low": "#f2f4f4",
+                    "surface-bright": "#f8fafa",
+                    "on-surface-variant": "#3e4947",
+                    "secondary-container": "#6df5e1",
+                    "status-success": "#16A34A",
+                    "on-primary-fixed": "#00201d",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#00201c",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#00504a",
+                    "primary": "#005c55",
+                    "on-background": "#191c1d",
+                    "on-tertiary-fixed": "#00201d",
+                    "background": "#f8fafa",
+                    "inverse-surface": "#2e3131",
+                    "surface-container-highest": "#e1e3e3",
+                    "surface-container": "#eceeee",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#006a63",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#80d5cb",
+                    "tint-info": "#EEF2FF",
+                    "secondary-fixed": "#71f8e4",
+                    "text-primary": "#1A1A1A",
+                    "primary-container": "#0f766e",
+                    "surface": "#f8fafa",
+                    "outline-variant": "#bdc9c6",
+                    "status-warning": "#D97706",
+                    "on-tertiary-container": "#b3f7ee",
+                    "inverse-primary": "#80d5cb",
+                    "surface-container-high": "#e6e8e8",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#a3faef",
+                    "tint-success": "#E6F5F3",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "text-secondary": "#6B7280",
+                    "tint-danger": "#FDE8E6",
+                    "tertiary-container": "#2f746d",
+                    "tertiary": "#0d5b55",
+                    "surface-dim": "#d8dada",
+                    "surface-variant": "#e1e3e3",
+                    "on-secondary-fixed-variant": "#005048",
+                    "secondary": "#006b5f",
+                    "outline": "#6e7977",
+                    "tertiary-fixed": "#abefe7",
+                    "primary-fixed": "#9cf2e8",
+                    "on-surface": "#191c1d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "12px",
+                    "container-padding": "20px",
+                    "base": "8px",
+                    "element-gap": "16px",
+                    "stack-xs": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter", "sans-serif"],
+                    "headline-sm": ["Inter", "sans-serif"],
+                    "body-lg": ["Inter", "sans-serif"],
+                    "headline-md": ["Inter", "sans-serif"],
+                    "stat-display": ["Inter", "sans-serif"],
+                    "label-sm": ["Inter", "sans-serif"],
+                    "label-md": ["Inter", "sans-serif"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                    "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                    "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                    "stat-display": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .soft-shadow { shadow-[0_4px_16px_rgba(15,92,86,0.08)]; }
+        .nav-shadow { box-shadow: 0 -4px 16px rgba(15, 92, 86, 0.08); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-background flex justify-between items-center px-container-padding h-16">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-2xl">menu</span>
+<h1 class="font-headline-md text-headline-md text-primary">Comptabilité 📒</h1>
+</div>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-primary text-2xl">account_circle</span>
+</div>
+</header>
+<main class="pt-20 px-container-padding space-y-8 max-w-[600px] mx-auto">
+<!-- Stat Cards Section -->
+<section class="flex overflow-x-auto gap-4 py-2 hide-scrollbar snap-x">
+<div class="flex-none w-40 p-5 rounded-2xl bg-tint-success snap-start shadow-[0_4px_16px_rgba(15,92,86,0.08)]">
+<p class="font-label-md text-label-md text-primary mb-1">Écritures ce mois</p>
+<h2 class="font-stat-display text-stat-display text-primary">42</h2>
+</div>
+<div class="flex-none w-40 p-5 rounded-2xl bg-tint-warning snap-start shadow-[0_4px_16px_rgba(15,92,86,0.08)]">
+<p class="font-label-md text-label-md text-status-warning mb-1">À catégoriser</p>
+<h2 class="font-stat-display text-stat-display text-status-warning">6</h2>
+</div>
+<div class="flex-none w-40 p-5 rounded-2xl bg-tint-info snap-start shadow-[0_4px_16px_rgba(15,92,86,0.08)]">
+<p class="font-label-md text-label-md text-status-premium mb-1">Journaux</p>
+<h2 class="font-stat-display text-stat-display text-status-premium">3</h2>
+</div>
+</section>
+<!-- Quick Access Section -->
+<section class="space-y-4">
+<h3 class="font-headline-sm text-headline-sm text-on-surface px-1">Accès rapide</h3>
+<div class="grid grid-cols-2 gap-4">
+<button class="bg-surface-container-lowest p-5 rounded-[24px] shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex flex-col items-start gap-4 transition-transform active:scale-95 hover:bg-surface-bright">
+<div class="w-10 h-10 rounded-xl bg-tint-info flex items-center justify-center">
+<span class="material-symbols-outlined text-status-premium" data-icon="description">description</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold text-left">Journal des ventes</span>
+</button>
+<button class="bg-surface-container-lowest p-5 rounded-[24px] shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex flex-col items-start gap-4 transition-transform active:scale-95 hover:bg-surface-bright">
+<div class="w-10 h-10 rounded-xl bg-tint-success flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="shopping_cart">shopping_cart</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold text-left">Journal des achats</span>
+</button>
+<button class="bg-surface-container-lowest p-5 rounded-[24px] shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex flex-col items-start gap-4 transition-transform active:scale-95 hover:bg-surface-bright">
+<div class="w-10 h-10 rounded-xl bg-tint-warning flex items-center justify-center">
+<span class="material-symbols-outlined text-status-warning" data-icon="menu_book">menu_book</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold text-left">Grand livre</span>
+</button>
+<button class="bg-surface-container-lowest p-5 rounded-[24px] shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex flex-col items-start gap-4 transition-transform active:scale-95 hover:bg-surface-bright">
+<div class="w-10 h-10 rounded-xl bg-tint-danger flex items-center justify-center">
+<span class="material-symbols-outlined text-status-danger" data-icon="account_balance">account_balance</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold text-left">Balance</span>
+</button>
+</div>
+</section>
+<!-- Automated Banner -->
+<section class="bg-tint-info rounded-2xl p-5 border border-primary-fixed-dim/20 flex items-center gap-4 relative overflow-hidden">
+<div class="flex-1">
+<p class="font-label-md text-label-md text-primary font-semibold">Généré automatiquement depuis tes transactions ✨</p>
+<p class="font-label-sm text-label-sm text-primary opacity-60">Basé sur tes données</p>
+</div>
+<div class="w-12 h-12 flex-none flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl animate-pulse">auto_awesome</span>
+</div>
+</section>
+<!-- Ghost Action Button -->
+<div class="flex justify-center pt-4">
+<button class="flex items-center gap-2 px-6 py-3 rounded-full border border-outline/20 text-on-surface-variant hover:bg-surface-container-low transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[18px]">file_upload</span>
+<span class="font-label-md text-label-md">Exporter pour mon comptable</span>
+</button>
+</div>
+<!-- Pedagogical Disclaimer -->
+<footer class="pt-8 pb-12">
+<div class="bg-surface-container-lowest/50 rounded-xl p-4 border border-outline-variant/10">
+<p class="font-label-sm text-label-sm text-outline text-center leading-relaxed">
+                    Cette application est un outil pédagogique destiné à l'aide à la gestion. Elle ne remplace en aucun cas les services d'un expert-comptable certifié. Les données sont indicatives.
+                </p>
+</div>
+</footer>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-surface-container-lowest rounded-t-2xl nav-shadow">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm mt-1">Accueil</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-label-sm text-label-sm mt-1">IA</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="document_scanner">document_scanner</span>
+<span class="font-label-sm text-label-sm mt-1">Scanner</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary font-bold transition-all active:scale-95 after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-1">Finance</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-label-sm text-label-sm mt-1">Savoir</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction for Stat Cards
+        document.querySelectorAll('.snap-start').forEach(card => {
+            card.addEventListener('mousedown', () => card.classList.add('scale-[0.98]'));
+            card.addEventListener('mouseup', () => card.classList.remove('scale-[0.98]'));
+            card.addEventListener('mouseleave', () => card.classList.remove('scale-[0.98]'));
+        });
+    </script>
+</body></html>

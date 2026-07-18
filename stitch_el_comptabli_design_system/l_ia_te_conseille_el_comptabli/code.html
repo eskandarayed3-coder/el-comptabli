@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#3e4947",
+                        "text-primary": "#1A1A1A",
+                        "surface-tint": "#006a63",
+                        "surface-container": "#eceeee",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#9cf2e8",
+                        "on-background": "#191c1d",
+                        "on-surface": "#191c1d",
+                        "secondary": "#006b5f",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e6e8e8",
+                        "inverse-primary": "#80d5cb",
+                        "surface": "#f8fafa",
+                        "status-danger": "#DC2626",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f2f4f4",
+                        "secondary-fixed": "#71f8e4",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f8fafa",
+                        "surface-variant": "#e1e3e3",
+                        "outline": "#6e7977",
+                        "primary": "#005c55",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#006f64",
+                        "tertiary-container": "#2f746d",
+                        "secondary-container": "#6df5e1",
+                        "primary-container": "#0f766e",
+                        "surface-dim": "#d8dada",
+                        "tertiary-fixed": "#abefe7",
+                        "background": "#f8fafa",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-primary-fixed-variant": "#00504a",
+                        "on-tertiary-fixed": "#00201d",
+                        "tertiary": "#0d5b55",
+                        "inverse-on-surface": "#eff1f1",
+                        "tint-warning": "#FEF3E2",
+                        "tint-success": "#E6F5F3",
+                        "inverse-surface": "#2e3131",
+                        "status-success": "#16A34A",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "status-warning": "#D97706",
+                        "surface-container-highest": "#e1e3e3",
+                        "text-secondary": "#6B7280",
+                        "status-premium": "#7C3AED",
+                        "on-secondary-fixed": "#00201c",
+                        "tint-info": "#EEF2FF",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "primary-fixed-dim": "#80d5cb",
+                        "on-secondary": "#ffffff",
+                        "tint-danger": "#FDE8E6",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "on-primary-fixed": "#00201d",
+                        "outline-variant": "#bdc9c6",
+                        "on-primary-container": "#a3faef"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "container-padding": "20px",
+                        "base": "8px",
+                        "stack-xs": "4px",
+                        "element-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "stat-display": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ia-card-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .glass-header {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body class="text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 glass-header">
+<div class="flex items-center justify-between px-container-padding py-stack-sm w-full max-w-[600px] mx-auto">
+<div class="flex items-center gap-3">
+<img alt="El Comptabli Logo" class="w-8 h-8 rounded-lg shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkeiaunAmu2CZlmN-Flo4U__AeNxYcNY2zIknR-_PE6lGe8bT0y1DdRGZ7cDcXT4X-fpsmARlfVIe3inV6ALjOIIyz2sJvqvcLj7DAmbMAjvFW_uzA_dunI6_mqCVeHsj94QUsfNGIhe-2FeoPnmZdxryg6WBqW0ShMkclssUL9i8LZ2REg6Hu97TIAHfsZLI_7VDiVXspHKOAZHWn-RWhOArFF7C8cPZlMIb3FsoHbOrAOXbmmAbugpy493f40YtsSRYUa72SmA"/>
+<h1 class="font-headline-sm text-headline-sm text-primary font-bold">L'IA te conseille 💡</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center text-primary hover:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="max-w-[600px] mx-auto px-container-padding pt-6 space-y-6">
+<!-- Welcome Insight (Bento-style Intro) -->
+<div class="bg-primary-container p-6 rounded-[24px] text-on-primary-container relative overflow-hidden ia-card-shadow">
+<div class="relative z-10">
+<p class="font-label-sm text-label-sm opacity-80 mb-1">Résumé du jour</p>
+<h2 class="font-headline-md text-headline-md mb-2">Bonjour ! Voici tes opportunités fiscales.</h2>
+<div class="flex items-center gap-2 mt-4">
+<span class="bg-on-primary-container text-primary text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Mise à jour</span>
+<span class="text-label-sm">Il y a 5 min</span>
+</div>
+</div>
+<!-- Decorative light effect -->
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-on-primary-container opacity-10 rounded-full blur-3xl"></div>
+</div>
+<!-- AI Advice Cards Stack -->
+<div class="space-y-4">
+<!-- Card 1 -->
+<div class="bg-tint-info p-6 rounded-[24px] ia-card-shadow flex flex-col gap-4 border border-indigo-50/50">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary bg-white p-2 rounded-xl">local_gas_station</span>
+<p class="text-[10px] font-medium text-text-secondary uppercase tracking-tight">Basé sur tes données</p>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Tes dépenses carburant ont augmenté de 30%</p>
+<button class="bg-primary text-white font-label-md px-6 py-2.5 rounded-full w-fit hover:opacity-90 active:scale-95 transition-all">
+                    Voir le détail
+                </button>
+</div>
+<!-- Card 2 -->
+<div class="bg-tint-info p-6 rounded-[24px] ia-card-shadow flex flex-col gap-4 border border-indigo-50/50">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary bg-white p-2 rounded-xl">savings</span>
+<p class="text-[10px] font-medium text-text-secondary uppercase tracking-tight">Basé sur tes données</p>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Tu peux économiser 96 DT de TVA déductible sur tes achats</p>
+<button class="bg-primary text-white font-label-md px-6 py-2.5 rounded-full w-fit hover:opacity-90 active:scale-95 transition-all">
+                    Comment ?
+                </button>
+</div>
+<!-- Card 3 -->
+<div class="bg-tint-info p-6 rounded-[24px] ia-card-shadow flex flex-col gap-4 border border-indigo-50/50">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary bg-white p-2 rounded-xl">event_repeat</span>
+<p class="text-[10px] font-medium text-text-secondary uppercase tracking-tight">Basé sur tes données</p>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Ton acompte provisionnel arrive le 25 sept</p>
+<button class="bg-primary text-white font-label-md px-6 py-2.5 rounded-full w-fit hover:opacity-90 active:scale-95 transition-all">
+                    Estimer le montant
+                </button>
+</div>
+<!-- Card 4 -->
+<div class="bg-tint-info p-6 rounded-[24px] ia-card-shadow flex flex-col gap-4 border border-indigo-50/50">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary bg-white p-2 rounded-xl">fact_check</span>
+<p class="text-[10px] font-medium text-text-secondary uppercase tracking-tight">Basé sur tes données</p>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface">3 factures scannées attendent validation</p>
+<button class="bg-primary text-white font-label-md px-6 py-2.5 rounded-full w-fit hover:opacity-90 active:scale-95 transition-all">
+                    Valider
+                </button>
+</div>
+</div>
+<!-- Disclaimer Banner -->
+<div class="mt-8 mb-4 px-4 py-3 bg-surface-container-low rounded-xl">
+<p class="text-[10px] leading-relaxed text-center text-on-surface-variant font-label-sm italic opacity-70">
+                El Comptabli est un outil pédagogique et ne remplace pas un expert-comptable certifié.
+            </p>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 max-w-[600px] left-1/2 -translate-x-1/2 bg-surface-container-lowest shadow-[0_-8px_24px_rgba(0,0,0,0.08)] rounded-t-xl">
+<!-- Accueil -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/20 rounded-full transition-all duration-200 active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-1">Accueil</span>
+</a>
+<!-- IA (Active State) -->
+<a class="flex flex-col items-center justify-center text-primary font-bold after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 p-2" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-label-sm text-label-sm">IA</span>
+</a>
+<!-- Scanner (Central FAB style interaction) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/20 rounded-full transition-all duration-200 active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">document_scanner</span>
+<span class="font-label-sm text-label-sm mt-1">Scanner</span>
+</a>
+<!-- Finance -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/20 rounded-full transition-all duration-200 active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-1">Finance</span>
+</a>
+<!-- Savoir -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/20 rounded-full transition-all duration-200 active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-sm text-label-sm mt-1">Savoir</span>
+</a>
+</nav>
+<script>
+        // Simple entrance animation for cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.bg-tint-info');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67)';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * (index + 1));
+            });
+        });
+    </script>
+</body></html>

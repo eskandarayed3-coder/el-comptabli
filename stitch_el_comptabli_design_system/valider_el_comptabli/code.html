@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "inverse-surface": "#2e3131",
+                "error-container": "#ffdad6",
+                "primary-container": "#0f766e",
+                "tertiary-fixed": "#abefe7",
+                "secondary-container": "#6df5e1",
+                "surface-container-lowest": "#ffffff",
+                "on-surface": "#191c1d",
+                "on-primary": "#ffffff",
+                "surface": "#f8fafa",
+                "on-primary-fixed-variant": "#00504a",
+                "background": "#f8fafa",
+                "on-secondary-fixed": "#00201c",
+                "outline": "#6e7977",
+                "on-primary-container": "#a3faef",
+                "primary-fixed-dim": "#80d5cb",
+                "on-tertiary-container": "#b3f7ee",
+                "tint-warning": "#FEF3E2",
+                "tertiary-container": "#2f746d",
+                "secondary-fixed-dim": "#4fdbc8",
+                "on-secondary": "#ffffff",
+                "secondary": "#006b5f",
+                "status-danger": "#DC2626",
+                "inverse-on-surface": "#eff1f1",
+                "on-error-container": "#93000a",
+                "inverse-primary": "#80d5cb",
+                "text-primary": "#1A1A1A",
+                "surface-container-high": "#e6e8e8",
+                "status-premium": "#7C3AED",
+                "on-tertiary-fixed": "#00201d",
+                "tint-info": "#EEF2FF",
+                "primary": "#005c55",
+                "on-primary-fixed": "#00201d",
+                "surface-container": "#eceeee",
+                "on-error": "#ffffff",
+                "status-warning": "#D97706",
+                "tint-success": "#E6F5F3",
+                "text-secondary": "#6B7280",
+                "on-background": "#191c1d",
+                "surface-dim": "#d8dada",
+                "surface-container-highest": "#e1e3e3",
+                "primary-fixed": "#9cf2e8",
+                "tertiary-fixed-dim": "#90d3cb",
+                "surface-container-low": "#f2f4f4",
+                "on-tertiary": "#ffffff",
+                "on-tertiary-fixed-variant": "#00504a",
+                "surface-bright": "#f8fafa",
+                "on-secondary-container": "#006f64",
+                "on-secondary-fixed-variant": "#005048",
+                "surface-variant": "#e1e3e3",
+                "outline-variant": "#bdc9c6",
+                "error": "#ba1a1a",
+                "tint-danger": "#FDE8E6",
+                "on-surface-variant": "#3e4947",
+                "surface-tint": "#006a63",
+                "status-success": "#16A34A",
+                "secondary-fixed": "#71f8e4",
+                "tertiary": "#0d5b55"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px",
+                "card": "24px"
+            },
+            "spacing": {
+                "stack-sm": "12px",
+                "base": "8px",
+                "element-gap": "16px",
+                "container-padding": "20px",
+                "stack-xs": "4px"
+            },
+            "fontFamily": {
+                "label-md": ["Inter"],
+                "headline-md": ["Inter"],
+                "headline-lg": ["Inter"],
+                "label-sm": ["Inter"],
+                "headline-sm": ["Inter"],
+                "body-lg": ["Inter"],
+                "stat-display": ["Inter"]
+            },
+            "fontSize": {
+                "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .swipe-card-stack {
+            perspective: 1000px;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .active-dot::after {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background-color: #005c55;
+            border-radius: 50%;
+            margin-top: 4px;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            color: #191c1d;
+            overflow-x: hidden;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between px-container-padding py-base w-full sticky top-0 z-40 bg-surface dark:bg-on-background">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">person</span>
+</div>
+<h1 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed">À valider (3)</h1>
+</div>
+<button class="hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">notifications</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-container-padding flex flex-col gap-6 max-w-[600px] mx-auto w-full pb-32">
+<!-- Progress Section -->
+<section class="mt-4 flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<span class="font-label-md text-label-md text-text-secondary">Progression</span>
+<span class="font-headline-sm text-headline-sm text-primary">1 sur 3</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-1/3 rounded-full transition-all duration-500"></div>
+</div>
+</section>
+<!-- Document Stack -->
+<section class="relative swipe-card-stack flex-1 mt-4">
+<!-- Bottom Card (Visual Depth) -->
+<div class="absolute inset-x-2 top-8 bg-surface-container-high rounded-card h-[400px] -z-20 opacity-50 scale-95 border border-outline-variant/30"></div>
+<!-- Middle Card (Visual Depth) -->
+<div class="absolute inset-x-1 top-4 bg-surface-container-highest rounded-card h-[400px] -z-10 opacity-80 scale-[0.98] border border-outline-variant/30"></div>
+<!-- Top Active Card -->
+<article class="bg-white rounded-card card-shadow border border-outline-variant/20 p-5 flex flex-col h-full relative overflow-hidden transition-transform duration-300" id="active-card">
+<!-- Document Header & Confidence -->
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">description</span>
+<span class="font-label-md text-label-md font-bold text-text-primary">Facture #8841</span>
+</div>
+<!-- Confidence Pill: High Confidence -->
+<div class="flex items-center gap-1.5 px-3 py-1 bg-tint-success text-status-success rounded-full border border-status-success/10">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-[12px] font-semibold">96% Confiance</span>
+</div>
+</div>
+<div class="flex gap-4 items-stretch mb-8">
+<!-- Thumbnail -->
+<div class="w-24 h-32 flex-shrink-0 bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/20">
+<div class="w-full h-full bg-cover bg-center" data-alt="A macro photograph of a business receipt from a Tunisian cafe, showing printed text and a logo on white thermal paper. The lighting is bright and directional, highlighting the paper texture and slightly blurred edges. The overall aesthetic is clean, professional, and minimalist, fitting a soft fintech UI with teal and white tones." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAfeJR0_rc4t1SJe4fjEdddYt8wX3lILyHLlcWJrJ-7yhR0bYx2ci9w4fL4mMlxPekc551vu-J5q6wkNUkWbkHx9_JcwN3td0ZkX8iurey0xLo60r1WR2aKzHn0Lk0zcXUb53QcB-CuCu29DZekW1zhOad3C-XEU8AXmoyAZxBIMwBHaUhgAu58YKJIiNHMGyRwnWyfriT4DjCOjayOZK3xsLB3MghbskKE5cMJvKhab2bTbJYMJS04R3y1CemI1-fF8ZOfitjzjQ')"></div>
+</div>
+<!-- Details -->
+<div class="flex flex-col justify-between py-1">
+<div class="space-y-3">
+<div class="flex flex-col">
+<span class="text-[11px] uppercase tracking-wider text-text-secondary font-medium">Fournisseur</span>
+<span class="font-label-md text-label-md text-text-primary font-bold">Ooredoo Tunisie</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[11px] uppercase tracking-wider text-text-secondary font-medium">Date</span>
+<span class="font-label-md text-label-md text-text-primary">12 Oct 2023</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-[11px] uppercase tracking-wider text-text-secondary font-medium">Montant TTC</span>
+<span class="font-stat-display text-[24px] text-primary">54,500 <span class="text-sm font-bold">DT</span></span>
+</div>
+</div>
+</div>
+<!-- Guidance Note -->
+<div class="bg-tint-info p-3 rounded-xl mb-6 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[18px]">info</span>
+<p class="text-label-sm font-label-sm text-on-surface-variant leading-relaxed">
+                        L'IA a détecté une facture récurrente. Les détails semblent corrects et correspondent à vos habitudes.
+                    </p>
+</div>
+<!-- Actions -->
+<div class="mt-auto flex gap-3">
+<button class="flex-1 py-3 px-4 rounded-full font-label-md text-label-md text-primary hover:bg-surface-container transition-colors active:scale-95">
+                        Corriger
+                    </button>
+<button class="flex-1 py-3 px-4 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:scale-95 transition-all">
+<span>Valider</span>
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+</button>
+</div>
+</article>
+<!-- Disclaimer Banner -->
+<div class="mt-8 bg-surface-container-low p-4 rounded-xl text-center">
+<p class="text-[11px] text-on-surface-variant/70 leading-tight">
+                    FiscAssist est un outil pédagogique et ne remplace pas l'avis d'un expert-comptable certifié. Veuillez vérifier chaque document avant validation finale.
+                </p>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Predicted and Injected) -->
+<nav class="fixed bottom-6 left-0 right-0 mx-auto w-[92%] max-w-[500px] flex justify-around items-center px-6 py-3 z-50 rounded-full bg-surface shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-90 p-2">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Accueil</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-90 p-2">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm">IA</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary font-bold after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 active:scale-90 p-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">document_scanner</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-90 p-2">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm">Finance</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-90 p-2">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-sm text-label-sm">Savoir</span>
+</button>
+</nav>
+<script>
+        // Simple Interaction logic
+        const card = document.getElementById('active-card');
+        let startX = 0;
+        let currentX = 0;
+
+        card.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            card.style.transition = 'none';
+        });
+
+        card.addEventListener('touchmove', (e) => {
+            currentX = e.touches[0].clientX - startX;
+            const rotation = currentX / 20;
+            card.style.transform = `translateX(${currentX}px) rotate(${rotation}deg)`;
+            
+            // Visual feedback for swiping
+            if (currentX > 50) {
+                card.style.borderColor = 'rgba(22, 163, 74, 0.5)'; // Green for validate
+            } else if (currentX < -50) {
+                card.style.borderColor = 'rgba(220, 38, 38, 0.5)'; // Red for skip/correct
+            } else {
+                card.style.borderColor = 'rgba(0, 0, 0, 0.05)';
+            }
+        });
+
+        card.addEventListener('touchend', () => {
+            card.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s';
+            if (Math.abs(currentX) > 120) {
+                const flyOutX = currentX > 0 ? 1000 : -1000;
+                card.style.transform = `translateX(${flyOutX}px) rotate(${currentX/10}deg)`;
+                setTimeout(() => {
+                    alert('Document traité ! Passage au suivant.');
+                    card.style.display = 'none';
+                }, 300);
+            } else {
+                card.style.transform = 'translateX(0) rotate(0)';
+                card.style.borderColor = 'rgba(0, 0, 0, 0.05)';
+            }
+            currentX = 0;
+        });
+
+        // Click interaction for "Valider"
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Subtle haptic-like feedback animation already handled by tailwind classes
+            });
+        });
+    </script>
+</body></html>

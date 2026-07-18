@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli - Gestion des Abonnements</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F7F7;
+        }
+        .sidebar-active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #9cf2e8;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e1e3e3;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "surface-container-highest": "#e1e3e3",
+                      "on-tertiary-fixed": "#00201d",
+                      "error-container": "#ffdad6",
+                      "tint-warning": "#FEF3E2",
+                      "tertiary": "#0d5b55",
+                      "on-background": "#191c1d",
+                      "status-success": "#16A34A",
+                      "error": "#ba1a1a",
+                      "tertiary-container": "#2f746d",
+                      "primary-fixed": "#9cf2e8",
+                      "primary": "#005c55",
+                      "secondary-container": "#6df5e1",
+                      "tint-info": "#EEF2FF",
+                      "on-primary": "#ffffff",
+                      "tint-success": "#E6F5F3",
+                      "tertiary-fixed-dim": "#90d3cb",
+                      "surface-container-high": "#e6e8e8",
+                      "surface-variant": "#e1e3e3",
+                      "surface-dim": "#d8dada",
+                      "secondary-fixed": "#71f8e4",
+                      "primary-container": "#0f766e",
+                      "inverse-surface": "#2e3131",
+                      "inverse-on-surface": "#eff1f1",
+                      "text-primary": "#1A1A1A",
+                      "on-error-container": "#93000a",
+                      "tint-danger": "#FDE8E6",
+                      "on-secondary-fixed-variant": "#005048",
+                      "text-secondary": "#6B7280",
+                      "status-premium": "#7C3AED",
+                      "on-tertiary-fixed-variant": "#00504a",
+                      "secondary": "#006b5f",
+                      "surface-bright": "#f8fafa",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "background": "#f8fafa",
+                      "inverse-primary": "#80d5cb",
+                      "on-primary-fixed": "#00201d",
+                      "on-surface-variant": "#3e4947",
+                      "status-danger": "#DC2626",
+                      "primary-fixed-dim": "#80d5cb",
+                      "surface": "#f8fafa",
+                      "on-primary-fixed-variant": "#00504a",
+                      "status-warning": "#D97706",
+                      "on-surface": "#191c1d",
+                      "on-error": "#ffffff",
+                      "outline-variant": "#bdc9c6",
+                      "surface-container": "#eceeee",
+                      "tertiary-fixed": "#abefe7",
+                      "on-tertiary-container": "#b3f7ee",
+                      "surface-tint": "#006a63",
+                      "on-secondary-container": "#006f64",
+                      "surface-container-low": "#f2f4f4",
+                      "outline": "#6e7977",
+                      "on-secondary-fixed": "#00201c",
+                      "on-primary-container": "#a3faef",
+                      "on-tertiary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "2xl": "1.5rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "12px",
+                      "base": "8px",
+                      "stack-xs": "4px",
+                      "container-padding": "20px",
+                      "element-gap": "16px"
+              },
+              "fontFamily": {
+                      "stat-display": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "label-md": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="flex min-h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-[280px] bg-primary text-white flex flex-col h-screen shrink-0 z-50">
+<div class="p-8">
+<h1 class="font-headline-md text-headline-md tracking-tight text-primary-fixed">El Comptabli</h1>
+<p class="text-[10px] font-label-sm opacity-60 uppercase tracking-widest mt-1">Admin Dashboard</p>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-on-primary-container opacity-80 hover:opacity-100 group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100">dashboard</span>
+<span class="font-label-md">Tableau de Bord</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl sidebar-active text-on-primary-container group" href="#">
+<span class="material-symbols-outlined text-primary-fixed">subscriptions</span>
+<span class="font-label-md">Abonnements</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-on-primary-container opacity-80 hover:opacity-100 group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100">group</span>
+<span class="font-label-md">Utilisateurs</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-on-primary-container opacity-80 hover:opacity-100 group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100">payments</span>
+<span class="font-label-md">Transactions</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-on-primary-container opacity-80 hover:opacity-100 group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100">analytics</span>
+<span class="font-label-md">Statistiques</span>
+</a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="bg-primary-container/20 p-4 rounded-2xl border border-white/10">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary-fixed text-[20px]">support_agent</span>
+<span class="font-label-md text-primary-fixed">Support Admin</span>
+</div>
+<p class="text-[12px] opacity-70 leading-relaxed">Besoin d'aide pour la gestion des comptes ?</p>
+</div>
+<button class="w-full flex items-center gap-3 px-4 py-3 mt-4 rounded-xl text-error opacity-80 hover:opacity-100 hover:bg-error/10 transition-all">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md">Déconnexion</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden bg-background">
+<!-- Top Bar -->
+<header class="h-[80px] bg-white flex items-center justify-between px-10 shrink-0 shadow-sm z-40">
+<div class="flex items-center bg-surface-container-low px-4 py-2.5 rounded-full w-[400px] border border-outline-variant/30">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md w-full ml-2" placeholder="Rechercher un abonnement, client..." type="text"/>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-status-danger rounded-full border-2 border-white"></span>
+</button>
+<div class="h-8 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="text-right">
+<p class="font-label-md text-text-primary leading-tight">Yassine Admin</p>
+<p class="text-[11px] text-text-secondary">Super Administrateur</p>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-primary-fixed overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a North African male administrator in his 30s, wearing a crisp white shirt, minimalist lighting, clean professional fintech studio background, soft teal and white color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3D0AU-PaXD1I5njX6ellS02eFH5GKa7QXdF8hnCsPOVNuMsJc5iJNg6Ho4kD-73IbwXinRidgkojNC4c9Mlwe46qAusRnR-mqWX5bBETG6d2xK9S9AJBQklIkEawE5B_DI1T09AZcm1ccrJTfQHt5t6ShOd0LpieO6vSQBzn9Gm4iCEcoW0nufu76FrEvipv8v74UMbnGmrCq_PZzCtnZLU1Iuo7QFMKp3OG6QNuuXIG0AWxdjLZWhUJAz8XvZPmn9R-uxHFvag"/>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-y-0.5 transition-transform">expand_more</span>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<section class="flex-1 overflow-y-auto p-10 custom-scrollbar">
+<!-- Row 1: KPI Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+<!-- KPI 1 -->
+<div class="bg-white p-6 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.06)] border border-outline-variant/20 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-tint-success rounded-xl">
+<span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+</div>
+<span class="flex items-center text-status-success text-[12px] font-bold bg-green-50 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +12%
+                        </span>
+</div>
+<div class="mt-4">
+<p class="text-text-secondary font-label-md uppercase tracking-wider text-[11px]">Total MRR</p>
+<h2 class="font-stat-display text-stat-display text-primary mt-1">42.850 DT</h2>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-white p-6 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.06)] border border-outline-variant/20 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-tint-info rounded-xl">
+<span class="material-symbols-outlined text-tertiary">person_add</span>
+</div>
+<span class="flex items-center text-status-success text-[12px] font-bold bg-green-50 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +8%
+                        </span>
+</div>
+<div class="mt-4">
+<p class="text-text-secondary font-label-md uppercase tracking-wider text-[11px]">Nouveaux Abonnés (Mois)</p>
+<h2 class="font-stat-display text-stat-display text-primary mt-1">154</h2>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-white p-6 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.06)] border border-outline-variant/20 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div class="p-3 bg-tint-warning rounded-xl">
+<span class="material-symbols-outlined text-status-warning">analytics</span>
+</div>
+<span class="flex items-center text-status-danger text-[12px] font-bold bg-red-50 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_down</span> -2%
+                        </span>
+</div>
+<div class="mt-4">
+<p class="text-text-secondary font-label-md uppercase tracking-wider text-[11px]">ARPU Moyen</p>
+<h2 class="font-stat-display text-stat-display text-primary mt-1">278 DT</h2>
+</div>
+</div>
+</div>
+<!-- Row 2: Analytics -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+<!-- Churn Line Chart -->
+<div class="lg:col-span-2 bg-white p-8 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.06)] border border-outline-variant/20 relative overflow-hidden group">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="font-headline-sm text-text-primary">Tendance du Churn Rate</h3>
+<p class="text-text-secondary text-label-sm">Évolution des désabonnements sur les 6 derniers mois</p>
+</div>
+<select class="bg-surface-container-low border-none rounded-lg text-label-sm py-1.5 px-3 focus:ring-primary/20">
+<option>Semestre 1</option>
+<option>Semestre 2</option>
+</select>
+</div>
+<!-- Mock Line Chart Area -->
+<div class="h-64 flex items-end justify-between px-2 gap-4">
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-tint-danger rounded-t-lg transition-all duration-700 hover:bg-status-danger" style="height: 40%;"></div>
+<span class="text-[10px] font-medium text-text-secondary">JAN</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-tint-danger rounded-t-lg transition-all duration-700 hover:bg-status-danger" style="height: 35%;"></div>
+<span class="text-[10px] font-medium text-text-secondary">FEB</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-tint-danger rounded-t-lg transition-all duration-700 hover:bg-status-danger" style="height: 45%;"></div>
+<span class="text-[10px] font-medium text-text-secondary">MAR</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-tint-danger rounded-t-lg transition-all duration-700 hover:bg-status-danger" style="height: 25%;"></div>
+<span class="text-[10px] font-medium text-text-secondary">APR</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-tint-danger rounded-t-lg transition-all duration-700 hover:bg-status-danger" style="height: 20%;"></div>
+<span class="text-[10px] font-medium text-text-secondary">MAY</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-tint-danger rounded-t-lg transition-all duration-700 hover:bg-status-danger" style="height: 15%;"></div>
+<span class="text-[10px] font-medium text-text-secondary">JUN</span>
+</div>
+</div>
+<!-- Shader overlay for "high-end" look -->
+<div class="absolute inset-0 pointer-events-none opacity-[0.03]">
+
+</div>
+</div>
+<!-- Plan Distribution Donut -->
+<div class="bg-white p-8 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.06)] border border-outline-variant/20 flex flex-col">
+<h3 class="font-headline-sm text-text-primary mb-1">Répartition Plans</h3>
+<p class="text-text-secondary text-label-sm mb-8">Gratuit vs Premium</p>
+<div class="relative flex-1 flex items-center justify-center">
+<!-- Simulated Donut Chart -->
+<div class="w-40 h-40 rounded-full border-[12px] border-primary-container relative flex items-center justify-center">
+<div class="absolute inset-[-12px] rounded-full border-[12px] border-tint-info border-l-transparent border-b-transparent rotate-45"></div>
+<div class="text-center">
+<p class="text-stat-display font-stat-display leading-none">68%</p>
+<p class="text-[11px] text-text-secondary uppercase">Premium</p>
+</div>
+</div>
+</div>
+<div class="mt-8 space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary-container"></div>
+<span class="text-label-md text-text-primary">Premium</span>
+</div>
+<span class="font-bold text-label-md">1,240</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-tint-info"></div>
+<span class="text-label-md text-text-primary">Gratuit</span>
+</div>
+<span class="font-bold text-label-md">580</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Row 3: Subscription Table -->
+<div class="bg-white rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-outline-variant/20 overflow-hidden">
+<div class="px-8 py-6 border-b border-outline-variant/30 flex justify-between items-center bg-white sticky top-0 z-10">
+<h3 class="font-headline-sm text-text-primary">Liste des Abonnements</h3>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 px-4 py-2 rounded-xl border border-outline text-text-secondary font-label-md hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                            Filtrer
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-xl text-primary font-label-md border border-primary/20 hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-[20px]">ios_share</span>
+                            Exporter les données
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-4 text-[11px] uppercase tracking-wider text-text-secondary font-bold">Utilisateur</th>
+<th class="px-6 py-4 text-[11px] uppercase tracking-wider text-text-secondary font-bold">Plan</th>
+<th class="px-6 py-4 text-[11px] uppercase tracking-wider text-text-secondary font-bold">Statut</th>
+<th class="px-6 py-4 text-[11px] uppercase tracking-wider text-text-secondary font-bold">Date début</th>
+<th class="px-6 py-4 text-[11px] uppercase tracking-wider text-text-secondary font-bold">Prochaine facture</th>
+<th class="px-6 py-4 text-[11px] uppercase tracking-wider text-text-secondary font-bold">Montant</th>
+<th class="px-8 py-4 text-right"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20">
+<!-- User 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tint-info flex items-center justify-center text-primary font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a young entrepreneur in a modern office, bright natural lighting, professional high-end fintech aesthetic, soft colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuClwVlzbWomAz-s-xOYghxv4PiY6lG3MQumR_lfS0s6o2opk6ECyg-ZvhWHSbg3DdpstCQgTw2wInYN0RR5KH3JqHbK6h9xvxlfxd7lzqZhJjLNCh7mNEngUWAqIcix7SxKdaMZ9DfqQANmao1po6OmUY_sadbGq61WHn6w1HFPaxMa9kH-sZ0j8K8iqc5gHPzbTD_ugaHQajhfdSmHPnPTlikXeEX08-2i9wEU8s2Mdhejfd2uPrp9OW_gm_-wlT5GZ-aP8Pqttw"/>
+</div>
+<div>
+<p class="font-label-md text-text-primary">Mehdi Ben Salem</p>
+<p class="text-[11px] text-text-secondary">mehdi.bs@mail.tn</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-primary/10 text-primary text-[11px] font-bold rounded-full uppercase tracking-tight">Premium Yearly</span>
+</td>
+<td class="px-6 py-5">
+<span class="flex items-center gap-1.5 text-status-success font-bold text-[11px] bg-green-50 px-3 py-1 rounded-full w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span> Actif
+                                    </span>
+</td>
+<td class="px-6 py-5 text-label-md text-text-secondary">12 Jan 2024</td>
+<td class="px-6 py-5 text-label-md text-text-secondary">12 Jan 2025</td>
+<td class="px-6 py-5 font-bold text-text-primary">350.000 DT</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- User 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tint-warning flex items-center justify-center text-status-warning font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A close-up profile of a woman smiling in a minimalist coworking space, warm soft daylighting, high-key photography, fintech lifestyle vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQpBvk1yertI-UpjcqabY3QsP1emU3z0ZlDggj5jrvPt38ypOiq1xSoMbwLSRjQJQe-FUTrghpt0MqM9egTCWOWKmAagSbON-_iej2A0196IMAIvMnlVJU0-rlQaRdhGnjl0sLA1fk4NpekTMomIWjPfn-sL9B1tf1N9zHXg1euHR1xlsWdYO-4M4cjG3VSfEDfx3C1_2raj8nxLk345vhJCpIcro6xwZoJisWXBbFZdM6B8C-8jI2p6DTJbUl_3zreKRTVTKXow"/>
+</div>
+<div>
+<p class="font-label-md text-text-primary">Amira Trabelsi</p>
+<p class="text-[11px] text-text-secondary">amira.t@agence.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant text-[11px] font-bold rounded-full uppercase tracking-tight">Gratuit</span>
+</td>
+<td class="px-6 py-5">
+<span class="flex items-center gap-1.5 text-text-secondary font-bold text-[11px] bg-surface-container-high px-3 py-1 rounded-full w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-text-secondary"></span> Annulé
+                                    </span>
+</td>
+<td class="px-6 py-5 text-label-md text-text-secondary">05 Mar 2024</td>
+<td class="px-6 py-5 text-label-md text-text-secondary">—</td>
+<td class="px-6 py-5 font-bold text-text-primary">0.000 DT</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- User 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tint-danger flex items-center justify-center text-status-danger font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional man in a business suit, thoughtful expression, soft focus background of a corporate setting, professional lighting, modern minimalist design style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfwX2sWKhFjupxBJyY3Y5VCabqMJ0SoyNBn6Exv2sLhDP5ghm3G_RXyqV76pIriFS_D9gV9BhBSiT3j2qWeXTP1zU7ftGOWHp0UGDOBM0nuyG33m5WXdcqqUUBT6EO8Fbxp0KjGg6fiteGXxjz0rx_xOFL1GtpZ3KoaxQBKY5bVMSnO3wWz_E5wkcr1sFSAWihgbKI4dnfbFDm5edUQD6jXGEOsWrt9UEuxRL8iHOJhP3R5TduxIEafENKhvmaloF24GgU4UipzQ"/>
+</div>
+<div>
+<p class="font-label-md text-text-primary">Slimane Gharbi</p>
+<p class="text-[11px] text-text-secondary">sgh@startup.tn</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-primary/10 text-primary text-[11px] font-bold rounded-full uppercase tracking-tight">Premium Monthly</span>
+</td>
+<td class="px-6 py-5">
+<span class="flex items-center gap-1.5 text-status-danger font-bold text-[11px] bg-red-50 px-3 py-1 rounded-full w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-status-danger"></span> Impayé
+                                    </span>
+</td>
+<td class="px-6 py-5 text-label-md text-text-secondary">20 May 2024</td>
+<td class="px-6 py-5 text-label-md text-text-secondary">20 Jun 2024</td>
+<td class="px-6 py-5 font-bold text-text-primary">45.000 DT</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-8 py-4 bg-surface-container-lowest border-t border-outline-variant/20 flex items-center justify-between">
+<p class="text-label-sm text-text-secondary">Affichage de 1-10 sur 1,820 abonnements</p>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center border border-outline-variant text-text-secondary hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center bg-primary text-white font-bold text-[12px]">1</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center border border-outline-variant text-text-secondary hover:bg-surface-container-low transition-all font-bold text-[12px]">2</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center border border-outline-variant text-text-secondary hover:bg-surface-container-low transition-all font-bold text-[12px]">3</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center border border-outline-variant text-text-secondary hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Pedagogical Disclaimer -->
+<div class="mt-12 mb-6 p-6 rounded-2xl bg-[#F5F7F7] border-2 border-dashed border-outline-variant/40 text-center">
+<p class="text-label-sm text-text-secondary max-w-3xl mx-auto italic">
+                    Note administrateur: Ces données sont fournies à titre indicatif pour la gestion pédagogique des entrepreneurs. Toutes les transactions financières doivent être réconciliées avec le système bancaire central avant toute action de recouvrement officielle.
+                </p>
+</div>
+</section>
+</main>
+<!-- Floating Action Button - Only for Primary Screens -->
+<button class="fixed bottom-10 right-10 flex items-center gap-3 bg-tertiary text-white px-6 py-4 rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 z-50">
+<span class="material-symbols-outlined">add</span>
+<span class="font-label-md font-bold">Nouvel Abonnement</span>
+</button>
+<script>
+        // Simple micro-interaction for KPI cards
+        document.querySelectorAll('.grid > div').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('translate-y-[-4px]');
+                card.style.transition = 'all 0.3s ease-out';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('translate-y-[-4px]');
+            });
+        });
+    </script>
+</body></html>

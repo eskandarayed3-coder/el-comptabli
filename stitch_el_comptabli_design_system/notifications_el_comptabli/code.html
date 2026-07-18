@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notifications - FiscAssist</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Use the exact Tailwind Config provided -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#006a63",
+                    "on-tertiary-container": "#b3f7ee",
+                    "status-danger": "#DC2626",
+                    "status-warning": "#D97706",
+                    "secondary-fixed": "#71f8e4",
+                    "primary-fixed-dim": "#80d5cb",
+                    "surface-container-low": "#f2f4f4",
+                    "primary-fixed": "#9cf2e8",
+                    "primary-container": "#0f766e",
+                    "on-surface-variant": "#3e4947",
+                    "tint-success": "#E6F5F3",
+                    "on-primary-container": "#a3faef",
+                    "on-primary-fixed": "#00201d",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#2e3131",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "text-primary": "#1A1A1A",
+                    "surface-container-high": "#e6e8e8",
+                    "surface-bright": "#f8fafa",
+                    "background": "#f8fafa",
+                    "on-secondary-container": "#006f64",
+                    "surface-container": "#eceeee",
+                    "secondary-container": "#6df5e1",
+                    "text-secondary": "#6B7280",
+                    "on-surface": "#191c1d",
+                    "on-primary-fixed-variant": "#00504a",
+                    "inverse-primary": "#80d5cb",
+                    "primary": "#005c55",
+                    "error-container": "#ffdad6",
+                    "outline-variant": "#bdc9c6",
+                    "surface-variant": "#e1e3e3",
+                    "surface-dim": "#d8dada",
+                    "tertiary-container": "#2f746d",
+                    "on-secondary-fixed": "#00201c",
+                    "tertiary": "#0d5b55",
+                    "on-secondary-fixed-variant": "#005048",
+                    "tertiary-fixed": "#abefe7",
+                    "status-premium": "#7C3AED",
+                    "on-background": "#191c1d",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#e1e3e3",
+                    "secondary": "#006b5f",
+                    "on-error-container": "#93000a",
+                    "tint-danger": "#FDE8E6",
+                    "status-success": "#16A34A",
+                    "inverse-on-surface": "#eff1f1",
+                    "tint-info": "#EEF2FF",
+                    "on-tertiary-fixed": "#00201d",
+                    "tint-warning": "#FEF3E2",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface": "#f8fafa",
+                    "outline": "#6e7977",
+                    "on-secondary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "card": "24px"
+            },
+            "spacing": {
+                    "stack-xs": "4px",
+                    "container-padding": "20px",
+                    "base": "8px",
+                    "stack-sm": "12px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "stat-display": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .unread-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #006a63;
+            border-radius: 50%;
+        }
+        /* Custom scrollbar for filter chips */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="bg-surface sticky top-0 z-50 w-full max-w-[600px] mx-auto flex items-center justify-between px-container-padding py-base">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a Tunisian entrepreneur in a minimalist workspace. The lighting is warm and cinematic, featuring a soft bokeh background with subtle office elements. The aesthetic is clean and high-end, utilizing the brand's teal and white color palette for a sophisticated fintech profile feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDniG1IQvgMRQQlce4fUHiZGqPoWQhtn_oGQvREihTYEhaugj82F6TtN4ZRyZAfvygZ4jvXH_Vi4sQm-F9MhlkkecNFG7reFoMmj1FWVRyASu_QFGMqocY4TKhkT8ZzQOpYHQOd0TQqvf9KLgk7_7ObGkVHz7rfVK1jHBrGIZN8sdl5B9G7Mk9FQxrhDOBUsKgmNhiZuDmzLVc4uS2GC0LwuKQgUNgdaCviMLPjKUr3Gea6LjALCtMo7mkpPnn5ClvjXUSWQDlIuQ"/>
+</div>
+<h1 class="font-headline-sm text-headline-sm text-primary">Notifications</h1>
+</div>
+<button class="font-label-md text-label-md text-primary hover:bg-surface-variant px-3 py-2 rounded-full transition-colors active:opacity-80">
+            Tout marquer lu
+        </button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-[600px] mx-auto px-container-padding pb-32">
+<!-- Filter Chips Section -->
+<section class="flex gap-2 overflow-x-auto py-stack-sm hide-scrollbar">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-5 py-2.5 rounded-full whitespace-nowrap shadow-sm hover:scale-105 transition-transform active:scale-95">
+                Toutes
+            </button>
+<button class="bg-surface-container text-on-surface-variant font-label-md text-label-md px-5 py-2.5 rounded-full whitespace-nowrap hover:bg-surface-variant transition-colors active:scale-95">
+                Échéances
+            </button>
+<button class="bg-surface-container text-on-surface-variant font-label-md text-label-md px-5 py-2.5 rounded-full whitespace-nowrap hover:bg-surface-variant transition-colors active:scale-95">
+                IA
+            </button>
+<button class="bg-surface-container text-on-surface-variant font-label-md text-label-md px-5 py-2.5 rounded-full whitespace-nowrap hover:bg-surface-variant transition-colors active:scale-95">
+                Système
+            </button>
+</section>
+<!-- Section: Aujourd'hui -->
+<section class="mt-base">
+<h2 class="font-label-md text-label-md text-text-secondary uppercase tracking-wider mb-stack-sm px-1">Aujourd'hui</h2>
+<div class="flex flex-col gap-element-gap">
+<!-- Late VAT Card -->
+<article class="bg-tint-danger rounded-card p-container-padding shadow-sm relative transition-all active:scale-[0.98]">
+<div class="flex items-start justify-between">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-full bg-status-danger/10 flex items-center justify-center text-status-danger">
+<span class="material-symbols-outlined text-[28px]">schedule</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary leading-tight">Déclaration TVA juin en retard</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Votre déclaration de juin n'a pas encore été soumise.</p>
+<span class="font-label-sm text-label-sm text-text-secondary mt-2 block">Il y a 2h</span>
+</div>
+</div>
+<div class="unread-dot mt-2"></div>
+</div>
+</article>
+<!-- Upcoming VAT Card -->
+<article class="bg-tint-warning rounded-card p-container-padding shadow-sm transition-all active:scale-[0.98]">
+<div class="flex items-start justify-between">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-full bg-status-warning/10 flex items-center justify-center text-status-warning">
+<span class="material-symbols-outlined text-[28px]">calendar_today</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary leading-tight">TVA juillet avant le 28</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Pensez à préparer vos pièces justificatives pour l'échéance.</p>
+<span class="font-label-sm text-label-sm text-text-secondary mt-2 block">Il y a 5h</span>
+</div>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Section: Hier -->
+<section class="mt-10">
+<h2 class="font-label-md text-label-md text-text-secondary uppercase tracking-wider mb-stack-sm px-1">Hier</h2>
+<div class="flex flex-col gap-element-gap">
+<!-- AI Insight Card -->
+<article class="bg-tint-info rounded-card p-container-padding shadow-sm transition-all active:scale-[0.98]">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-status-premium/10 flex items-center justify-center text-status-premium">
+<span class="material-symbols-outlined text-[28px]">lightbulb</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary leading-tight">Hausse dépenses carburant détectée</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Vos dépenses de transport ont augmenté de 15% ce mois-ci par rapport à juin.</p>
+<span class="font-label-sm text-label-sm text-text-secondary mt-2 block">Hier, 16:45</span>
+</div>
+</div>
+</article>
+<!-- Success Card -->
+<article class="bg-tint-success rounded-card p-container-padding shadow-sm transition-all active:scale-[0.98]">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-status-success/10 flex items-center justify-center text-status-success">
+<span class="material-symbols-outlined text-[28px]">check_circle</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary leading-tight">Facture STEG enregistrée</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-1">La facture N°84729 a été traitée et ajoutée à vos charges déductibles.</p>
+<span class="font-label-sm text-label-sm text-text-secondary mt-2 block">Hier, 11:20</span>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Disclaimer Banner -->
+<footer class="mt-12 text-center p-4 bg-surface-container-low rounded-xl">
+<p class="font-label-sm text-label-sm text-on-surface-variant italic">
+                Ceci est un outil pédagogique. Les notifications d'échéances sont à titre indicatif et ne remplacent pas les services d'un expert-comptable certifié.
+            </p>
+</footer>
+</main>
+<!-- Bottom Nav Bar - Home Active as per prompt logic -->
+<nav class="fixed bottom-6 left-0 right-0 z-50 flex justify-around items-center px-4 max-w-[600px] mx-auto bg-surface-container-highest dark:bg-inverse-surface shadow-[0_8px_24px_rgba(0,0,0,0.12)] rounded-full w-[90%] py-2">
+<!-- Accueil (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full px-4 py-2 hover:scale-105 transition-transform active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm mt-0.5">Accueil</span>
+</a>
+<!-- Calculs -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 hover:scale-105 transition-transform active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">calculate</span>
+<span class="font-label-sm text-label-sm mt-0.5">Calculs</span>
+</a>
+<!-- Assistant -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 hover:scale-105 transition-transform active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm mt-0.5">Assistant</span>
+</a>
+<!-- Docs -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 hover:scale-105 transition-transform active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">document_scanner</span>
+<span class="font-label-sm text-label-sm mt-0.5">Docs</span>
+</a>
+<!-- Suivi -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 hover:scale-105 transition-transform active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="font-label-sm text-label-sm mt-0.5">Suivi</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for marking all as read
+        document.querySelector('header button').addEventListener('click', function() {
+            const dots = document.querySelectorAll('.unread-dot');
+            dots.forEach(dot => {
+                dot.style.opacity = '0';
+                dot.style.transition = 'opacity 0.5s ease-out';
+            });
+            this.textContent = 'Tout est lu';
+            this.classList.add('text-status-success');
+        });
+
+        // Filter chips active state toggle
+        const chips = document.querySelectorAll('section button');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => {
+                    c.classList.remove('bg-primary', 'text-on-primary');
+                    c.classList.add('bg-surface-container', 'text-on-surface-variant');
+                });
+                chip.classList.remove('bg-surface-container', 'text-on-surface-variant');
+                chip.classList.add('bg-primary', 'text-on-primary');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trésorerie - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chart-container {
+            position: relative;
+            height: 180px;
+            width: 100%;
+        }
+        .custom-dashed-line {
+            stroke-dasharray: 6, 4;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "tertiary": "#0d5b55",
+                      "on-tertiary-fixed-variant": "#00504a",
+                      "primary-fixed-dim": "#80d5cb",
+                      "secondary-container": "#6df5e1",
+                      "on-primary-container": "#a3faef",
+                      "surface-dim": "#d8dada",
+                      "error": "#ba1a1a",
+                      "tint-success": "#E6F5F3",
+                      "status-warning": "#D97706",
+                      "tint-danger": "#FDE8E6",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#006b5f",
+                      "surface-container-high": "#e6e8e8",
+                      "inverse-surface": "#2e3131",
+                      "on-background": "#191c1d",
+                      "tint-warning": "#FEF3E2",
+                      "status-success": "#16A34A",
+                      "inverse-primary": "#80d5cb",
+                      "surface-container": "#eceeee",
+                      "outline-variant": "#bdc9c6",
+                      "on-surface-variant": "#3e4947",
+                      "tertiary-container": "#2f746d",
+                      "on-tertiary-container": "#b3f7ee",
+                      "surface-bright": "#f8fafa",
+                      "surface-tint": "#006a63",
+                      "on-secondary-fixed-variant": "#005048",
+                      "on-primary-fixed-variant": "#00504a",
+                      "on-tertiary-fixed": "#00201d",
+                      "status-premium": "#7C3AED",
+                      "tertiary-fixed": "#abefe7",
+                      "on-error-container": "#93000a",
+                      "primary-fixed": "#9cf2e8",
+                      "text-secondary": "#6B7280",
+                      "on-primary-fixed": "#00201d",
+                      "error-container": "#ffdad6",
+                      "on-secondary-container": "#006f64",
+                      "surface-container-low": "#f2f4f4",
+                      "tint-info": "#EEF2FF",
+                      "primary": "#005c55",
+                      "surface-container-highest": "#e1e3e3",
+                      "secondary-fixed": "#71f8e4",
+                      "on-primary": "#ffffff",
+                      "primary-container": "#0f766e",
+                      "background": "#f8fafa",
+                      "on-error": "#ffffff",
+                      "text-primary": "#1A1A1A",
+                      "inverse-on-surface": "#eff1f1",
+                      "on-surface": "#191c1d",
+                      "surface": "#f8fafa",
+                      "outline": "#6e7977",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed-dim": "#90d3cb",
+                      "on-secondary": "#ffffff",
+                      "status-danger": "#DC2626",
+                      "surface-variant": "#e1e3e3",
+                      "on-secondary-fixed": "#00201c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "2xl": "24px",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "20px",
+                      "element-gap": "16px",
+                      "stack-sm": "12px",
+                      "stack-xs": "4px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "label-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "stat-display": ["Inter"],
+                      "label-md": ["Inter"],
+                      "headline-sm": ["Inter"]
+              },
+              "fontSize": {
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                      "label-sm-mobile": ["11px", {"lineHeight": "14px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-sm-mobile": ["18px", {"lineHeight": "26px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky z-40 bg-background/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-container-padding py-4 w-full max-w-[600px] mx-auto">
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-90 duration-150">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm-mobile md:font-headline-sm md:text-headline-sm text-primary">Trésorerie</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional close-up headshot of a smiling North African entrepreneur in his 30s, wearing a modern business-casual linen shirt. The background is a soft-focus, bright coworking space in Tunis with warm natural light and a teal color palette. The style is clean, modern, and high-quality photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBioo0Kraz3KiFmO1jAqwlCApsvqxJa7vb_-dXMP2cu5j41q5pNx3pQZXF-CI7WwS3wFGkeO1HBChJu8CU78UGWKO74y8ZRo4MTeI2Cgz2Ryi8pzhrIxWO0v6zAQpiExvm3x7uxupqEogOaaDOYD8Whp8kXVguy2qUHkuzupOOQs7uIb8PbLsasZa9cnn3qt5VapO1PTxMXYlCTFcC17cwCuUjoZhss2li55sp0C1gEO008Ln3dMjkARCxFcTwLo6dg3EdrQxknEw"/>
+</div>
+</div>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding space-y-6">
+<!-- Balance Chart Card -->
+<section class="bg-surface-container-lowest p-6 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.08)]">
+<div class="flex justify-between items-end mb-4">
+<div>
+<h2 class="text-label-md font-label-md text-on-surface-variant">Solde actuel</h2>
+<p class="text-stat-display font-stat-display text-primary">2 140 DT</p>
+</div>
+<div class="text-right">
+<span class="text-label-sm font-label-sm text-status-success bg-tint-success px-2 py-1 rounded-lg">+12% vs m-1</span>
+</div>
+</div>
+<div class="chart-container overflow-hidden">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 400 180">
+<defs>
+<lineargradient id="gradient-area" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#006a63" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#006a63" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Background Area -->
+<path d="M0,150 L80,130 L160,145 L240,110 L240,180 L0,180 Z" fill="url(#gradient-area)"></path>
+<!-- Historical Line -->
+<path d="M0,150 L80,130 L160,145 L240,110" fill="none" stroke="#006a63" stroke-linecap="round" stroke-width="3"></path>
+<!-- Projection Line (Dashed) -->
+<path class="custom-dashed-line" d="M240,110 L320,125 L400,105" fill="none" stroke="#006a63" stroke-linecap="round" stroke-width="3"></path>
+<!-- Current Date Marker -->
+<line stroke="#bdc9c6" stroke-dasharray="4 4" stroke-width="1" x1="240" x2="240" y1="20" y2="180"></line>
+<circle cx="240" cy="110" fill="#006a63" r="4"></circle>
+</svg>
+</div>
+<div class="flex justify-between mt-4 text-label-sm font-label-sm text-outline">
+<span>Mai</span>
+<span>Juin</span>
+<span class="text-primary font-bold">Auj.</span>
+<span>Août</span>
+</div>
+</section>
+<!-- KPI Stat Cards -->
+<section class="grid grid-cols-3 gap-3">
+<div class="bg-tint-success p-4 rounded-2xl flex flex-col items-center text-center">
+<span class="text-label-sm font-label-sm text-on-surface-variant mb-1">Entrées</span>
+<span class="text-label-md font-bold text-primary">3 200 DT</span>
+</div>
+<div class="bg-tint-danger p-4 rounded-2xl flex flex-col items-center text-center">
+<span class="text-label-sm font-label-sm text-on-surface-variant mb-1">Sorties</span>
+<span class="text-label-md font-bold text-status-danger">1 960 DT</span>
+</div>
+<div class="bg-tint-info p-4 rounded-2xl flex flex-col items-center text-center">
+<span class="text-label-sm font-label-sm text-on-surface-variant mb-1">Solde fin</span>
+<span class="text-label-md font-bold text-status-premium">1 240 DT</span>
+</div>
+</section>
+<!-- Alert Card -->
+<section class="bg-tint-warning p-4 rounded-2xl flex gap-3 items-start border border-status-warning/10">
+<span class="material-symbols-outlined text-status-warning shrink-0">warning</span>
+<p class="text-label-md font-label-md text-on-surface-variant">
+                Le <span class="font-bold">28 juillet</span>, après ta TVA <span class="text-status-danger">(312 DT)</span>, ton solde projeté = <span class="font-bold">928 DT</span>.
+            </p>
+</section>
+<!-- Upcoming Movements List -->
+<section class="space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm-mobile text-on-surface">Mouvements à venir</h3>
+<button class="text-primary text-label-md font-label-md">Voir tout</button>
+</div>
+<div class="space-y-3">
+<!-- Item 1 -->
+<div class="bg-surface-container-lowest p-4 rounded-2xl flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tint-warning flex items-center justify-center">
+<span class="material-symbols-outlined text-status-warning">account_balance</span>
+</div>
+<div>
+<p class="text-body-lg font-semibold text-on-surface">TVA Juillet</p>
+<p class="text-label-sm text-on-surface-variant">Prévu le 28 Juil.</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-body-lg font-bold text-status-warning">-312 DT</p>
+<span class="text-label-sm px-2 py-0.5 rounded-full bg-tint-warning text-status-warning">En attente</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest p-4 rounded-2xl flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tint-success flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">person</span>
+</div>
+<div>
+<p class="text-body-lg font-semibold text-on-surface">Facture Client Wafa</p>
+<p class="text-label-sm text-on-surface-variant">Prévu le 30 Juil.</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-body-lg font-bold text-secondary">+850 DT</p>
+<span class="text-label-sm px-2 py-0.5 rounded-full bg-tint-success text-secondary">Confirmé</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface-container-lowest p-4 rounded-2xl flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tint-danger flex items-center justify-center">
+<span class="material-symbols-outlined text-status-danger">wifi</span>
+</div>
+<div>
+<p class="text-body-lg font-semibold text-on-surface">Abonnement Topnet</p>
+<p class="text-label-sm text-on-surface-variant">Prévu le 02 Août</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-body-lg font-bold text-status-danger">-55 DT</p>
+<span class="text-label-sm px-2 py-0.5 rounded-full bg-tint-danger text-status-danger">Récurrent</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Disclaimer -->
+<footer class="pt-8 pb-12 text-center">
+<p class="text-label-sm font-label-sm text-outline opacity-60">
+                Outil pédagogique - Non certifié expert-comptable
+            </p>
+</footer>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-28 right-6 bg-primary text-on-primary px-6 py-4 rounded-full flex items-center gap-2 shadow-lg hover:opacity-90 active:scale-95 transition-all duration-200 z-50">
+<span class="material-symbols-outlined">add</span>
+<span class="font-label-md font-bold text-label-md">Prévision</span>
+</button>
+<!-- Bottom Nav Bar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[560px] bg-surface-container-lowest/80 backdrop-blur-md rounded-full z-50 flex justify-around items-center py-4 px-6 shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+<a class="flex flex-col items-center justify-center text-outline transition-colors hover:bg-surface-container-high/50 rounded-full" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline transition-colors hover:bg-surface-container-high/50 rounded-full" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline transition-colors hover:bg-surface-container-high/50 rounded-full" href="#">
+<span class="material-symbols-outlined">document_scanner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline transition-colors hover:bg-surface-container-high/50 rounded-full" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+</a>
+</nav>
+<script>
+        // Simple hover micro-interaction for cards
+        document.querySelectorAll('.rounded-2xl').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s ease';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

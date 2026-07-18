@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .squishy-active:active {
+            transform: scale(0.96);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tint-success": "#E6F5F3",
+                      "primary": "#005c55",
+                      "on-secondary-fixed": "#00201c",
+                      "surface-container-highest": "#e1e3e3",
+                      "primary-fixed": "#9cf2e8",
+                      "surface": "#f8fafa",
+                      "on-error-container": "#93000a",
+                      "tint-danger": "#FDE8E6",
+                      "status-success": "#16A34A",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#191c1d",
+                      "text-secondary": "#6B7280",
+                      "tertiary-fixed-dim": "#90d3cb",
+                      "on-primary-fixed": "#00201d",
+                      "inverse-on-surface": "#eff1f1",
+                      "status-danger": "#DC2626",
+                      "surface-container": "#eceeee",
+                      "on-secondary-fixed-variant": "#005048",
+                      "on-primary": "#ffffff",
+                      "outline-variant": "#bdc9c6",
+                      "error": "#ba1a1a",
+                      "text-primary": "#1A1A1A",
+                      "on-tertiary-container": "#b3f7ee",
+                      "on-primary-container": "#a3faef",
+                      "surface-dim": "#d8dada",
+                      "inverse-surface": "#2e3131",
+                      "on-background": "#191c1d",
+                      "surface-bright": "#f8fafa",
+                      "secondary-fixed": "#71f8e4",
+                      "tint-warning": "#FEF3E2",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed-variant": "#00504a",
+                      "secondary": "#006b5f",
+                      "tertiary-container": "#2f746d",
+                      "secondary-container": "#6df5e1",
+                      "status-warning": "#D97706",
+                      "on-error": "#ffffff",
+                      "primary-container": "#0f766e",
+                      "outline": "#6e7977",
+                      "background": "#f8fafa",
+                      "on-surface-variant": "#3e4947",
+                      "surface-container-low": "#f2f4f4",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-high": "#e6e8e8",
+                      "on-tertiary-fixed": "#00201d",
+                      "on-tertiary-fixed-variant": "#00504a",
+                      "surface-variant": "#e1e3e3",
+                      "surface-tint": "#006a63",
+                      "inverse-primary": "#80d5cb",
+                      "primary-fixed-dim": "#80d5cb",
+                      "tertiary-fixed": "#abefe7",
+                      "tertiary": "#0d5b55",
+                      "tint-info": "#EEF2FF",
+                      "status-premium": "#7C3AED",
+                      "on-secondary-container": "#006f64"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "12px",
+                      "2xl": "24px",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "20px",
+                      "stack-xs": "4px",
+                      "stack-sm": "12px",
+                      "base": "8px",
+                      "element-gap": "16px"
+              },
+              "fontFamily": {
+                      "label-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "stat-display": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "headline-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky z-40 bg-background/80 backdrop-blur-md">
+<div class="flex items-center justify-between px-container-padding py-4 w-full max-w-[600px] mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A sophisticated professional portrait of a Tunisian entrepreneur in a minimalist workspace. The lighting is soft and natural, with a palette featuring deep teals and warm neutral tones, conveying trust and success. The image is framed as a modern circular profile avatar for a fintech application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi_3f1weC5duYNBDo8gRVmzcvXcj8EJGPPcr_DQQ_tAX_H_jwR11_6a5grKep8BB4T2EpBlLC5krYvZGgcATJEzU5TpRri-NO3dzEHV1fi6XC9ad_i2gc_JX0xKLWvFHrIk_fqH2Pr-PT4TWPqWWam9-9QTm9qsqhuiEpcY7Qvkvwf_ERdZ8rt7opXkW_JfqRmkZ_TdGAUBnCD6cur7XbALgmdDdd5hnsKE8roOTkgJ4nGPlAQljWlEoPoAaBLXMI3YY01kf312g"/>
+</div>
+<h1 class="font-headline-sm text-headline-sm text-primary tracking-tight">Revenus — Juillet</h1>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95">notifications</button>
+</div>
+</header>
+<main class="w-full max-w-[600px] mx-auto px-container-padding space-y-6 pt-4">
+<!-- Hero Card (Featured Gradient Card Variant) -->
+<div class="bg-tint-success rounded-2xl p-6 shadow-[0_4px_16px_rgba(15,92,86,0.08)] border border-primary/5 relative overflow-hidden">
+<div class="relative z-10">
+<p class="font-label-md text-text-secondary mb-1">Total encaissé</p>
+<h2 class="font-stat-display text-stat-display text-primary">+3 200 DT</h2>
+<div class="flex items-center gap-1.5 mt-2">
+<div class="bg-primary/10 px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span class="text-primary font-label-sm font-bold">+12%</span>
+</div>
+<span class="font-label-sm text-text-secondary">par rapport à juin</span>
+</div>
+</div>
+<!-- Decorative element -->
+<div class="absolute -right-6 -bottom-6 w-32 h-32 bg-primary/5 rounded-full blur-2xl"></div>
+</div>
+<!-- Filter Pills -->
+<div class="flex gap-2 overflow-x-auto hide-scrollbar -mx-container-padding px-container-padding pb-1">
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md shadow-sm whitespace-nowrap squishy-active transition-all">Tous</button>
+<button class="px-6 py-2.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-md whitespace-nowrap squishy-active transition-all hover:bg-surface-container">Payés</button>
+<button class="px-6 py-2.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-md whitespace-nowrap squishy-active transition-all hover:bg-surface-container">En attente</button>
+</div>
+<!-- Transaction List -->
+<div class="space-y-6">
+<!-- Group 1: 24 Juillet -->
+<div>
+<h3 class="font-label-sm text-text-secondary uppercase tracking-widest mb-3 px-1">24 Juillet</h3>
+<div class="space-y-3">
+<!-- Item 1 -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-[0_4px_16px_rgba(15,92,86,0.04)] border border-surface-container-highest flex items-start justify-between squishy-active transition-transform">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-xl bg-tint-success flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">language</span>
+</div>
+<div class="space-y-1">
+<p class="font-headline-sm text-[16px] text-text-primary leading-tight">Facture client Wafa — Site web</p>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-bold bg-[#DCFCE7] text-[#16A34A]">Payé</span>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-md text-[16px] text-primary font-bold">+850 DT</p>
+<p class="text-[12px] text-text-secondary">#FAC-0724-1</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Group 2: 18 Juillet -->
+<div>
+<h3 class="font-label-sm text-text-secondary uppercase tracking-widest mb-3 px-1">18 Juillet</h3>
+<div class="space-y-3">
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-[0_4px_16px_rgba(15,92,86,0.04)] border border-surface-container-highest flex items-start justify-between squishy-active transition-transform">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-xl bg-tint-warning flex items-center justify-center">
+<span class="material-symbols-outlined text-status-warning">pending_actions</span>
+</div>
+<div class="space-y-1">
+<p class="font-headline-sm text-[16px] text-text-primary leading-tight">Acompte projet Amine</p>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-bold bg-[#FEF3C7] text-[#D97706]">En attente</span>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-md text-[16px] text-status-warning font-bold">+400 DT</p>
+<p class="text-[12px] text-text-secondary">#DEV-0724-3</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Group 3: 12 Juillet -->
+<div>
+<h3 class="font-label-sm text-text-secondary uppercase tracking-widest mb-3 px-1">12 Juillet</h3>
+<div class="space-y-3">
+<!-- Item 3 -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-[0_4px_16px_rgba(15,92,86,0.04)] border border-surface-container-highest flex items-start justify-between squishy-active transition-transform">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-xl bg-tint-success flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">school</span>
+</div>
+<div class="space-y-1">
+<p class="font-headline-sm text-[16px] text-text-primary leading-tight">Formation design</p>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-bold bg-[#DCFCE7] text-[#16A34A]">Payé</span>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-md text-[16px] text-primary font-bold">+1 950 DT</p>
+<p class="text-[12px] text-text-secondary">#FOR-0724-1</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Legal Disclaimer -->
+<div class="pt-8 pb-12">
+<p class="text-center font-label-sm text-[10px] text-text-secondary bg-surface-container-low/50 py-3 px-4 rounded-xl">
+                Outil pédagogique, non officiel. Consultez un expert-comptable.
+            </p>
+</div>
+</main>
+<!-- FAB: Floating Action Button -->
+<button class="fixed bottom-24 right-6 flex items-center gap-2 bg-primary text-on-primary px-6 py-4 rounded-full shadow-[0_8px_24px_rgba(0,92,85,0.25)] z-50 squishy-active transition-all group">
+<span class="material-symbols-outlined group-hover:rotate-90 transition-transform duration-300">add</span>
+<span class="font-label-md font-bold">+ Revenu</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[400px] z-50 rounded-full bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.12)] border border-white/20">
+<div class="flex justify-around items-center h-16 px-4">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:opacity-80 transition-all squishy-active" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:opacity-80 transition-all squishy-active" href="#">
+<span class="material-symbols-outlined">chat_spark</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:opacity-80 transition-all squishy-active" href="#">
+<span class="material-symbols-outlined">event_note</span>
+</a>
+<!-- Active State: Finance/Wallet -->
+<a class="flex flex-col items-center justify-center text-primary after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 squishy-active" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:opacity-80 transition-all squishy-active" href="#">
+<span class="material-symbols-outlined">document_scanner</span>
+</a>
+</div>
+</nav>
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('.squishy-active').forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Filter chip selection logic
+        const chips = document.querySelectorAll('.flex.gap-2 button');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => {
+                    c.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+                    c.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+                });
+                chip.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+                chip.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+            });
+        });
+    </script>
+</body></html>

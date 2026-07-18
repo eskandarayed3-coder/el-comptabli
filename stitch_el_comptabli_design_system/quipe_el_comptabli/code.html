@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .drawer-open {
+            transform: translateY(0);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .drawer-closed {
+            transform: translateY(100%);
+        }
+        .squishy-touch:active {
+            transform: scale(0.96);
+            transition: transform 0.1s ease;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e1e3e3",
+                        "surface-container": "#eceeee",
+                        "on-tertiary-container": "#b3f7ee",
+                        "tint-info": "#EEF2FF",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#a3faef",
+                        "secondary": "#006b5f",
+                        "primary-container": "#0f766e",
+                        "status-warning": "#D97706",
+                        "surface-tint": "#006a63",
+                        "status-premium": "#7C3AED",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "error": "#ba1a1a",
+                        "background": "#f8fafa",
+                        "tertiary-container": "#2f746d",
+                        "secondary-fixed": "#71f8e4",
+                        "on-secondary-container": "#006f64",
+                        "secondary-container": "#6df5e1",
+                        "on-tertiary-fixed": "#00201d",
+                        "primary-fixed-dim": "#80d5cb",
+                        "outline": "#6e7977",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-primary-fixed": "#00201d",
+                        "on-primary-fixed-variant": "#00504a",
+                        "surface-dim": "#d8dada",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f8fafa",
+                        "surface-container-highest": "#e1e3e3",
+                        "tint-warning": "#FEF3E2",
+                        "tertiary-fixed": "#abefe7",
+                        "surface-container-high": "#e6e8e8",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "primary-fixed": "#9cf2e8",
+                        "text-primary": "#1A1A1A",
+                        "surface": "#f8fafa",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f4f4",
+                        "primary": "#005c55",
+                        "on-surface-variant": "#3e4947",
+                        "inverse-surface": "#2e3131",
+                        "tint-danger": "#FDE8E6",
+                        "status-danger": "#DC2626",
+                        "on-secondary-fixed-variant": "#005048",
+                        "inverse-primary": "#80d5cb",
+                        "on-surface": "#191c1d",
+                        "status-success": "#16A34A",
+                        "text-secondary": "#6B7280",
+                        "tint-success": "#E6F5F3",
+                        "outline-variant": "#bdc9c6",
+                        "tertiary": "#0d5b55",
+                        "on-background": "#191c1d",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "stack-xs": "4px",
+                        "stack-sm": "12px",
+                        "element-gap": "16px",
+                        "container-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "stat-display": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-sm-mobile": ["18px", {"lineHeight": "26px", "fontWeight": "600"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background min-h-screen pb-[100px] flex flex-col font-body-lg text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-background flex justify-between items-center px-container-padding py-stack-sm w-full max-w-[600px] mx-auto top-0 z-40 sticky">
+<div class="flex items-center gap-2">
+<img alt="Logo El Comptabli" class="w-8 h-8 rounded-lg object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLPf3jRtJiIuCdGwnjMjV6DHXkS58uU0_SrMmoFjsLAsLn0TZpxS2TwTVigCeqQ4ejTGGSKFA7bsbdQk9c6kE1A_ssRthtgRzRkyTt8haCepakQNaBh5sHDFnDbRg7qSxT_YDaP827NQSuD99vRrOcDDDC3XGOGGwYki3WeSdj-fQNWiWR-slNRN2EqsikEQbHm13r3rUj-jisY975kQeWZLL0SXKl-exklTl8YOOH57_zCLuc7Ul4i07TM9ybaY7wMxoX3YaVag"/>
+<h1 class="font-headline-md-mobile text-headline-md-mobile font-bold text-primary">El Comptabli</h1>
+</div>
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity">notifications</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional close-up of a smiling Tunisian business owner in a modern sunlit office, wearing a casual blazer, looking confident and friendly. Soft-focus office background with warm daylight, high-quality digital photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHwxW7JVxRVycnructMExtkjmSq9kgrWo1vqhYoIdyXr4H5sxTEmpDjSPhsPQhYR7sP2jBYHfjG3epOuLepeKSJe75WgV6Pf9uJIt_cO3_mXzseA37i1NCCzO1SQMDIK6WEbebIWWiLuXf5q8KmG3Mm2fS-xf1J0_cHdT8BX2eLOmu07nI214_IqEDXZvR3N8qm6Sp11lAbthBiqot8SLo2MjQE52EJR7EjGkQ14oLji90B0jk53eMpx9zdbmHc6ljQEokQLrNqQ"/>
+</div>
+</div>
+</header>
+<main class="w-full max-w-[600px] mx-auto px-container-padding mt-4 flex-1">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline-sm-mobile text-headline-sm-mobile text-text-primary">Mon équipe 👥</h2>
+<span class="text-label-sm text-text-secondary bg-surface-container px-3 py-1 rounded-full">3 Collaborateurs</span>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Employee Card 1 - Active State for Drawer -->
+<div class="bg-surface-container-lowest p-5 rounded-[24px] shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex items-start gap-4 cursor-pointer hover:shadow-md transition-shadow squishy-touch border border-secondary/10" onclick="toggleDrawer(true)">
+<div class="w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a Mediterranean man in his early 30s with a neat beard, wearing a stylish polo shirt. He has a friendly and intelligent expression, set against a clean, minimal tech workspace background with soft teal accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbeFBNoSRb1CL3KIKNsRXvcdYVNdvqSiVvT3YoRajhbS6AO-s_8UsdVgLPmHduMSH7VlnxKz1vu4F0nA7NfUivoIpczgc8DeAdIRV5jVN9x2jI93tbLu_h3CvLInIykVGvgulfdTpgDnCMMeNcztoOXm5NP2-LuFfgNo40ooAN9EYQhoX9vQ8S3UBM8hOV0U5uv5nPS_RuUvjt2ENX3nNiJZNLMUQdiI1ZGLF-XdcWUbOCrOFFT6D35Tfn7INvFUyQvbNdJtO7HA"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm-mobile text-headline-sm-mobile text-text-primary">Sami Ben Ali</h3>
+<span class="text-[10px] font-bold uppercase tracking-wider bg-tint-success text-primary px-2 py-0.5 rounded-full">CDI</span>
+</div>
+<p class="text-label-md text-text-secondary mt-0.5">Développeur Fullstack</p>
+<div class="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+<div class="flex items-center gap-1 text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">payments</span>
+<span>1 800 DT Brut</span>
+</div>
+<div class="flex items-center gap-1 text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>3 ans d'ancienneté</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Employee Card 2 -->
+<div class="bg-surface-container-lowest p-5 rounded-[24px] shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex items-start gap-4 squishy-touch">
+<div class="w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young Tunisian woman with glasses, smiling warmly, professional look. She is in a creative studio setting with pastel-colored boards and plants in the background. High-key soft lighting, serene modern atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfXBMC-PvYc6eO9nv-46QByTkTVMtiyWV3vq9DBbAR1wxLLKxoX6XqMDFcFPDNIHqmHbxq7MmaZjSLEQciFgK1k4-9Es0mfWG1zB5REo4lO7Cj2J8QvvA8wRUNcFBuIeCAE1taEDBTUlI_g5p4sZjWQZxsRu_C34x1Mxy2GJBDYE7gFSrsuIwqPFH2rhbPe37WcNpHjeU8lDcIOaYDJH926gJBWEnE2JV0e3M0RF6MsGYTGdj9l0jsXRuWF2K4cmot90c8Cb2pug"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm-mobile text-headline-sm-mobile text-text-primary">Inès Mansour</h3>
+<span class="text-[10px] font-bold uppercase tracking-wider bg-tint-warning text-status-warning px-2 py-0.5 rounded-full">SIVP</span>
+</div>
+<p class="text-label-md text-text-secondary mt-0.5">Designer UX/UI</p>
+<div class="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+<div class="flex items-center gap-1 text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">payments</span>
+<span>900 DT Brut</span>
+</div>
+<div class="flex items-center gap-1 text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>6 mois d'ancienneté</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Employee Card 3 -->
+<div class="bg-surface-container-lowest p-5 rounded-[24px] shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex items-start gap-4 squishy-touch">
+<div class="w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of a professional man in his late 40s, wearing a clean white shirt, looking approachable and experienced. Neutral office background with daylight streaming through a window. Sharp focus on eyes, warm cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3I5x2m7PzH_xkEE1tvUwq2vvqzEQPdilVvexnnT6QQ-J6TW8jqISVSL03sIrnnjnQW-8_vCmQlYhD47bpUTauFWJM8gUbxaLYRSpSAVBaRMRz2Ez0G4Pk1ZIdpDvwqJnIBxoEZ2cf-bboErf6NaDLCED-xuKc-hmK1lWKlbp9MvIaNWWQb84Up02id7yqMKoQpaEz_FTuGKOSSRv1fcgHiRT5SCVj_RI5JFCePIoICyMkbt6yuxQwPSQ2M9Yxu0UzNXVIODUjvw"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm-mobile text-headline-sm-mobile text-text-primary">Hedi Karoui</h3>
+<span class="text-[10px] font-bold uppercase tracking-wider bg-tint-info text-primary px-2 py-0.5 rounded-full">CDD</span>
+</div>
+<p class="text-label-md text-text-secondary mt-0.5">Commercial</p>
+<div class="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+<div class="flex items-center gap-1 text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">payments</span>
+<span>1 200 DT Brut</span>
+</div>
+<div class="flex items-center gap-1 text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>1 an d'ancienneté</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Add Employee Card -->
+<div class="border-2 border-dashed border-outline-variant bg-transparent p-6 rounded-[24px] flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-surface-container transition-colors squishy-touch group">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-primary">add</span>
+</div>
+<span class="text-label-md font-semibold text-primary">Ajouter un employé</span>
+</div>
+</div>
+<!-- Tiny legal disclaimer -->
+<p class="mt-12 text-center text-label-sm text-outline px-4 italic bg-surface-container-low py-4 rounded-xl">
+            El Comptabli est un outil pédagogique de gestion fiscale et non un cabinet d'expertise comptable agréé.
+        </p>
+</main>
+<!-- Detail Drawer Overlay -->
+<div class="fixed inset-0 bg-black/40 z-50 transition-opacity opacity-0 pointer-events-none" id="drawer-overlay" onclick="toggleDrawer(false)"></div>
+<!-- Detail Drawer (Visualizing open state for Sami) -->
+<div class="fixed bottom-0 left-0 right-0 max-w-[600px] mx-auto bg-surface-container-lowest rounded-t-[32px] z-50 shadow-[0_-8px_32px_rgba(0,0,0,0.15)] transition-transform duration-500 translate-y-full max-h-[85vh] overflow-y-auto" id="employee-drawer">
+<!-- Handle -->
+<div class="w-12 h-1.5 bg-surface-variant rounded-full mx-auto my-4 cursor-pointer" onclick="toggleDrawer(false)"></div>
+<div class="px-container-padding pb-10">
+<!-- Header Profile -->
+<div class="flex items-center gap-4 mb-8">
+<div class="w-20 h-20 rounded-3xl overflow-hidden border-2 border-primary/10">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a Mediterranean man in his early 30s with a neat beard, wearing a stylish polo shirt. High-quality digital photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiVRefMR2CGkbmsWsqz0gTCSxQ7K0jGnvb8i6t7FmuJ5pDHCuMxIZ5xDn-yBne9_JoJTh3SCHmJcz8m3HhtZmLh0Bup9NEhACSsEHQ9TuhTffYNCsjTinxL6-wpr2JbzT2l8muTSxzKUyozBO6CTVUaH_cv4HeMxBBGORHsMznkajtGOjlwPl6CoMx4hskMw3WYFUfB0Y9Jm5_84bOjq8lti4hnumsskhE9Rv0D82zO3HUe22S22nRext2dJ3gMQnelaJgHP-KxQ"/>
+</div>
+<div>
+<h2 class="font-headline-md text-text-primary">Sami Ben Ali</h2>
+<p class="text-label-md text-primary font-semibold">Développeur Fullstack</p>
+<div class="flex gap-2 mt-2">
+<span class="text-[11px] font-bold bg-tint-success text-primary px-3 py-0.5 rounded-full">CDI</span>
+<span class="text-[11px] font-bold bg-surface-container text-outline px-3 py-0.5 rounded-full">MATRICULE: 0042</span>
+</div>
+</div>
+</div>
+<!-- Sections Bento Grid-like Layout -->
+<div class="space-y-6">
+<!-- Informtions Personnelles -->
+<section>
+<h3 class="font-headline-sm-mobile text-text-primary mb-3">Informations personnelles</h3>
+<div class="bg-surface-container-low rounded-2xl p-4 grid grid-cols-2 gap-4">
+<div>
+<p class="text-[10px] text-outline font-bold uppercase tracking-wider">Date de naissance</p>
+<p class="text-label-md text-text-primary">12 Mars 1991</p>
+</div>
+<div>
+<p class="text-[10px] text-outline font-bold uppercase tracking-wider">CIN</p>
+<p class="text-label-md text-text-primary">07452XXX</p>
+</div>
+<div class="col-span-2">
+<p class="text-[10px] text-outline font-bold uppercase tracking-wider">Adresse</p>
+<p class="text-label-md text-text-primary">Avenue de Paris, Tunis 1002</p>
+</div>
+</div>
+</section>
+<!-- Détails du contrat -->
+<section>
+<h3 class="font-headline-sm-mobile text-text-primary mb-3">Détails du contrat</h3>
+<div class="bg-tint-info/50 rounded-2xl p-4">
+<div class="flex justify-between py-2 border-b border-indigo-100">
+<span class="text-label-md text-outline">Date d'embauche</span>
+<span class="text-label-md font-bold text-text-primary">01 Octobre 2020</span>
+</div>
+<div class="flex justify-between py-2 border-b border-indigo-100">
+<span class="text-label-md text-outline">Salaire de base (Net)</span>
+<span class="text-label-md font-bold text-text-primary">1 420 DT</span>
+</div>
+<div class="flex justify-between py-2">
+<span class="text-label-md text-outline">Congés restants</span>
+<span class="text-label-md font-bold text-status-success">14.5 Jours</span>
+</div>
+</div>
+</section>
+<!-- Documents -->
+<section>
+<h3 class="font-headline-sm-mobile text-text-primary mb-3">Documents</h3>
+<div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+<div class="flex-shrink-0 w-32 bg-surface-container-lowest border border-surface-variant p-3 rounded-2xl text-center shadow-sm">
+<span class="material-symbols-outlined text-status-danger text-3xl">picture_as_pdf</span>
+<p class="text-[10px] mt-2 font-medium truncate">Contrat_Sami.pdf</p>
+</div>
+<div class="flex-shrink-0 w-32 bg-surface-container-lowest border border-surface-variant p-3 rounded-2xl text-center shadow-sm">
+<span class="material-symbols-outlined text-status-danger text-3xl">picture_as_pdf</span>
+<p class="text-[10px] mt-2 font-medium truncate">CIN_Recto.pdf</p>
+</div>
+<div class="flex-shrink-0 w-32 bg-surface-container-lowest border border-surface-variant p-3 rounded-2xl text-center shadow-sm">
+<span class="material-symbols-outlined text-status-danger text-3xl">picture_as_pdf</span>
+<p class="text-[10px] mt-2 font-medium truncate">RIB_Attestation.pdf</p>
+</div>
+</div>
+</section>
+<!-- Historique paie -->
+<section>
+<h3 class="font-headline-sm-mobile text-text-primary mb-3">Historique paie</h3>
+<div class="space-y-2">
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</div>
+<span class="text-label-md font-medium">Décembre 2023</span>
+</div>
+<span class="text-label-md font-bold">1 800 DT</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</div>
+<span class="text-label-md font-medium">Novembre 2023</span>
+</div>
+<span class="text-label-md font-bold">1 800 DT</span>
+</div>
+</div>
+<button class="w-full mt-4 py-3 text-label-md font-bold text-primary border border-primary/20 rounded-full hover:bg-primary/5 transition-colors">
+                        Voir tout l'historique
+                    </button>
+</section>
+</div>
+</div>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-container-padding left-0 right-0 mx-auto flex justify-around items-center h-[72px] px-element-gap bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.12)] fixed bottom-base left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[560px] rounded-full z-[60]">
+<button class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors scale-90 transition-transform active:scale-110 duration-200">
+<span class="material-symbols-outlined">dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors scale-90 transition-transform active:scale-110 duration-200">
+<span class="material-symbols-outlined">calendar_month</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors scale-90 transition-transform active:scale-110 duration-200">
+<span class="material-symbols-outlined">smart_toy</span>
+</button>
+<!-- Active Tab: Equipe/Profile -->
+<button class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full scale-90 transition-transform active:scale-110 duration-200">
+<span class="material-symbols-outlined">group</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors scale-90 transition-transform active:scale-110 duration-200">
+<span class="material-symbols-outlined">bar_chart</span>
+</button>
+</nav>
+<script>
+        function toggleDrawer(open) {
+            const drawer = document.getElementById('employee-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            if (open) {
+                drawer.classList.remove('translate-y-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100', 'pointer-events-auto');
+                document.body.style.overflow = 'hidden';
+            } else {
+                drawer.classList.add('translate-y-full');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                overlay.classList.remove('opacity-100', 'pointer-events-auto');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Open drawer by default for visualization as requested
+        window.onload = () => {
+            setTimeout(() => {
+                toggleDrawer(true);
+            }, 800);
+        }
+    </script>
+</body></html>

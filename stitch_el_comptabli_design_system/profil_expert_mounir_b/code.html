@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chat-bubble-assistant {
+            border-bottom-left-radius: 6px !important;
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            background: rgba(248, 250, 250, 0.8);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            color: #1A1A1A;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "text-primary": "#1A1A1A",
+                        "primary-container": "#0f766e",
+                        "outline-variant": "#bdc9c6",
+                        "tint-danger": "#FDE8E6",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#2f746d",
+                        "surface": "#f8fafa",
+                        "on-surface": "#191c1d",
+                        "primary-fixed-dim": "#80d5cb",
+                        "surface-tint": "#006a63",
+                        "text-secondary": "#6B7280",
+                        "status-danger": "#DC2626",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#006f64",
+                        "primary": "#005c55",
+                        "on-primary-container": "#a3faef",
+                        "tint-info": "#EEF2FF",
+                        "surface-bright": "#f8fafa",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "inverse-surface": "#2e3131",
+                        "inverse-primary": "#80d5cb",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "on-tertiary-fixed": "#00201d",
+                        "tertiary-fixed": "#abefe7",
+                        "status-warning": "#D97706",
+                        "status-success": "#16A34A",
+                        "surface-container": "#eceeee",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary-container": "#b3f7ee",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "outline": "#6e7977",
+                        "tint-success": "#E6F5F3",
+                        "on-primary-fixed-variant": "#00504a",
+                        "tertiary": "#0d5b55",
+                        "secondary-fixed": "#71f8e4",
+                        "status-premium": "#7C3AED",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f2f4f4",
+                        "on-background": "#191c1d",
+                        "surface-variant": "#e1e3e3",
+                        "secondary": "#006b5f",
+                        "primary-fixed": "#9cf2e8",
+                        "on-surface-variant": "#3e4947",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e1e3e3",
+                        "on-primary-fixed": "#00201d",
+                        "surface-container-high": "#e6e8e8",
+                        "tint-warning": "#FEF3E2",
+                        "surface-dim": "#d8dada",
+                        "secondary-container": "#6df5e1",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "background": "#f8fafa"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "3xl": "2rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "container-padding": "20px",
+                        "stack-xs": "4px",
+                        "element-gap": "16px",
+                        "base": "8px"
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                        "headline-md-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen pb-32">
+<!-- Top Navigation (Shell Implementation) -->
+<header class="w-full top-0 sticky z-40 bg-background/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-container-padding py-stack-sm w-full max-w-[600px] mx-auto">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/20 transition-transform active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-background">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm-mobile text-on-background">Profil Expert</h1>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/20 transition-transform active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-background">share</span>
+</button>
+</div>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding space-y-8 mt-4">
+<!-- Hero Section: Avatar & Identity -->
+<section class="flex flex-col items-center text-center space-y-4">
+<div class="relative">
+<div class="w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a Tunisian male accountant in his 40s, wearing a clean, modern navy blazer over a crisp white shirt. He has a friendly, trustworthy expression and is set against a soft, bright office background with teal accents. The lighting is high-key and professional, embodying the Serene Fiscal design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrrkM4WAizP8Z0KI0Q0rq_J1bh4OBx0_K2zN8TuBRV8ilqTneadebn08-7AhhlpJl7siCbfDDhdoYbT4vXyIZfvSOUOBuyE7LaT_7-McxUGrOR6RMgwZfe5YKIDNobPw0WyOaQ_yXiq-fl6fNEp0u7PciR_n3jibyx2xvcZZzkhSa01T-eN8FrARY_eAET5IwKQ5OVAglIRR32uw7eYQ4uvwg6cO4A_rtkzXO8hgWbDR9N0bD7SwAdDrvgV5SBIjjcq2cI4DjmvQ"/>
+</div>
+<div class="absolute bottom-1 right-1 bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+</div>
+<div class="space-y-1">
+<h2 class="font-headline-md text-headline-md-mobile text-text-primary">Mounir B.</h2>
+<div class="flex flex-wrap justify-center gap-2 items-center">
+<span class="px-3 py-1 bg-primary-fixed text-primary text-label-md rounded-full font-medium">Expert certifié ✓</span>
+<span class="text-status-warning font-semibold flex items-center gap-1 text-label-md">
+                        4,8 <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-text-secondary font-normal">(127 avis)</span>
+</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-text-secondary text-label-md">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>Nabeul</span>
+</div>
+<div class="w-1 h-1 rounded-full bg-outline-variant"></div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">work_history</span>
+<span>15 ans d'expérience</span>
+</div>
+</div>
+</section>
+<!-- Bio & Specialties -->
+<section class="space-y-4">
+<div class="bg-tint-info p-5 rounded-2xl border border-blue-50">
+<p class="text-body-lg text-on-surface-variant leading-relaxed">
+                    Expert-comptable passionné par l'accompagnement des jeunes entrepreneurs et freelances. Spécialiste de la fiscalité tunisienne et de la structuration juridique.
+                </p>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-4 py-2 bg-surface-container-low text-primary rounded-full text-label-md border border-outline-variant/30">Fiscalité</span>
+<span class="px-4 py-2 bg-surface-container-low text-primary rounded-full text-label-md border border-outline-variant/30">TVA</span>
+<span class="px-4 py-2 bg-surface-container-low text-primary rounded-full text-label-md border border-outline-variant/30">Création SUARL</span>
+<span class="px-4 py-2 bg-surface-container-low text-primary rounded-full text-label-md border border-outline-variant/30">Audit</span>
+</div>
+</section>
+<!-- Services Section -->
+<section class="space-y-4">
+<h3 class="font-headline-sm text-headline-sm-mobile text-text-primary px-1">Services et Tarifs</h3>
+<div class="bg-surface-container-lowest rounded-3xl p-6 shadow-[0_4px_16px_rgba(15,92,86,0.06)] border border-outline-variant/20 divide-y divide-outline-variant/10">
+<div class="flex justify-between items-center py-4 first:pt-0">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tint-success flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">schedule</span>
+</div>
+<span class="font-medium text-text-primary">Consultation 30 min</span>
+</div>
+<span class="font-bold text-primary">60 DT</span>
+</div>
+<div class="flex justify-between items-center py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tint-success flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">description</span>
+</div>
+<span class="font-medium text-text-primary">Déclaration TVA</span>
+</div>
+<span class="font-bold text-primary">90 DT</span>
+</div>
+<div class="flex justify-between items-center py-4 last:pb-0">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tint-success flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">business</span>
+</div>
+<span class="font-medium text-text-primary">Création SUARL</span>
+</div>
+<span class="font-bold text-primary">350 DT</span>
+</div>
+</div>
+</section>
+<!-- Reviews Section -->
+<section class="space-y-4 pb-12">
+<div class="flex justify-between items-end px-1">
+<h3 class="font-headline-sm text-headline-sm-mobile text-text-primary">Avis clients</h3>
+<button class="text-primary font-medium text-label-md hover:underline">Voir tout</button>
+</div>
+<div class="space-y-4">
+<!-- Review Card 1 -->
+<div class="bg-surface-container-low p-5 rounded-2xl space-y-3">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-outline-variant/30 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A small, soft-focus profile avatar of a young Tunisian male entrepreneur wearing casual professional attire. The style is minimalist and clean, consistent with modern fintech apps, using a soft pastel background circle. High quality and human-centric." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhOg0eJ4qzhmfLKumjUi2ABG53oNvzv8UNXsxocVBUu_AbtfXytvKkGxabx_jSFcBMVRBsTywpL0HDHMr6ikuVTog2QWxSs-VAiFmG5CPxfNsRrWJ-UEu8yQoKu8agqL110XHluWzEIyaALMgWmkSfVh_wPEl1AXhZ9Y3rHsRdTiuAcQC2vRWnjRLe-42llfzibOznNPFA83jm7iKm7vHg9pTpFmU1WVeJT_t3EGyGZtZriT0DMdwtbznCLgvx4_9cn5OQ-gDfng"/>
+</div>
+<div>
+<p class="font-semibold text-text-primary text-label-md">Sami K.</p>
+<div class="flex text-status-warning">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star_half</span>
+</div>
+</div>
+</div>
+<span class="text-text-secondary text-[11px]">Il y a 2 sem.</span>
+</div>
+<p class="text-on-surface-variant text-label-md italic">"Très clair dans ses explications, m'a beaucoup aidé pour mon passage au régime réel."</p>
+</div>
+<!-- Review Card 2 -->
+<div class="bg-surface-container-low p-5 rounded-2xl space-y-3">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-outline-variant/30 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A small, soft-focus profile avatar of a Tunisian woman professional with a friendly smile, dressed in a modern teal business casual outfit. The lighting is warm and welcoming. Minimalist digital portrait aesthetic for a high-end UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFrCOChgC9AYA73FFmnB6IPc0JzQ78CkYzleCELrlOT5zvMozQaKckfmoH9Uw0Xep4VBr8vfBooNJI_oRVyg7Sktil5WKDodsREL1ZabCZigIKOGc5E9uJctb7eysv3aJkDvnLm1Kzgc4Sz4vWLdgqW1R1XJcfJINep4GfRMNd3hiokex0LwJGtlrN7IC8oeMPa0EW5rP89tDLODmqawcXjrsty-5FjDV7Jae5ztFH2qgYsnZcLt__VzF5FsaW1xjN2gF5GT6D0w"/>
+</div>
+<div>
+<p class="font-semibold text-text-primary text-label-md">Ines M.</p>
+<div class="flex text-status-warning">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+<span class="text-text-secondary text-[11px]">Il y a 1 mois</span>
+</div>
+<p class="text-on-surface-variant text-label-md italic">"Professionnel et ponctuel. Je recommande vivement pour les freelances."</p>
+</div>
+</div>
+<!-- Disclaimer (Design System Mandate) -->
+<div class="bg-surface p-4 rounded-xl mt-8">
+<p class="text-[10px] text-text-secondary leading-tight text-center uppercase tracking-wider">
+                    FiscAssist est un outil pédagogique. Les échanges avec les experts ne constituent pas une certification comptable officielle sans contrat de mission formel.
+                </p>
+</div>
+</section>
+</main>
+<!-- Sticky Bottom Bar -->
+<div class="fixed bottom-0 left-0 w-full px-container-padding pb-8 pt-4 bg-gradient-to-t from-background via-background/95 to-transparent pointer-events-none">
+<div class="max-w-[600px] mx-auto flex items-center gap-3 pointer-events-auto">
+<button class="flex-none w-14 h-14 rounded-full border-2 border-primary text-primary flex items-center justify-center bg-white shadow-lg active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined">chat</span>
+</button>
+<button class="flex-grow h-14 bg-primary text-white rounded-full font-headline-sm text-headline-sm-mobile shadow-[0_8px_24px_rgba(0,92,85,0.25)] active:scale-95 transition-all duration-200 flex items-center justify-center gap-2">
+<span>Prendre RDV</span>
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+</div>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simple fade-in animation for list items
+            const cards = document.querySelectorAll('.bg-surface-container-low, .bg-surface-container-lowest');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(10px)';
+                card.style.transition = 'all 0.4s ease-out';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body></html>

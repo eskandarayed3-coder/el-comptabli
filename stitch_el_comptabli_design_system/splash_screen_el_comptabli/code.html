@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "on-secondary-fixed-variant": "#005048",
+                    "status-success": "#16A34A",
+                    "status-danger": "#DC2626",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#e6e8e8",
+                    "status-premium": "#7C3AED",
+                    "error-container": "#ffdad6",
+                    "outline-variant": "#bdc9c6",
+                    "primary-fixed-dim": "#80d5cb",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#9cf2e8",
+                    "text-secondary": "#6B7280",
+                    "surface-container-highest": "#e1e3e3",
+                    "outline": "#6e7977",
+                    "status-warning": "#D97706",
+                    "on-primary-fixed": "#00201d",
+                    "surface": "#f8fafa",
+                    "surface-variant": "#e1e3e3",
+                    "secondary": "#006b5f",
+                    "on-background": "#191c1d",
+                    "on-surface": "#191c1d",
+                    "on-secondary-container": "#006f64",
+                    "background": "#f8fafa",
+                    "on-surface-variant": "#3e4947",
+                    "primary": "#005c55",
+                    "primary-container": "#0f766e"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "headline-md-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); opacity: 0.3; }
+            50% { transform: translateY(-4px); opacity: 1; }
+        }
+        .dot-1 { animation: bounce-slow 1.4s infinite 0s; }
+        .dot-2 { animation: bounce-slow 1.4s infinite 0.2s; }
+        .dot-3 { animation: bounce-slow 1.4s infinite 0.4s; }
+        
+        .bg-splash-gradient {
+            background: linear-gradient(135deg, #0F766E 0%, #14B8A6 100%);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Ambient glow effect */
+        .glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- Splash Screen Container -->
+<main class="relative flex flex-col items-center justify-center min-h-screen w-full bg-splash-gradient overflow-hidden">
+<!-- Decorative Ambient Glows -->
+<div class="glow top-[-10%] left-[-10%]"></div>
+<div class="glow bottom-[-10%] right-[-10%]"></div>
+<!-- Central Content Area -->
+<section class="flex flex-col items-center justify-center px-container-padding text-center z-10 transition-all duration-1000 ease-out opacity-0 translate-y-4" id="main-content">
+<!-- Logo Section -->
+<div class="mb-stack-sm drop-shadow-2xl">
+<img alt="El Comptabli Logo" class="w-24 h-24 md:w-32 md:h-32 object-contain" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+<!-- Brand Identity -->
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-white tracking-tight mb-2">
+                El Comptabli
+            </h1>
+<p class="font-body-lg text-body-lg text-white/80 max-w-[280px] mx-auto">
+                Ton assistant fiscal &amp; comptable IA 🇹🇳
+            </p>
+</section>
+<!-- Bottom Loading Indicator -->
+<footer class="absolute bottom-12 flex flex-col items-center space-y-4 z-10">
+<div class="flex items-center space-x-2">
+<span class="dot-1 w-2 h-2 bg-white rounded-full"></span>
+<span class="dot-2 w-2 h-2 bg-white rounded-full"></span>
+<span class="dot-3 w-2 h-2 bg-white rounded-full"></span>
+</div>
+<!-- Pedagogical Disclaimer (Soft hint at bottom) -->
+<p class="font-label-sm text-label-sm text-white/40 px-8 text-center max-w-[300px]">
+                Outil pédagogique pour entrepreneurs tunisiens.
+            </p>
+</footer>
+</main>
+<script>
+        // Simple entrance animation
+        window.addEventListener('DOMContentLoaded', () => {
+            const content = document.getElementById('main-content');
+            setTimeout(() => {
+                content.classList.remove('opacity-0', 'translate-y-4');
+                content.classList.add('opacity-100', 'translate-y-0');
+            }, 300);
+        });
+
+        // Subtle parallax movement based on mouse/touch (desktop only for performance)
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                const glows = document.querySelectorAll('.glow');
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                glows[0].style.transform = `translate(${x * 50}px, ${y * 50}px)`;
+                glows[1].style.transform = `translate(${x * -50}px, ${y * -50}px)`;
+            });
+        }
+    </script>
+</body></html>

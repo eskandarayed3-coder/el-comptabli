@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Langue - Serene Fiscal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#eceeee",
+                        "on-secondary-fixed": "#00201c",
+                        "status-success": "#16A34A",
+                        "status-warning": "#D97706",
+                        "tertiary-fixed": "#abefe7",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#00201d",
+                        "tertiary": "#0d5b55",
+                        "on-primary-fixed-variant": "#00504a",
+                        "secondary-fixed": "#71f8e4",
+                        "tint-success": "#E6F5F3",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "outline": "#6e7977",
+                        "on-tertiary-container": "#b3f7ee",
+                        "surface-variant": "#e1e3e3",
+                        "secondary": "#006b5f",
+                        "on-background": "#191c1d",
+                        "on-surface-variant": "#3e4947",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#9cf2e8",
+                        "surface-container-low": "#f2f4f4",
+                        "status-premium": "#7C3AED",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "background": "#f8fafa",
+                        "tint-warning": "#FEF3E2",
+                        "surface-dim": "#d8dada",
+                        "secondary-container": "#6df5e1",
+                        "surface-container-highest": "#e1e3e3",
+                        "surface-container-high": "#e6e8e8",
+                        "on-primary-fixed": "#00201d",
+                        "surface": "#f8fafa",
+                        "tertiary-container": "#2f746d",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#bdc9c6",
+                        "tint-danger": "#FDE8E6",
+                        "primary-container": "#0f766e",
+                        "text-primary": "#1A1A1A",
+                        "text-secondary": "#6B7280",
+                        "status-danger": "#DC2626",
+                        "primary-fixed-dim": "#80d5cb",
+                        "on-surface": "#191c1d",
+                        "surface-tint": "#006a63",
+                        "primary": "#005c55",
+                        "on-primary-container": "#a3faef",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#006f64",
+                        "on-secondary-fixed-variant": "#005048",
+                        "inverse-on-surface": "#eff1f1",
+                        "tint-info": "#EEF2FF",
+                        "surface-bright": "#f8fafa",
+                        "inverse-surface": "#2e3131",
+                        "inverse-primary": "#80d5cb",
+                        "on-tertiary-fixed-variant": "#00504a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "card": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "container-padding": "20px",
+                        "stack-xs": "4px",
+                        "element-gap": "16px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "stat-display": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            color: #191c1d;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        .card-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .active-dot::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            width: 4px;
+            height: 4px;
+            background-color: #006b5f;
+            border-radius: 50%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex items-center justify-center min-h-screen bg-surface-container-low p-4">
+<!-- Mobile Container -->
+<div class="relative w-full max-w-[400px] h-[844px] bg-background overflow-hidden rounded-[40px] shadow-2xl flex flex-col">
+<!-- TopAppBar -->
+<header class="flex items-center px-container-padding h-16 w-full max-w-[600px] mx-auto bg-background transition-colors duration-200">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="flex-1 text-center font-headline-sm text-headline-sm text-primary pr-10">Langues</h1>
+</header>
+<!-- Content Canvas -->
+<main class="flex-1 overflow-y-auto px-container-padding pt-4 pb-32 space-y-8">
+<!-- Main Language Selection -->
+<section class="space-y-4">
+<div class="space-y-3">
+<!-- Arabic Card -->
+<div class="relative flex items-center justify-between p-5 bg-surface-container-lowest rounded-card card-shadow border border-transparent transition-all active:scale-[0.98] cursor-pointer">
+<div class="flex flex-col text-right w-full pr-4" dir="rtl">
+<span class="font-headline-sm text-headline-sm text-on-surface">العربية التونسية</span>
+<span class="font-label-sm text-label-sm text-outline">أهلا بيك</span>
+</div>
+<div class="w-6 h-6 border-2 border-outline-variant rounded-full flex items-center justify-center"></div>
+</div>
+<!-- French Card (Selected) -->
+<div class="relative flex items-center justify-between p-5 bg-tint-success rounded-card card-shadow border border-primary/10 transition-all active:scale-[0.98] cursor-pointer">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-primary">Français</span>
+<span class="font-label-sm text-label-sm text-primary/70">Ahla bik</span>
+</div>
+<div class="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[16px] font-bold" data-icon="check">check</span>
+</div>
+</div>
+<!-- English Card -->
+<div class="relative flex items-center justify-between p-5 bg-surface-container-lowest rounded-card card-shadow border border-transparent transition-all active:scale-[0.98] cursor-pointer">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">English</span>
+<span class="font-label-sm text-label-sm text-outline">Welcome</span>
+</div>
+<div class="w-6 h-6 border-2 border-outline-variant rounded-full flex items-center justify-center"></div>
+</div>
+</div>
+</section>
+<!-- IA Response Language -->
+<section class="space-y-4">
+<h2 class="font-headline-sm text-headline-sm text-on-surface-variant">Langue des réponses IA</h2>
+<div class="bg-surface-container-high p-1.5 rounded-full flex items-center h-14">
+<button class="flex-1 h-full flex items-center justify-center rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-surface-variant/30 transition-all">
+                        Darija
+                    </button>
+<button class="flex-1 h-full flex items-center justify-center rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-surface-variant/30 transition-all">
+                        Français
+                    </button>
+<button class="flex-1 h-full flex items-center justify-center rounded-full bg-primary text-white shadow-lg font-headline-sm text-label-md transition-all">
+                        Mixte
+                    </button>
+</div>
+<p class="font-label-sm text-label-sm text-outline text-center">Le changement est instantané</p>
+</section>
+<!-- Pedagogical Disclaimer -->
+<div class="bg-surface-container-low p-4 rounded-xl mt-8">
+<p class="font-label-sm text-label-sm text-on-surface-variant/80 text-center leading-relaxed">
+                    Serene Fiscal est un outil pédagogique conçu pour vous guider. Il ne remplace pas les conseils d'un expert-comptable agréé.
+                </p>
+</div>
+</main>
+<!-- Bottom Action Button -->
+<div class="absolute bottom-28 left-0 w-full px-container-padding z-10">
+<button class="w-full h-16 bg-primary text-white rounded-full font-headline-sm text-headline-sm shadow-[0_8px_24px_rgba(0,92,85,0.25)] active:scale-95 transition-transform flex items-center justify-center gap-2">
+                Appliquer
+                <span class="material-symbols-outlined" data-icon="language">language</span>
+</button>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[400px] rounded-full bg-surface-container-lowest/80 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.12)] z-50 flex justify-around items-center px-6 py-3">
+<button class="flex flex-col items-center justify-center text-outline hover:bg-surface-variant/20 rounded-full p-2 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline hover:bg-surface-variant/20 rounded-full p-2 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline hover:bg-surface-variant/20 rounded-full p-2 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="calculate">calculate</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline hover:bg-surface-variant/20 rounded-full p-2 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-secondary after:rounded-full hover:bg-surface-variant/20 rounded-full p-2 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+</button>
+</nav>
+<!-- Atmospheric Micro-interaction Script -->
+<script>
+            // Simple visual feedback for language cards
+            document.querySelectorAll('main section:first-of-type > div > div').forEach(card => {
+                card.addEventListener('click', function() {
+                    // Reset others (simulation)
+                    document.querySelectorAll('main section:first-of-type > div > div').forEach(c => {
+                        c.classList.remove('bg-tint-success', 'border-primary/10');
+                        c.classList.add('bg-surface-container-lowest', 'border-transparent');
+                        const text = c.querySelector('span:first-child');
+                        if(text) text.classList.replace('text-primary', 'text-on-surface');
+                        const iconCont = c.querySelector('div:last-child');
+                        iconCont.innerHTML = '';
+                        iconCont.classList.add('border-2', 'border-outline-variant');
+                        iconCont.classList.remove('bg-primary');
+                    });
+                    
+                    // Set current
+                    this.classList.remove('bg-surface-container-lowest', 'border-transparent');
+                    this.classList.add('bg-tint-success', 'border-primary/10');
+                    const text = this.querySelector('span:first-child');
+                    if(text) text.classList.replace('text-on-surface', 'text-primary');
+                    const iconCont = this.querySelector('div:last-child');
+                    iconCont.classList.remove('border-2', 'border-outline-variant');
+                    iconCont.classList.add('bg-primary');
+                    iconCont.innerHTML = '<span class="material-symbols-outlined text-white text-[16px] font-bold" data-icon="check">check</span>';
+                });
+            });
+        </script>
+</div>
+</body></html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dépenses — Juillet</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#0f766e",
+                    "status-warning": "#D97706",
+                    "inverse-primary": "#80d5cb",
+                    "primary-fixed": "#9cf2e8",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#e6e8e8",
+                    "primary-fixed-dim": "#80d5cb",
+                    "on-primary-fixed-variant": "#00504a",
+                    "outline": "#6e7977",
+                    "on-primary": "#ffffff",
+                    "background": "#f8fafa",
+                    "primary": "#005c55",
+                    "on-surface-variant": "#3e4947",
+                    "on-surface": "#191c1d",
+                    "secondary": "#006b5f",
+                    "on-secondary-fixed": "#00201c",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#191c1d",
+                    "inverse-on-surface": "#eff1f1",
+                    "tertiary": "#0d5b55",
+                    "surface-container-low": "#f2f4f4",
+                    "surface-container": "#eceeee",
+                    "secondary-container": "#6df5e1",
+                    "on-error": "#ffffff",
+                    "text-secondary": "#6B7280",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed": "#00201d",
+                    "outline-variant": "#bdc9c6",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "tint-danger": "#FDE8E6",
+                    "tint-info": "#EEF2FF",
+                    "text-primary": "#1A1A1A",
+                    "tertiary-container": "#2f746d",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#2e3131",
+                    "tint-warning": "#FEF3E2",
+                    "surface-container-highest": "#e1e3e3",
+                    "surface-variant": "#e1e3e3",
+                    "tertiary-fixed": "#abefe7",
+                    "on-primary-container": "#a3faef",
+                    "status-success": "#16A34A",
+                    "on-secondary-container": "#006f64",
+                    "on-secondary-fixed-variant": "#005048",
+                    "on-tertiary-fixed": "#00201d",
+                    "surface-tint": "#006a63",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "surface": "#f8fafa",
+                    "surface-bright": "#f8fafa",
+                    "status-premium": "#7C3AED",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#d8dada",
+                    "tint-success": "#E6F5F3",
+                    "status-danger": "#DC2626",
+                    "secondary-fixed": "#71f8e4",
+                    "on-tertiary-container": "#b3f7ee"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "element-gap": "16px",
+                    "container-padding": "20px",
+                    "base": "8px",
+                    "stack-sm": "12px",
+                    "stack-xs": "4px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .smooth-shadow { shadow-[0_8px_24px_rgba(0,0,0,0.12)] }
+        .status-pill { padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-40">
+<!-- Top Navigation Anchor (Based on JSON TopAppBar) -->
+<nav class="sticky top-0 z-50 bg-background flex items-center justify-between px-container-padding h-16 w-full max-w-[600px] mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary cursor-pointer active:scale-95 duration-200">arrow_back</span>
+<h1 class="font-headline-sm text-headline-sm text-primary">Finance</h1>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full cursor-pointer hover:bg-surface-container-high transition-colors active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">calendar_today</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Juillet 2026</span>
+</div>
+</nav>
+<main class="max-w-[600px] mx-auto px-container-padding pt-4">
+<!-- Month Selector Controls -->
+<div class="flex items-center justify-center gap-6 mb-8">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-lowest shadow-sm text-on-surface-variant active:scale-90 transition-transform">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="text-center">
+<h2 class="font-headline-md text-headline-md text-on-surface">Juillet 2026</h2>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-lowest shadow-sm text-on-surface-variant active:scale-90 transition-transform">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<!-- Hero: Coral Tinted Card -->
+<section class="bg-tint-danger rounded-2xl p-6 mb-8 relative overflow-hidden">
+<!-- Atmospheric micro-pattern background -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, #ba1a1a 1px, transparent 0); background-size: 24px 24px;"></div>
+<div class="relative z-10">
+<p class="font-label-md text-label-md text-status-danger mb-1">Dépenses totales</p>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-display text-stat-display text-on-surface">-1 960 DT</span>
+</div>
+<div class="flex items-center gap-1.5 mt-2">
+<span class="flex items-center text-status-danger font-bold text-label-sm">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+                        +8%
+                    </span>
+<span class="text-on-surface-variant text-label-sm">par rapport au mois dernier</span>
+</div>
+</div>
+</section>
+<!-- Filter Pills -->
+<div class="flex gap-3 mb-8 overflow-x-auto pb-2 no-scrollbar">
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md whitespace-nowrap active:scale-95 transition-all">Toutes</button>
+<button class="px-6 py-2.5 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/30 font-label-md whitespace-nowrap active:scale-95 transition-all">Déductibles</button>
+<button class="px-6 py-2.5 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/30 font-label-md whitespace-nowrap active:scale-95 transition-all">Non déductibles</button>
+</div>
+<!-- Expense List grouped by date -->
+<div class="space-y-8">
+<!-- Group 1 -->
+<div>
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-4">Hier, 14 Juillet</h3>
+<div class="space-y-4">
+<!-- Facture STEG -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.04)] hover:shadow-md transition-shadow cursor-pointer border border-outline-variant/10">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-headline-sm text-label-md text-on-surface">Facture STEG</h4>
+<div class="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-tint-info text-primary text-[11px] font-bold">
+                                    Électricité
+                                </div>
+</div>
+<span class="font-headline-sm text-label-md text-on-surface">-141 DT</span>
+</div>
+<p class="text-[11px] text-outline italic">TVA récupérable: 22,5 DT</p>
+</div>
+<!-- Plein gasoil -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.04)] hover:shadow-md transition-shadow cursor-pointer border border-outline-variant/10">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-headline-sm text-label-md text-on-surface">Plein gasoil</h4>
+<div class="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-tint-warning text-status-warning text-[11px] font-bold">
+                                    Carburant
+                                </div>
+</div>
+<span class="font-headline-sm text-label-md text-on-surface">-420 DT</span>
+</div>
+<p class="text-[11px] text-outline italic">TVA récupérable: 0 DT</p>
+</div>
+</div>
+</div>
+<!-- Group 2 -->
+<div>
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-4">12 Juillet</h3>
+<div class="space-y-4">
+<!-- Loyer bureau -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.04)] hover:shadow-md transition-shadow cursor-pointer border border-outline-variant/10">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-headline-sm text-label-md text-on-surface">Loyer bureau</h4>
+<div class="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-[11px] font-bold">
+                                    Loyer
+                                </div>
+</div>
+<span class="font-headline-sm text-label-md text-on-surface">-680 DT</span>
+</div>
+<p class="text-[11px] text-status-danger italic">TVA récupérable: 0 DT (non déductible)</p>
+</div>
+<!-- Fournitures -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.04)] hover:shadow-md transition-shadow cursor-pointer border border-outline-variant/10">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-headline-sm text-label-md text-on-surface">Fournitures</h4>
+<div class="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-tint-success text-status-success text-[11px] font-bold">
+                                    Achats
+                                </div>
+</div>
+<span class="font-headline-sm text-label-md text-on-surface">-95 DT</span>
+</div>
+<p class="text-[11px] text-outline italic">TVA récupérable: 15,2 DT</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Legal Disclaimer -->
+<div class="mt-16 p-4 rounded-xl bg-surface-container-low/50">
+<p class="text-[10px] text-on-surface-variant text-center leading-relaxed font-label-sm">
+                Cette application est un outil pédagogique destiné aux entrepreneurs tunisiens. Les montants et déductions affichés sont à titre indicatif. Consultez toujours un comptable certifié ou un conseil fiscal pour vos déclarations officielles.
+            </p>
+</div>
+</main>
+<!-- FAB: Floating Dark Teal Pill -->
+<button class="fixed bottom-28 right-6 z-40 bg-primary text-on-primary flex items-center gap-2 px-6 py-4 rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.2)] hover:scale-105 active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined">add</span>
+<span class="font-label-md">+ Dépense</span>
+</button>
+<!-- Bottom Navigation Shell (Based on JSON BottomNavBar) -->
+<nav class="fixed bottom-6 left-0 right-0 z-50 flex justify-around items-center px-6 py-3 bg-surface-container-lowest dark:bg-inverse-surface rounded-full mx-container-padding shadow-[0_8px_24px_rgba(0,0,0,0.12)] glass-nav max-w-[560px] mx-auto">
+<!-- Accueil -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-0.5">Accueil</span>
+</a>
+<!-- IA -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm mt-0.5">IA</span>
+</a>
+<!-- Scanner -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">document_scanner</span>
+<span class="font-label-sm text-label-sm mt-0.5">Scanner</span>
+</a>
+<!-- Finance (Active) -->
+<a class="flex flex-col items-center justify-center text-primary font-bold after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-0.5">Finance</span>
+</a>
+<!-- Savoir -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label-sm text-label-sm mt-0.5">Savoir</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for list item highlight
+        document.querySelectorAll('.cursor-pointer').forEach(item => {
+            item.addEventListener('mousedown', () => {
+                item.classList.add('scale-[0.98]');
+            });
+            item.addEventListener('mouseup', () => {
+                item.classList.remove('scale-[0.98]');
+            });
+            item.addEventListener('mouseleave', () => {
+                item.classList.remove('scale-[0.98]');
+            });
+        });
+    </script>
+</body></html>

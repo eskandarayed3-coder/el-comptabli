@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ventes 🛒 - Gestion Commerciale</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f8fafa",
+                        "on-background": "#191c1d",
+                        "inverse-surface": "#2e3131",
+                        "surface-dim": "#d8dada",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-primary-container": "#a3faef",
+                        "text-primary": "#1A1A1A",
+                        "outline-variant": "#bdc9c6",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#005048",
+                        "surface-container": "#eceeee",
+                        "status-danger": "#DC2626",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-primary-fixed": "#00201d",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "text-secondary": "#6B7280",
+                        "on-surface": "#191c1d",
+                        "on-secondary": "#ffffff",
+                        "status-success": "#16A34A",
+                        "tint-danger": "#FDE8E6",
+                        "on-error-container": "#93000a",
+                        "surface": "#f8fafa",
+                        "surface-container-highest": "#e1e3e3",
+                        "primary-fixed": "#9cf2e8",
+                        "primary": "#005c55",
+                        "on-secondary-fixed": "#00201c",
+                        "tint-success": "#E6F5F3",
+                        "tint-info": "#EEF2FF",
+                        "status-premium": "#7C3AED",
+                        "on-secondary-container": "#006f64",
+                        "tertiary": "#0d5b55",
+                        "tertiary-fixed": "#abefe7",
+                        "primary-fixed-dim": "#80d5cb",
+                        "surface-variant": "#e1e3e3",
+                        "surface-tint": "#006a63",
+                        "inverse-primary": "#80d5cb",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "surface-container-high": "#e6e8e8",
+                        "on-tertiary-fixed": "#00201d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f4f4",
+                        "on-surface-variant": "#3e4947",
+                        "primary-container": "#0f766e",
+                        "outline": "#6e7977",
+                        "background": "#f8fafa",
+                        "status-warning": "#D97706",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#2f746d",
+                        "secondary-container": "#6df5e1",
+                        "secondary": "#006b5f",
+                        "on-primary-fixed-variant": "#00504a",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "tint-warning": "#FEF3E2",
+                        "secondary-fixed": "#71f8e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "xxl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "element-gap": "16px",
+                        "stack-xs": "4px",
+                        "stack-sm": "12px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "stat-display": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-sm-mobile": ["11px", {"lineHeight": "14px", "fontWeight": "400"}],
+                        "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-md-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .card-shadow { shadow-[0_4px_16px_rgba(15,92,86,0.08)] }
+        .custom-scrollbar::-webkit-scrollbar { width: 0px; background: transparent; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="bg-surface-bright sticky top-0 z-40 flex justify-between items-center px-container-padding h-16 w-full max-w-[600px] mx-auto">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-md-mobile text-headline-md-mobile text-primary">Ventes 🛒</h1>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-primary">search</span>
+</button>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding mt-4">
+<!-- Pipeline Overview Section -->
+<section class="mb-8">
+<div class="flex justify-between gap-3">
+<!-- Card: Devis -->
+<div class="flex-1 bg-tint-warning rounded-xxl p-4 flex flex-col items-center justify-center shadow-sm">
+<span class="font-label-sm text-status-warning mb-1">Devis</span>
+<span class="font-stat-display text-status-warning">4</span>
+</div>
+<!-- Card: Commandes -->
+<div class="flex-1 bg-tint-info rounded-xxl p-4 flex flex-col items-center justify-center shadow-sm">
+<span class="font-label-sm text-primary-container mb-1 text-blue-600">Commandes</span>
+<span class="font-stat-display text-blue-700">2</span>
+</div>
+<!-- Card: Facturé -->
+<div class="flex-1 bg-tint-success rounded-xxl p-4 flex flex-col items-center justify-center shadow-sm">
+<span class="font-label-sm text-status-success mb-1">Facturé</span>
+<span class="font-stat-display text-status-success text-lg leading-tight text-center">3 200<br/><span class="text-sm">DT</span></span>
+</div>
+</div>
+</section>
+<!-- Document List Section -->
+<section class="space-y-4">
+<!-- Card 1: Devis -->
+<div class="bg-surface-container-lowest rounded-xxl p-5 shadow-[0_4px_16px_rgba(15,92,86,0.06)] relative overflow-hidden">
+<div class="flex justify-between items-start mb-3">
+<div>
+<span class="bg-tint-warning text-status-warning px-3 py-1 rounded-full font-label-sm inline-block mb-2">En attente</span>
+<h3 class="font-headline-sm text-text-primary">Devis #D-024</h3>
+</div>
+<div class="text-right">
+<p class="font-stat-display text-headline-sm text-primary">1 200 DT</p>
+<p class="font-label-sm text-text-secondary">Client: Wafa</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-md py-3 rounded-full flex items-center justify-center gap-2 active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined text-[20px]">sync</span>
+                    Convertir en Facture
+                </button>
+</div>
+<!-- Card 2: Facture -->
+<div class="bg-surface-container-lowest rounded-xxl p-5 shadow-[0_4px_16px_rgba(15,92,86,0.06)]">
+<div class="flex justify-between items-start">
+<div>
+<span class="bg-tint-success text-status-success px-3 py-1 rounded-full font-label-sm inline-block mb-2">Payée</span>
+<h3 class="font-headline-sm text-text-primary">Facture #F-018</h3>
+<p class="font-label-sm text-text-secondary mt-1">Transaction directe</p>
+</div>
+<div class="text-right">
+<p class="font-stat-display text-headline-sm text-primary">850 DT</p>
+</div>
+</div>
+</div>
+<!-- Card 3: Devis -->
+<div class="bg-surface-container-lowest rounded-xxl p-5 shadow-[0_4px_16px_rgba(15,92,86,0.06)]">
+<div class="flex justify-between items-start mb-3">
+<div>
+<span class="bg-tint-warning text-status-warning px-3 py-1 rounded-full font-label-sm inline-block mb-2">En attente</span>
+<h3 class="font-headline-sm text-text-primary">Devis #D-023</h3>
+</div>
+<div class="text-right">
+<p class="font-stat-display text-headline-sm text-primary">450 DT</p>
+<p class="font-label-sm text-text-secondary">Client: Tech-In</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-md py-3 rounded-full flex items-center justify-center gap-2 active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined text-[20px]">sync</span>
+                    Convertir en Facture
+                </button>
+</div>
+</section>
+<!-- Pedagogy Disclaimer -->
+<footer class="mt-12 text-center">
+<div class="bg-surface-container-low rounded-xl py-3 px-4 inline-block">
+<p class="font-label-sm text-text-secondary">Outil pédagogique - Non certifié expert-comptable</p>
+</div>
+</footer>
+</main>
+<!-- FAB: Floating Action Button -->
+<button class="fixed bottom-24 right-6 z-50 bg-primary text-on-primary rounded-full px-6 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.16)] flex items-center gap-2 active:scale-90 transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">add</span>
+<span class="font-label-md">+ Devis</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-6 left-0 right-0 w-full z-50 flex justify-around items-center px-4 max-w-[600px] mx-auto">
+<div class="bg-surface-container-lowest shadow-[0_8px_24px_rgba(0,0,0,0.12)] rounded-full w-full flex justify-around items-center p-2 py-3">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-all duration-300" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm-mobile mt-1">Accueil</span>
+</a>
+<!-- Documents -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-all duration-300" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm-mobile mt-1">Documents</span>
+</a>
+<!-- Ventes (ACTIVE) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 shadow-sm transition-all duration-300" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+<span class="font-label-sm-mobile mt-1">Ventes</span>
+</a>
+<!-- Clients -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-all duration-300" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-sm-mobile mt-1">Clients</span>
+</a>
+<!-- More -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-all duration-300" href="#">
+<span class="material-symbols-outlined">more_horiz</span>
+<span class="font-label-sm-mobile mt-1">Plus</span>
+</a>
+</div>
+</nav>
+<script>
+        // Micro-interaction for cards on hover/touch
+        const cards = document.querySelectorAll('.bg-surface-container-lowest');
+        cards.forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

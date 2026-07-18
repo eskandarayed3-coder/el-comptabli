@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configuration du profil - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e6e8e8",
+                    "on-tertiary-fixed": "#00201d",
+                    "on-surface-variant": "#3e4947",
+                    "primary-fixed": "#9cf2e8",
+                    "inverse-on-surface": "#eff1f1",
+                    "status-premium": "#7C3AED",
+                    "on-secondary-container": "#006f64",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#a3faef",
+                    "tint-danger": "#FDE8E6",
+                    "error-container": "#ffdad6",
+                    "primary": "#005c55",
+                    "secondary-container": "#6df5e1",
+                    "on-background": "#191c1d",
+                    "background": "#f8fafa",
+                    "status-danger": "#DC2626",
+                    "on-secondary-fixed": "#00201c",
+                    "surface-container-highest": "#e1e3e3",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#e1e3e3",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "on-primary-fixed-variant": "#00504a",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#abefe7",
+                    "surface-dim": "#d8dada",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#0d5b55",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "surface-container": "#eceeee",
+                    "tint-warning": "#FEF3E2",
+                    "status-warning": "#D97706",
+                    "secondary-fixed": "#71f8e4",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed": "#00201d",
+                    "tertiary-container": "#2f746d",
+                    "on-error-container": "#93000a",
+                    "inverse-primary": "#80d5cb",
+                    "on-surface": "#191c1d",
+                    "primary-container": "#0f766e",
+                    "text-secondary": "#6B7280",
+                    "on-secondary-fixed-variant": "#005048",
+                    "outline-variant": "#bdc9c6",
+                    "secondary": "#006b5f",
+                    "status-success": "#16A34A",
+                    "primary-fixed-dim": "#80d5cb",
+                    "inverse-surface": "#2e3131",
+                    "surface-tint": "#006a63",
+                    "surface-container-low": "#f2f4f4",
+                    "text-primary": "#1A1A1A",
+                    "surface": "#f8fafa",
+                    "tint-info": "#EEF2FF",
+                    "surface-bright": "#f8fafa",
+                    "on-tertiary-container": "#b3f7ee",
+                    "tint-success": "#E6F5F3",
+                    "outline": "#6e7977"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "24": "24px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "stack-xs": "4px",
+                    "container-padding": "20px",
+                    "element-gap": "16px",
+                    "stack-sm": "12px"
+            },
+            "fontFamily": {
+                    "stat-display": ["Inter"],
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            color: #191c1d;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #005c55;
+        }
+        .toggle-checkbox:checked + .toggle-label .toggle-dot {
+            transform: translateX(100%);
+        }
+        .custom-card-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen max-w-[390px] mx-auto bg-background">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky bg-background z-40 flex items-center justify-between px-container-padding h-16 max-w-[600px] mx-auto">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm-mobile text-headline-sm-mobile md:text-headline-sm text-primary">Configuration du profil</h1>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</header>
+<main class="flex-grow px-container-padding pt-6 pb-24 space-y-6">
+<!-- Hero Section -->
+<div class="space-y-2">
+<h2 class="font-headline-md text-headline-md text-on-background">Dernière étape</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Configurez vos accès pour une expérience optimale avec votre assistant fiscal.</p>
+</div>
+<!-- Permissions Container -->
+<div class="space-y-4">
+<!-- Row 1: Notifications -->
+<div class="bg-tint-success rounded-24 p-5 flex items-center gap-4 custom-card-shadow border border-white/50">
+<div class="w-12 h-12 rounded-full bg-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-sm text-headline-sm-mobile text-primary">Notifications</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">pour tes rappels d'échéances</p>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-0 h-0 opacity-0" id="toggle-notifications" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-container-highest cursor-pointer transition-colors duration-200" for="toggle-notifications">
+<span class="toggle-dot absolute block w-6 h-6 rounded-full bg-white border-2 border-transparent transition-transform duration-200 ease-in-out transform shadow-sm"></span>
+</label>
+</div>
+</div>
+<!-- Row 2: Camera -->
+<div class="bg-tint-success rounded-24 p-5 flex items-center gap-4 custom-card-shadow border border-white/50">
+<div class="w-12 h-12 rounded-full bg-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="photo_camera">photo_camera</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-sm text-headline-sm-mobile text-primary">Appareil photo</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">pour scanner tes factures</p>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-0 h-0 opacity-0" id="toggle-camera" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-container-highest cursor-pointer transition-colors duration-200" for="toggle-camera">
+<span class="toggle-dot absolute block w-6 h-6 rounded-full bg-white border-2 border-transparent transition-transform duration-200 ease-in-out transform shadow-sm"></span>
+</label>
+</div>
+</div>
+<!-- Row 3: Storage -->
+<div class="bg-surface-container-low rounded-24 p-5 flex items-center gap-4 custom-card-shadow">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="folder_open">folder_open</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-sm text-headline-sm-mobile text-on-surface">Stockage</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">pour importer des PDF</p>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-0 h-0 opacity-0" id="toggle-storage" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-container-highest cursor-pointer transition-colors duration-200" for="toggle-storage">
+<span class="toggle-dot absolute block w-6 h-6 rounded-full bg-white border-2 border-transparent transition-transform duration-200 ease-in-out transform shadow-sm"></span>
+</label>
+</div>
+</div>
+</div>
+<!-- Illustration / Empty Space for Mobile Focus -->
+<div class="flex justify-center pt-8 opacity-40 grayscale">
+<span class="material-symbols-outlined text-[64px]" data-icon="security" style="font-variation-settings: 'opsz' 48;">security</span>
+</div>
+</main>
+<!-- Bottom Actions & Disclaimer -->
+<footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] bg-background/80 backdrop-blur-lg px-container-padding pb-6 space-y-4">
+<!-- Main Action -->
+<button class="w-full bg-primary text-on-primary py-4 rounded-full font-headline-sm text-headline-sm-mobile hover:bg-primary-container transition-all active:scale-95 shadow-lg flex items-center justify-center gap-2">
+            Terminer
+            <span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+</button>
+<!-- Pedagogical Disclaimer -->
+<div class="bg-surface-container-low rounded-xl p-3">
+<p class="font-label-sm text-[10px] leading-relaxed text-on-surface-variant text-center">
+<span class="font-bold uppercase">Disclaimer :</span> El Comptabli est un outil pédagogique d'aide à la gestion fiscale. Cette application ne remplace en aucun cas les services d'un expert-comptable agréé ou d'un conseiller fiscal professionnel.
+            </p>
+</div>
+</footer>
+<!-- Bottom Navigation Shell (Initially Suppressed for focused journey, but logic dictates it can exist if it were a top-level screen. However, per "The Destination Rule", this is a Task-Focused/Onboarding sub-page, so it is suppressed.) -->
+<script>
+        // Handle Switch Interactions
+        document.querySelectorAll('.toggle-checkbox').forEach(toggle => {
+            toggle.addEventListener('change', (e) => {
+                const parent = e.target.closest('.rounded-24');
+                const icon = parent.querySelector('.material-symbols-outlined');
+                
+                if (e.target.checked) {
+                    if (parent.classList.contains('bg-surface-container-low')) {
+                        parent.classList.remove('bg-surface-container-low');
+                        parent.classList.add('bg-tint-success');
+                        icon.classList.remove('text-on-surface-variant');
+                        icon.classList.add('text-primary');
+                        icon.parentElement.classList.remove('bg-surface-container-highest');
+                        icon.parentElement.classList.add('bg-on-primary');
+                    }
+                } else {
+                    if (parent.classList.contains('bg-tint-success')) {
+                        parent.classList.remove('bg-tint-success');
+                        parent.classList.add('bg-surface-container-low');
+                        icon.classList.remove('text-primary');
+                        icon.classList.add('text-on-surface-variant');
+                        icon.parentElement.classList.remove('bg-on-primary');
+                        icon.parentElement.classList.add('bg-surface-container-highest');
+                    }
+                }
+            });
+        });
+
+        // Add subtle haptic simulation on button click
+        document.querySelector('button').addEventListener('click', function() {
+            if (window.navigator.vibrate) {
+                window.navigator.vibrate(10);
+            }
+        });
+    </script>
+</body></html>

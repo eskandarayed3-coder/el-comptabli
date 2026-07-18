@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mes documents 📁 - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#00504a",
+                      "tertiary": "#0d5b55",
+                      "secondary-fixed": "#71f8e4",
+                      "tint-success": "#E6F5F3",
+                      "tertiary-fixed-dim": "#90d3cb",
+                      "outline": "#6e7977",
+                      "on-tertiary-container": "#b3f7ee",
+                      "status-warning": "#D97706",
+                      "status-success": "#16A34A",
+                      "tertiary-fixed": "#abefe7",
+                      "on-error": "#ffffff",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "on-tertiary-fixed": "#00201d",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "background": "#f8fafa",
+                      "tint-warning": "#FEF3E2",
+                      "surface-dim": "#d8dada",
+                      "secondary-container": "#6df5e1",
+                      "surface-container-highest": "#e1e3e3",
+                      "on-primary-fixed": "#00201d",
+                      "surface-container-high": "#e6e8e8",
+                      "on-background": "#191c1d",
+                      "surface-variant": "#e1e3e3",
+                      "secondary": "#006b5f",
+                      "primary-fixed": "#9cf2e8",
+                      "on-surface-variant": "#3e4947",
+                      "on-secondary": "#ffffff",
+                      "surface-container-low": "#f2f4f4",
+                      "status-premium": "#7C3AED",
+                      "on-primary": "#ffffff",
+                      "text-secondary": "#6B7280",
+                      "status-danger": "#DC2626",
+                      "on-surface": "#191c1d",
+                      "primary-fixed-dim": "#80d5cb",
+                      "surface-tint": "#006a63",
+                      "tertiary-container": "#2f746d",
+                      "surface": "#f8fafa",
+                      "on-tertiary": "#ffffff",
+                      "outline-variant": "#bdc9c6",
+                      "tint-danger": "#FDE8E6",
+                      "text-primary": "#1A1A1A",
+                      "primary-container": "#0f766e",
+                      "on-secondary-fixed-variant": "#005048",
+                      "inverse-on-surface": "#eff1f1",
+                      "tint-info": "#EEF2FF",
+                      "surface-bright": "#f8fafa",
+                      "on-tertiary-fixed-variant": "#00504a",
+                      "inverse-surface": "#2e3131",
+                      "inverse-primary": "#80d5cb",
+                      "primary": "#005c55",
+                      "on-primary-container": "#a3faef",
+                      "surface-container-lowest": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-secondary-container": "#006f64"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "2xl": "24px",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "element-gap": "16px",
+                      "base": "8px",
+                      "stack-xs": "4px",
+                      "stack-sm": "12px",
+                      "container-padding": "20px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Inter"],
+                      "stat-display": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "label-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "headline-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            user-select: none;
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .fab-shadow {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col items-center">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky z-50 bg-background flex justify-between items-center px-container-padding py-stack-sm w-full max-w-[600px] mx-auto transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="font-bold text-headline-sm">EC</span>
+</div>
+<h1 class="font-headline-sm text-headline-sm text-primary">Mes documents</h1>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content Container -->
+<main class="w-full max-w-[600px] flex flex-col gap-6 px-container-padding pt-4 pb-32">
+<!-- Search Section -->
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container transition-all" placeholder="Rechercher un document..." type="text"/>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-3 overflow-x-auto hide-scrollbar -mx-5 px-5 py-1">
+<button class="px-5 py-2 rounded-full bg-primary text-on-primary whitespace-nowrap font-label-md transition-all active:scale-95">Tous</button>
+<button class="px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant whitespace-nowrap font-label-md hover:bg-surface-container-highest transition-all active:scale-95">Factures</button>
+<button class="px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant whitespace-nowrap font-label-md hover:bg-surface-container-highest transition-all active:scale-95">Reçus</button>
+<button class="px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant whitespace-nowrap font-label-md hover:bg-surface-container-highest transition-all active:scale-95">Déclarations</button>
+<button class="px-5 py-2 rounded-full bg-surface-container-high text-on-surface-variant whitespace-nowrap font-label-md hover:bg-surface-container-highest transition-all active:scale-95">Exports</button>
+</div>
+<!-- Document Grid -->
+<div class="grid grid-cols-2 gap-4">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 custom-shadow flex flex-col gap-3 hover:translate-y-[-2px] transition-transform cursor-pointer group">
+<div class="aspect-square w-full rounded-xl bg-secondary-fixed-dim/20 flex items-center justify-center overflow-hidden relative">
+<span class="material-symbols-outlined text-secondary text-[40px]" data-icon="description">description</span>
+<div class="absolute top-2 left-2 px-2 py-1 bg-tint-success text-status-success rounded-lg font-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+                        Validé
+                    </div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-label-md text-on-surface line-clamp-1 group-hover:text-primary transition-colors">Facture STEG juil</h3>
+<div class="flex justify-between items-center text-outline text-[11px] font-label-sm">
+<span>16 juil</span>
+<span>1.2 Mo</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 custom-shadow flex flex-col gap-3 hover:translate-y-[-2px] transition-transform cursor-pointer group">
+<div class="aspect-square w-full rounded-xl bg-secondary-fixed-dim/20 flex items-center justify-center overflow-hidden relative">
+<span class="material-symbols-outlined text-secondary text-[40px]" data-icon="receipt_long">receipt_long</span>
+<div class="absolute top-2 left-2 px-2 py-1 bg-tint-warning text-status-warning rounded-lg font-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-warning"></span>
+                        À vérifier
+                    </div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-label-md text-on-surface line-clamp-1 group-hover:text-primary transition-colors">Reçu Carrefour</h3>
+<div class="flex justify-between items-center text-outline text-[11px] font-label-sm">
+<span>15 juil</span>
+<span>0.8 Mo</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 custom-shadow flex flex-col gap-3 hover:translate-y-[-2px] transition-transform cursor-pointer group">
+<div class="aspect-square w-full rounded-xl bg-secondary-fixed-dim/20 flex items-center justify-center overflow-hidden relative">
+<span class="material-symbols-outlined text-secondary text-[40px]" data-icon="article">article</span>
+<div class="absolute top-2 left-2 px-2 py-1 bg-tint-success text-status-success rounded-lg font-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+                        Validé
+                    </div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-label-md text-on-surface line-clamp-1 group-hover:text-primary transition-colors">Déclaration TVA</h3>
+<div class="flex justify-between items-center text-outline text-[11px] font-label-sm">
+<span>12 juil</span>
+<span>2.4 Mo</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 custom-shadow flex flex-col gap-3 hover:translate-y-[-2px] transition-transform cursor-pointer group">
+<div class="aspect-square w-full rounded-xl bg-secondary-fixed-dim/20 flex items-center justify-center overflow-hidden relative">
+<span class="material-symbols-outlined text-secondary text-[40px]" data-icon="receipt">receipt</span>
+<div class="absolute top-2 left-2 px-2 py-1 bg-tint-success text-status-success rounded-lg font-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+                        Validé
+                    </div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-label-md text-on-surface line-clamp-1 group-hover:text-primary transition-colors">Loyer Bureau</h3>
+<div class="flex justify-between items-center text-outline text-[11px] font-label-sm">
+<span>10 juil</span>
+<span>1.5 Mo</span>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 custom-shadow flex flex-col gap-3 hover:translate-y-[-2px] transition-transform cursor-pointer group">
+<div class="aspect-square w-full rounded-xl bg-secondary-fixed-dim/20 flex items-center justify-center overflow-hidden relative">
+<span class="material-symbols-outlined text-secondary text-[40px]" data-icon="task">task</span>
+<div class="absolute top-2 left-2 px-2 py-1 bg-tint-warning text-status-warning rounded-lg font-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-warning"></span>
+                        À vérifier
+                    </div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-label-md text-on-surface line-clamp-1 group-hover:text-primary transition-colors">Acompte IS</h3>
+<div class="flex justify-between items-center text-outline text-[11px] font-label-sm">
+<span>05 juil</span>
+<span>3.1 Mo</span>
+</div>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 custom-shadow flex flex-col gap-3 hover:translate-y-[-2px] transition-transform cursor-pointer group">
+<div class="aspect-square w-full rounded-xl bg-secondary-fixed-dim/20 flex items-center justify-center overflow-hidden relative">
+<span class="material-symbols-outlined text-secondary text-[40px]" data-icon="description">description</span>
+<div class="absolute top-2 left-2 px-2 py-1 bg-tint-success text-status-success rounded-lg font-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+                        Validé
+                    </div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-label-md text-on-surface line-clamp-1 group-hover:text-primary transition-colors">Facture Ooredoo</h3>
+<div class="flex justify-between items-center text-outline text-[11px] font-label-sm">
+<span>01 juil</span>
+<span>1.1 Mo</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Storage Info -->
+<p class="text-center text-outline text-label-sm mt-4">34 documents · 128 Mo</p>
+<!-- Disclaimer Banner -->
+<div class="bg-surface-container-low rounded-xl p-3 mt-4 text-center">
+<p class="text-[10px] text-on-surface-variant font-label-sm italic">
+                El Comptabli est un outil pédagogique et ne remplace pas les conseils d'un expert-comptable agréé.
+            </p>
+</div>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-28 right-6 bg-primary text-on-primary flex items-center gap-2 px-6 py-4 rounded-full fab-shadow z-50 hover:bg-primary-container transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="font-headline-sm text-sm">Ajouter</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[400px] rounded-full z-50 bg-surface-container-lowest shadow-[0_8px_24px_rgba(0,0,0,0.12)] flex justify-around items-center px-6 py-3">
+<button class="flex flex-col items-center justify-center text-outline transition-all hover:bg-surface-container-high rounded-full p-2">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline transition-all hover:bg-surface-container-high rounded-full p-2">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+</button>
+<!-- Active: Document Scanner / Documents -->
+<button class="flex flex-col items-center justify-center text-secondary relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-secondary after:rounded-full transition-all p-2">
+<span class="material-symbols-outlined" data-icon="document_scanner">document_scanner</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline transition-all hover:bg-surface-container-high rounded-full p-2">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline transition-all hover:bg-surface-container-high rounded-full p-2">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction for filter chips
+        const chips = document.querySelectorAll('.flex.gap-3 button');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => {
+                    c.classList.remove('bg-primary', 'text-on-primary');
+                    c.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+                });
+                chip.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+                chip.classList.add('bg-primary', 'text-on-primary');
+            });
+        });
+
+        // Simple scale effect on document cards
+        const cards = document.querySelectorAll('.grid > div');
+        cards.forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.97)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

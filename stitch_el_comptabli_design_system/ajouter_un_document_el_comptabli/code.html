@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ajouter un document - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0f766e",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#e6e8e8",
+                        "surface-variant": "#e1e3e3",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "on-tertiary-fixed": "#00201d",
+                        "surface-container": "#eceeee",
+                        "tint-success": "#E6F5F3",
+                        "secondary-fixed": "#71f8e4",
+                        "inverse-primary": "#80d5cb",
+                        "on-primary-container": "#a3faef",
+                        "on-secondary-fixed-variant": "#005048",
+                        "text-primary": "#1A1A1A",
+                        "text-secondary": "#6B7280",
+                        "on-primary-fixed-variant": "#00504a",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c1d",
+                        "inverse-surface": "#2e3131",
+                        "tint-warning": "#FEF3E2",
+                        "secondary": "#006b5f",
+                        "primary-fixed": "#9cf2e8",
+                        "on-secondary-fixed": "#00201c",
+                        "tint-danger": "#FDE8E6",
+                        "outline": "#6e7977",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "secondary-container": "#6df5e1",
+                        "on-secondary-container": "#006f64",
+                        "surface-container-highest": "#e1e3e3",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#eff1f1",
+                        "surface": "#f8fafa",
+                        "tertiary-fixed": "#abefe7",
+                        "outline-variant": "#bdc9c6",
+                        "status-warning": "#D97706",
+                        "on-surface": "#191c1d",
+                        "on-surface-variant": "#3e4947",
+                        "status-danger": "#DC2626",
+                        "surface-container-low": "#f2f4f4",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "surface-dim": "#d8dada",
+                        "tertiary": "#0d5b55",
+                        "surface-tint": "#006a63",
+                        "tertiary-container": "#2f746d",
+                        "status-premium": "#7C3AED",
+                        "primary-fixed-dim": "#80d5cb",
+                        "tint-info": "#EEF2FF",
+                        "on-primary-fixed": "#00201d",
+                        "error": "#ba1a1a",
+                        "primary": "#005c55",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8fafa",
+                        "surface-container-lowest": "#ffffff",
+                        "status-success": "#16A34A",
+                        "background": "#f8fafa"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "element-gap": "16px",
+                        "stack-sm": "12px",
+                        "base": "8px",
+                        "stack-xs": "4px",
+                        "container-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafa; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bottom-sheet-overlay {
+            background-color: rgba(25, 28, 29, 0.4);
+            backdrop-filter: blur(4px);
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .nav-shadow {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col items-center overflow-hidden">
+<!-- BACKGROUND CONTENT (Mes documents screen emulation) -->
+<div class="w-full max-w-[600px] h-screen bg-background p-container-padding flex flex-col gap-6 opacity-60 pointer-events-none">
+<!-- Top App Bar Mock -->
+<header class="flex justify-between items-center py-base">
+<span class="font-headline-lg text-headline-lg font-black text-primary">EC</span>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary">notifications</span>
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden border-2 border-primary-container/20">
+<img class="w-full h-full object-cover" data-alt="A close-up professional portrait of a confident Tunisian business woman in her 30s, dressed in modern business casual attire. The lighting is soft and natural, emphasizing a bright, trustworthy, and friendly fintech brand aesthetic. The background is a clean, minimalist office setting with soft teal accents and generous white space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw1hZTDonii_MWfJ62ieM2uK9m_BAbVyLKUKO8zVqotX9TMShZQg3NQDD8FROhO3YuptCkoQIjU2eigdIbOAPaWadCXNIIUE_mQNRruLucqGfF3xRZzF0OoBGJ7z1xCEFbpZExC4dJai0ZsIjCMw7IgzBK81kvvKaKyt1C6rC-IsNbFjo4R6a4XTxjVbSzNqU2asHtBMdAgCkmlCrniu1OFLi1yQudQYsyA2SZTwc-gsdC9t_96N2VNm07bPBaRYKGck1J2NJb7w"/>
+</div>
+</div>
+</header>
+<h1 class="font-headline-md text-headline-md text-text-primary">Mes documents</h1>
+<!-- Content Mockups -->
+<div class="flex flex-col gap-4">
+<div class="p-5 bg-tint-info rounded-2xl flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="px-2 py-1 bg-primary text-on-primary text-[10px] rounded-full uppercase font-bold tracking-wider">Payé</span>
+<span class="font-label-sm text-label-sm text-text-secondary">Hier, 14:30</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm">Facture Sonede #882</h3>
+<p class="font-label-md text-label-md text-text-secondary">Extraction automatique complétée par l'IA.</p>
+</div>
+<div class="p-5 bg-tint-warning rounded-2xl flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="px-2 py-1 bg-status-warning text-white text-[10px] rounded-full uppercase font-bold tracking-wider">En attente</span>
+<span class="font-label-sm text-label-sm text-text-secondary">24 Oct, 2023</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm">Loyer Bureau Tunis</h3>
+<p class="font-label-md text-label-md text-text-secondary">Veuillez vérifier les informations extraites.</p>
+</div>
+</div>
+</div>
+<!-- BOTTOM SHEET OVERLAY -->
+<div class="fixed inset-0 bottom-sheet-overlay z-40 flex items-end justify-center transition-opacity duration-300" id="modal-overlay">
+<!-- BOTTOM SHEET MODAL -->
+<div class="w-full max-w-[600px] bg-surface-container-lowest rounded-t-[24px] z-50 flex flex-col animate-slide-up transform translate-y-0 transition-transform duration-500 ease-out" id="bottom-sheet">
+<!-- Drag Handle -->
+<div class="w-full flex justify-center py-4">
+<div class="w-12 h-1.5 bg-surface-variant rounded-full"></div>
+</div>
+<div class="px-container-padding pb-10 flex flex-col gap-8">
+<!-- Header -->
+<div class="flex flex-col gap-1">
+<h2 class="font-headline-md text-headline-md text-text-primary">Ajouter un document</h2>
+<p class="font-label-md text-label-md text-text-secondary">Choisissez une méthode pour importer vos pièces justificatives.</p>
+</div>
+<!-- Upload Options -->
+<div class="flex flex-col gap-3">
+<button class="w-full p-4 bg-tint-info rounded-2xl flex items-center gap-4 active:scale-[0.98] transition-all text-left">
+<div class="w-12 h-12 rounded-xl bg-primary-container/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[28px]">photo_camera</span>
+</div>
+<div>
+<span class="block font-headline-sm text-headline-sm text-primary">Scanner avec l'appareil</span>
+<span class="block font-label-sm text-label-sm text-primary/70">Capture rapide de vos reçus</span>
+</div>
+</button>
+<button class="w-full p-4 bg-tint-success rounded-2xl flex items-center gap-4 active:scale-[0.98] transition-all text-left">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[28px]">image</span>
+</div>
+<div>
+<span class="block font-headline-sm text-headline-sm text-secondary">Depuis la galerie</span>
+<span class="block font-label-sm text-label-sm text-secondary/70">Importer une photo existante</span>
+</div>
+</button>
+<button class="w-full p-4 bg-surface-container-low rounded-2xl flex items-center gap-4 active:scale-[0.98] transition-all text-left">
+<div class="w-12 h-12 rounded-xl bg-on-surface-variant/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-[28px]">description</span>
+</div>
+<div>
+<span class="block font-headline-sm text-headline-sm text-on-surface-variant">Importer un PDF</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant/70">Documents numériques &amp; exports</span>
+</div>
+</button>
+</div>
+<!-- Document Type Filter -->
+<div class="flex flex-col gap-3">
+<h3 class="font-label-md text-label-md font-bold uppercase tracking-widest text-text-secondary">Type de document</h3>
+<div class="flex flex-wrap gap-2">
+<button class="px-5 py-2.5 bg-primary text-on-primary rounded-full font-label-md text-label-md transition-colors">Facture</button>
+<button class="px-5 py-2.5 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md hover:bg-surface-variant transition-colors">Reçu</button>
+<button class="px-5 py-2.5 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md hover:bg-surface-variant transition-colors">Déclaration</button>
+<button class="px-5 py-2.5 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md hover:bg-surface-variant transition-colors">Autre</button>
+</div>
+</div>
+<!-- AI Toggle Row -->
+<div class="flex items-center justify-between p-4 bg-tint-info/50 border border-primary-container/10 rounded-2xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-primary">Analyser avec l'IA</span>
+<span class="font-label-sm text-label-sm text-text-secondary italic">Extraction auto des montants</span>
+</div>
+</div>
+<!-- Toggle Switch -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Primary Action -->
+<button class="w-full bg-primary text-on-primary py-4 rounded-2xl font-headline-sm text-headline-sm flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all">
+<span>Ajouter</span>
+</button>
+<!-- Disclaimer -->
+<p class="text-center font-label-sm text-label-sm text-text-secondary bg-surface-container-low py-2 px-4 rounded-lg">
+                    El Comptabli est un outil pédagogique. Les extractions IA doivent être vérifiées.
+                </p>
+</div>
+</div>
+</div>
+<!-- Navigation Shadow Mockup (shared component logic) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[400px] bg-surface-container-lowest/80 backdrop-blur-md rounded-full px-4 py-3 flex justify-around items-center nav-shadow z-30 opacity-50 pointer-events-none">
+<span class="material-symbols-outlined text-primary">home</span>
+<span class="material-symbols-outlined text-on-surface-variant">chat_bubble</span>
+<div class="bg-primary text-on-primary rounded-full w-12 h-12 flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">account_balance_wallet</span>
+<span class="material-symbols-outlined text-on-surface-variant">menu_book</span>
+</div>
+<script>
+        // Simple Interaction logic
+        const overlay = document.getElementById('modal-overlay');
+        const sheet = document.getElementById('bottom-sheet');
+
+        // Logic to simulate closing when clicking background
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                sheet.classList.add('translate-y-full');
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 300);
+            }
+        });
+
+        // Filter pills interaction
+        const filterButtons = document.querySelectorAll('.flex.flex-wrap.gap-2 button');
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => {
+                    b.classList.remove('bg-primary', 'text-on-primary');
+                    b.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+                });
+                btn.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+                btn.classList.add('bg-primary', 'text-on-primary');
+            });
+        });
+    </script>
+</body></html>

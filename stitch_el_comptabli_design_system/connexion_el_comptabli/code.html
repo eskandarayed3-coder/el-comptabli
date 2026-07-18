@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#0f766e",
+                    "outline-variant": "#bdc9c6",
+                    "on-surface": "#191c1d",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#006f64",
+                    "status-warning": "#D97706",
+                    "error": "#ba1a1a",
+                    "on-tertiary": "#ffffff",
+                    "surface-bright": "#f8fafa",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "tint-warning": "#FEF3E2",
+                    "inverse-on-surface": "#eff1f1",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2e3131",
+                    "surface-variant": "#e1e3e3",
+                    "on-tertiary-fixed": "#00201d",
+                    "error-container": "#ffdad6",
+                    "surface": "#f8fafa",
+                    "on-background": "#191c1d",
+                    "on-primary-fixed-variant": "#00504a",
+                    "surface-container-highest": "#e1e3e3",
+                    "status-premium": "#7C3AED",
+                    "status-success": "#16A34A",
+                    "inverse-primary": "#80d5cb",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "surface-dim": "#d8dada",
+                    "tint-danger": "#FDE8E6",
+                    "tertiary": "#0d5b55",
+                    "secondary-container": "#6df5e1",
+                    "on-secondary-fixed": "#00201c",
+                    "surface-container-high": "#e6e8e8",
+                    "secondary": "#006b5f",
+                    "surface-container": "#eceeee",
+                    "surface-tint": "#006a63",
+                    "primary-fixed-dim": "#80d5cb",
+                    "on-secondary": "#ffffff",
+                    "outline": "#6e7977",
+                    "on-secondary-fixed-variant": "#005048",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "tertiary-fixed": "#abefe7",
+                    "tertiary-container": "#2f746d",
+                    "tint-info": "#EEF2FF",
+                    "text-secondary": "#6B7280",
+                    "text-primary": "#1A1A1A",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#00201d",
+                    "status-danger": "#DC2626",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#71f8e4",
+                    "primary": "#005c55",
+                    "background": "#f8fafa",
+                    "on-surface-variant": "#3e4947",
+                    "surface-container-low": "#f2f4f4",
+                    "tint-success": "#E6F5F3",
+                    "primary-fixed": "#9cf2e8",
+                    "on-tertiary-container": "#b3f7ee",
+                    "on-primary-container": "#a3faef"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "12px",
+                    "base": "8px",
+                    "element-gap": "16px",
+                    "container-padding": "20px",
+                    "stack-xs": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f8fafa;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .pill-active {
+            position: relative;
+        }
+        .pill-active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background-color: #0f766e;
+            border-radius: 99px;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+<!-- Top Navigation / Language Toggle -->
+<header class="w-full max-w-[600px] mx-auto flex justify-end items-center px-container-padding py-stack-sm">
+<button class="bg-surface-container-low hover:bg-surface-variant/50 transition-colors px-4 py-2 rounded-full text-primary font-label-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">language</span>
+<span>FR / عربي</span>
+</button>
+</header>
+<main class="flex-grow flex flex-col items-center justify-start w-full max-w-[600px] mx-auto px-container-padding pt-base">
+<!-- Brand Identity -->
+<div class="flex flex-col items-center mb-10">
+<div class="w-20 h-20 mb-4 animate-in fade-in zoom-in duration-700">
+<img alt="El Comptabli Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLs2gvSOA5sNx9Al5wN7ND-iGjBRIIDepIck9takzF1qzAmNeVXSLJ0dSGw8IZPp1jNdWK6H9DcBOR_r2ucUWBTtwc-NoRcpYtwSkv17hU4tm2iC-N0lC8IHi3RAXOFn5bR_Ns-zfliTJ8P77nEln4buMZTYi6K8ZpAu4XtUC9i-e8zKwBuaWn4czquRnb4Iz-yfFKN5iUEuxpokyTJyvJ4PYxEDkyD56yxFmTzeg_Ms_dwHWOSG_thSTQ"/>
+</div>
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary tracking-tight">
+                El Comptabli
+            </h1>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex w-full justify-center gap-8 mb-8">
+<button class="font-headline-sm text-headline-sm text-primary pill-active transition-all">
+                Connexion
+            </button>
+<button class="font-headline-sm text-headline-sm text-on-surface-variant opacity-60 hover:opacity-100 transition-all">
+                Inscription
+            </button>
+</div>
+<!-- Login Card -->
+<div class="w-full bg-surface-container-lowest rounded-2xl p-container-padding soft-shadow animate-in slide-in-from-bottom-4 duration-500">
+<form class="space-y-6" onsubmit="event.preventDefault();">
+<!-- Email Input -->
+<div class="space-y-2">
+<label class="font-label-md text-on-surface-variant block ml-1" for="email">Adresse e-mail</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-transparent focus:border-primary focus:ring-0 rounded-xl px-4 py-4 text-on-surface transition-all placeholder:text-outline-variant font-body-lg" id="email" placeholder="exemple@domain.tn" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="space-y-2">
+<label class="font-label-md text-on-surface-variant block ml-1" for="password">Mot de passe</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-transparent focus:border-primary focus:ring-0 rounded-xl px-4 py-4 text-on-surface transition-all placeholder:text-outline-variant font-body-lg" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors" onclick="togglePassword()" type="button">
+<span class="material-symbols-outlined" id="eye-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-primary-container hover:bg-primary text-on-primary-container font-headline-sm py-4 rounded-full shadow-lg shadow-primary/20 active:scale-[0.98] transition-all flex justify-center items-center gap-2" type="submit">
+                    Se connecter
+                </button>
+<!-- Forgot Password -->
+<div class="text-center">
+<a class="text-primary font-label-md hover:underline underline-offset-4 decoration-2" href="#">
+                        Mot de passe oublié ?
+                    </a>
+</div>
+</form>
+<!-- Social Divider -->
+<div class="relative my-8 flex items-center py-2">
+<div class="flex-grow border-t border-surface-variant"></div>
+<span class="flex-shrink mx-4 text-on-surface-variant font-label-sm uppercase tracking-widest">ou</span>
+<div class="flex-grow border-t border-surface-variant"></div>
+</div>
+<!-- Social Login -->
+<button class="w-full border-2 border-surface-variant hover:bg-surface-container-low text-on-surface font-label-md py-4 rounded-full transition-all flex justify-center items-center gap-3">
+<svg height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+                Continuer avec Google
+            </button>
+</div>
+<!-- Support Message -->
+<div class="mt-8 bg-tint-info p-4 rounded-2xl flex items-start gap-3 w-full">
+<span class="material-symbols-outlined text-secondary">info</span>
+<p class="text-secondary font-label-sm leading-relaxed">
+                Besoin d'aide pour votre première déclaration ? Notre assistant pédagogique vous guide étape par étape.
+            </p>
+</div>
+</main>
+<!-- Footer Disclaimer -->
+<footer class="w-full max-w-[600px] mx-auto px-container-padding py-8">
+<div class="bg-surface-container-low/50 rounded-lg p-3 text-center">
+<p class="font-label-sm text-[10px] uppercase tracking-wider text-outline-variant">
+                El Comptabli est un outil pédagogique, pas un expert-comptable.
+            </p>
+</div>
+</footer>
+<script>
+        function togglePassword() {
+            const input = document.getElementById('password');
+            const icon = document.getElementById('eye-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = 'visibility_off';
+            } else {
+                input.type = 'password';
+                icon.textContent = 'visibility';
+            }
+        }
+    </script>
+</body></html>

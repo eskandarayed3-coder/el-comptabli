@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "status-premium": "#7C3AED",
+                        "on-tertiary-fixed": "#00201d",
+                        "tertiary-fixed": "#abefe7",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed-variant": "#00504a",
+                        "surface-bright": "#f8fafa",
+                        "surface-tint": "#006a63",
+                        "on-surface-variant": "#3e4947",
+                        "tertiary-container": "#2f746d",
+                        "tint-warning": "#FEF3E2",
+                        "status-success": "#16A34A",
+                        "surface-container": "#eceeee",
+                        "outline-variant": "#bdc9c6",
+                        "inverse-primary": "#80d5cb",
+                        "tint-danger": "#FDE8E6",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#006b5f",
+                        "surface-container-high": "#e6e8e8",
+                        "inverse-surface": "#2e3131",
+                        "on-background": "#191c1d",
+                        "surface-dim": "#d8dada",
+                        "error": "#ba1a1a",
+                        "tint-success": "#E6F5F3",
+                        "status-warning": "#D97706",
+                        "tertiary": "#0d5b55",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "primary-fixed-dim": "#80d5cb",
+                        "secondary-container": "#6df5e1",
+                        "on-primary-container": "#a3faef",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "surface-variant": "#e1e3e3",
+                        "on-secondary-fixed": "#00201c",
+                        "status-danger": "#DC2626",
+                        "on-surface": "#191c1d",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f8fafa",
+                        "outline": "#6e7977",
+                        "text-primary": "#1A1A1A",
+                        "background": "#f8fafa",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e1e3e3",
+                        "secondary-fixed": "#71f8e4",
+                        "primary": "#005c55",
+                        "primary-container": "#0f766e",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#006f64",
+                        "surface-container-low": "#f2f4f4",
+                        "tint-info": "#EEF2FF",
+                        "on-primary-fixed": "#00201d",
+                        "error-container": "#ffdad6",
+                        "text-secondary": "#6B7280",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#9cf2e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "24": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-xs": "4px",
+                        "base": "8px",
+                        "element-gap": "16px",
+                        "stack-sm": "12px",
+                        "container-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "stat-display": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f8fafa;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .active-tab::after {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 4px;
+            background-color: #005c55;
+            border-radius: 50%;
+            margin-top: 4px;
+        }
+        .custom-dashed {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='24' ry='24' stroke='%23005C5566' stroke-width='2' stroke-dasharray='8%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+            border-radius: 24px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center">
+<!-- Top App Bar -->
+<header class="bg-surface sticky top-0 z-50 w-full max-w-[600px] mx-auto flex justify-between items-center px-container-padding py-stack-sm">
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-primary">Scanner un document</h1>
+</div>
+<img alt="EC Logo" class="h-8 w-8 rounded-lg object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDORi7n1IePcdgIBsiMndBpsH0RtTloaWSPL7gNMv5afOn0I5H-89i6M3g2ibP-mMux9kGjSqLpfDLMwalKjgv6gui_juw9aQX5apF0Kk8LPMiGDUQFbD8bOxLPJqKo8CnP4vBB7eESnMhwwBzPmICl2TdQatzpHwrtQJltIUfR2NmvgP8Q8Qq3zdqBgrEbby2egW92NQw2kT6GHRlYsybz06YJzyUsYylIb6DaL9dfcOadiu1CPOMHmfJ3GUW0HRZQbUQmUNShQA"/>
+</header>
+<!-- Main Content -->
+<main class="w-full max-w-[600px] px-container-padding pb-32 pt-element-gap flex flex-col gap-element-gap">
+<!-- Document Type Selector -->
+<section>
+<h2 class="text-label-md font-label-md text-on-surface-variant mb-stack-sm px-1">Type de document</h2>
+<div class="flex gap-stack-sm overflow-x-auto pb-2 no-scrollbar">
+<button class="whitespace-nowrap px-6 py-2.5 rounded-full bg-primary-container text-on-primary font-label-md transition-all">
+                    Avis d'imposition
+                </button>
+<button class="whitespace-nowrap px-6 py-2.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-md hover:bg-surface-container transition-all">
+                    Déclaration
+                </button>
+<button class="whitespace-nowrap px-6 py-2.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-md hover:bg-surface-container transition-all">
+                    Quittance
+                </button>
+<button class="whitespace-nowrap px-6 py-2.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-md hover:bg-surface-container transition-all">
+                    Autre
+                </button>
+</div>
+</section>
+<!-- Upload Zone -->
+<div class="custom-dashed p-10 flex flex-col items-center justify-center text-center bg-tint-success/30 hover:bg-tint-success/50 transition-colors cursor-pointer group">
+<div class="w-16 h-16 bg-primary-fixed-dim rounded-2xl flex items-center justify-center mb-element-gap group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-4xl">document_scanner</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Dépose ton document</h3>
+<p class="text-body-lg text-on-surface-variant mb-element-gap max-w-[240px]">Ou prends une photo directement avec ton mobile</p>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-label-md shadow-sm active:scale-95 transition-transform">
+                Choisir un fichier
+            </button>
+</div>
+<!-- AI Info Card -->
+<div class="bg-tint-info p-element-gap rounded-24 flex items-start gap-4 border border-indigo-100/50">
+<div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-status-premium" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-label-md text-on-tertiary-fixed font-bold mb-1">Intelligence Fiscale</h4>
+<p class="text-label-md text-on-surface-variant leading-relaxed">
+                    Notre IA analyse votre document pour extraire automatiquement les montants, les dates limites et les rubriques fiscales.
+                </p>
+</div>
+</div>
+<!-- Primary Action -->
+<div class="mt-4">
+<button class="w-full bg-primary-container text-on-primary py-5 rounded-full font-headline-sm flex items-center justify-center gap-3 shadow-lg active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+                Scanner le document
+            </button>
+<p class="text-center text-label-sm text-outline mt-stack-sm px-container-padding">
+                Ce service est un outil pédagogique et ne remplace pas l'avis d'un expert-comptable certifié.
+            </p>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-base left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[560px] z-50 bg-surface-container-lowest/80 backdrop-blur-md rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.12)] flex justify-around items-center px-4 py-3">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:scale-105 transition-transform" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm font-label-sm">Accueil</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:scale-105 transition-transform" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="text-label-sm font-label-sm">IA</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold active-tab hover:scale-105 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">document_scanner</span>
+<span class="text-label-sm font-label-sm">Scanner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:scale-105 transition-transform" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-label-sm font-label-sm">Finance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:scale-105 transition-transform" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-label-sm font-label-sm">Savoir</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for the upload zone
+        const dropZone = document.querySelector('.custom-dashed');
+        dropZone.addEventListener('click', () => {
+            // Simulate file picker trigger
+            console.log('File picker triggered');
+        });
+
+        // Tab selection logic
+        const tabs = document.querySelectorAll('.overflow-x-auto button');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('bg-primary-container', 'text-on-primary');
+                    t.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+                });
+                tab.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+                tab.classList.add('bg-primary-container', 'text-on-primary');
+            });
+        });
+    </script>
+</body></html>

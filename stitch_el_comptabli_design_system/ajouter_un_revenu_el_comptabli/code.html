@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#0f766e",
+                        "outline": "#6e7977",
+                        "background": "#f8fafa",
+                        "status-warning": "#D97706",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#2f746d",
+                        "secondary-container": "#6df5e1",
+                        "secondary": "#006b5f",
+                        "on-surface-variant": "#3e4947",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "tint-warning": "#FEF3E2",
+                        "secondary-fixed": "#71f8e4",
+                        "on-primary-fixed-variant": "#00504a",
+                        "tertiary": "#0d5b55",
+                        "tertiary-fixed": "#abefe7",
+                        "primary-fixed-dim": "#80d5cb",
+                        "tint-info": "#EEF2FF",
+                        "status-premium": "#7C3AED",
+                        "on-secondary-container": "#006f64",
+                        "surface-container-low": "#f2f4f4",
+                        "surface-variant": "#e1e3e3",
+                        "surface-tint": "#006a63",
+                        "inverse-primary": "#80d5cb",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "surface-container-high": "#e6e8e8",
+                        "on-tertiary-fixed": "#00201d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "text-secondary": "#6B7280",
+                        "on-surface": "#191c1d",
+                        "status-danger": "#DC2626",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-primary-fixed": "#00201d",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "surface": "#f8fafa",
+                        "surface-container-highest": "#e1e3e3",
+                        "primary-fixed": "#9cf2e8",
+                        "primary": "#005c55",
+                        "on-secondary-fixed": "#00201c",
+                        "tint-success": "#E6F5F3",
+                        "on-secondary": "#ffffff",
+                        "status-success": "#16A34A",
+                        "tint-danger": "#FDE8E6",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#d8dada",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-primary-container": "#a3faef",
+                        "surface-bright": "#f8fafa",
+                        "on-background": "#191c1d",
+                        "inverse-surface": "#2e3131",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#005048",
+                        "surface-container": "#eceeee",
+                        "text-primary": "#1A1A1A",
+                        "outline-variant": "#bdc9c6",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "stack-xs": "4px",
+                        "stack-sm": "12px",
+                        "base": "8px",
+                        "element-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "stat-display": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            user-select: none;
+        }
+        .bottom-sheet-shadow {
+            box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08);
+        }
+        .drag-handle {
+            width: 32px;
+            height: 4px;
+            background-color: #E1E3E3;
+            border-radius: 2px;
+        }
+        body {
+            background-color: #f8fafa;
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for subtle feel */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bdc9c6;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+<!-- Background: Dimmed Income List (The "Canvas") -->
+<main class="fixed inset-0 bg-background pointer-events-none p-container-padding">
+<header class="flex justify-between items-center mb-8 pt-4">
+<img alt="Logo" class="w-8 h-8 rounded-lg grayscale opacity-30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgRnDZH1iTf-FpY6ChYagoD83N7LvDYgfPnDy-fkfclxLab-oxT6nTD_LYNbI1igiHR1eyrYKtlsO8MovAcBqPEKP41oAj2U-RHPLjn8gd74ET2Ae2y5lO0QB5PNBOLittJOTsjZbMwX3e4DZG97kKXQt5XKZX74b8-s5-8qwbwUT3RZTimtgGjemaEWKyVGRcQAIF-Hm1iejn-hr6g4LrfxNtInPTB-RvKKvdInFGP1sbri2xRkO78B2CuBfH3hBwiJPcYLcC0g"/>
+<span class="material-symbols-outlined text-outline">notifications</span>
+</header>
+<h1 class="font-headline-md text-headline-md text-on-surface mb-6 opacity-40">Revenus récents</h1>
+<div class="space-y-4">
+<div class="p-5 bg-surface-container-lowest rounded-3xl border border-outline-variant/30 opacity-40">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tint-success flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Digital Agency LTD</p>
+<p class="text-[12px] text-on-surface-variant">Ventes • 12 juil. 2026</p>
+</div>
+</div>
+<p class="font-headline-sm text-headline-sm text-secondary">1,250 DT</p>
+</div>
+</div>
+<div class="p-5 bg-surface-container-lowest rounded-3xl border border-outline-variant/30 opacity-40">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tint-info flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">school</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Formation Python</p>
+<p class="text-[12px] text-on-surface-variant">Formation • 10 juil. 2026</p>
+</div>
+</div>
+<p class="font-headline-sm text-headline-sm text-primary">450 DT</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Overlay Dimmer -->
+<div class="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-40 transition-opacity duration-300"></div>
+<!-- Bottom Sheet Modal -->
+<div class="fixed bottom-0 left-0 right-0 z-50 flex justify-center">
+<div class="bg-white w-full max-w-[600px] h-[85vh] rounded-t-[32px] bottom-sheet-shadow flex flex-col overflow-hidden animate-slide-up">
+<!-- Handle & Close Header -->
+<div class="flex flex-col items-center pt-3 pb-2 px-6">
+<div class="drag-handle mb-4"></div>
+<div class="w-full flex justify-between items-center">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Ajouter un revenu</h2>
+<button class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</button>
+</div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto px-6 pb-24">
+<!-- Amount Section -->
+<div class="py-8 text-center">
+<div class="inline-flex items-baseline gap-2">
+<span class="font-stat-display text-[56px] text-primary">850</span>
+<span class="text-headline-sm font-light text-on-surface-variant">DT</span>
+</div>
+<p class="text-label-sm text-on-surface-variant/60 font-medium">MONTANT DU REVENU</p>
+</div>
+<!-- Fields -->
+<div class="space-y-6">
+<!-- Client -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1">Client</label>
+<div class="w-full h-14 bg-surface-container-low rounded-2xl flex items-center px-4 border border-transparent focus-within:border-primary/20 transition-all">
+<span class="material-symbols-outlined text-outline mr-3">store</span>
+<span class="font-body-lg text-body-lg text-on-surface">Wafa Trading</span>
+</div>
+</div>
+<!-- Catégorie -->
+<div class="space-y-3">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1">Catégorie</label>
+<div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+<button class="whitespace-nowrap px-5 py-2.5 bg-primary text-white rounded-full font-label-md text-label-md transition-all active:scale-95">Ventes</button>
+<button class="whitespace-nowrap px-5 py-2.5 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md transition-all active:scale-95">Services</button>
+<button class="whitespace-nowrap px-5 py-2.5 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md transition-all active:scale-95">Formation</button>
+<button class="whitespace-nowrap px-5 py-2.5 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md transition-all active:scale-95">Autre</button>
+</div>
+</div>
+<!-- Date -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1">Date</label>
+<div class="w-full h-14 bg-surface-container-low rounded-2xl flex items-center justify-between px-4">
+<span class="font-body-lg text-body-lg text-on-surface">16 juillet 2026</span>
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+</div>
+</div>
+<!-- Statut -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1">Statut</label>
+<div class="p-1 bg-surface-container-low rounded-2xl flex">
+<button class="flex-1 py-3 bg-white text-primary font-label-md text-label-md rounded-xl shadow-sm transition-all duration-200">Payé</button>
+<button class="flex-1 py-3 text-on-surface-variant font-label-md text-label-md rounded-xl transition-all duration-200">En attente</button>
+</div>
+</div>
+<!-- TVA Section -->
+<div class="bg-tint-success/50 p-5 rounded-3xl border border-secondary-fixed-dim/20">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">receipt_long</span>
+<span class="font-label-md text-label-md text-on-secondary-container">Facturé avec TVA 19%</span>
+</div>
+<!-- Custom Toggle -->
+<div class="w-12 h-7 bg-secondary rounded-full flex items-center px-1">
+<div class="w-5 h-5 bg-white rounded-full shadow-sm translate-x-5 transition-transform"></div>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-secondary pl-9">TVA : 135,7 DT</p>
+</div>
+<!-- Note -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1">Note (Optionnel)</label>
+<textarea class="w-full p-4 bg-surface-container-low rounded-2xl border-none focus:ring-1 focus:ring-primary/30 text-body-lg text-on-surface min-h-[100px] resize-none placeholder:text-outline-variant" placeholder="Ajouter une note..."></textarea>
+</div>
+</div>
+<!-- Disclaimer -->
+<div class="mt-8 mb-4 p-3 bg-surface-container rounded-xl text-center">
+<p class="text-[10px] text-on-surface-variant/60 leading-relaxed uppercase tracking-wider">
+                        El Comptabli est un outil pédagogique. Consultez un expert pour toute certification légale.
+                    </p>
+</div>
+</div>
+<!-- Footer Action Button -->
+<div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white via-white to-transparent">
+<button class="w-full h-16 bg-primary-container text-white rounded-full font-headline-sm text-headline-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all hover:bg-primary shadow-lg shadow-primary-container/20">
+<span>Enregistrer</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Micro-interaction script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Pill toggle simulation
+            const pills = document.querySelectorAll('.flex.gap-2.overflow-x-auto button');
+            pills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    pills.forEach(p => {
+                        p.classList.remove('bg-primary', 'text-white');
+                        p.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+                    });
+                    pill.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+                    pill.classList.add('bg-primary', 'text-white');
+                });
+            });
+
+            // Segmented control simulation
+            const statusButtons = document.querySelectorAll('.p-1.bg-surface-container-low.rounded-2xl button');
+            statusButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    statusButtons.forEach(b => {
+                        b.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                        b.classList.add('text-on-surface-variant');
+                    });
+                    btn.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                    btn.classList.remove('text-on-surface-variant');
+                });
+            });
+        });
+    </script>
+<style>
+        @keyframes slide-up {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .animate-slide-up {
+            animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>

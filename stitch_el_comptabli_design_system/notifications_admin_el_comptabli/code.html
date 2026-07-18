@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli Admin - Gestion des Notifications</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#9cf2e8",
+                        "text-secondary": "#6B7280",
+                        "on-primary-fixed": "#00201d",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#006f64",
+                        "surface-container-low": "#f2f4f4",
+                        "tint-info": "#EEF2FF",
+                        "surface-container-highest": "#e1e3e3",
+                        "secondary-fixed": "#71f8e4",
+                        "primary": "#005c55",
+                        "primary-container": "#0f766e",
+                        "on-primary": "#ffffff",
+                        "text-primary": "#1A1A1A",
+                        "background": "#f8fafa",
+                        "on-error": "#ffffff",
+                        "on-surface": "#191c1d",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f8fafa",
+                        "outline": "#6e7977",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "surface-variant": "#e1e3e3",
+                        "on-secondary-fixed": "#00201c",
+                        "status-danger": "#DC2626",
+                        "tertiary": "#0d5b55",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "primary-fixed-dim": "#80d5cb",
+                        "secondary-container": "#6df5e1",
+                        "on-primary-container": "#a3faef",
+                        "surface-dim": "#d8dada",
+                        "error": "#ba1a1a",
+                        "tint-success": "#E6F5F3",
+                        "status-warning": "#D97706",
+                        "tint-danger": "#FDE8E6",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#006b5f",
+                        "surface-container-high": "#e6e8e8",
+                        "inverse-surface": "#2e3131",
+                        "on-background": "#191c1d",
+                        "tint-warning": "#FEF3E2",
+                        "status-success": "#16A34A",
+                        "surface-container": "#eceeee",
+                        "outline-variant": "#bdc9c6",
+                        "inverse-primary": "#80d5cb",
+                        "on-surface-variant": "#3e4947",
+                        "tertiary-container": "#2f746d",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed-variant": "#00504a",
+                        "surface-bright": "#f8fafa",
+                        "surface-tint": "#006a63",
+                        "status-premium": "#7C3AED",
+                        "on-tertiary-fixed": "#00201d",
+                        "tertiary-fixed": "#abefe7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "12px",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "arabic": ["Noto Sans Arabic"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .arabic-text { font-family: 'Noto Sans Arabic', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #bdc9c6; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #005c55; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-lg overflow-hidden">
+<!-- Sidebar Navigation Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col bg-surface-container-low shadow-sm z-50">
+<div class="flex flex-col h-full p-6">
+<div class="mb-10 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Serene Admin</h1>
+<p class="text-[11px] uppercase tracking-wider text-outline">Gestion Fiscale</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Tableau de bord</span>
+</a>
+<a class="flex items-center gap-3 bg-secondary-container text-on-secondary-container px-4 py-3 font-bold rounded-xl scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Déclarations</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Contribuables</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Paiements</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-label-md text-label-md">Documents</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Paramètres</span>
+</a>
+</nav>
+<div class="mt-auto space-y-2 pt-6 border-t border-outline-variant">
+<button class="w-full bg-primary-container text-on-primary py-3 rounded-xl font-bold mb-4 shadow-sm active:scale-95 transition-all">
+                    Nouveau Dossier
+                </button>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<a class="flex items-center gap-3 text-status-danger px-4 py-2 hover:bg-tint-danger transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Déconnexion</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Top Navbar Shell -->
+<header class="flex justify-between items-center h-16 px-8 ml-64 w-[calc(100%-16rem)] bg-surface border-b border-outline-variant sticky top-0 z-40">
+<div class="flex items-center gap-6 flex-1">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Admin Console</h2>
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container rounded-full border-none focus:ring-2 focus:ring-primary text-label-md" placeholder="Rechercher un contribuable, une déclaration..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-surface-container-high p-2 rounded-full transition-all text-on-surface-variant relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-status-danger rounded-full border-2 border-surface"></span>
+</button>
+<button class="hover:bg-surface-container-high p-2 rounded-full transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">history</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<div class="text-right">
+<p class="font-label-md text-label-md font-bold">Admin El Comptabli</p>
+<p class="text-[11px] text-outline">Super Utilisateur</p>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A professional high-definition close-up portrait of a Mediterranean male executive in a modern workspace, soft lighting, minimalist background, corporate fintech aesthetic with teal accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuARxZEzW8-jxTwl0urF7FF7pofpg9xcDHXU3z_CNMaMglzqDuiYFlMQd3hRStbCZrEXo0S4DSiEyHG05XtKIjuQ52ZUeKJlQfqlcINPbl2KVkLpx6JUzieCD46v6QqOcwnHVyc2ee0LX5KwkGbtYsAHYm3yrTvgVZVxUgIffVJ9KAqMpIPYW1MMVSH1bBVOyfubEbAMFtlUYWhMt3_bTwgzfQyY08C8ZWzEu-kaSJ3AXsh6xvKiymw2s-1atCpLqdq6mxlg86M1pg"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-64 p-8 h-[calc(100vh-4rem)] overflow-y-auto bg-background">
+<div class="max-w-6xl mx-auto space-y-8">
+<!-- Page Header -->
+<section class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Gestion des Notifications</h2>
+<p class="text-on-surface-variant mt-1">Communiquez efficacement avec vos contribuables en français et en arabe.</p>
+</div>
+<div class="bg-tint-info px-4 py-2 rounded-xl flex items-center gap-2 border border-blue-100">
+<span class="material-symbols-outlined text-blue-600">info</span>
+<span class="text-label-md text-blue-700 font-medium">12 notifications programmées cette semaine</span>
+</div>
+</section>
+<!-- Composer Section -->
+<section class="bg-surface-container-lowest rounded-2xl shadow-sm overflow-hidden border border-outline-variant">
+<div class="p-6 border-b border-outline-variant bg-surface-container-low flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">add_comment</span>
+<h3 class="font-headline-sm text-headline-sm">Nouveau message</h3>
+</div>
+<div class="p-8 space-y-8">
+<!-- Audience Segments -->
+<div>
+<label class="block font-label-md text-label-md font-bold text-on-surface mb-4">Segments de l'audience</label>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+<label class="flex items-center gap-3 p-4 rounded-2xl bg-tint-success border border-teal-100 cursor-pointer hover:border-primary transition-all">
+<input checked="" class="w-5 h-5 rounded text-primary focus:ring-primary border-teal-200" type="checkbox"/>
+<span class="font-label-md font-medium text-primary">Tous</span>
+</label>
+<label class="flex items-center gap-3 p-4 rounded-2xl bg-surface-container-low border border-outline-variant cursor-pointer hover:border-primary transition-all">
+<input class="w-5 h-5 rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/>
+<span class="font-label-md font-medium text-on-surface">Gratuit</span>
+</label>
+<label class="flex items-center gap-3 p-4 rounded-2xl bg-surface-container-low border border-outline-variant cursor-pointer hover:border-primary transition-all">
+<input class="w-5 h-5 rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/>
+<span class="font-label-md font-medium text-on-surface">Premium</span>
+</label>
+<label class="flex items-center gap-3 p-4 rounded-2xl bg-surface-container-low border border-outline-variant cursor-pointer hover:border-primary transition-all">
+<input class="w-5 h-5 rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/>
+<span class="font-label-md font-medium text-on-surface">Régime réel</span>
+</label>
+<label class="flex items-center gap-3 p-4 rounded-2xl bg-tint-danger border border-red-100 cursor-pointer hover:border-primary transition-all">
+<input class="w-5 h-5 rounded text-status-danger focus:ring-status-danger border-red-200" type="checkbox"/>
+<span class="font-label-md font-medium text-status-danger">En retard TVA</span>
+</label>
+</div>
+</div>
+<!-- Bilingual Composer -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="flex justify-between items-center px-1">
+<span class="font-label-md font-bold text-on-surface">Message (Français)</span>
+<span class="text-[11px] text-outline">120/500 caractères</span>
+</label>
+<textarea class="w-full h-40 p-5 rounded-2xl bg-surface-container-low border-outline-variant focus:ring-primary focus:border-primary text-label-md resize-none transition-all" dir="ltr" placeholder="Saisissez votre message ici..."></textarea>
+</div>
+<div class="space-y-2">
+<label class="flex justify-between items-center px-1">
+<span class="text-[11px] text-outline">500/120 حرفاً</span>
+<span class="font-label-md font-bold text-on-surface arabic-text">الرسالة (بالعربية)</span>
+</label>
+<textarea class="w-full h-40 p-5 rounded-2xl bg-surface-container-low border-outline-variant focus:ring-primary focus:border-primary text-label-md arabic-text resize-none transition-all" dir="rtl" placeholder="اكتب رسالتك هنا..."></textarea>
+</div>
+</div>
+<!-- Channels & Scheduling -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+<div class="space-y-4">
+<label class="block font-label-md text-label-md font-bold text-on-surface">Canaux de diffusion</label>
+<div class="flex items-center justify-between p-4 bg-surface-container rounded-2xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">smartphone</span>
+<span class="font-label-md">Push Notification</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container rounded-2xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">mail</span>
+<span class="font-label-md">E-mail</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="space-y-4">
+<label class="block font-label-md text-label-md font-bold text-on-surface">Programmer l'envoi</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">event</span>
+<input class="w-full pl-12 pr-4 py-3 bg-surface-container rounded-2xl border-none focus:ring-primary text-label-md" type="datetime-local"/>
+</div>
+<p class="text-[11px] text-outline px-1 italic">Laissez vide pour un envoi immédiat</p>
+</div>
+<div class="flex flex-col gap-3 h-full justify-end">
+<button class="flex items-center justify-center gap-2 px-6 py-3 border border-primary text-primary rounded-xl font-bold hover:bg-tint-success transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">send</span>
+                                Envoyer un test
+                            </button>
+<button class="flex items-center justify-center gap-2 px-6 py-4 bg-primary text-on-primary rounded-2xl font-bold shadow-lg shadow-primary/20 hover:bg-primary-container transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">send</span>
+                                Envoyer à l'audience
+                            </button>
+</div>
+</div>
+</div>
+</section>
+<!-- History Section -->
+<section class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant overflow-hidden">
+<div class="p-6 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">history</span>
+<h3 class="font-headline-sm text-headline-sm">Historique des notifications</h3>
+</div>
+<button class="text-primary font-bold font-label-md flex items-center gap-1 hover:underline">
+                        Tout voir
+                        <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-high/50">
+<tr>
+<th class="px-6 py-4 font-label-md text-label-md font-bold text-on-surface">Date d'envoi</th>
+<th class="px-6 py-4 font-label-md text-label-md font-bold text-on-surface">Message</th>
+<th class="px-6 py-4 font-label-md text-label-md font-bold text-on-surface">Audience</th>
+<th class="px-6 py-4 font-label-md text-label-md font-bold text-on-surface">Canal</th>
+<th class="px-6 py-4 font-label-md text-label-md font-bold text-on-surface">Taux d'ouverture</th>
+<th class="px-6 py-4 font-label-md text-label-md font-bold text-on-surface">Statut</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-6 py-4">
+<p class="text-label-md font-medium">Aujourd'hui</p>
+<p class="text-[11px] text-outline">14:20</p>
+</td>
+<td class="px-6 py-4">
+<p class="text-label-md text-on-surface-variant max-w-[200px] truncate">Rappel important: Déclaration de TVA trimestrielle...</p>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-tint-danger text-status-danger text-[11px] font-bold">En retard TVA</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex gap-1 text-primary">
+<span class="material-symbols-outlined text-[18px]">smartphone</span>
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 78%"></div>
+</div>
+<span class="text-label-md font-bold text-primary">78%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-tint-success text-status-success text-[11px] font-bold border border-green-100 uppercase tracking-tight">Envoyé</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-6 py-4">
+<p class="text-label-md font-medium">Demain</p>
+<p class="text-[11px] text-outline">09:00</p>
+</td>
+<td class="px-6 py-4">
+<p class="text-label-md text-on-surface-variant max-w-[200px] truncate">Nouveautés sur la plateforme El Comptabli...</p>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant text-[11px] font-bold">Tous</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex gap-1 text-primary">
+<span class="material-symbols-outlined text-[18px]">smartphone</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-label-md text-outline italic">En attente</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-tint-warning text-status-warning text-[11px] font-bold border border-orange-100 uppercase tracking-tight">Programmé</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-6 py-4">
+<p class="text-label-md font-medium">15 Oct. 2023</p>
+<p class="text-[11px] text-outline">10:30</p>
+</td>
+<td class="px-6 py-4">
+<p class="text-label-md text-on-surface-variant max-w-[200px] truncate">Offre spéciale Premium : Gagnez du temps sur vos...</p>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-tint-info text-blue-600 text-[11px] font-bold">Gratuit</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex gap-1 text-primary">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 42%"></div>
+</div>
+<span class="text-label-md font-bold text-primary">42%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-tint-success text-status-success text-[11px] font-bold border border-green-100 uppercase tracking-tight">Envoyé</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Footer Disclaimer -->
+<footer class="mt-12 text-center pb-8">
+<p class="text-[12px] text-outline px-6 py-2 bg-surface-container rounded-full inline-block">
+                El Comptabli Admin est un outil de gestion pédagogique. Les notifications envoyées doivent respecter les directives RGPD et la confidentialité des contribuables.
+            </p>
+</footer>
+</main>
+<!-- Floating Action for Quick Drafting (Contextual) -->
+<button class="fixed bottom-8 right-8 bg-tertiary text-on-tertiary px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 hover:bg-tertiary-container transition-all active:scale-95 z-50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-bold">Assistant IA Message</span>
+</button>
+<script>
+        // Micro-interaction: Textarea focus effects
+        const textareas = document.querySelectorAll('textarea');
+        textareas.forEach(textarea => {
+            textarea.addEventListener('focus', () => {
+                textarea.parentElement.parentElement.classList.add('shadow-md');
+            });
+            textarea.addEventListener('blur', () => {
+                textarea.parentElement.parentElement.classList.remove('shadow-md');
+            });
+        });
+
+        // Simulating sending state
+        const sendBtn = document.querySelector('button.bg-primary');
+        if(sendBtn) {
+            sendBtn.addEventListener('click', () => {
+                const originalContent = sendBtn.innerHTML;
+                sendBtn.disabled = true;
+                sendBtn.innerHTML = `<span class="animate-spin material-symbols-outlined">sync</span> Envoi en cours...`;
+                
+                setTimeout(() => {
+                    sendBtn.innerHTML = `<span class="material-symbols-outlined">check_circle</span> Envoyé avec succès !`;
+                    sendBtn.classList.remove('bg-primary');
+                    sendBtn.classList.add('bg-status-success');
+                    
+                    setTimeout(() => {
+                        sendBtn.innerHTML = originalContent;
+                        sendBtn.classList.add('bg-primary');
+                        sendBtn.classList.remove('bg-status-success');
+                        sendBtn.disabled = false;
+                    }, 2000);
+                }, 1500);
+            });
+        }
+    </script>
+</body></html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tint-success": "#E6F5F3",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#00201d",
+                        "on-background": "#191c1d",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f8fafa",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "surface-container-highest": "#e1e3e3",
+                        "surface-container": "#eceeee",
+                        "inverse-surface": "#2e3131",
+                        "tertiary-fixed": "#abefe7",
+                        "primary-fixed-dim": "#80d5cb",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "tint-danger": "#FDE8E6",
+                        "secondary": "#006b5f",
+                        "text-primary": "#1A1A1A",
+                        "on-surface": "#191c1d",
+                        "background": "#f8fafa",
+                        "inverse-primary": "#80d5cb",
+                        "status-premium": "#7C3AED",
+                        "status-danger": "#DC2626",
+                        "surface-dim": "#d8dada",
+                        "on-error": "#ffffff",
+                        "outline": "#6e7977",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-primary-fixed": "#00201d",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#2f746d",
+                        "on-primary-container": "#a3faef",
+                        "on-surface-variant": "#3e4947",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#006a63",
+                        "primary": "#005c55",
+                        "status-warning": "#D97706",
+                        "on-primary-fixed-variant": "#00504a",
+                        "surface-variant": "#e1e3e3",
+                        "on-secondary-fixed-variant": "#005048",
+                        "secondary-container": "#6df5e1",
+                        "text-secondary": "#6B7280",
+                        "tint-info": "#EEF2FF",
+                        "tertiary": "#0d5b55",
+                        "secondary-fixed": "#71f8e4",
+                        "tint-warning": "#FEF3E2",
+                        "surface-container-high": "#e6e8e8",
+                        "on-secondary-container": "#006f64",
+                        "outline-variant": "#bdc9c6",
+                        "primary-fixed": "#9cf2e8",
+                        "surface-container-low": "#f2f4f4",
+                        "on-secondary-fixed": "#00201c",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "surface-bright": "#f8fafa",
+                        "on-error-container": "#93000a",
+                        "status-success": "#16A34A",
+                        "primary-container": "#0f766e",
+                        "inverse-on-surface": "#eff1f1",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-xs": "4px",
+                        "container-padding": "20px",
+                        "base": "8px",
+                        "element-gap": "16px",
+                        "stack-sm": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .custom-shadow { shadow-[0_4px_16px_rgba(15,92,86,0.08)]; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- Top Navigation -->
+<header class="bg-background w-full top-0 sticky z-40 flex justify-between items-center px-container-padding py-base transition-opacity duration-200">
+<div class="flex items-center gap-4">
+<button class="p-2 -ml-2 rounded-full hover:bg-surface-container-low transition-colors duration-200">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-primary">Mon équipe</h1>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a smiling Tunisian business owner in a modern bright office, soft natural lighting, high-end photography style, representing a trustworthy user profile for a fintech app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYvLMY_OZivqEJyQNi_NuouiuJNdBaJnAthU5M-hrFbCcd6pZa1fngC_DTFBQYDgU3yEbLV3ynGTDA5TrSXiNCWmIt1L7-E82rfUhMNihp798hn42-ySFez87dAA8mFczix6wai9sEI3ngxjzFyPoVELUTQgx0ZBD01oHCZGMqlSFs7dkUwgwc4hgLGawHOzfPup64ZrvwxvnPcP7QwkJ2rv4uV8aSNqB0CmZuJSrEHF6DvJ7QZQrDqccvsLE0zPvWYcZ7nHyVpg"/>
+</div>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding pt-4 space-y-6">
+<!-- Plan Usage Card -->
+<section class="bg-surface-container-lowest p-5 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.08)]">
+<div class="flex justify-between items-center mb-3">
+<span class="font-label-md text-on-surface-variant">Usage de votre plan</span>
+<span class="font-label-md text-primary font-semibold">Plan Business</span>
+</div>
+<div class="flex justify-between items-end mb-2">
+<h2 class="font-headline-md text-headline-md text-text-primary">3/5 <span class="text-on-surface-variant font-normal text-body-lg">membres</span></h2>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 60%"></div>
+</div>
+<p class="font-label-sm text-on-surface-variant mt-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">info</span>
+                Vous pouvez ajouter 2 membres supplémentaires.
+            </p>
+</section>
+<!-- Member List -->
+<div class="space-y-3">
+<h3 class="font-label-md text-on-surface-variant px-1">Membres actifs</h3>
+<!-- Owner Card -->
+<div class="bg-surface-container-lowest p-4 rounded-2xl flex items-center gap-4 shadow-[0_4px_16px_rgba(15,92,86,0.08)] hover:scale-[1.01] transition-transform duration-200 cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-tint-success flex items-center justify-center overflow-hidden border-2 border-white">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a Mediterranean man in his 40s with a professional look, wearing a casual blazer, studio lighting, clean white background, soft fintech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYt1u06On6fhdI9iFof5-MXpeFM_CaZc5N7_tMsxvlDWKGHy2wGsLTR475q3CJHbO6NOQYmfTPDDIZFZJn4LHKjFKZNCSFifhis2ThNbbS_6iVrs8yx1iwH2ijzZifLFDLM2yPF2JsfYUZg-8WutyM7Z891yQ9KWGyRdiHTse3Scmbht18rgboQAr10g3LN7MB8afP3z_Xxg5_M9fEQdF9rAsK4T8na-gPVaMXfeY23FpI1ZEUZaLwi-nMl7qWrBE_W-nU0DxrPg"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-headline-sm text-[16px] text-text-primary">Eskandar</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-tint-success text-primary uppercase tracking-wider">Propriétaire</span>
+</div>
+<span class="font-label-sm text-on-surface-variant">Actif maintenant</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<!-- Member Card (Comptable) -->
+<div class="bg-surface-container-lowest p-4 rounded-2xl flex items-center gap-4 shadow-[0_4px_16px_rgba(15,92,86,0.08)] hover:scale-[1.01] transition-transform duration-200 cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-tint-info flex items-center justify-center overflow-hidden border-2 border-white">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young Tunisian woman with glasses, smiling warmly, looking professional as an accountant, soft blue atmospheric lighting, clean minimalist composition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOBuB8bqmgPVi2aUIDHQRvRgwdJdcuhORIgUd23khh2Od92wJaTMmdkP5PhPfydoAz3LjvIEVxijHRZwqpIMy4QkhhB0K_mpF67pZWsUogWOHt61Dcre-onwK8twyB0pi362LTmpfXVh29rm2ehXmNxM9_riLOs4vt0rLcXjL-98uB3sZOg30wLNQtzlQTpbEQkB1gQJtmr5KQbF2jDG97V3SS2xmHnsYTxekGW3OF41x7GZgpFKGJxDyZzLMpD_77LcwnWsWXeg"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-headline-sm text-[16px] text-text-primary">Sarra B.</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-tint-info text-[#4F46E5] uppercase tracking-wider">Comptable</span>
+</div>
+<span class="font-label-sm text-on-surface-variant">Actif il y a 2h</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<!-- Member Card (Assistant) -->
+<div class="bg-surface-container-lowest p-4 rounded-2xl flex items-center gap-4 shadow-[0_4px_16px_rgba(15,92,86,0.08)] hover:scale-[1.01] transition-transform duration-200 cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center overflow-hidden border-2 border-white">
+<img class="w-full h-full object-cover" data-alt="Portrait of a focused young man in a modern workspace, casual office wear, bright morning light coming from a window, high-quality portrait photography for a team profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDW4Bk1WIKd7Bi9Yq8RY-5Ix7zAv3QgHDmqDN0pI_pXnwuq95fvC6FzNfTPURr-cGheiD9fKPf9Jqd-IV191P314svJOceCWKIoVzrZZnOQohimXNnrLEmfsYNe8fU6Ld-OYAOD73UB0gfr3AWQbToDpWAo861EQqNQxvgRnOn_7-bxOxBx0-OnCjdZ8syKYq91q3xgL2vEs9ClDxtAx1gSWXfZal7NDFMEsN-ab9Ih9CQWXpO_pm7qyc7fMAAoiW1K3uOGeIe7lQ"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-headline-sm text-[16px] text-text-primary">Mehdi</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#F5F7F7] text-text-secondary uppercase tracking-wider">Assistant</span>
+</div>
+<span class="font-label-sm text-on-surface-variant">En ligne hier</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+<!-- Invite Member Action -->
+<section class="mt-8">
+<h3 class="font-label-md text-on-surface-variant px-1 mb-3">Nouvelle invitation</h3>
+<div class="border-2 border-dashed border-outline-variant/50 rounded-2xl p-6 flex flex-col items-center justify-center bg-surface/50 hover:bg-surface-container-low transition-colors duration-300 group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-primary text-[28px]">person_add</span>
+</div>
+<h4 class="font-headline-sm text-[16px] text-primary mb-1">Inviter un membre</h4>
+<p class="font-label-sm text-on-surface-variant text-center mb-4 px-4">L'invitation sera envoyée par e-mail avec un accès sécurisé.</p>
+<div class="w-full max-w-xs relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-full px-4 py-2.5 text-body-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-outline-variant/70" placeholder="email@exemple.com" type="email"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 bg-primary text-white p-1.5 rounded-full hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Pedagogical Footer -->
+<div class="pt-8 pb-4 text-center">
+<div class="bg-surface-container-low p-3 rounded-xl inline-flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px]">school</span>
+<p class="font-label-sm text-on-surface-variant">L'accès collaboratif facilite le suivi fiscal mensuel.</p>
+</div>
+<p class="font-label-sm text-on-surface-variant/60 mt-6 px-10">
+                El Comptabli est un outil pédagogique. Les accès partagés doivent être gérés avec prudence.
+            </p>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Fixed) -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[400px] z-50 flex justify-around items-center px-6 py-3 bg-surface-container-lowest/90 backdrop-blur-md rounded-full border border-outline-variant/30 shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+<a class="flex flex-col items-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary active:scale-95 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Accueil</span>
+</a>
+<a class="flex flex-col items-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary active:scale-95 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm">IA</span>
+</a>
+<a class="flex flex-col items-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary active:scale-95 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">document_scanner</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</a>
+<a class="flex flex-col items-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary active:scale-95 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm">Finance</span>
+</a>
+<!-- Active Tab: Savoir (Contextual for team/profile/knowledge) -->
+<a class="flex flex-col items-center text-primary dark:text-primary-fixed relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full active:scale-95 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<span class="font-label-sm text-label-sm">Savoir</span>
+</a>
+</nav>
+<!-- FAB (Suppressed for focused settings/team screen per protocol) -->
+<script>
+        // Simple micro-interaction for member cards
+        document.querySelectorAll('.bg-surface-container-lowest').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1.01)';
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#006f64",
+                        "on-secondary-fixed-variant": "#005048",
+                        "error": "#ba1a1a",
+                        "tint-danger": "#FDE8E6",
+                        "on-surface-variant": "#3e4947",
+                        "surface-variant": "#e1e3e3",
+                        "outline-variant": "#bdc9c6",
+                        "tertiary": "#0d5b55",
+                        "status-success": "#16A34A",
+                        "secondary-fixed": "#71f8e4",
+                        "surface-tint": "#006a63",
+                        "status-warning": "#D97706",
+                        "surface-container": "#eceeee",
+                        "on-error": "#ffffff",
+                        "primary": "#005c55",
+                        "on-primary-fixed": "#00201d",
+                        "surface-container-low": "#f2f4f4",
+                        "surface-dim": "#d8dada",
+                        "surface-container-highest": "#e1e3e3",
+                        "primary-fixed": "#9cf2e8",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "tint-success": "#E6F5F3",
+                        "text-secondary": "#6B7280",
+                        "on-background": "#191c1d",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f8fafa",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "primary-fixed-dim": "#80d5cb",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-primary-container": "#a3faef",
+                        "outline": "#6e7977",
+                        "secondary": "#006b5f",
+                        "status-danger": "#DC2626",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "on-secondary": "#ffffff",
+                        "tint-warning": "#FEF3E2",
+                        "tertiary-container": "#2f746d",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#80d5cb",
+                        "inverse-on-surface": "#eff1f1",
+                        "status-premium": "#7C3AED",
+                        "on-tertiary-fixed": "#00201d",
+                        "tint-info": "#EEF2FF",
+                        "text-primary": "#1A1A1A",
+                        "surface-container-high": "#e6e8e8",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0f766e",
+                        "inverse-surface": "#2e3131",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#6df5e1",
+                        "tertiary-fixed": "#abefe7",
+                        "surface": "#f8fafa",
+                        "on-surface": "#191c1d",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#00201c",
+                        "background": "#f8fafa",
+                        "on-primary-fixed-variant": "#00504a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "stack-sm": "12px",
+                        "stack-xs": "4px",
+                        "element-gap": "16px",
+                        "container-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .activity-row:active {
+            transform: scale(0.98);
+            transition: transform 0.1s ease-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-on-surface">
+<!-- Top AppBar -->
+<header class="w-full top-0 sticky z-40 bg-background/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-container-padding py-stack-sm w-full max-w-[600px] mx-auto">
+<div class="flex items-center gap-3">
+<img alt="FiscAssist Logo" class="h-8 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB263KR-Eaf_JzjSzLedKHS8FpCAjgxjvl-6-rQl7VwQqyVmCg4_9vw5nansm50la2uL-pp4mPwusfBLQ3WEclvSmVJZMldmt_GXJcWAsQTZ7c3_JkYsVQBa4o4zBJawDTDr58CHASn5lHMW8EaTDujJrVWd3qOT6JqP4HOV3xStAOnRdOzXFcR6G2IkmSCILa_aBztU558jDw-A_dsPN6XBIX2BcXDokyhzkGA_qROhbUqzLicoGZS-bo4Yq0jX93mM4AxjCsXkw"/>
+<h1 class="font-headline-sm-mobile text-headline-sm-mobile text-primary tracking-tight">FiscAssist</h1>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-on-surface-variant hover:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding pb-32">
+<!-- Title -->
+<div class="py-6">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background">Activité récente</h2>
+<p class="text-text-secondary font-label-md mt-1">Suivi de vos opérations fiscales</p>
+</div>
+<!-- Today Section -->
+<section class="mb-8">
+<h3 class="font-label-md text-text-secondary uppercase tracking-widest mb-4">Aujourd'hui</h3>
+<div class="space-y-3">
+<!-- Row 1 -->
+<div class="activity-row flex items-center p-4 bg-surface-container-lowest rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.06)] border border-surface-variant/30">
+<div class="w-12 h-12 rounded-full bg-tint-info flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-[#3B82F6]" style="font-variation-settings: 'FILL' 1;">receipt</span>
+</div>
+<div class="flex-1">
+<p class="font-body-lg text-on-surface leading-tight">Facture STEG scannée (141,134 DT)</p>
+<p class="text-label-sm text-text-secondary mt-1">10:24</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<!-- Row 2 -->
+<div class="activity-row flex items-center p-4 bg-surface-container-lowest rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.06)] border border-surface-variant/30">
+<div class="w-12 h-12 rounded-full bg-tint-success flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="flex-1">
+<p class="font-body-lg text-on-surface leading-tight">Question posée à l'IA : TVA freelance</p>
+<p class="text-label-sm text-text-secondary mt-1">09:12</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Yesterday Section -->
+<section class="mb-8">
+<h3 class="font-label-md text-text-secondary uppercase tracking-widest mb-4">Hier</h3>
+<div class="space-y-3">
+<!-- Row 3 -->
+<div class="activity-row flex items-center p-4 bg-surface-container-lowest rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.06)] border border-surface-variant/30">
+<div class="w-12 h-12 rounded-full bg-tint-success flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-status-success" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+</div>
+<div class="flex-1">
+<p class="font-body-lg text-on-surface leading-tight">Recette +850 DT ajoutée</p>
+<p class="text-label-sm text-text-secondary mt-1">Hier</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<!-- Row 4 -->
+<div class="activity-row flex items-center p-4 bg-surface-container-lowest rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.06)] border border-surface-variant/30">
+<div class="w-12 h-12 rounded-full bg-tint-info flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">description</span>
+</div>
+<div class="flex-1">
+<p class="font-body-lg text-on-surface leading-tight">Rapport juin exporté en Excel</p>
+<p class="text-label-sm text-text-secondary mt-1">Hier</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Date Section -->
+<section class="mb-12">
+<h3 class="font-label-md text-text-secondary uppercase tracking-widest mb-4">12 juillet</h3>
+<div class="space-y-3">
+<!-- Row 5 -->
+<div class="activity-row flex items-center p-4 bg-surface-container-lowest rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.06)] border border-surface-variant/30">
+<div class="w-12 h-12 rounded-full bg-[#E0F2FE] flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-[#0EA5E9]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex-1">
+<p class="font-body-lg text-on-surface leading-tight">Déclaration TVA mai marquée payée</p>
+<p class="text-label-sm text-text-secondary mt-1">12 juil.</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Legal Disclaimer -->
+<footer class="pb-10 pt-4 px-4 text-center">
+<div class="bg-surface-container-low rounded-xl p-4">
+<p class="text-[10px] text-outline leading-normal font-label-sm italic">
+                    FiscAssist est un outil pédagogique et d'aide à la gestion. Il ne remplace en aucun cas les conseils d'un expert-comptable certifié ou les directives officielles de l'administration fiscale tunisienne. Les calculs sont fournis à titre indicatif.
+                </p>
+</div>
+</footer>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-base left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[560px] rounded-full z-50 mb-safe glass-nav bg-surface-container-highest/90 shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+<div class="flex justify-around items-center py-stack-sm px-element-gap">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 rounded-full p-2 active:scale-90 transition-all">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-0.5">Accueil</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 rounded-full p-2 active:scale-90 transition-all">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm mt-0.5">IA</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary relative after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 rounded-full p-2 active:scale-90 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">document_scanner</span>
+<span class="font-label-sm text-label-sm mt-0.5">Scanner</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 rounded-full p-2 active:scale-90 transition-all">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-0.5">Finance</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 rounded-full p-2 active:scale-90 transition-all">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-sm text-label-sm mt-0.5">Savoir</span>
+</button>
+</div>
+</nav>
+<script>
+        // Micro-interaction: Scroll reveal for rows
+        const rows = document.querySelectorAll('.activity-row');
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 50);
+                }
+            });
+        }, observerOptions);
+
+        rows.forEach(row => {
+            row.style.opacity = '0';
+            row.style.transform = 'translateY(10px)';
+            row.style.transition = 'all 0.4s ease-out';
+            observer.observe(row);
+        });
+    </script>
+</body></html>

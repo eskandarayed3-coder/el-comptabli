@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "primary-container": "#0f766e",
+                        "on-primary-fixed-variant": "#00504a",
+                        "surface-dim": "#d8dada",
+                        "primary": "#005c55",
+                        "on-secondary-container": "#006f64",
+                        "surface-container-high": "#e6e8e8",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "surface-bright": "#f8fafa",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "secondary-fixed": "#71f8e4",
+                        "surface-tint": "#006a63",
+                        "surface-container": "#eceeee",
+                        "background": "#f8fafa",
+                        "text-primary": "#1A1A1A",
+                        "on-secondary-fixed": "#00201c",
+                        "status-danger": "#DC2626",
+                        "surface-container-low": "#f2f4f4",
+                        "tertiary-fixed": "#abefe7",
+                        "tertiary-container": "#2f746d",
+                        "secondary": "#006b5f",
+                        "tertiary": "#0d5b55",
+                        "on-surface-variant": "#3e4947",
+                        "outline-variant": "#bdc9c6",
+                        "status-success": "#16A34A",
+                        "on-surface": "#191c1d",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e1e3e3",
+                        "on-background": "#191c1d",
+                        "outline": "#6e7977",
+                        "primary-fixed": "#9cf2e8",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#80d5cb",
+                        "inverse-surface": "#2e3131",
+                        "secondary-container": "#6df5e1",
+                        "tint-info": "#EEF2FF",
+                        "on-tertiary-container": "#b3f7ee",
+                        "inverse-primary": "#80d5cb",
+                        "status-premium": "#7C3AED",
+                        "on-tertiary-fixed": "#00201d",
+                        "tint-danger": "#FDE8E6",
+                        "status-warning": "#D97706",
+                        "text-secondary": "#6B7280",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e1e3e3",
+                        "on-primary-fixed": "#00201d",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eff1f1",
+                        "error-container": "#ffdad6",
+                        "surface": "#f8fafa",
+                        "on-primary-container": "#a3faef",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#005048",
+                        "tint-success": "#E6F5F3",
+                        "on-secondary": "#ffffff",
+                        "tint-warning": "#FEF3E2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "element-gap": "16px",
+                        "stack-xs": "4px",
+                        "container-padding": "20px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background font-body-lg text-on-surface antialiased min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="bg-background flex justify-between items-center px-container-padding py-base w-full max-w-[600px] mx-auto sticky top-0 z-40">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl overflow-hidden bg-white shadow-sm flex items-center justify-center p-1 border border-outline-variant">
+<img alt="EC App Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTYfE7SmLxbTGEFvPgtr9WrWw4WxiRrVEyGw6Uufx6RkOyMt-G02b7QkzCcVmtawxtCA9W1Q_-apiFxVSPfBmyYDuwO4WFMyOIXWHpSqdObvDuC4TovzLfuMx04enyqEWiCZBTYOMV1LE3kTmxE9qDgxo8IJPkvHlv3bb-10Y6iXzxKENGTUSONxvCoro-9yvrQEDcxNP4YYN5Yar3tySBynUAIniFlCDOcr3qir8aivrV99yS5lg8qgZT5wj4admZ-C7MGxT1kw"/>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm text-primary">Rapports IA ✨</h1>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-status-premium/10 text-status-premium uppercase tracking-wider">Premium</span>
+</div>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-low text-primary hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding flex flex-col gap-6 pt-4">
+<!-- AI Query Input Card -->
+<section class="bg-tint-info rounded-2xl p-container-padding shadow-[0_4px_16px_rgba(15,92,86,0.08)] border border-blue-100/50">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-label-md text-label-md">Assistant Fiscal Intelligent</span>
+</div>
+<div class="relative bg-white rounded-xl p-3 border border-outline-variant focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<textarea class="w-full bg-transparent border-none focus:ring-0 p-0 text-body-lg min-h-[80px] placeholder:text-outline resize-none" placeholder="Demande un rapport en langage naturel…"></textarea>
+<button class="absolute bottom-2 right-2 bg-primary text-white p-2 rounded-lg hover:opacity-90 active:scale-95 transition-all shadow-md">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<!-- Suggestion Chips -->
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 rounded-full bg-white border border-outline-variant text-[13px] text-on-surface-variant font-medium hover:bg-primary-container hover:text-white hover:border-primary-container transition-all">
+                        Mes dépenses par catégorie ce trimestre
+                    </button>
+<button class="px-3 py-1.5 rounded-full bg-white border border-outline-variant text-[13px] text-on-surface-variant font-medium hover:bg-primary-container hover:text-white hover:border-primary-container transition-all">
+                        Compare juin et juillet
+                    </button>
+<button class="px-3 py-1.5 rounded-full bg-white border border-outline-variant text-[13px] text-on-surface-variant font-medium hover:bg-primary-container hover:text-white hover:border-primary-container transition-all">
+                        Où je peux économiser ?
+                    </button>
+</div>
+</div>
+</section>
+<!-- Reports List -->
+<div class="flex flex-col gap-stack-sm">
+<h2 class="font-label-md text-label-md text-outline uppercase tracking-widest px-1">Rapports Récents</h2>
+<!-- Loading/Skeleton Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-container-padding border border-outline-variant/30 flex flex-col gap-4 animate-pulse-subtle">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-2 w-full">
+<div class="h-5 bg-surface-container w-2/3 rounded-full"></div>
+<div class="h-3 bg-surface-container-low w-1/4 rounded-full"></div>
+</div>
+<div class="bg-surface-container px-3 py-1 rounded-full h-6 w-24"></div>
+</div>
+<!-- Skeleton Chart -->
+<div class="h-32 bg-surface-container-low/50 rounded-xl flex items-end gap-2 px-4 py-2">
+<div class="flex-1 bg-surface-container h-12 rounded-t-lg"></div>
+<div class="flex-1 bg-surface-container h-24 rounded-t-lg"></div>
+<div class="flex-1 bg-surface-container h-16 rounded-t-lg"></div>
+<div class="flex-1 bg-surface-container h-28 rounded-t-lg"></div>
+<div class="flex-1 bg-surface-container h-20 rounded-t-lg"></div>
+</div>
+<div class="flex items-center gap-2 text-outline text-[12px] italic">
+<span class="material-symbols-outlined text-[14px]">sync</span>
+                    Génération en cours…
+                </div>
+</div>
+<!-- Completed Report Card 1 -->
+<div class="bg-surface-container-lowest rounded-2xl p-container-padding border border-outline-variant/30 shadow-sm hover:shadow-md transition-all group">
+<div class="flex justify-between items-start mb-4">
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-[18px] text-on-surface">Analyse des revenus T2 2026</h3>
+<p class="text-label-sm text-outline">Généré le 12 Juin 2024</p>
+</div>
+<div class="flex gap-2">
+<button class="h-8 px-3 rounded-full bg-tint-success text-status-success font-bold text-[11px] flex items-center gap-1 hover:bg-status-success hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[14px]">table_view</span> EXCEL
+                        </button>
+<button class="h-8 px-3 rounded-full bg-tint-danger text-status-danger font-bold text-[11px] flex items-center gap-1 hover:bg-status-danger hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[14px]">picture_as_pdf</span> PDF
+                        </button>
+</div>
+</div>
+<!-- Mini Chart Thumbnail (Bar) -->
+<div class="bg-tint-success/30 rounded-xl p-4 h-32 flex items-end gap-3 mb-4 border border-status-success/5">
+<div class="flex-1 bg-primary/40 h-1/2 rounded-t-md group-hover:h-3/4 transition-all duration-500"></div>
+<div class="flex-1 bg-primary/60 h-2/3 rounded-t-md group-hover:h-1/2 transition-all duration-500"></div>
+<div class="flex-1 bg-primary h-5/6 rounded-t-md group-hover:h-2/3 transition-all duration-500"></div>
+<div class="flex-1 bg-primary/70 h-1/3 rounded-t-md group-hover:h-5/6 transition-all duration-500"></div>
+<div class="flex-1 bg-primary/50 h-2/3 rounded-t-md group-hover:h-1/3 transition-all duration-500"></div>
+</div>
+<div class="flex items-center justify-between">
+<p class="text-label-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-status-success" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Prêt à l'export
+                    </p>
+<button class="text-primary font-bold text-label-md flex items-center">
+                        Détails <span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Completed Report Card 2 (Finance/Spending) -->
+<div class="bg-surface-container-lowest rounded-2xl p-container-padding border border-outline-variant/30 shadow-sm hover:shadow-md transition-all group">
+<div class="flex justify-between items-start mb-4">
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-[18px] text-on-surface">Optimisation Fiscale 2024</h3>
+<p class="text-label-sm text-outline">Généré le 05 Juin 2024</p>
+</div>
+<div class="flex gap-2">
+<button class="h-8 px-3 rounded-full bg-tint-success text-status-success font-bold text-[11px] flex items-center gap-1 hover:bg-status-success hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[14px]">table_view</span> EXCEL
+                        </button>
+<button class="h-8 px-3 rounded-full bg-tint-danger text-status-danger font-bold text-[11px] flex items-center gap-1 hover:bg-status-danger hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[14px]">picture_as_pdf</span> PDF
+                        </button>
+</div>
+</div>
+<!-- Mini Chart Thumbnail (Line Style) -->
+<div class="bg-tint-info/40 rounded-xl p-4 h-32 flex items-center justify-center mb-4 border border-blue-200/20">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 200 60">
+<path class="group-hover:translate-y-[-5px] transition-transform duration-500" d="M0,50 Q25,10 50,40 T100,20 T150,50 T200,10" fill="none" stroke="#005c55" stroke-linecap="round" stroke-width="3"></path>
+<circle cx="200" cy="10" fill="#005c55" r="4"></circle>
+</svg>
+</div>
+<div class="flex items-center justify-between">
+<p class="text-label-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-status-success" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        3 conseils d'IA inclus
+                    </p>
+<button class="text-primary font-bold text-label-md flex items-center">
+                        Détails <span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Tiny Disclaimer -->
+<footer class="mt-8 mb-12 text-center">
+<p class="text-[11px] text-outline px-4 italic bg-surface-container-lowest/50 py-3 rounded-xl border border-outline-variant/10">
+                Avertissement : Les rapports générés par l'IA sont des outils pédagogiques d'aide à la décision. Cette application n'est pas un cabinet d'expertise comptable agréé. Veuillez consulter un professionnel pour vos déclarations officielles.
+            </p>
+</footer>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-6 left-0 right-0 z-50 flex justify-around items-center px-6 py-3 bg-surface-container-lowest/90 backdrop-blur-md fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[560px] rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high/50 rounded-full transition-all px-4 py-1 active:scale-90">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm font-label-sm">Accueil</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary font-bold relative after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 px-4 py-1 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="text-label-sm font-label-sm">IA</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high/50 rounded-full transition-all px-4 py-1 active:scale-90">
+<span class="material-symbols-outlined">document_scanner</span>
+<span class="text-label-sm font-label-sm">Scanner</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high/50 rounded-full transition-all px-4 py-1 active:scale-90">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-label-sm font-label-sm">Finance</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high/50 rounded-full transition-all px-4 py-1 active:scale-90">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-label-sm font-label-sm">Savoir</span>
+</button>
+</nav>
+<!-- Micro-interaction script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const textarea = document.querySelector('textarea');
+            textarea.addEventListener('focus', () => {
+                textarea.parentElement.classList.add('ring-2', 'ring-primary/20');
+            });
+            textarea.addEventListener('blur', () => {
+                textarea.parentElement.classList.remove('ring-2', 'ring-primary/20');
+            });
+
+            // Smooth appear for chips
+            const chips = document.querySelectorAll('.flex.flex-wrap button');
+            chips.forEach((chip, index) => {
+                chip.style.opacity = '0';
+                chip.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    chip.style.transition = 'all 0.4s ease';
+                    chip.style.opacity = '1';
+                    chip.style.transform = 'translateY(0)';
+                }, 100 + (index * 100));
+            });
+        });
+    </script>
+</body></html>

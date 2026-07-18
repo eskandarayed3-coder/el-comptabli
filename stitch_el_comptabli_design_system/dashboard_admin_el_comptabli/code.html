@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FiscalGuide Admin - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e1e3e3",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e1e3e3",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "on-primary-fixed-variant": "#00504a",
+                        "status-danger": "#DC2626",
+                        "on-secondary-fixed": "#00201c",
+                        "error-container": "#ffdad6",
+                        "primary": "#005c55",
+                        "secondary-container": "#6df5e1",
+                        "on-background": "#191c1d",
+                        "background": "#f8fafa",
+                        "surface-container-high": "#e6e8e8",
+                        "on-tertiary-fixed": "#00201d",
+                        "on-surface-variant": "#3e4947",
+                        "primary-fixed": "#9cf2e8",
+                        "inverse-on-surface": "#eff1f1",
+                        "status-premium": "#7C3AED",
+                        "on-secondary-container": "#006f64",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#a3faef",
+                        "tint-danger": "#FDE8E6",
+                        "surface-tint": "#006a63",
+                        "surface-container-low": "#f2f4f4",
+                        "text-primary": "#1A1A1A",
+                        "surface": "#f8fafa",
+                        "tint-info": "#EEF2FF",
+                        "surface-bright": "#f8fafa",
+                        "on-tertiary-container": "#b3f7ee",
+                        "tint-success": "#E6F5F3",
+                        "outline": "#6e7977",
+                        "on-primary-fixed": "#00201d",
+                        "tertiary-container": "#2f746d",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#80d5cb",
+                        "on-surface": "#191c1d",
+                        "primary-container": "#0f766e",
+                        "text-secondary": "#6B7280",
+                        "on-secondary-fixed-variant": "#005048",
+                        "outline-variant": "#bdc9c6",
+                        "secondary": "#006b5f",
+                        "status-success": "#16A34A",
+                        "primary-fixed-dim": "#80d5cb",
+                        "inverse-surface": "#2e3131",
+                        "tint-warning": "#FEF3E2",
+                        "status-warning": "#D97706",
+                        "secondary-fixed": "#71f8e4",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#abefe7",
+                        "surface-dim": "#d8dada",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#0d5b55",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "surface-container": "#eceeee"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "12px",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafa; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .nav-shadow { box-shadow: 0 4px 16px rgba(15, 92, 86, 0.04); }
+        .card-shadow { box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08); }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #bdc9c6; border-radius: 10px; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col p-4 z-50">
+<div class="flex items-center gap-3 px-2 mb-8">
+<img alt="FiscalGuide Logo" class="w-10 h-10 rounded-xl object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUuNkKDYurCbkBuhNR37TXTWMZs-cfQxl95PPMMgYRnqPOAaoftB9r4AXv-_0oRxjTbwCnfiYesjDtBzAhdQAO8HeikXXS4sM2vVcD7zUl6diZ0qj536sdqew42chBQ5vXrB0p6mfC7edmMx22vu0V9ZMsspz0bDHNtnRQKl9OLwGKvV_Nc2pLpUl3GHyjFdmMcCV2eb1E-D6yBV3JLdL62bO7mSlq94pqeJUDykt1N8rvPP7TrvLE7TmnrXpzSgdUxrHu5ed75w"/>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-md text-primary">FiscalGuide</span>
+<span class="text-[10px] uppercase tracking-wider font-bold text-outline">Admin Console</span>
+</div>
+</div>
+<nav class="flex-1 space-y-1 custom-scrollbar overflow-y-auto">
+<!-- Dashboard Active -->
+<a class="flex items-center gap-3 bg-secondary-container text-on-secondary-container rounded-xl px-4 py-3 font-bold transition-transform active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Utilisateurs</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Abonnements</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-md text-label-md">Base de connaissance</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md text-label-md">Logs IA</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">person_search</span>
+<span class="font-label-md text-label-md">Experts</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">article</span>
+<span class="font-label-md text-label-md">Contenu</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-md text-label-md">Notifications</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<div class="pt-4 mt-4 border-t border-outline-variant">
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high transition-colors duration-200 rounded-xl" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Réglages</span>
+</a>
+</div>
+</nav>
+<div class="mt-auto p-4 bg-primary/5 rounded-2xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
+<span class="font-bold text-sm">JS</span>
+</div>
+<div class="flex flex-col">
+<span class="text-label-md font-bold text-on-background">Jean Dupont</span>
+<span class="text-label-sm text-outline">Super Admin</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="h-16 sticky top-0 z-40 bg-surface/80 backdrop-blur-md flex items-center justify-between px-8 border-b border-outline-variant">
+<div class="flex items-center flex-1 max-w-xl relative">
+<span class="material-symbols-outlined absolute left-3 text-outline">search</span>
+<input class="w-full bg-surface-container border-none rounded-full pl-10 pr-4 py-2 text-label-md focus:ring-2 focus:ring-primary/20 placeholder:text-outline-variant" placeholder="Rechercher un utilisateur, un log ou un document..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-surface-container-high p-2 rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant">help</span>
+</button>
+<button class="hover:bg-surface-container-high p-2 rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer">
+<img class="w-10 h-10 rounded-full border-2 border-primary/10 object-cover" data-alt="A professional headshot of a middle-aged male executive with short dark hair, wearing a navy blue blazer over a white crisp shirt. He has a warm, confident smile, set against a blurred modern office background with soft teal accents. The lighting is professional and high-key, conveying leadership and trustworthiness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtYz__Y5PyrVVJ9ie-O9M6VUMHaVk544CqR2cLqBkl0PB-4oFjoFEYWeNK1l0DwDchO5iDhoeSMA75zHnJ6t8zGKstr7pZAnhYyC3lzHGMxiprf48jqTju3_aDiGBweQBeZENQe0QWEpIfj7dLxHQUCONVZljkUKe4h3qgQOTfcxVcwYr8r9ZCZyugzJK5oFAkqQDVMxXr5qp4zj3zoStTp-SbWv-1lXenlCErX1QpjumvdcncdYncSuTFwdXSeIDINUktBYXe0Q"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="p-8 max-w-[1440px] mx-auto w-full">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-background">Tableau de bord</h1>
+<p class="text-on-surface-variant font-body-lg">Bienvenue, voici l'activité de votre plateforme aujourd'hui.</p>
+</div>
+<div class="flex items-center gap-3 bg-white px-4 py-2.5 rounded-2xl border border-outline-variant shadow-sm cursor-pointer hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<span class="font-label-md font-bold text-on-surface">Juillet 2026</span>
+<span class="material-symbols-outlined text-outline">expand_more</span>
+</div>
+</div>
+<!-- KPI Row (4 Cards) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<!-- KPI 1 -->
+<div class="bg-tint-info p-6 rounded-2xl card-shadow border border-white/50 group hover:-translate-y-1 transition-transform duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-white rounded-xl shadow-sm text-primary">
+<span class="material-symbols-outlined">group</span>
+</div>
+<span class="flex items-center text-status-success font-bold text-label-sm bg-status-success/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span>+12%
+                        </span>
+</div>
+<p class="text-on-surface-variant font-label-md mb-1">Utilisateurs</p>
+<h3 class="text-headline-md font-headline-md text-on-background">2 847</h3>
+</div>
+<!-- KPI 2 -->
+<div class="bg-tint-success p-6 rounded-2xl card-shadow border border-white/50 group hover:-translate-y-1 transition-transform duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-white rounded-xl shadow-sm text-secondary">
+<span class="material-symbols-outlined">star</span>
+</div>
+<span class="text-on-surface-variant text-label-sm">Premium</span>
+</div>
+<p class="text-on-surface-variant font-label-md mb-1">Abonnés Premium</p>
+<h3 class="text-headline-md font-headline-md text-on-background">312</h3>
+</div>
+<!-- KPI 3 -->
+<div class="bg-tint-warning p-6 rounded-2xl card-shadow border border-white/50 group hover:-translate-y-1 transition-transform duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-white rounded-xl shadow-sm text-status-warning">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-on-surface-variant text-label-sm">Mensuel</span>
+</div>
+<p class="text-on-surface-variant font-label-md mb-1">MRR</p>
+<h3 class="text-headline-md font-headline-md text-on-background">6 240 DT</h3>
+</div>
+<!-- KPI 4 -->
+<div class="bg-primary/5 p-6 rounded-2xl card-shadow border border-white/50 group hover:-translate-y-1 transition-transform duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-white rounded-xl shadow-sm text-primary">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<span class="text-on-surface-variant text-label-sm">Activité</span>
+</div>
+<p class="text-on-surface-variant font-label-md mb-1">Questions IA/jour</p>
+<h3 class="text-headline-md font-headline-md text-on-background">1 205</h3>
+</div>
+</div>
+<!-- Middle Row: Large Chart -->
+<div class="grid grid-cols-1 mb-8">
+<div class="bg-white p-8 rounded-2xl card-shadow border border-outline-variant/30">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-background">Croissance Utilisateurs</h3>
+<p class="text-on-surface-variant text-label-md">Evolution sur les 6 derniers mois</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-surface-container text-on-surface-variant rounded-full text-label-sm font-bold">Hebdomadaire</button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-full text-label-sm font-bold shadow-md">Mensuel</button>
+</div>
+</div>
+<!-- Visual Mockup of a Line Chart using SVG -->
+<div class="relative w-full h-[320px] flex items-end justify-between">
+<!-- Chart Lines (Simulated with CSS/SVG) -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#005c55" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#005c55" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0 250 Q 120 230 240 200 T 480 180 T 720 120 T 960 140 T 1200 80 L 1440 60 V 320 H 0 Z" fill="url(#chartGradient)"></path>
+<path d="M0 250 Q 120 230 240 200 T 480 180 T 720 120 T 960 140 T 1200 80 L 1440 60" fill="none" stroke="#005c55" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
+<div class="border-b border-outline w-full h-0"></div>
+<div class="border-b border-outline w-full h-0"></div>
+<div class="border-b border-outline w-full h-0"></div>
+<div class="border-b border-outline w-full h-0"></div>
+<div class="border-b border-outline w-full h-0"></div>
+</div>
+<!-- Labels -->
+<div class="absolute bottom-0 w-full flex justify-between px-2 pt-4">
+<span class="text-label-sm text-outline">Fév</span>
+<span class="text-label-sm text-outline">Mar</span>
+<span class="text-label-sm text-outline">Avr</span>
+<span class="text-label-sm text-outline">Mai</span>
+<span class="text-label-sm text-outline">Juin</span>
+<span class="text-label-sm text-on-surface font-bold">Juil</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row: Table & System Health -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left: Table (2/3 width) -->
+<div class="lg:col-span-2 bg-white rounded-2xl card-shadow border border-outline-variant/30 overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="text-headline-sm font-headline-sm text-on-background">Inscriptions récentes</h3>
+<button class="text-primary font-bold text-label-md hover:underline">Voir tout</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-on-surface-variant text-label-sm uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">Utilisateur</th>
+<th class="px-6 py-4">Plan</th>
+<th class="px-6 py-4">Date</th>
+<th class="px-6 py-4 text-right">Statut</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/50">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">AH</div>
+<span class="font-label-md text-on-background">Ahmed Hamdi</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-primary-container text-on-primary text-[10px] font-bold uppercase tracking-tight">Premium</span>
+</td>
+<td class="px-6 py-4 text-label-md text-on-surface-variant">24 Juil 2026</td>
+<td class="px-6 py-4 text-right">
+<span class="text-status-success flex items-center justify-end gap-1 font-bold text-label-sm">
+<span class="w-2 h-2 rounded-full bg-status-success"></span> Actif
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline font-bold text-xs">SB</div>
+<span class="font-label-md text-on-background">Sonia Belkadhi</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-[10px] font-bold uppercase tracking-tight">Gratuit</span>
+</td>
+<td class="px-6 py-4 text-label-md text-on-surface-variant">23 Juil 2026</td>
+<td class="px-6 py-4 text-right">
+<span class="text-status-success flex items-center justify-end gap-1 font-bold text-label-sm">
+<span class="w-2 h-2 rounded-full bg-status-success"></span> Actif
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-outline font-bold text-xs">ML</div>
+<span class="font-label-md text-on-background">Mehdi Laribi</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-primary-container text-on-primary text-[10px] font-bold uppercase tracking-tight">Premium</span>
+</td>
+<td class="px-6 py-4 text-label-md text-on-surface-variant">22 Juil 2026</td>
+<td class="px-6 py-4 text-right">
+<span class="text-status-warning flex items-center justify-end gap-1 font-bold text-label-sm">
+<span class="w-2 h-2 rounded-full bg-status-warning"></span> En attente
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right: System Health (1/3 width) -->
+<div class="bg-inverse-surface text-inverse-on-surface rounded-2xl p-8 shadow-xl flex flex-col relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-primary/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+<h3 class="text-headline-sm font-headline-sm mb-6 relative z-10">Santé du système</h3>
+<div class="space-y-6 relative z-10">
+<div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-fixed">api</span>
+<span class="font-bold">API Gateway</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs text-secondary-fixed">Opérationnel</span>
+<span class="material-symbols-outlined text-status-success" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-fixed">document_scanner</span>
+<span class="font-bold">OCR Engine</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs text-secondary-fixed">Opérationnel</span>
+<span class="material-symbols-outlined text-status-success" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-fixed">memory</span>
+<span class="font-bold">RAG Model</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs text-secondary-fixed">Opérationnel</span>
+<span class="material-symbols-outlined text-status-success" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-8">
+<div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="w-full h-full bg-secondary-fixed animate-pulse"></div>
+</div>
+<p class="text-[10px] mt-2 opacity-60 text-center uppercase tracking-widest">Temps de réponse global: 142ms</p>
+</div>
+</div>
+</div>
+<!-- Disclaimer Banner -->
+<div class="mt-12 p-4 bg-surface-container-low rounded-xl border border-outline-variant flex items-center justify-center gap-3">
+<span class="material-symbols-outlined text-outline-variant text-sm">info</span>
+<p class="text-label-sm text-outline-variant italic">Ceci est une console d'administration pédagogique pour El Comptabli. Toute action est enregistrée à des fins de sécurité.</p>
+</div>
+</div>
+</main>
+<!-- FAB Contextual -->
+<button class="fixed bottom-8 right-8 bg-primary text-on-primary flex items-center gap-3 px-6 py-4 rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all z-50 group">
+<span class="material-symbols-outlined">add</span>
+<span class="font-bold font-label-md">Nouvel Expert</span>
+<div class="absolute inset-0 bg-white/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+<script>
+        // Micro-interactions for dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card-shadow');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    // Subtle interaction potential
+                });
+            });
+
+            // Handle date range picker simple click effect
+            const datePicker = document.querySelector('.bg-white.shadow-sm.cursor-pointer');
+            if(datePicker) {
+                datePicker.addEventListener('click', () => {
+                    alert('Le sélecteur de date sera disponible dans la version finale.');
+                });
+            }
+        });
+    </script>
+</body></html>

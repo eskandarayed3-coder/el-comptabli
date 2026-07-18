@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli - Chat IA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chat-bubble-assistant {
+            border-bottom-left-radius: 6px !important;
+        }
+        .chat-bubble-user {
+            border-bottom-right-radius: 6px !important;
+        }
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#191c1d",
+                      "inverse-on-surface": "#eff1f1",
+                      "on-tertiary": "#ffffff",
+                      "surface": "#f8fafa",
+                      "outline": "#6e7977",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#90d3cb",
+                      "surface-variant": "#e1e3e3",
+                      "on-secondary-fixed": "#00201c",
+                      "status-danger": "#DC2626",
+                      "surface-container-highest": "#e1e3e3",
+                      "secondary-fixed": "#71f8e4",
+                      "primary": "#005c55",
+                      "primary-container": "#0f766e",
+                      "on-primary": "#ffffff",
+                      "text-primary": "#1A1A1A",
+                      "background": "#f8fafa",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed": "#00201d",
+                      "error-container": "#ffdad6",
+                      "on-secondary-container": "#006f64",
+                      "surface-container-low": "#f2f4f4",
+                      "tint-info": "#EEF2FF",
+                      "on-error-container": "#93000a",
+                      "primary-fixed": "#9cf2e8",
+                      "text-secondary": "#6B7280",
+                      "on-tertiary-container": "#b3f7ee",
+                      "on-secondary-fixed-variant": "#005048",
+                      "on-primary-fixed-variant": "#00504a",
+                      "surface-bright": "#f8fafa",
+                      "surface-tint": "#006a63",
+                      "status-premium": "#7C3AED",
+                      "on-tertiary-fixed": "#00201d",
+                      "tertiary-fixed": "#abefe7",
+                      "on-surface-variant": "#3e4947",
+                      "tertiary-container": "#2f746d",
+                      "tint-danger": "#FDE8E6",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#006b5f",
+                      "surface-container-high": "#e6e8e8",
+                      "inverse-surface": "#2e3131",
+                      "on-background": "#191c1d",
+                      "tint-warning": "#FEF3E2",
+                      "status-success": "#16A34A",
+                      "surface-container": "#eceeee",
+                      "outline-variant": "#bdc9c6",
+                      "inverse-primary": "#80d5cb",
+                      "tertiary": "#0d5b55",
+                      "on-tertiary-fixed-variant": "#00504a",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "primary-fixed-dim": "#80d5cb",
+                      "secondary-container": "#6df5e1",
+                      "on-primary-container": "#a3faef",
+                      "surface-dim": "#d8dada",
+                      "error": "#ba1a1a",
+                      "tint-success": "#E6F5F3",
+                      "status-warning": "#D97706"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "stack-xs": "4px",
+                      "stack-sm": "12px",
+                      "element-gap": "16px",
+                      "container-padding": "20px"
+              },
+              "fontFamily": {
+                      "label-sm": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "label-md": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "stat-display": ["Inter"]
+              },
+              "fontSize": {
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface">
+<!-- Top AppBar - Following JSON Structure -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface">
+<div class="flex justify-between items-center px-container-padding py-stack-sm w-full max-w-[600px] mx-auto">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-primary p-2 active:scale-95 transition-transform" data-icon="arrow_back">arrow_back</button>
+<div class="flex items-center gap-2">
+<img alt="EC Logo" class="w-8 h-8 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFYnTUhpK2bpbN0IW4C6WrkOsQvm8A8SN-rhv3Dv7susMspruu8RI-mIO5I5wmMzko0LBUbq-_F6piPZsgghi5ZwelNeNdkvTxSH6SCwM57NOFew31S2YsLBsgRrzCAiG2DYwnmZkZsVFr3mMCwumR_JQWj5G4pXYVXitTC9lIH6B-7WmY5BYyYGkjdfAe-1U9rVz_5aLmK2LJ-ana5Fo8esh11l-XaaMK_l5OnmuqjnaSst9dm1YeOmch8VEJ9jEWIjFWye5jQQ"/>
+<div class="flex flex-col">
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">El Comptabli 🤖</h1>
+<div class="flex items-center">
+<span class="bg-tint-success text-secondary text-[10px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider">IA vérifiée</span>
+</div>
+</div>
+</div>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-variant transition-colors rounded-full" data-icon="history">history</button>
+</div>
+<!-- Disclaimer Banner -->
+<div class="bg-surface-container-low py-1.5 px-container-padding text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant italic">
+                Outil pédagogique — consulte un expert
+            </p>
+</div>
+</header>
+<!-- Chat Canvas -->
+<main class="pt-[100px] pb-[160px] px-container-padding max-w-[600px] mx-auto flex flex-col gap-element-gap">
+<!-- Message 1: Assistant -->
+<div class="flex justify-start max-w-[85%]">
+<div class="chat-bubble-assistant bg-tint-info text-on-surface p-4 rounded-[20px] shadow-sm">
+<p class="font-body-lg text-body-lg">Ahla ! Pose-moi ta question fiscale 👋</p>
+</div>
+</div>
+<!-- Message 2: User -->
+<div class="flex justify-end">
+<div class="chat-bubble-user bg-primary-container text-on-primary p-4 rounded-[20px] max-w-[85%] shadow-md">
+<p class="font-body-lg text-body-lg">Est-ce que je dois facturer la TVA ?</p>
+</div>
+</div>
+<!-- Message 3: Assistant Detailed Answer -->
+<div class="flex flex-col gap-2 max-w-[90%]">
+<div class="chat-bubble-assistant bg-tint-info text-on-surface p-4 rounded-[20px] shadow-sm">
+<p class="font-body-lg text-body-lg mb-3">
+                    En Tunisie, l'assujettissement à la TVA dépend de votre activité. Généralement :
+                </p>
+<ul class="space-y-2 font-label-md text-label-md list-disc ml-4 text-on-surface-variant">
+<li>Activités commerciales et industrielles : Obligatoire.</li>
+<li>Professions libérales : Obligatoire (taux de 19%).</li>
+<li>Régime forfaitaire : Pas de TVA à collecter.</li>
+</ul>
+<!-- Mini-card Expert -->
+<div class="mt-4 bg-tint-danger p-3 rounded-xl border border-error/10">
+<div class="flex items-start gap-2 mb-2">
+<span class="material-symbols-outlined text-error text-lg" data-icon="warning">warning</span>
+<p class="font-label-md text-label-md text-on-surface font-semibold">Cas complexe ? Consulte un expert</p>
+</div>
+<button class="w-full py-2 border border-error/20 text-error font-label-md text-label-md rounded-lg hover:bg-white/50 transition-colors">
+                        Trouver un expert
+                    </button>
+</div>
+</div>
+<!-- Source Badge -->
+<div class="flex items-center gap-1.5 px-2">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sources : Code de la TVA · vérifié 2026</span>
+</div>
+</div>
+<!-- Typing Indicator (Visible state for demo) -->
+<div class="flex justify-start opacity-70">
+<div class="bg-surface-container-high px-4 py-3 rounded-full flex gap-1 items-center">
+<div class="typing-dot w-1.5 h-1.5 bg-outline rounded-full"></div>
+<div class="typing-dot w-1.5 h-1.5 bg-outline rounded-full"></div>
+<div class="typing-dot w-1.5 h-1.5 bg-outline rounded-full"></div>
+</div>
+</div>
+</main>
+<!-- Bottom Interaction Area -->
+<div class="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-t from-surface via-surface/95 to-transparent pb-6 pt-10">
+<div class="max-w-[600px] mx-auto px-container-padding space-y-4">
+<!-- Suggestion Chips -->
+<div class="flex gap-2 overflow-x-auto no-scrollbar">
+<button class="flex-shrink-0 px-4 py-2 bg-white border border-outline-variant rounded-full font-label-md text-label-md text-primary hover:bg-primary-container hover:text-white transition-all shadow-sm">
+                    Exemple de facture
+                </button>
+<button class="flex-shrink-0 px-4 py-2 bg-white border border-outline-variant rounded-full font-label-md text-label-md text-primary hover:bg-primary-container hover:text-white transition-all shadow-sm">
+                    Régime forfaitaire
+                </button>
+</div>
+<!-- Input Bar -->
+<div class="bg-white rounded-full shadow-[0_8px_24px_rgba(15,92,86,0.08)] p-1.5 flex items-center border border-outline-variant/30">
+<input class="flex-grow bg-transparent border-none focus:ring-0 px-4 py-2 text-on-surface font-body-lg placeholder:text-outline/50" placeholder="Posez votre question..." type="text"/>
+<button class="w-12 h-12 bg-primary-container text-white rounded-full flex items-center justify-center active:scale-90 transition-transform shadow-md">
+<span class="material-symbols-outlined" data-icon="send" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+        // Micro-interaction for suggestions
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.add('scale-95');
+                setTimeout(() => this.classList.remove('scale-95'), 100);
+            });
+        });
+    </script>
+</body></html>

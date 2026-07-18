@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#00504a",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-tertiary-container": "#b3f7ee",
+                    "surface-container-low": "#f2f4f4",
+                    "tint-warning": "#FEF3E2",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "on-secondary-fixed-variant": "#005048",
+                    "status-premium": "#7C3AED",
+                    "text-primary": "#1A1A1A",
+                    "secondary-container": "#6df5e1",
+                    "status-warning": "#D97706",
+                    "on-surface-variant": "#3e4947",
+                    "on-error-container": "#93000a",
+                    "on-error": "#ffffff",
+                    "outline": "#6e7977",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#a3faef",
+                    "on-background": "#191c1d",
+                    "status-danger": "#DC2626",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "surface-variant": "#e1e3e3",
+                    "tint-danger": "#FDE8E6",
+                    "surface-bright": "#f8fafa",
+                    "background": "#f8fafa",
+                    "tint-info": "#EEF2FF",
+                    "surface-container-high": "#e6e8e8",
+                    "primary-fixed": "#9cf2e8",
+                    "on-secondary-container": "#006f64",
+                    "on-secondary-fixed": "#00201c",
+                    "outline-variant": "#bdc9c6",
+                    "surface-container-highest": "#e1e3e3",
+                    "surface": "#f8fafa",
+                    "tertiary-container": "#2f746d",
+                    "surface-container": "#eceeee",
+                    "surface-tint": "#006a63",
+                    "inverse-on-surface": "#eff1f1",
+                    "surface-dim": "#d8dada",
+                    "on-tertiary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#abefe7",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#0d5b55",
+                    "secondary": "#006b5f",
+                    "text-secondary": "#6B7280",
+                    "on-tertiary-fixed": "#00201d",
+                    "inverse-surface": "#2e3131",
+                    "status-success": "#16A34A",
+                    "primary-fixed-dim": "#80d5cb",
+                    "secondary-fixed": "#71f8e4",
+                    "primary": "#005c55",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#80d5cb",
+                    "on-primary-fixed": "#00201d",
+                    "primary-container": "#0f766e",
+                    "error-container": "#ffdad6",
+                    "on-surface": "#191c1d",
+                    "tint-success": "#E6F5F3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "card": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-xs": "4px",
+                    "stack-sm": "12px",
+                    "container-padding": "20px",
+                    "base": "8px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .chat-bubble-ai {
+            border-radius: 20px 20px 20px 6px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col items-center">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-background/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-container-padding py-base w-full max-w-[600px] mx-auto h-16">
+<button class="active:scale-95 transition-transform hover:opacity-80 p-2 -ml-2">
+<span class="material-symbols-outlined text-on-surface text-2xl">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm-mobile md:text-headline-sm text-on-surface text-center flex-1 pr-6">Détails du revenu</h1>
+<div class="w-8"></div> <!-- Spacer for symmetry -->
+</div>
+</header>
+<!-- Main Content -->
+<main class="w-full max-w-[600px] px-container-padding pb-32 flex flex-col gap-element-gap">
+<!-- Hero Section: Amount & Status -->
+<section class="flex flex-col items-center py-base mt-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
+<span class="material-symbols-outlined text-4xl" data-icon="trending_up">trending_up</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg-mobile text-status-success mb-2">+850 DT</h2>
+<div class="px-4 py-1 bg-tint-success text-status-success font-label-md text-label-md rounded-full flex items-center gap-2">
+<span class="w-2 h-2 bg-status-success rounded-full"></span>
+                Payé
+            </div>
+</section>
+<!-- Bento Grid / Info Card -->
+<section class="bg-surface-container-lowest rounded-card p-container-padding shadow-[0_4px_16px_rgba(15,92,86,0.08)] border border-outline-variant/30">
+<div class="flex flex-col">
+<!-- Info Rows -->
+<div class="flex justify-between items-center py-4 border-b border-outline-variant/30">
+<span class="text-on-surface-variant font-label-md text-label-md">Client</span>
+<span class="text-on-surface font-headline-sm text-label-md">Wafa Trading</span>
+</div>
+<div class="flex justify-between items-center py-4 border-b border-outline-variant/30">
+<span class="text-on-surface-variant font-label-md text-label-md">Catégorie</span>
+<span class="text-on-surface font-headline-sm text-label-md">Ventes</span>
+</div>
+<div class="flex justify-between items-center py-4 border-b border-outline-variant/30">
+<span class="text-on-surface-variant font-label-md text-label-md">Date</span>
+<span class="text-on-surface font-headline-sm text-label-md">16 juillet 2026</span>
+</div>
+<div class="flex justify-between items-center py-4 border-b border-outline-variant/30">
+<span class="text-on-surface-variant font-label-md text-label-md">TVA collectée</span>
+<span class="text-on-surface font-headline-sm text-label-md">135,7 DT</span>
+</div>
+<div class="flex justify-between items-center py-4">
+<span class="text-on-surface-variant font-label-md text-label-md">Ajouté via</span>
+<span class="text-on-surface font-headline-sm text-label-md">Saisie manuelle</span>
+</div>
+</div>
+</section>
+<!-- AI Insight Card -->
+<section class="chat-bubble-ai bg-tint-info p-container-padding flex gap-4 items-start shadow-sm transform hover:scale-[1.01] transition-all duration-300">
+<div class="flex-shrink-0 w-8 h-8 bg-tertiary-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-primary leading-relaxed">
+                    💡 Wafa Trading = ton meilleur client ce trimestre (2 400 DT)
+                </p>
+<div class="mt-3 flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+<button class="whitespace-nowrap px-3 py-1.5 border border-primary/20 rounded-full font-label-sm text-label-sm text-primary bg-white/50 hover:bg-white transition-colors">Voir l'historique</button>
+<button class="whitespace-nowrap px-3 py-1.5 border border-primary/20 rounded-full font-label-sm text-label-sm text-primary bg-white/50 hover:bg-white transition-colors">Exporter rapport</button>
+</div>
+</div>
+</section>
+<!-- Disclaimer -->
+<p class="px-container-padding text-center font-label-sm text-label-sm text-on-surface-variant opacity-70 mt-4">
+            El Comptabli est un outil pédagogique et ne remplace pas l'expertise d'un comptable agréé.
+        </p>
+<!-- Actions -->
+<div class="fixed bottom-32 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[560px] flex gap-4 px-2">
+<button class="flex-1 py-4 px-6 rounded-full border border-outline-variant bg-white text-on-surface-variant font-headline-sm text-label-md hover:bg-surface-container transition-colors active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+                Modifier
+            </button>
+<button class="flex-1 py-4 px-6 rounded-full border border-tint-danger bg-white text-status-danger font-headline-sm text-label-md hover:bg-tint-danger transition-colors active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+                Supprimer
+            </button>
+</div>
+</main>
+<!-- Bottom Navigation Shell (Suppressed context for detail view as per mandate, but present in JSON for structure) -->
+<!-- Applying hidden-ish style to maintain focus on the transaction details while respecting the UI Shell presence -->
+<nav class="fixed bottom-6 left-0 right-0 z-50 flex justify-around items-center px-6 py-3 bg-surface-container/90 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.12)] fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[560px] rounded-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Accueil</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="event_note">event_note</span>
+<span class="font-label-sm text-label-sm">Échéances</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="center_focus_strong">center_focus_strong</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim scale-110 after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1" href="#">
+<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-sm text-label-sm">Suivi</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profil</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Subtle haptic-like visual feedback already handled by Tailwind active: classes
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli - Paie</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+Arabic:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e1e3e3",
+                    "on-secondary-fixed-variant": "#005048",
+                    "secondary": "#006b5f",
+                    "outline": "#6e7977",
+                    "tertiary-fixed": "#abefe7",
+                    "primary-fixed": "#9cf2e8",
+                    "on-surface": "#191c1d",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "text-secondary": "#6B7280",
+                    "tint-danger": "#FDE8E6",
+                    "tertiary-container": "#2f746d",
+                    "tertiary": "#0d5b55",
+                    "surface-dim": "#d8dada",
+                    "status-warning": "#D97706",
+                    "on-tertiary-container": "#b3f7ee",
+                    "inverse-primary": "#80d5cb",
+                    "surface-container-high": "#e6e8e8",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#a3faef",
+                    "tint-success": "#E6F5F3",
+                    "tint-info": "#EEF2FF",
+                    "secondary-fixed": "#71f8e4",
+                    "text-primary": "#1A1A1A",
+                    "primary-container": "#0f766e",
+                    "surface": "#f8fafa",
+                    "outline-variant": "#bdc9c6",
+                    "inverse-surface": "#2e3131",
+                    "surface-container-highest": "#e1e3e3",
+                    "surface-container": "#eceeee",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#006a63",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#80d5cb",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#00504a",
+                    "primary": "#005c55",
+                    "on-background": "#191c1d",
+                    "on-tertiary-fixed": "#00201d",
+                    "background": "#f8fafa",
+                    "surface-bright": "#f8fafa",
+                    "on-surface-variant": "#3e4947",
+                    "secondary-container": "#6df5e1",
+                    "status-success": "#16A34A",
+                    "on-primary-fixed": "#00201d",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#00201c",
+                    "tint-warning": "#FEF3E2",
+                    "status-premium": "#7C3AED",
+                    "inverse-on-surface": "#eff1f1",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#006f64",
+                    "status-danger": "#DC2626",
+                    "surface-container-low": "#f2f4f4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-xs": "4px",
+                    "element-gap": "16px",
+                    "base": "8px",
+                    "stack-sm": "12px",
+                    "container-padding": "20px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter", "Noto Sans Arabic"],
+                    "headline-lg": ["Inter", "Noto Sans Arabic"],
+                    "headline-sm": ["Inter", "Noto Sans Arabic"],
+                    "body-lg": ["Inter", "Noto Sans Arabic"],
+                    "label-md": ["Inter", "Noto Sans Arabic"],
+                    "stat-display": ["Inter", "Noto Sans Arabic"],
+                    "label-sm": ["Inter", "Noto Sans Arabic"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', 'Noto Sans Arabic', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-effect { backdrop-filter: blur(8px); background-color: rgba(255, 255, 255, 0.8); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-40">
+<!-- TopAppBar -->
+<header class="bg-surface sticky top-0 z-40 w-full max-w-[600px] mx-auto px-container-padding py-stack-sm flex justify-between items-center">
+<div class="flex items-center gap-3">
+<img alt="El Comptabli Logo" class="w-10 h-10 rounded-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_dwAaL6hAe-SjWoepCta1w51HdlKs23HSi5HlJDDKQzsHPgwAC2XxtAyhU78fL8NklghE2vbmVH2oyM26A1-OEnudtchyWUEz_GE9eRyKiZV5b-o22xys5SI-dlN8VGHoEr0ekjHLyo5nPpvzLNMiiVgSkoqJB8oACNB9GzhsHBJ80rMR8De9KU-sp7Q7M1dQkXhqyXBa6SWBPrTibI6GfD-AdcWzt0AdZNQCY-tV7fkPdhj4ifrPdnDUb1ewhs-AG7wuQQvO0A"/>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">El Comptabli</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-low hover:bg-surface-container-high transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface">notifications</span>
+</button>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding pt-base">
+<!-- Month Selector Header -->
+<div class="flex items-center justify-between mb-element-gap">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container rounded-full hover:bg-surface-container-high transition-colors active:scale-95">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Juillet 2026</span>
+<span class="material-symbols-outlined text-primary scale-75">arrow_drop_down</span>
+</button>
+<span class="text-label-sm font-label-sm text-outline">Calculs CNSS/IRPP automatiques</span>
+</div>
+<!-- Employee List Section -->
+<div class="flex flex-col gap-stack-sm mb-element-gap">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-2 px-1">Équipe (3)</h2>
+<!-- Employee Card 1 -->
+<div class="bg-surface-container-lowest rounded-2xl p-container-padding shadow-[0_4px_16px_rgba(15,92,86,0.06)] hover:shadow-[0_4px_20px_rgba(15,92,86,0.1)] transition-shadow">
+<div class="flex items-start justify-between mb-stack-sm">
+<div class="flex gap-3">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold text-headline-sm">AB</div>
+<div>
+<p class="font-headline-sm text-headline-sm leading-none">Amine Ben Salem</p>
+<p class="font-label-sm text-label-sm text-outline mt-1">Développeur Senior</p>
+</div>
+</div>
+<button class="text-primary hover:bg-primary-fixed/20 p-1 rounded-full transition-colors active:scale-90">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-stack-sm">
+<div class="bg-surface-container-low p-3 rounded-xl">
+<p class="text-label-sm text-outline mb-1">Salaire Brut</p>
+<p class="font-headline-sm text-headline-sm">1 200 DT</p>
+</div>
+<div class="bg-tint-success p-3 rounded-xl">
+<p class="text-label-sm text-primary mb-1">Net à Payer</p>
+<p class="font-headline-sm text-headline-sm text-primary">942 DT</p>
+</div>
+</div>
+</div>
+<!-- Employee Card 2 -->
+<div class="bg-surface-container-lowest rounded-2xl p-container-padding shadow-[0_4px_16px_rgba(15,92,86,0.06)]">
+<div class="flex items-start justify-between mb-stack-sm">
+<div class="flex gap-3">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold text-headline-sm">MC</div>
+<div>
+<p class="font-headline-sm text-headline-sm leading-none">Meryem Chahed</p>
+<p class="font-label-sm text-label-sm text-outline mt-1">Designer UI/UX</p>
+</div>
+</div>
+<button class="text-primary p-1 rounded-full">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-stack-sm">
+<div class="bg-surface-container-low p-3 rounded-xl">
+<p class="text-label-sm text-outline mb-1">Salaire Brut</p>
+<p class="font-headline-sm text-headline-sm">1 200 DT</p>
+</div>
+<div class="bg-tint-success p-3 rounded-xl">
+<p class="text-label-sm text-primary mb-1">Net à Payer</p>
+<p class="font-headline-sm text-headline-sm text-primary">942 DT</p>
+</div>
+</div>
+</div>
+<!-- Employee Card 3 -->
+<div class="bg-surface-container-lowest rounded-2xl p-container-padding shadow-[0_4px_16px_rgba(15,92,86,0.06)]">
+<div class="flex items-start justify-between mb-stack-sm">
+<div class="flex gap-3">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-bold text-headline-sm">OK</div>
+<div>
+<p class="font-headline-sm text-headline-sm leading-none">Omar Khemiri</p>
+<p class="font-label-sm text-label-sm text-outline mt-1">Project Manager</p>
+</div>
+</div>
+<button class="text-primary p-1 rounded-full">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-stack-sm">
+<div class="bg-surface-container-low p-3 rounded-xl">
+<p class="text-label-sm text-outline mb-1">Salaire Brut</p>
+<p class="font-headline-sm text-headline-sm">1 200 DT</p>
+</div>
+<div class="bg-tint-success p-3 rounded-xl">
+<p class="text-label-sm text-primary mb-1">Net à Payer</p>
+<p class="font-headline-sm text-headline-sm text-primary">942 DT</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Summary Card -->
+<div class="bg-tint-info rounded-2xl p-container-padding border border-outline-variant/30 mb-8">
+<h3 class="font-label-md text-label-md font-bold text-on-secondary-container mb-stack-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">analytics</span>
+                Résumé des charges - Juillet
+            </h3>
+<div class="space-y-stack-sm">
+<div class="flex justify-between items-center">
+<span class="text-body-lg text-on-surface-variant">Masse salariale</span>
+<span class="font-headline-sm text-headline-sm">3 600 DT</span>
+</div>
+<div class="h-px bg-outline-variant/40"></div>
+<div class="flex justify-between items-center">
+<span class="text-body-lg text-on-surface-variant">CNSS patronale</span>
+<span class="font-body-lg text-body-lg font-bold">614 DT</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-body-lg text-on-surface-variant">Retenues IRPP</span>
+<span class="font-body-lg text-body-lg font-bold">187 DT</span>
+</div>
+</div>
+</div>
+<!-- Disclaimer -->
+<div class="bg-surface-container-low p-4 rounded-xl text-center mb-10">
+<p class="text-[10px] leading-relaxed text-outline">
+                Cet outil est une aide pédagogique au calcul de la paie selon la législation tunisienne. Il ne remplace pas l'expertise d'un expert-comptable certifié.
+            </p>
+</div>
+</main>
+<!-- Fixed Action Button -->
+<div class="fixed bottom-24 right-6 z-50">
+<button class="bg-primary text-on-primary flex items-center gap-3 px-6 py-4 rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.2)] active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="font-label-md text-label-md font-bold">Générer les fiches de paie</span>
+</button>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[560px] z-50 bg-surface-container-lowest/90 dark:bg-surface-dim/90 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.12)] flex justify-around items-center py-3 px-6 rounded-full">
+<!-- Accueil -->
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary-container transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Accueil</span>
+</a>
+<!-- IA -->
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary-container transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm">IA</span>
+</a>
+<!-- Scanner -->
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary-container transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined">document_scanner</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</a>
+<!-- Finance (Active) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="font-label-sm text-label-sm">Finance</span>
+</a>
+<!-- Savoir -->
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary-container transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-sm text-label-sm">Savoir</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('click', () => {
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(5);
+                }
+            });
+        });
+    </script>
+</body></html>

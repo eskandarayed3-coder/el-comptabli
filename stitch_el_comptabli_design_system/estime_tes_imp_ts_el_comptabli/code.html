@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=390, initial-scale=1.0" name="viewport"/>
+<title>Estime tes impôts - Serene Fiscal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "status-success": "#16A34A",
+                    "on-primary-fixed": "#00201d",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#00201c",
+                    "surface-bright": "#f8fafa",
+                    "on-surface-variant": "#3e4947",
+                    "secondary-container": "#6df5e1",
+                    "status-danger": "#DC2626",
+                    "surface-container-low": "#f2f4f4",
+                    "tint-warning": "#FEF3E2",
+                    "status-premium": "#7C3AED",
+                    "inverse-on-surface": "#eff1f1",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#006f64",
+                    "surface-tint": "#006a63",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#80d5cb",
+                    "inverse-surface": "#2e3131",
+                    "surface-container-highest": "#e1e3e3",
+                    "surface-container": "#eceeee",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#00201d",
+                    "background": "#f8fafa",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#00504a",
+                    "primary": "#005c55",
+                    "on-background": "#191c1d",
+                    "inverse-primary": "#80d5cb",
+                    "surface-container-high": "#e6e8e8",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#a3faef",
+                    "tint-success": "#E6F5F3",
+                    "status-warning": "#D97706",
+                    "on-tertiary-container": "#b3f7ee",
+                    "surface": "#f8fafa",
+                    "outline-variant": "#bdc9c6",
+                    "tint-info": "#EEF2FF",
+                    "secondary-fixed": "#71f8e4",
+                    "text-primary": "#1A1A1A",
+                    "primary-container": "#0f766e",
+                    "tertiary-fixed": "#abefe7",
+                    "primary-fixed": "#9cf2e8",
+                    "on-surface": "#191c1d",
+                    "surface-variant": "#e1e3e3",
+                    "on-secondary-fixed-variant": "#005048",
+                    "secondary": "#006b5f",
+                    "outline": "#6e7977",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "text-secondary": "#6B7280",
+                    "tint-danger": "#FDE8E6",
+                    "tertiary-container": "#2f746d",
+                    "tertiary": "#0d5b55",
+                    "surface-dim": "#d8dada",
+                    "on-error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "card": "24px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "container-padding": "20px",
+                    "stack-sm": "12px",
+                    "stack-xs": "4px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "stat-display": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .custom-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-open .accordion-content {
+            max-height: 300px;
+        }
+        .accordion-open .chevron-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen pb-32">
+<!-- Top AppBar (from JSON) -->
+<header class="w-full top-0 sticky z-50 bg-surface dark:bg-background flex justify-between items-center px-container-padding py-base w-full max-w-[600px] mx-auto">
+<button class="hover:bg-surface-container-low transition-colors active:scale-95 duration-150 p-2 rounded-full">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm-mobile text-primary dark:text-primary-fixed">Estime tes impôts</h1>
+<button class="hover:bg-surface-container-low transition-colors active:scale-95 duration-150 p-2 rounded-full">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">account_circle</span>
+</button>
+</header>
+<main class="w-full max-w-[600px] mx-auto px-container-padding mt-4 flex flex-col gap-6">
+<!-- Segmented Control -->
+<div class="bg-surface-container p-1 rounded-full flex w-full">
+<button class="flex-1 py-2 text-label-md font-label-md rounded-full text-outline transition-all">TVA</button>
+<button class="flex-1 py-2 text-label-md font-label-md rounded-full bg-surface-container-lowest text-primary shadow-sm transition-all">IRPP</button>
+</div>
+<!-- Form Section -->
+<section class="bg-surface-container-lowest rounded-card p-container-padding shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex flex-col gap-element-gap">
+<div class="flex flex-col gap-stack-xs">
+<label class="text-label-sm font-label-sm text-outline ml-1">CA annuel</label>
+<div class="relative">
+<input class="w-full border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-body-lg font-body-lg" type="text" value="24 000 DT"/>
+</div>
+</div>
+<div class="flex flex-col gap-stack-xs">
+<label class="text-label-sm font-label-sm text-outline ml-1">Charges</label>
+<div class="relative">
+<input class="w-full border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-body-lg font-body-lg" type="text" value="6 000 DT"/>
+</div>
+</div>
+<div class="flex flex-col gap-stack-sm">
+<label class="text-label-sm font-label-sm text-outline ml-1">Régime fiscal</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-full border border-outline-variant text-label-md font-label-md text-outline hover:bg-surface-container-low">Forfaitaire</button>
+<button class="px-4 py-2 rounded-full bg-primary text-on-primary text-label-md font-label-md shadow-sm">Réel</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-label-md font-label-md text-outline hover:bg-surface-container-low">Auto-entrepreneur</button>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-full font-headline-sm text-headline-sm-mobile active:scale-95 transition-transform mt-2">
+                Estimer
+            </button>
+</section>
+<!-- Results Section -->
+<section class="flex overflow-x-auto gap-4 custom-scrollbar -mx-container-padding px-container-padding pb-4">
+<!-- Stat Card 1 -->
+<div class="min-w-[140px] flex-shrink-0 bg-tint-info rounded-card p-4 flex flex-col gap-1">
+<span class="text-label-sm font-label-sm text-on-surface-variant">TVA</span>
+<span class="font-stat-display text-stat-display text-primary">1 140 DT</span>
+</div>
+<!-- Stat Card 2 -->
+<div class="min-w-[140px] flex-shrink-0 bg-tint-warning rounded-card p-4 flex flex-col gap-1">
+<span class="text-label-sm font-label-sm text-on-surface-variant">IRPP</span>
+<span class="font-stat-display text-stat-display text-primary">2 350 DT</span>
+</div>
+<!-- Stat Card 3 -->
+<div class="min-w-[140px] flex-shrink-0 bg-tint-success rounded-card p-4 flex flex-col gap-1 border border-primary/10">
+<span class="text-label-sm font-label-sm text-on-surface-variant">Net</span>
+<span class="font-stat-display text-stat-display text-primary">14 510 DT</span>
+</div>
+</section>
+<!-- Expandable Calculation Section -->
+<section class="bg-surface-container-low rounded-card transition-all duration-300" id="calculation-accordion">
+<button class="w-full flex justify-between items-center px-container-padding py-4 text-primary font-label-md" onclick="toggleAccordion()">
+<span>Détail du calcul</span>
+<span class="material-symbols-outlined chevron-icon transition-transform duration-300">expand_more</span>
+</button>
+<div class="accordion-content px-container-padding pb-4">
+<div class="flex flex-col gap-3 pt-2 text-on-surface-variant border-t border-outline-variant/30">
+<div class="flex flex-col gap-1">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Revenu Imposable</span>
+<p class="text-label-md font-label-md">24 000 DT - 6 000 DT = <span class="font-bold text-primary">18 000 DT</span></p>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Tranche IRPP</span>
+<p class="text-label-md font-label-md">IRPP = (Tranche x %) + Forfait de base</p>
+</div>
+<div class="mt-2 p-3 bg-surface-container rounded-xl">
+<p class="text-label-sm text-outline italic">Calcul basé sur le barème fiscal tunisien en vigueur (2024).</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Warning Banner -->
+<section class="bg-surface-container-high rounded-xl p-4 flex gap-3 items-start">
+<span class="material-symbols-outlined text-status-warning shrink-0">warning</span>
+<p class="text-label-sm font-label-sm text-on-surface-variant leading-relaxed">
+                Estimation indicative — consulte un expert-comptable pour tes déclarations officielles.
+            </p>
+</section>
+</main>
+<!-- Bottom Navigation Bar (from JSON) -->
+<nav class="fixed bottom-6 left-0 right-0 z-50 flex justify-around items-center px-6 py-3 bg-surface-container-lowest/80 dark:bg-inverse-surface/90 fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[400px] rounded-full backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:opacity-80 transition-opacity active:scale-90 duration-200 ease-out" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Accueil</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:opacity-80 transition-opacity active:scale-90 duration-200 ease-out" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm">IA</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:opacity-80 transition-opacity active:scale-90 duration-200 ease-out" href="#">
+<span class="material-symbols-outlined">document_scanner</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</a>
+<!-- Active Tab: Finance -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-secondary-fixed relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full hover:opacity-80 transition-opacity active:scale-90 duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="font-label-sm text-label-sm">Finance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:opacity-80 transition-opacity active:scale-90 duration-200 ease-out" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-sm text-label-sm">Savoir</span>
+</a>
+</nav>
+<script>
+        function toggleAccordion() {
+            const accordion = document.getElementById('calculation-accordion');
+            accordion.classList.toggle('accordion-open');
+        }
+
+        // Add a slight delay to reveal calculation if needed, but here simple toggle is better for mobile
+        document.addEventListener('DOMContentLoaded', () => {
+            // Optional: Auto-expand for demo purposes after 1 second
+            // setTimeout(toggleAccordion, 1000);
+        });
+    </script>
+</body></html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#80d5cb",
+                        "surface-container-high": "#e6e8e8",
+                        "primary-fixed": "#9cf2e8",
+                        "on-error-container": "#93000a",
+                        "status-warning": "#D97706",
+                        "inverse-primary": "#80d5cb",
+                        "primary-container": "#0f766e",
+                        "secondary": "#006b5f",
+                        "on-secondary-fixed": "#00201c",
+                        "on-surface": "#191c1d",
+                        "primary": "#005c55",
+                        "on-surface-variant": "#3e4947",
+                        "outline": "#6e7977",
+                        "on-primary": "#ffffff",
+                        "background": "#f8fafa",
+                        "on-primary-fixed-variant": "#00504a",
+                        "surface-container-low": "#f2f4f4",
+                        "tertiary": "#0d5b55",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-background": "#191c1d",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "error": "#ba1a1a",
+                        "text-secondary": "#6B7280",
+                        "secondary-container": "#6df5e1",
+                        "on-error": "#ffffff",
+                        "surface-container": "#eceeee",
+                        "tertiary-fixed": "#abefe7",
+                        "surface-variant": "#e1e3e3",
+                        "tint-warning": "#FEF3E2",
+                        "surface-container-highest": "#e1e3e3",
+                        "inverse-surface": "#2e3131",
+                        "tint-info": "#EEF2FF",
+                        "text-primary": "#1A1A1A",
+                        "tertiary-container": "#2f746d",
+                        "surface-container-lowest": "#ffffff",
+                        "tint-danger": "#FDE8E6",
+                        "outline-variant": "#bdc9c6",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "on-primary-fixed": "#00201d",
+                        "on-tertiary-fixed": "#00201d",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-secondary-container": "#006f64",
+                        "status-success": "#16A34A",
+                        "on-primary-container": "#a3faef",
+                        "on-tertiary": "#ffffff",
+                        "status-premium": "#7C3AED",
+                        "surface-bright": "#f8fafa",
+                        "surface": "#f8fafa",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "surface-tint": "#006a63",
+                        "on-tertiary-container": "#b3f7ee",
+                        "secondary-fixed": "#71f8e4",
+                        "status-danger": "#DC2626",
+                        "tint-success": "#E6F5F3",
+                        "surface-dim": "#d8dada",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "card": "24px"
+                    },
+                    "spacing": {
+                        "element-gap": "16px",
+                        "container-padding": "20px",
+                        "base": "8px",
+                        "stack-xs": "4px",
+                        "stack-sm": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "34px", "fontWeight": "700"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 bg-background z-50 flex items-center justify-between px-container-padding h-16">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-sm-mobile text-headline-sm-mobile text-primary">Exporter mes données</h1>
+</div>
+<img alt="El Comptabli Logo" class="h-8 w-8 rounded-full shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu49smqpCbsboP92aZwtRZdH7W_gIxazm3pBmNNLD8L41__dSyZEFcp5-elmLAh6YfCBuN2jNbz0yqK2U7qi6V1uoDaPKp7zgwiM7L6HOL8OzHLOxc9B69SGbaaVXQ54g18oy2fPhLQQ9Fl-hzwsUXRGrUlTMpiYW1HUInBw2uawtNYUwEWqxx33CbMCdZp9aUP402JJb149MyWFV3vXSgcX4puUhc7p05pKclvhv-XgoHijysSlFRC8uwvtnK9BmWrGaXwDDdKQ"/>
+</header>
+<main class="px-container-padding max-w-[600px] mx-auto pt-4 space-y-8">
+<!-- Period Selector -->
+<section>
+<h2 class="text-on-surface-variant font-label-md mb-4 ml-1">Période</h2>
+<div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+<button class="bg-primary text-on-primary px-5 py-2.5 rounded-full font-label-md active:scale-95 transition-all flex-shrink-0">Mois</button>
+<button class="bg-surface-container-low text-on-surface-variant px-5 py-2.5 rounded-full font-label-md hover:bg-surface-container-high active:scale-95 transition-all flex-shrink-0">Trimestre</button>
+<button class="bg-surface-container-low text-on-surface-variant px-5 py-2.5 rounded-full font-label-md hover:bg-surface-container-high active:scale-95 transition-all flex-shrink-0">Année</button>
+<button class="bg-surface-container-low text-on-surface-variant px-5 py-2.5 rounded-full font-label-md hover:bg-surface-container-high active:scale-95 transition-all flex-shrink-0">Personnalisé</button>
+</div>
+</section>
+<!-- Content Selection (Cards) -->
+<section>
+<h2 class="text-on-surface-variant font-label-md mb-4 ml-1">Contenu à inclure</h2>
+<div class="grid grid-cols-1 gap-3">
+<!-- Selected Cards -->
+<div class="bg-tint-success p-5 rounded-card border border-primary/10 flex items-center justify-between shadow-sm active:scale-[0.98] transition-all cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="bg-primary-container/10 p-3 rounded-full text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+<span class="font-headline-sm-mobile text-primary">Transactions</span>
+</div>
+<div class="bg-primary text-on-primary rounded-full p-1 h-6 w-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</div>
+<div class="bg-tint-success p-5 rounded-card border border-primary/10 flex items-center justify-between shadow-sm active:scale-[0.98] transition-all cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="bg-primary-container/10 p-3 rounded-full text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+</div>
+<span class="font-headline-sm-mobile text-primary">Factures scannées</span>
+</div>
+<div class="bg-primary text-on-primary rounded-full p-1 h-6 w-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</div>
+<div class="bg-tint-success p-5 rounded-card border border-primary/10 flex items-center justify-between shadow-sm active:scale-[0.98] transition-all cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="bg-primary-container/10 p-3 rounded-full text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+<span class="font-headline-sm-mobile text-primary">Journal comptable</span>
+</div>
+<div class="bg-primary text-on-primary rounded-full p-1 h-6 w-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</div>
+<!-- Unselected Card -->
+<div class="bg-surface-container-lowest p-5 rounded-card border border-outline-variant flex items-center justify-between active:scale-[0.98] transition-all cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="bg-surface-variant p-3 rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<span class="font-headline-sm-mobile text-on-surface-variant">Rapport TVA</span>
+</div>
+<div class="border-2 border-outline-variant rounded-full h-6 w-6"></div>
+</div>
+</div>
+</section>
+<!-- Format Selector -->
+<section>
+<h2 class="text-on-surface-variant font-label-md mb-4 ml-1">Format de fichier</h2>
+<div class="bg-surface-container-low p-1.5 rounded-full flex gap-1">
+<button class="flex-1 bg-surface-container-lowest text-primary py-2.5 rounded-full font-headline-sm-mobile shadow-sm transition-all">Excel</button>
+<button class="flex-1 text-on-surface-variant py-2.5 rounded-full font-headline-sm-mobile hover:bg-surface-container-high transition-all">PDF</button>
+<button class="flex-1 text-on-surface-variant py-2.5 rounded-full font-headline-sm-mobile hover:bg-surface-container-high transition-all">CSV</button>
+</div>
+</section>
+<!-- Recipient -->
+<section class="space-y-4">
+<div class="space-y-2">
+<label class="text-on-surface-variant font-label-md ml-1 block" for="email-comptable">Email de ton comptable (optionnel)</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-2xl p-4 text-body-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" id="email-comptable" placeholder="naji@cabinet.tn" type="email"/>
+</div>
+</section>
+<!-- CTA -->
+<div class="pt-4">
+<button class="w-full bg-primary text-on-primary font-headline-sm-mobile py-5 rounded-full shadow-lg hover:bg-primary-container active:scale-95 transition-all flex items-center justify-center gap-2" onclick="showSuccess()">
+<span class="material-symbols-outlined">ios_share</span>
+                Générer l'export
+            </button>
+</div>
+<!-- Success Toast (Initially Hidden) -->
+<div class="hidden transform translate-y-10 opacity-0 transition-all duration-500 pb-8" id="success-state">
+<div class="bg-tint-success border border-primary/20 p-5 rounded-card flex items-center gap-4 shadow-md">
+<div class="bg-primary text-on-primary rounded-full p-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</div>
+<div>
+<p class="text-primary font-headline-sm-mobile">Export prêt</p>
+<p class="text-on-secondary-container font-label-sm">envoyé à naji@cabinet.tn</p>
+</div>
+</div>
+</div>
+<!-- Pedagogical Disclaimer -->
+<div class="bg-surface-container-low p-4 rounded-xl text-center">
+<p class="text-on-surface-variant font-label-sm text-[11px] leading-relaxed opacity-70">
+                El Comptabli est un outil pédagogique. Les exports générés sont destinés à faciliter votre organisation. Pour toute certification officielle, consultez votre expert-comptable agréé.
+            </p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-4 right-4 z-50 bg-surface-container-lowest/90 backdrop-blur-md rounded-full h-16 shadow-[0_8px_24px_rgba(0,0,0,0.12)] flex justify-around items-center px-4 max-w-[600px] mx-auto">
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity active:scale-90" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity active:scale-90" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary font-bold after:content-[''] after:w-1 after:h-1 after:bg-secondary after:rounded-full after:mt-1 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity active:scale-90" href="#">
+<span class="material-symbols-outlined">analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity active:scale-90" href="#">
+<span class="material-symbols-outlined">person</span>
+</a>
+</nav>
+<script>
+        function showSuccess() {
+            const successEl = document.getElementById('success-state');
+            successEl.classList.remove('hidden');
+            // Force a reflow
+            successEl.offsetHeight;
+            successEl.classList.remove('translate-y-10', 'opacity-0');
+            successEl.classList.add('translate-y-0', 'opacity-100');
+            
+            // Scroll to success message
+            successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body></html>

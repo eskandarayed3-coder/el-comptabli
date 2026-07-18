@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli Admin - Gestion des Experts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "text-secondary": "#6B7280",
+                        "text-primary": "#1A1A1A",
+                        "tint-info": "#EEF2FF",
+                        "tertiary-fixed": "#abefe7",
+                        "tertiary-container": "#2f746d",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "on-secondary-fixed-variant": "#005048",
+                        "outline": "#6e7977",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#80d5cb",
+                        "on-primary-fixed": "#00201d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e6e8e8",
+                        "on-secondary-fixed": "#00201c",
+                        "tertiary": "#0d5b55",
+                        "secondary-container": "#6df5e1",
+                        "tint-danger": "#FDE8E6",
+                        "surface-tint": "#006a63",
+                        "surface-container": "#eceeee",
+                        "secondary": "#006b5f",
+                        "tint-success": "#E6F5F3",
+                        "surface-container-low": "#f2f4f4",
+                        "on-surface-variant": "#3e4947",
+                        "background": "#f8fafa",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-primary-container": "#a3faef",
+                        "primary-fixed": "#9cf2e8",
+                        "on-primary": "#ffffff",
+                        "status-danger": "#DC2626",
+                        "primary": "#005c55",
+                        "secondary-fixed": "#71f8e4",
+                        "status-warning": "#D97706",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#f8fafa",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary-container": "#0f766e",
+                        "outline-variant": "#bdc9c6",
+                        "on-surface": "#191c1d",
+                        "on-secondary-container": "#006f64",
+                        "surface-container-highest": "#e1e3e3",
+                        "status-premium": "#7C3AED",
+                        "on-primary-fixed-variant": "#00504a",
+                        "on-background": "#191c1d",
+                        "surface-dim": "#d8dada",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "inverse-primary": "#80d5cb",
+                        "status-success": "#16A34A",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#eff1f1",
+                        "tint-warning": "#FEF3E2",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "surface": "#f8fafa",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#00201d",
+                        "surface-variant": "#e1e3e3",
+                        "inverse-surface": "#2e3131"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .expert-card-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        
+        .active-nav-glow {
+            box-shadow: 0 0 12px rgba(0, 92, 85, 0.1);
+        }
+
+        .glass-header {
+            background: rgba(248, 250, 250, 0.8);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-text-primary font-body-lg min-h-screen overflow-x-hidden">
+<!-- SideNavBar (Execution from JSON) -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col bg-surface border-r border-outline-variant shadow-sm z-50">
+<!-- Brand Header -->
+<div class="px-6 py-8 flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<img alt="EC Logo" class="w-10 h-10 rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1hvnmgWy-wJRa6p6If9sEKx6mAWBL1xSd9tdFkPs6m5xJe-Brqbljf84XL2-Ha7UkkUOcapF0M9eelMOxoedyNBM6XYiZsNEOfDakIT2-88LpTpU0NW4lJ65vA0VzHGqjZsiAHqoXaocrkMWMgUpi2Zx8kdyMkUTfo8_sftS34dN1lHoF6GVpkBdU4x492thMPsmw_UYgOC-cdiyZKRp4RLEkOEQJn7-fALMnI9BiDL1DCHGe6St9wp-i_ZMd2tKxHA4Cvv9xmg"/>
+<span class="font-headline-md text-headline-md font-black text-primary">El Comptabli</span>
+</div>
+<span class="font-label-md text-label-md text-text-secondary pl-13">Admin Console</span>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 px-4 space-y-1 overflow-y-auto hide-scrollbar">
+<!-- Labels & Icons from JSON mapping -->
+<a class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:text-primary transition-colors hover:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:text-primary transition-colors hover:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Utilisateurs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:text-primary transition-colors hover:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Abonnements</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:text-primary transition-colors hover:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-md text-label-md">Base de connaissance</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:text-primary transition-colors hover:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Logs IA</span>
+</a>
+<!-- Active Navigation (Experts) -->
+<a class="flex items-center gap-3 px-4 py-3 text-primary font-bold border-r-4 border-primary bg-tint-success active-nav-glow rounded-l-none rounded-xl" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-label-md text-label-md">Experts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:text-primary transition-colors hover:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined">article</span>
+<span class="font-label-md text-label-md">Contenu</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:text-primary transition-colors hover:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-md text-label-md">Notifications</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:text-primary transition-colors hover:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-text-secondary hover:text-primary transition-colors hover:bg-surface-container-high rounded-xl" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Réglages</span>
+</a>
+</nav>
+<!-- Footer Action -->
+<div class="p-4 border-t border-outline-variant">
+<button class="w-full flex items-center justify-center gap-2 py-3 bg-primary-container text-on-primary-container font-label-md text-label-md rounded-2xl active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+                Support Technique
+            </button>
+</div>
+</aside>
+<!-- TopNavBar (Execution from JSON) -->
+<header class="flex justify-between items-center h-16 ml-64 px-8 w-[calc(100%-16rem)] glass-header sticky top-0 z-40 border-b border-outline-variant/30">
+<div class="flex items-center bg-surface-container-low px-4 py-2 rounded-full w-96">
+<span class="material-symbols-outlined text-text-secondary mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md w-full" placeholder="Rechercher un expert, un dossier..." type="text"/>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-tint-info rounded-full transition-all text-text-secondary">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="p-2 hover:bg-tint-info rounded-full transition-all text-text-secondary">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="font-label-md text-label-md text-text-primary">Admin El Comptabli</p>
+<p class="text-[10px] text-text-secondary uppercase tracking-wider font-bold">Super Admin</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container overflow-hidden border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a Mediterranean business administrator in a modern office, soft focus background, natural bright lighting, teal and white color palette, professional and welcoming expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvroxQQh_JK3fjf6Y6HhWtus1bSwoJpdGCWUiNctocNDezl2nQpbq7elL2Z6GSOEOab4CEhuWX4NCdv7EfW5sDDVX5t1kV9hkPv55d0hETg30rDHT4_Kz7e1xQYPeWVxdx1b_UZZclxb6V4f7WOnerUGSRdldZnW2hynBuPEykJw8X7biz8hqCKIIXUpuWCdO4cc5T0c25KNx9CtVD_2AYTlwDOhWUeeCpKs7yS6A8BdG47I6h_1uk4Dz_GsdWoW-4RJxAbxH9qA"/>
+</div>
+<button class="ml-2 px-4 py-2 text-primary font-bold text-label-md hover:bg-tint-danger hover:text-status-danger rounded-full transition-all">
+                    Déconnexion
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 p-8 min-h-screen">
+<!-- Section 1: Demandes en attente -->
+<section class="mb-12">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline-sm text-headline-sm text-text-primary flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">pending_actions</span>
+                    Demandes en attente
+                </h2>
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-label-md text-label-md font-bold">4 nouvelles demandes</span>
+</div>
+<div class="flex gap-6 overflow-x-auto pb-6 hide-scrollbar snap-x">
+<!-- Expert Card 1 -->
+<div class="min-w-[340px] bg-surface expert-card-shadow rounded-2xl p-6 flex flex-col gap-4 border border-outline-variant/30 snap-start bg-white">
+<div class="flex items-center gap-4">
+<img class="w-16 h-16 rounded-2xl object-cover border border-outline-variant/20" data-alt="A clean professional headshot of a middle-aged accountant named Anis M. with a friendly smile, studio lighting, soft gray background, wearing a smart casual blazer, high-end photography style, teal accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6s2ZIW36FhAoToSoEpDW1r4qegxxmltREzz_MZv8tVUaoq9gCHwagcTMaXfyBzC_2bTCTsvpmOoTKfkFzZ3YVdKGoV9GjOAIwwIcBBIxxv6t3GCmiwdDQ8s_2grobxLamb2a9wflx8Zg_M-1FWzX7spYgxXgsOdWzHnSmT3D4dg-mA9q5XGrznQb0j2IXljVbaTJKEc6qP0pkmw6238Sg8g1tlGCwxwD4OUsp36oJDj0ge8X8OGbwNgraqdzzSZ1v9w8ggdWhBg"/>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Anis M.</h3>
+<p class="text-text-secondary font-label-md text-label-md">N° Ordre : 1422</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low text-text-secondary text-label-sm font-medium rounded-full border border-outline-variant/20 cursor-pointer hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
+                            Diplôme.pdf
+                        </span>
+<span class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low text-text-secondary text-label-sm font-medium rounded-full border border-outline-variant/20 cursor-pointer hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[16px]">description</span>
+                            Attestation.pdf
+                        </span>
+</div>
+<div class="flex gap-3 mt-2">
+<button class="flex-1 bg-primary text-white font-label-md text-label-md py-3 rounded-2xl shadow-sm hover:bg-primary-container transition-all active:scale-95">Vérifier ✓</button>
+<button class="px-4 py-3 text-status-danger font-label-md text-label-md rounded-2xl border border-transparent hover:bg-tint-danger transition-all">Refuser</button>
+</div>
+</div>
+<!-- Expert Card 2 -->
+<div class="min-w-[340px] bg-surface expert-card-shadow rounded-2xl p-6 flex flex-col gap-4 border border-outline-variant/30 snap-start bg-white">
+<div class="flex items-center gap-4">
+<img class="w-16 h-16 rounded-2xl object-cover border border-outline-variant/20" data-alt="A professional headshot of a female tax expert named Sarah K., confident look, bright office background with soft teal highlights, wearing glasses and professional attire, high quality digital portrait." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8UeTIb9Y6GZSH7tBiEws30vPjqYhk0EfYQUyYJ3UjmaipZcNlclJ8tJNBFFsTmQfXzPSM9rUKNCWZieMDS93yZizkZdC52t_xYQdms4gpFMOhs274DYzDyb73OqZIvNDq_mtREqKEH7xbjjNMDZrTt54qqpQNro6p4KNBaZMCearQHQyKxswQ-vig3kwrZZ9GKaoDzkKbMrjHhAarsm95vGWAmHIpR3ziJg8_O60WMuUELvULkPT0NR3gJ4v3uYSprxbkD0UnxQ"/>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Sarah K.</h3>
+<p class="text-text-secondary font-label-md text-label-md">N° Ordre : 2891</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low text-text-secondary text-label-sm font-medium rounded-full border border-outline-variant/20 cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
+                            Diplôme_Expert.pdf
+                        </span>
+<span class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low text-text-secondary text-label-sm font-medium rounded-full border border-outline-variant/20 cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">id_card</span>
+                            CIN_Recto.png
+                        </span>
+</div>
+<div class="flex gap-3 mt-2">
+<button class="flex-1 bg-primary text-white font-label-md text-label-md py-3 rounded-2xl shadow-sm hover:bg-primary-container transition-all">Vérifier ✓</button>
+<button class="px-4 py-3 text-status-danger font-label-md text-label-md rounded-2xl border border-transparent hover:bg-tint-danger transition-all">Refuser</button>
+</div>
+</div>
+<!-- Expert Card 3 -->
+<div class="min-w-[340px] bg-surface expert-card-shadow rounded-2xl p-6 flex flex-col gap-4 border border-outline-variant/30 snap-start bg-white">
+<div class="flex items-center gap-4">
+<img class="w-16 h-16 rounded-2xl object-cover border border-outline-variant/20" data-alt="A professional male accountant portrait named Mourad T., calm and helpful expression, sharp focus on face, soft bokeh background of a modern workspace in Tunis, teal and neutral tones, professional lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ9whbSsmv92NEHr5jfp8MzEcz0rFBEA8UJclyV0G2BHvnVFxsj6uso97USksPVPBzY-IMQRctP_SEqCGi2NpUOEjY7zt62_drI0i4bnsmY-mYQMs0zuQCgbthqjJOmB2v3OrgcG73UWf3Afnl3KalAtTo9usrWSXFXorZEZR9IlHboSiFseF26ZPoFYxmHH1r7zLzWNV9Xje4lxRBc_0uQOWsi70gfzfjjY36H32GUcAXfMEcOJ5OBjbVTxQ1MGojk66N3WsNYw"/>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Mourad T.</h3>
+<p class="text-text-secondary font-label-md text-label-md">N° Ordre : 1055</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low text-text-secondary text-label-sm font-medium rounded-full border border-outline-variant/20">
+<span class="material-symbols-outlined text-[16px]">article</span>
+                            Dossier_Fisc.pdf
+                        </span>
+</div>
+<div class="flex gap-3 mt-2">
+<button class="flex-1 bg-primary text-white font-label-md text-label-md py-3 rounded-2xl shadow-sm hover:bg-primary-container transition-all">Vérifier ✓</button>
+<button class="px-4 py-3 text-status-danger font-label-md text-label-md rounded-2xl border border-transparent hover:bg-tint-danger transition-all">Refuser</button>
+</div>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-12 gap-8 items-start">
+<!-- Section 2: Experts actifs (Table) -->
+<div class="col-span-12 lg:col-span-8">
+<div class="bg-white rounded-2xl border border-outline-variant/30 expert-card-shadow overflow-hidden">
+<div class="p-6 border-b border-outline-variant/20 flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Experts actifs</h2>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-surface-container-low rounded-lg text-text-secondary"><span class="material-symbols-outlined">filter_list</span></button>
+<button class="p-2 hover:bg-surface-container-low rounded-lg text-text-secondary"><span class="material-symbols-outlined">download</span></button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="px-6 py-4 font-label-md text-label-md text-text-secondary uppercase tracking-wider">Expert</th>
+<th class="px-6 py-4 font-label-md text-label-md text-text-secondary uppercase tracking-wider">Ville</th>
+<th class="px-6 py-4 font-label-md text-label-md text-text-secondary uppercase tracking-wider">Note</th>
+<th class="px-6 py-4 font-label-md text-label-md text-text-secondary uppercase tracking-wider">Consultations</th>
+<th class="px-6 py-4 font-label-md text-label-md text-text-secondary uppercase tracking-wider text-right">Revenus</th>
+<th class="px-6 py-4 font-label-md text-label-md text-text-secondary uppercase tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tint-info flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of an expert expert, minimalist office background, professional style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBINzyqyYbV1mtg7p1nKcF4MZa_B1-nACHiXRsyg21o2GV40QSujNKn8jq22AenQ0grGy8DxrR4GLJMceQi4bmVRmRB-bpTj8XHX68Qsf_zJbAbPCKwvha6DB3Pjgga4LBQtzrudRbeiutePo_JxHCjnjYIUioftZoUE_CANhns22cPeYu7naHqjf7rxMLdlGuhg7ASr3vnlo-MWwF7d_zMDiaoj_DX-ChxDhBItYJ1jDZvlqJDK6RFSNt1pQq1VfONi693sbiVQQ"/>
+</div>
+<span class="font-label-md text-label-md text-text-primary">Amine Ben Salem</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary text-label-md">Tunis</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 text-label-md font-bold text-[#B48100]">
+                                            4.8 <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary text-label-md">124</td>
+<td class="px-6 py-4 text-right font-bold text-primary text-label-md">7 440 DT</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-tint-success text-status-success rounded-full text-[12px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+                                            En ligne
+                                        </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tint-info flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of professional accountant, warm office tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyvsfIf1N1ycwnoYWAGuNfSGmxoUM0wsGc4r-HnQE73aDFyHcq2lE4cHbZ56KyGxomm09ngP0J1Fstt57BrjX6i8T8W5hl-YpK3rVHI6FfgUhGa9LEcf2adJ8Ppcs8NYx-Zq5_TTnz40xdg0vaBRZZyyXkjzfr0JhKA7k_4moyAosvDQbKXjJkgnVQXxWq3mpdBhHbsWaJQyJtGFXdsJKlM-nEhxhndXpruKl37MD3yt6-9wkI_ur_E2hiZ7FtRT1HdmauVOaJSQ"/>
+</div>
+<span class="font-label-md text-label-md text-text-primary">Faten Kammoun</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary text-label-md">Sousse</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 text-label-md font-bold text-[#B48100]">
+                                            4.9 <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary text-label-md">208</td>
+<td class="px-6 py-4 text-right font-bold text-primary text-label-md">12 850 DT</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-tint-warning text-status-warning rounded-full text-[12px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-status-warning"></span>
+                                            Occupé
+                                        </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tint-info flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of an accounting expert, clean style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLZ4BkzXBGyJ0lyeXkMcXeJzuW5TOIvf7SBzBa5FUXbwRSCKowsD_rn--oM-S9Xn9bHOkoc4FqAVB6J0OxMF7JiRFsfg6It44XrJHoErhoAeut8QQJJ0sXM1zu6uo9qzaoaCLZhmwkvfJCiAAoXvsoLe1yQnhxoPq8Rm3hQW10YDCS3PoYTnUZCwqhhkcGuuA8V3wmjhvxll0qHi0ioH_pJfu1JWMRxM3qz4jkpYrvKsf_Sm362EOemK7AEPhpF-5eK7nvWekEDw"/>
+</div>
+<span class="font-label-md text-label-md text-text-primary">Mehdi Trabelsi</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary text-label-md">Sfax</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 text-label-md font-bold text-[#B48100]">
+                                            4.5 <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary text-label-md">86</td>
+<td class="px-6 py-4 text-right font-bold text-primary text-label-md">4 120 DT</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-tint-success text-status-success rounded-full text-[12px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+                                            En ligne
+                                        </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tint-info flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a finance expert, professional soft lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1BshxVEFGjCc3uhj9yEGHX5B680HvnnZ9JA7m4qyybdbq-bOODdZO7iNWxfgNDO3-lDHsj0HDeTRMFMVWYDRBgVHk-vBy_XY7GiQCkvq3mGYoZHZIoiHhoYu9_VXIL9vH0U4a6I6jvXJrDVvYSoY2P1WopmRHpUX3MMFqf6yRil5pXQF7yLYGESVnWBV-klbTbqM1dVdVhfgJraVgDJLiXdF1mLqc_E_gZ48h7inBFmyaX_pbkj5J9jo3SPsU50XyeIzwnHs7bQ"/>
+</div>
+<span class="font-label-md text-label-md text-text-primary">Rim Houidi</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary text-label-md">Nabeul</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 text-label-md font-bold text-[#B48100]">
+                                            4.7 <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary text-label-md">153</td>
+<td class="px-6 py-4 text-right font-bold text-primary text-label-md">9 200 DT</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-tint-success text-status-success rounded-full text-[12px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+                                            En ligne
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant/10 flex justify-center">
+<button class="text-primary font-bold text-label-md hover:underline">Voir tous les experts</button>
+</div>
+</div>
+</div>
+<!-- Section 3: Configuration des commissions -->
+<div class="col-span-12 lg:col-span-4">
+<div class="bg-surface rounded-2xl p-6 border border-outline-variant/30 expert-card-shadow flex flex-col gap-6 sticky top-24 bg-white">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary bg-tint-success p-2 rounded-xl">settings_account_box</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Commissions</h2>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-text-secondary">Commission El Comptabli (%)</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border border-outline-variant/30 rounded-2xl py-3 px-4 text-headline-sm font-bold text-primary focus:ring-primary focus:border-primary" type="number" value="15"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary font-bold">%</span>
+</div>
+<p class="text-[11px] text-text-secondary italic">Appliqué sur le montant brut des consultations.</p>
+</div>
+<div class="flex items-center justify-between py-4 border-y border-outline-variant/10">
+<div class="flex flex-col gap-0.5">
+<span class="font-label-md text-label-md text-text-primary">Paiement automatique</span>
+<span class="text-label-sm text-text-secondary">Virement après 24h</span>
+</div>
+<!-- Simple Custom Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="p-4 bg-tint-info rounded-2xl">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<p class="text-[12px] text-text-primary/80 leading-snug">Les changements de commission s'appliquent uniquement aux nouvelles consultations créées après l'enregistrement.</p>
+</div>
+</div>
+<button class="w-full py-4 bg-primary text-white font-headline-sm text-headline-sm rounded-2xl active:scale-95 transition-transform shadow-lg shadow-primary/20">
+                            Enregistrer
+                        </button>
+</div>
+</div>
+<!-- Quick Stats -->
+<div class="mt-8 bg-primary-container text-on-primary-container rounded-2xl p-6 relative overflow-hidden">
+<div class="relative z-10">
+<p class="font-label-md text-label-md opacity-80 mb-1">Total Revenu Plateforme</p>
+<h3 class="font-stat-display text-stat-display">24 810 DT</h3>
+<div class="mt-4 flex items-center gap-2">
+<span class="bg-white/20 px-2 py-1 rounded-lg text-label-sm">+12.5% ce mois</span>
+</div>
+</div>
+<!-- Decorative Circle -->
+<div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+</div>
+</div>
+</div>
+<!-- Disclaimer Footer -->
+<footer class="mt-16 py-8 border-t border-outline-variant/20">
+<div class="bg-surface-container-low p-4 rounded-2xl text-center">
+<p class="text-label-sm text-text-secondary italic">
+                    El Comptabli est un outil pédagogique et d'assistance. Les informations fournies ne constituent pas un conseil comptable ou fiscal certifié sans la validation d'un expert-comptable inscrit à l'Ordre.
+                </p>
+</div>
+</footer>
+</main>
+<script>
+        // Micro-interactions for buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.add('opacity-70');
+                setTimeout(() => this.classList.remove('opacity-70'), 100);
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-primary/20', 'bg-white');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-primary/20', 'bg-white');
+        });
+    </script>
+</body></html>

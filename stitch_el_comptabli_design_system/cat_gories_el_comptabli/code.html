@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "primary-fixed": "#9cf2e8",
+                        "text-primary": "#1A1A1A",
+                        "surface": "#f8fafa",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#abefe7",
+                        "surface-container-high": "#e6e8e8",
+                        "tint-warning": "#FEF3E2",
+                        "surface-container-highest": "#e1e3e3",
+                        "surface-dim": "#d8dada",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f8fafa",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#0d5b55",
+                        "on-background": "#191c1d",
+                        "status-success": "#16A34A",
+                        "text-secondary": "#6B7280",
+                        "tint-success": "#E6F5F3",
+                        "outline-variant": "#bdc9c6",
+                        "on-surface": "#191c1d",
+                        "inverse-surface": "#2e3131",
+                        "tint-danger": "#FDE8E6",
+                        "status-danger": "#DC2626",
+                        "on-secondary-fixed-variant": "#005048",
+                        "inverse-primary": "#80d5cb",
+                        "on-surface-variant": "#3e4947",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f4f4",
+                        "primary": "#005c55",
+                        "status-warning": "#D97706",
+                        "surface-tint": "#006a63",
+                        "status-premium": "#7C3AED",
+                        "primary-container": "#0f766e",
+                        "secondary": "#006b5f",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#a3faef",
+                        "tint-info": "#EEF2FF",
+                        "surface-container": "#eceeee",
+                        "on-tertiary-container": "#b3f7ee",
+                        "surface-variant": "#e1e3e3",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-primary-fixed": "#00201d",
+                        "on-primary-fixed-variant": "#00504a",
+                        "primary-fixed-dim": "#80d5cb",
+                        "outline": "#6e7977",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#006f64",
+                        "secondary-container": "#6df5e1",
+                        "on-tertiary-fixed": "#00201d",
+                        "tertiary-container": "#2f746d",
+                        "secondary-fixed": "#71f8e4",
+                        "background": "#f8fafa",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#4fdbc8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "element-gap": "16px",
+                        "container-padding": "20px",
+                        "stack-sm": "12px",
+                        "stack-xs": "4px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "stat-display": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .nav-shadow {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-surface sticky top-0 z-40 w-full flex items-center justify-between px-container-padding h-16 w-full max-w-[600px] mx-auto">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform hover:opacity-80 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm-mobile text-headline-sm-mobile text-primary">Catégories</h1>
+</div>
+<div class="flex items-center">
+<img alt="Logo El Comptabli" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX9Wows0pYMOeFRHwUQjUUylv_TXZRcGvcwkVQVzYEAuaePY4mTBp1nPMFbjNdQWBO8wBk8Q4_dLIj66aFqk24EIjGyK9r4Zli0zU272TB08mdKkUw9UIPlPgNo3tnu6eJx3bBHnRPiolIz-sBFCX9sPpXRNL-SbnUqXfOgrV6_MsmBHDrE9J_AUsjEJWpt83jAyih9Y0NZBiBScMtpm5HkbaZnlUFXtc2K1cBbRPtZ--XDEuWkhaXy8j0DvmW9avyb_DvdzP4vA"/>
+</div>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding mt-4">
+<!-- Categories Grid -->
+<div class="grid grid-cols-2 gap-element-gap">
+<!-- Ventes -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl card-shadow active:scale-95 transition-all cursor-pointer flex flex-col gap-stack-sm">
+<div class="w-10 h-10 rounded-full bg-tint-success flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="payments">payments</span>
+</div>
+<div>
+<p class="text-on-surface-variant font-label-md text-label-md">Ventes</p>
+<p class="text-primary font-headline-sm-mobile text-headline-sm-mobile">+3 200 DT</p>
+</div>
+</div>
+<!-- Achats -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl card-shadow active:scale-95 transition-all cursor-pointer flex flex-col gap-stack-sm">
+<div class="w-10 h-10 rounded-full bg-tint-danger flex items-center justify-center">
+<span class="material-symbols-outlined text-status-danger" data-icon="shopping_cart">shopping_cart</span>
+</div>
+<div>
+<p class="text-on-surface-variant font-label-md text-label-md">Achats</p>
+<p class="text-on-surface font-headline-sm-mobile text-headline-sm-mobile">-590 DT</p>
+</div>
+</div>
+<!-- Loyer -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl card-shadow active:scale-95 transition-all cursor-pointer flex flex-col gap-stack-sm">
+<div class="w-10 h-10 rounded-full bg-tint-danger flex items-center justify-center">
+<span class="material-symbols-outlined text-status-danger" data-icon="home_work">home_work</span>
+</div>
+<div>
+<p class="text-on-surface-variant font-label-md text-label-md">Loyer</p>
+<p class="text-on-surface font-headline-sm-mobile text-headline-sm-mobile">-680 DT</p>
+</div>
+</div>
+<!-- Carburant -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl card-shadow active:scale-95 transition-all cursor-pointer flex flex-col gap-stack-sm">
+<div class="w-10 h-10 rounded-full bg-tint-danger flex items-center justify-center">
+<span class="material-symbols-outlined text-status-danger" data-icon="local_gas_station">local_gas_station</span>
+</div>
+<div>
+<p class="text-on-surface-variant font-label-md text-label-md">Carburant</p>
+<p class="text-on-surface font-headline-sm-mobile text-headline-sm-mobile">-180 DT</p>
+</div>
+</div>
+<!-- Salaires -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl card-shadow active:scale-95 transition-all cursor-pointer flex flex-col gap-stack-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-outline" data-icon="groups">groups</span>
+</div>
+<div>
+<p class="text-on-surface-variant font-label-md text-label-md">Salaires</p>
+<p class="text-outline font-headline-sm-mobile text-headline-sm-mobile">—</p>
+</div>
+</div>
+<!-- Électricité -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl card-shadow active:scale-95 transition-all cursor-pointer flex flex-col gap-stack-sm">
+<div class="w-10 h-10 rounded-full bg-tint-danger flex items-center justify-center">
+<span class="material-symbols-outlined text-status-danger" data-icon="bolt">bolt</span>
+</div>
+<div>
+<p class="text-on-surface-variant font-label-md text-label-md">Électricité</p>
+<p class="text-on-surface font-headline-sm-mobile text-headline-sm-mobile">-141 DT</p>
+</div>
+</div>
+<!-- Télécom -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl card-shadow active:scale-95 transition-all cursor-pointer flex flex-col gap-stack-sm">
+<div class="w-10 h-10 rounded-full bg-tint-danger flex items-center justify-center">
+<span class="material-symbols-outlined text-status-danger" data-icon="wifi">wifi</span>
+</div>
+<div>
+<p class="text-on-surface-variant font-label-md text-label-md">Télécom</p>
+<p class="text-on-surface font-headline-sm-mobile text-headline-sm-mobile">-45 DT</p>
+</div>
+</div>
+<!-- Autre -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl card-shadow active:scale-95 transition-all cursor-pointer flex flex-col gap-stack-sm">
+<div class="w-10 h-10 rounded-full bg-tint-danger flex items-center justify-center">
+<span class="material-symbols-outlined text-status-danger" data-icon="category">category</span>
+</div>
+<div>
+<p class="text-on-surface-variant font-label-md text-label-md">Autre</p>
+<p class="text-on-surface font-headline-sm-mobile text-headline-sm-mobile">-324 DT</p>
+</div>
+</div>
+<!-- Nouvelle catégorie -->
+<div class="border-2 border-dashed border-outline-variant p-5 rounded-2xl active:scale-95 transition-all cursor-pointer flex flex-col items-center justify-center gap-stack-xs group hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="add_circle">add_circle</span>
+<p class="text-outline font-label-md text-label-md group-hover:text-primary transition-colors">Nouvelle catégorie</p>
+</div>
+</div>
+<p class="text-center text-on-surface-variant font-label-sm text-label-sm mt-8 opacity-60">Maintiens pour modifier</p>
+<!-- Disclaimer Banner -->
+<div class="mt-12 bg-surface-container-low p-4 rounded-xl">
+<p class="text-on-surface-variant font-label-sm text-label-sm leading-relaxed text-center">
+                Cette interface est un outil pédagogique de suivi fiscal. Pour toute certification comptable, veuillez consulter un expert agréé.
+            </p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-0 right-0 z-50 flex justify-center items-center px-4 h-16 pointer-events-none">
+<div class="bg-surface-container-lowest flex justify-around items-center w-[calc(100%-40px)] max-w-[560px] h-16 rounded-full nav-shadow pointer-events-auto">
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-3 hover:bg-surface-container-high transition-colors active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</button>
+<!-- Active: smart_toy is interpreted as "Finance/Suivi" context for this dashboard -->
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-3 after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-3 hover:bg-surface-container-high transition-colors active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="document_scanner">document_scanner</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-3 hover:bg-surface-container-high transition-colors active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-3 hover:bg-surface-container-high transition-colors active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+</button>
+</div>
+</nav>
+<script>
+        // Micro-interaction for category cards
+        document.querySelectorAll('.active\\:scale-95').forEach(card => {
+            let timer;
+            card.addEventListener('mousedown', () => {
+                timer = setTimeout(() => {
+                    card.classList.add('ring-2', 'ring-primary', 'ring-offset-2');
+                }, 800);
+            });
+            card.addEventListener('mouseup', () => clearTimeout(timer));
+            card.addEventListener('mouseleave', () => {
+                clearTimeout(timer);
+                card.classList.remove('ring-2', 'ring-primary', 'ring-offset-2');
+            });
+            
+            // Touch events for mobile
+            card.addEventListener('touchstart', () => {
+                timer = setTimeout(() => {
+                    card.classList.add('ring-2', 'ring-primary', 'ring-offset-2');
+                }, 800);
+            });
+            card.addEventListener('touchend', () => {
+                clearTimeout(timer);
+                setTimeout(() => card.classList.remove('ring-2', 'ring-primary', 'ring-offset-2'), 500);
+            });
+        });
+    </script>
+</body></html>

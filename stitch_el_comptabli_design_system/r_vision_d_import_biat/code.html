@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "status-warning": "#D97706",
+                        "surface-container": "#eceeee",
+                        "on-error": "#ffffff",
+                        "primary": "#005c55",
+                        "on-primary-fixed": "#00201d",
+                        "surface-container-low": "#f2f4f4",
+                        "surface-dim": "#d8dada",
+                        "surface-container-highest": "#e1e3e3",
+                        "primary-fixed": "#9cf2e8",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "tint-success": "#E6F5F3",
+                        "text-secondary": "#6B7280",
+                        "on-background": "#191c1d",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f8fafa",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "on-secondary-container": "#006f64",
+                        "on-secondary-fixed-variant": "#005048",
+                        "error": "#ba1a1a",
+                        "tint-danger": "#FDE8E6",
+                        "on-surface-variant": "#3e4947",
+                        "surface-variant": "#e1e3e3",
+                        "outline-variant": "#bdc9c6",
+                        "tertiary": "#0d5b55",
+                        "status-success": "#16A34A",
+                        "secondary-fixed": "#71f8e4",
+                        "surface-tint": "#006a63",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0f766e",
+                        "inverse-surface": "#2e3131",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#6df5e1",
+                        "tertiary-fixed": "#abefe7",
+                        "surface": "#f8fafa",
+                        "on-surface": "#191c1d",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#00201c",
+                        "background": "#f8fafa",
+                        "on-primary-fixed-variant": "#00504a",
+                        "primary-fixed-dim": "#80d5cb",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-primary-container": "#a3faef",
+                        "outline": "#6e7977",
+                        "secondary": "#006b5f",
+                        "status-danger": "#DC2626",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "on-secondary": "#ffffff",
+                        "tint-warning": "#FEF3E2",
+                        "tertiary-container": "#2f746d",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#80d5cb",
+                        "inverse-on-surface": "#eff1f1",
+                        "status-premium": "#7C3AED",
+                        "on-tertiary-fixed": "#00201d",
+                        "tint-info": "#EEF2FF",
+                        "text-primary": "#1A1A1A",
+                        "surface-container-high": "#e6e8e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "base": "8px",
+                        "element-gap": "16px",
+                        "container-padding": "20px",
+                        "stack-xs": "4px"
+                    },
+                    "fontFamily": {
+                        "stat-display": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .transaction-list::-webkit-scrollbar { display: none; }
+        .squishy-touch:active { transform: scale(0.97); transition: transform 0.1s ease; }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex flex-col min-h-screen">
+<!-- Top App Bar -->
+<header class="docked full-width top-0 z-40 bg-background dark:bg-on-background flex justify-between items-center w-full px-container-padding py-base transition-opacity duration-200">
+<div class="flex items-center gap-3">
+<img alt="Logo El Comptabli" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHgjTLz0z5rKEnmmOTE_k4nNYMtFOY2UDm9SdNQ1SqtXOJrzHN074JrpySVyUaQL_5YLvfzEL7BI7Do1hpeTMMkm21FFqy4hpeL0HnjsJI30vVFv7h13y8EOBejMX6-hcEVeE-27-O1rCcwc2VLUVdSMWlH-SuQ8on5cUz28x8DwtzggSm9pCeOeatrdBODiAGpFtIIyQvW2KyTIaCXjGnsrR_fsv8NIqSRHoMr_qJjkhN1US7mG425V7dXBK-rJ3DnoDsJ4LIBQ"/>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed">El Comptabli</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<img class="w-10 h-10 rounded-full border-2 border-primary-fixed" data-alt="A close-up high-quality portrait of a professional Tunisian entrepreneur, soft natural lighting, light-mode business aesthetic with teal accents, professional headshot style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoXl-G_9kxit1WcWDVmeRp5vcyM-KFfYtu_aG4bhKo0m_fDwR5KXHQnGV9BkSnBGe_XtF1br3SLfzTqvDDPe0JW8UXs5pkRgqlToWpgL5n7TWGQiuKjx4lqScZCr5uvskI8mJksoh48CyHmGfFwryVgp0kYqmTjUJkNgNMgUOa-CTu1FaD1JdX5mVPR5QG8Prr-fB9_hZ8P_1AhTTqycjZscFkFsRzfQbvb88cvlE3oQMPfAHxndChLWYXMyXG6ZoEnYuFpoUF9A"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-container-padding pb-40">
+<!-- Bank Header Card -->
+<section class="mt-4 mb-8">
+<div class="bg-primary p-6 rounded-2xl shadow-[0_8px_24px_rgba(15,92,86,0.12)] flex flex-col gap-4 relative overflow-hidden">
+<!-- Abstract visual element -->
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-2">
+<img class="w-full h-full object-contain" data-alt="Official logo of BIAT Bank, clean vector-style graphics, minimalist finance branding, high contrast on white background, professional banking identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKBiZU0W9RlrqpLF7SLn-VwCU6shsLIvHATan3ybguF0j2cmf--cuj-UFwgs9YcqyTJme1Z2rhKfdzIJGqb50UlpBktgbaWEdR5pcCEwjqm7yKqZW_6sONOw9XPqMm6izwFFMocr45v7rjsOb4TkxQORDbp0R7O5MxBtxxIdra85EztQkSHv9ynRzYT_E2ohc2eQcbcWJ6MxlV53S0CEBovl4Ba7-xLTbr0ROj-8ew1Q09E5Hn_PcO4LxT-vQ2AnOWgn2guJ90Ww"/>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-primary">BIAT ····4521</h2>
+<p class="font-label-md text-label-md text-on-primary/80">Compte Courant Professionnel</p>
+</div>
+</div>
+<div class="flex justify-between items-end mt-2">
+<div>
+<span class="font-label-sm text-label-sm text-on-primary/70 block uppercase tracking-wider">Solde Actuel</span>
+<p class="font-stat-display text-stat-display text-on-primary">3 180 DT</p>
+</div>
+<div class="bg-white/20 px-3 py-1 rounded-full text-on-primary text-xs font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">sync</span> Synchronisé
+                    </div>
+</div>
+</div>
+</section>
+<!-- Transaction Review Section -->
+<section class="flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary">Révision des flux</h3>
+<span class="bg-surface-container text-outline px-3 py-1 rounded-full text-xs font-bold">15 OPÉRATIONS</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Row 1: High Confidence -->
+<div class="bg-white p-4 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.04)] border border-outline-variant/30 flex justify-between items-center hover:bg-surface-bright transition-colors group">
+<div class="flex gap-4 items-center">
+<div class="w-10 h-10 rounded-full bg-tint-success flex items-center justify-center">
+<span class="material-symbols-outlined text-status-success">trending_up</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Wafa Trading</p>
+<p class="text-xs text-text-secondary">12 Oct. 2023</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-headline-sm text-status-success">+850 DT</p>
+<div class="mt-1 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-tint-success text-status-success text-[10px] font-bold uppercase tracking-tight">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+                            Ventes
+                        </div>
+</div>
+</div>
+<!-- Row 2: High Confidence -->
+<div class="bg-white p-4 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.04)] border border-outline-variant/30 flex justify-between items-center hover:bg-surface-bright transition-colors">
+<div class="flex gap-4 items-center">
+<div class="w-10 h-10 rounded-full bg-tint-danger flex items-center justify-center">
+<span class="material-symbols-outlined text-status-danger">local_gas_station</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Shell Gammarth</p>
+<p class="text-xs text-text-secondary">11 Oct. 2023</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-headline-sm text-status-danger">-42 DT</p>
+<div class="mt-1 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-tint-success text-status-success text-[10px] font-bold uppercase tracking-tight">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+                            Carburant
+                        </div>
+</div>
+</div>
+<!-- Row 3: Medium Confidence / Unknown -->
+<div class="bg-white p-4 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.04)] border-2 border-status-warning/20 flex justify-between items-center bg-tint-warning/30">
+<div class="flex gap-4 items-center">
+<div class="w-10 h-10 rounded-full bg-tint-warning flex items-center justify-center">
+<span class="material-symbols-outlined text-status-warning">help_outline</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Chèque n°12</p>
+<p class="text-xs text-text-secondary">10 Oct. 2023</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-headline-sm text-on-surface">-450 DT</p>
+<div class="mt-1 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-tint-warning text-status-warning text-[10px] font-bold uppercase tracking-tight">
+<span class="w-1.5 h-1.5 rounded-full bg-status-warning"></span>
+                            Inconnu
+                        </div>
+</div>
+</div>
+<!-- Row 4: High Confidence Expense -->
+<div class="bg-white p-4 rounded-2xl shadow-[0_4px_16px_rgba(15,92,86,0.04)] border border-outline-variant/30 flex justify-between items-center">
+<div class="flex gap-4 items-center">
+<div class="w-10 h-10 rounded-full bg-tint-info flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">apartment</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Ste Immobilière</p>
+<p class="text-xs text-text-secondary">05 Oct. 2023</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-headline-sm text-status-danger">-1 200 DT</p>
+<div class="mt-1 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-tint-success text-status-success text-[10px] font-bold uppercase tracking-tight">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+                            Loyer
+                        </div>
+</div>
+</div>
+</div>
+<!-- Disclaimer -->
+<footer class="mt-8 mb-4">
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/20">
+<p class="text-[10px] leading-relaxed text-outline text-center">
+                        Cette application est un outil pédagogique d'aide à la gestion fiscale. El Comptabli n'est pas un cabinet d'expertise comptable agréé. Les suggestions de l'IA doivent être validées par l'utilisateur.
+                    </p>
+</div>
+</footer>
+</section>
+</main>
+<!-- Bulk Action Bar -->
+<div class="fixed bottom-24 left-4 right-4 z-40 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-primary-fixed/30 p-4 flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
+<div class="bg-tint-warning px-4 py-2 rounded-xl flex items-center gap-2">
+<span class="material-symbols-outlined text-status-warning text-lg">auto_awesome</span>
+<p class="text-xs font-medium text-status-warning">
+<span class="font-bold">12 catégorisées auto</span> · 3 à vérifier
+            </p>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-primary text-white font-bold py-3 px-6 rounded-full text-sm squishy-touch flex items-center justify-center gap-2">
+                Tout valider <span class="material-symbols-outlined text-sm">done_all</span>
+</button>
+<button class="flex-1 border-2 border-primary text-primary font-bold py-3 px-6 rounded-full text-sm squishy-touch flex items-center justify-center">
+                Réviser
+            </button>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-4 left-4 right-4 z-50 h-16 bg-surface-container-lowest dark:bg-surface-dim rounded-full shadow-lg flex justify-around items-center px-4">
+<button class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">smart_toy</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">document_scanner</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 Active: scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">menu_book</span>
+</button>
+</nav>
+<script>
+        // Micro-interactions for buttons
+        document.querySelectorAll('.squishy-touch').forEach(button => {
+            button.addEventListener('mousedown', () => button.style.transform = 'scale(0.95)');
+            button.addEventListener('mouseup', () => button.style.transform = 'scale(1)');
+            button.addEventListener('mouseleave', () => button.style.transform = 'scale(1)');
+        });
+    </script>
+</body></html>

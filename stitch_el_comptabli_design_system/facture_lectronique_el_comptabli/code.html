@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Facture électronique 🧾 (LF 2026)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "status-premium": "#7C3AED",
+                        "on-tertiary-fixed": "#00201d",
+                        "tertiary-fixed": "#abefe7",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed-variant": "#00504a",
+                        "surface-tint": "#006a63",
+                        "surface-bright": "#f8fafa",
+                        "on-surface-variant": "#3e4947",
+                        "tertiary-container": "#2f746d",
+                        "tint-warning": "#FEF3E2",
+                        "status-success": "#16A34A",
+                        "surface-container": "#eceeee",
+                        "outline-variant": "#bdc9c6",
+                        "inverse-primary": "#80d5cb",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#006b5f",
+                        "tint-danger": "#FDE8E6",
+                        "on-background": "#191c1d",
+                        "surface-container-high": "#e6e8e8",
+                        "inverse-surface": "#2e3131",
+                        "surface-dim": "#d8dada",
+                        "error": "#ba1a1a",
+                        "tint-success": "#E6F5F3",
+                        "status-warning": "#D97706",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "tertiary": "#0d5b55",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "secondary-container": "#6df5e1",
+                        "on-primary-container": "#a3faef",
+                        "primary-fixed-dim": "#80d5cb",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "on-secondary-fixed": "#00201c",
+                        "surface-variant": "#e1e3e3",
+                        "status-danger": "#DC2626",
+                        "on-surface": "#191c1d",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#6e7977",
+                        "surface": "#f8fafa",
+                        "text-primary": "#1A1A1A",
+                        "on-error": "#ffffff",
+                        "background": "#f8fafa",
+                        "secondary-fixed": "#71f8e4",
+                        "surface-container-highest": "#e1e3e3",
+                        "primary": "#005c55",
+                        "primary-container": "#0f766e",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f2f4f4",
+                        "on-secondary-container": "#006f64",
+                        "tint-info": "#EEF2FF",
+                        "on-primary-fixed": "#00201d",
+                        "error-container": "#ffdad6",
+                        "text-secondary": "#6B7280",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#9cf2e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "stack-sm": "12px",
+                        "element-gap": "16px",
+                        "base": "8px",
+                        "stack-xs": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .fab-shadow {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding h-16 bg-surface dark:bg-surface-dim transition-opacity duration-200">
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed">Facture électronique 🧾</h1>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">notifications</span>
+</div>
+</header>
+<main class="mt-20 px-container-padding max-w-[600px] mx-auto space-y-element-gap">
+<!-- Form Card -->
+<section class="bg-surface-container-lowest p-container-padding rounded-2xl custom-shadow space-y-stack-sm">
+<div class="grid grid-cols-1 gap-4">
+<div>
+<label class="block font-label-md text-on-surface-variant mb-stack-xs">Client</label>
+<input class="w-full px-4 py-3 rounded-xl border border-outline-variant focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all font-body-lg" type="text" value="Studio Wafa"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block font-label-md text-on-surface-variant mb-stack-xs">Montant HT</label>
+<input class="w-full px-4 py-3 rounded-xl border border-outline-variant focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all font-body-lg" type="text" value="1 200 DT"/>
+</div>
+<div>
+<label class="block font-label-md text-on-surface-variant mb-stack-xs">TVA (19%)</label>
+<input class="w-full px-4 py-3 rounded-xl bg-surface-container border border-outline-variant font-body-lg text-primary font-semibold" readonly="" type="text" value="228 DT"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-on-surface-variant mb-stack-xs">Mentions obligatoires</label>
+<textarea class="w-full px-4 py-3 rounded-xl border border-outline-variant focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all font-body-lg text-on-surface-variant text-sm" rows="3">Conforme au JORT n°2023-102. Matricule Fiscal: 1234567/A/M/000. Soumis à l'obligation de facturation électronique Loi de Finances 2026.</textarea>
+</div>
+</div>
+</section>
+<!-- Compliance Checklist -->
+<section class="bg-tint-success p-container-padding rounded-2xl space-y-3">
+<h2 class="font-label-md text-primary font-bold">Vérification de conformité</h2>
+<ul class="space-y-2">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-status-success text-lg">check_circle</span>
+<span class="text-on-surface-variant font-label-md">Format XML conforme ✓</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-status-success text-lg">check_circle</span>
+<span class="text-on-surface-variant font-label-md">Signature QR code active ✓</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-status-success text-lg">check_circle</span>
+<span class="text-on-surface-variant font-label-md">Archivage légal sécurisé ✓</span>
+</li>
+</ul>
+</section>
+<!-- Preview Thumbnail -->
+<div class="flex justify-center py-4">
+<div class="relative w-48 h-64 bg-white rounded-xl shadow-lg border border-outline-variant p-4 overflow-hidden group hover:scale-[1.02] transition-transform cursor-pointer">
+<div class="h-4 w-2/3 bg-surface-container rounded-sm mb-4"></div>
+<div class="space-y-2">
+<div class="h-2 w-full bg-surface-container-low rounded-sm"></div>
+<div class="h-2 w-full bg-surface-container-low rounded-sm"></div>
+<div class="h-2 w-3/4 bg-surface-container-low rounded-sm"></div>
+</div>
+<div class="absolute bottom-4 right-4 w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary opacity-50">qr_code_2</span>
+</div>
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-primary">Aperçu</span>
+</div>
+</div>
+</div>
+<!-- Main Action -->
+<div class="pt-4 space-y-4">
+<button class="w-full bg-primary-container text-on-primary py-4 rounded-full font-headline-sm flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all fab-shadow">
+<span class="material-symbols-outlined">send</span>
+                Générer &amp; envoyer
+            </button>
+<p class="text-center font-label-sm text-text-secondary">
+                Conforme à l'obligation e-facture services 2026
+            </p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-0 w-full z-50 flex justify-around items-center px-6">
+<div class="bg-surface-container-highest/90 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.12)] rounded-full w-[calc(100%-40px)] h-16 flex justify-around items-center px-2">
+<!-- Dashboard -->
+<button class="flex items-center justify-center text-on-surface-variant w-12 h-12 hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">dashboard</span>
+</button>
+<!-- Calendar -->
+<button class="flex items-center justify-center text-on-surface-variant w-12 h-12 hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+<!-- Finance (Active) -->
+<button class="flex items-center justify-center bg-primary text-on-primary rounded-full w-12 h-12 hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">document_scanner</span>
+</button>
+<!-- AI assistant -->
+<button class="flex items-center justify-center text-on-surface-variant w-12 h-12 hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">smart_toy</span>
+</button>
+</div>
+</nav>
+<script>
+        // Micro-interaction for the Send button
+        document.querySelector('button.bg-primary-container').addEventListener('click', function() {
+            const btn = this;
+            const originalContent = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Envoi en cours...';
+            
+            setTimeout(() => {
+                btn.classList.replace('bg-primary-container', 'bg-status-success');
+                btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Envoyé avec succès';
+                
+                setTimeout(() => {
+                    btn.classList.replace('bg-status-success', 'bg-primary-container');
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                }, 2000);
+            }, 1500);
+        });
+    </script>
+</body></html>

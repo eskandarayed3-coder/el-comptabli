@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e6e8e8",
+                    "on-tertiary-fixed": "#00201d",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#e1e3e3",
+                    "surface-tint": "#006a63",
+                    "inverse-primary": "#80d5cb",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-low": "#f2f4f4",
+                    "tint-info": "#EEF2FF",
+                    "status-premium": "#7C3AED",
+                    "on-secondary-container": "#006f64",
+                    "tertiary": "#0d5b55",
+                    "primary-fixed-dim": "#80d5cb",
+                    "tertiary-fixed": "#abefe7",
+                    "on-primary-fixed-variant": "#00504a",
+                    "error-container": "#ffdad6",
+                    "tint-warning": "#FEF3E2",
+                    "secondary-fixed": "#71f8e4",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "on-surface-variant": "#3e4947",
+                    "status-warning": "#D97706",
+                    "on-error": "#ffffff",
+                    "primary-container": "#0f766e",
+                    "outline": "#6e7977",
+                    "background": "#f8fafa",
+                    "secondary": "#006b5f",
+                    "tertiary-container": "#2f746d",
+                    "secondary-container": "#6df5e1",
+                    "text-primary": "#1A1A1A",
+                    "outline-variant": "#bdc9c6",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed-variant": "#005048",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#eceeee",
+                    "inverse-surface": "#2e3131",
+                    "surface-bright": "#f8fafa",
+                    "on-background": "#191c1d",
+                    "surface-dim": "#d8dada",
+                    "on-tertiary-container": "#b3f7ee",
+                    "on-primary-container": "#a3faef",
+                    "status-success": "#16A34A",
+                    "on-secondary": "#ffffff",
+                    "tint-danger": "#FDE8E6",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e1e3e3",
+                    "primary-fixed": "#9cf2e8",
+                    "surface": "#f8fafa",
+                    "primary": "#005c55",
+                    "on-secondary-fixed": "#00201c",
+                    "tint-success": "#E6F5F3",
+                    "inverse-on-surface": "#eff1f1",
+                    "status-danger": "#DC2626",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "on-primary-fixed": "#00201d",
+                    "text-secondary": "#6B7280",
+                    "on-surface": "#191c1d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "20px",
+                    "stack-xs": "4px",
+                    "stack-sm": "12px",
+                    "base": "8px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #000; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pip-shadow {
+            box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+        }
+        .vignette-overlay {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,0.6) 100%);
+        }
+        .glass-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="overflow-hidden h-screen w-screen relative">
+<!-- Expert Full-Screen Video Background -->
+<div class="absolute inset-0 z-0 h-full w-full overflow-hidden">
+<div class="w-full h-full bg-cover bg-center" data-alt="A high-fidelity cinematic close-up of a middle-aged Tunisian professional man named Mounir B. wearing a crisp white shirt and a modern dark blazer. He is sitting in a bright, minimalist office with soft teal accents and warm wood textures. The lighting is flattering and professional, resembling a high-quality video call. The background is slightly out of focus to emphasize the subject." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCiuBb6ASHbNeAdXjDRgkezKIfXpbAXLyo1IyH0GDF-dkTSBFQ7MhyY9R66JlCBIYawGmLfbdE95C9w2xflxzHDx6uhpcv9BxDZz7DAl4hwjZmmNJ4RUg5oBUbLk0XAeqoO5c_NVCa4XoTW4KTJCMcMPqlVwQPPm8WwUM8e64dtkXe9CsuuFOU_Tib3SWgc_HqodMUThK67nOaNvTZY3T0609B9ZRatTtAwcX0pvoOEEx6wcP8PVV6kmudc5g3zNHCQU9P2_Qv3Xg')">
+</div>
+<div class="absolute inset-0 vignette-overlay z-10 pointer-events-none"></div>
+</div>
+<!-- Header: TopAppBar (Transparent per prompt) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding h-16 z-20">
+<div class="flex flex-col">
+<span class="text-white font-headline-sm text-headline-sm tracking-tight">Mounir B.</span>
+<span class="text-white/80 font-label-sm text-label-sm">Expert-comptable — El Comptabli</span>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 bg-black/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10">
+<span class="text-white font-label-md text-label-md tabular-nums" id="timer">12:34</span>
+</div>
+<div class="flex gap-stack-sm">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all text-white">
+<span class="material-symbols-outlined">schedule</span>
+</button>
+</div>
+</header>
+<!-- Picture-in-Picture Self View -->
+<div class="fixed top-20 right-container-padding z-30 w-32 h-44 md:w-40 md:h-56 rounded-2xl overflow-hidden pip-shadow border-2 border-white/20">
+<div class="w-full h-full bg-cover bg-center" data-alt="A portrait-oriented self-view window showing a young Tunisian entrepreneur in a brightly lit home office. The person is smiling slightly, looking into the camera. The setting features a soft green plant and a clean desk, following the warm and pedagogical atmosphere of the Serene Fiscal brand." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuATWxZhbatgHk5yz-BGswZuDaViOLQXNAp8rBUqN4J8T7zAWdWBrDan2mVYTt2x1nhm6Ncuo7rNlk7X5Y3Odwnw577_7n-M5v2-FldEJ9ZJm8dEQqnsRxCqkK5-Dl62mAepA29iceOF6r_F0o_zdcVvVRHHHbAQ9hViRe0reN621hs-qnZS2qunOqlWEDHCVf7DPcaYx7swWRQCiIbq48A9HjJghmCDnCXclWgLqfMuHfVIJnwYtwYnoPCcwMTjisd9m3Q6Vs2rsg')">
+</div>
+</div>
+<!-- Shared Document Floating Card -->
+<div class="fixed bottom-32 left-1/2 -translate-x-1/2 w-[90%] max-w-[450px] z-40 transition-all transform hover:scale-[1.02] active:scale-95 cursor-pointer">
+<div class="bg-tint-info/95 backdrop-blur-md p-4 rounded-[24px] flex items-center gap-4 shadow-xl shadow-primary/5 border border-white/50">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">description</span>
+</div>
+<div class="flex flex-col">
+<span class="text-primary font-label-md text-label-md">Document partagé</span>
+<span class="text-primary font-headline-sm text-label-md truncate">Déclaration TVA juillet.pdf</span>
+</div>
+<div class="ml-auto">
+<span class="material-symbols-outlined text-primary/40">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Controls: BottomNavBar -->
+<nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex justify-around items-center px-4 py-2 bg-surface-container-highest/90 dark:bg-inverse-surface/90 backdrop-blur-xl docked fixed bottom-8 mx-auto w-[90%] max-w-[400px] rounded-full left-0 right-0 shadow-lg shadow-primary/10">
+<!-- Mute (Mic Off) -->
+<button class="group flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-4 hover:bg-surface-container-high dark:hover:bg-surface-variant/20 rounded-full transition-all scale-110 active:scale-90" id="btn-mic" onclick="toggleState(this)">
+<span class="material-symbols-outlined">mic_off</span>
+</button>
+<!-- Camera (Videocam Off) -->
+<button class="group flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-4 hover:bg-surface-container-high dark:hover:bg-surface-variant/20 rounded-full transition-all scale-110 active:scale-90" id="btn-cam" onclick="toggleState(this)">
+<span class="material-symbols-outlined">videocam_off</span>
+</button>
+<!-- Share Document (Screen Share) -->
+<button class="group flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-4 hover:bg-surface-container-high dark:hover:bg-surface-variant/20 rounded-full transition-all scale-110 active:scale-90" id="btn-share" onclick="toggleState(this)">
+<span class="material-symbols-outlined">screen_share</span>
+</button>
+<!-- End Call (Call End) - Active/Danger State -->
+<button class="group flex flex-col items-center justify-center bg-error text-on-error rounded-full p-4 hover:bg-error/90 transition-all scale-110 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">call_end</span>
+</button>
+</nav>
+<!-- UI Overlay interactions -->
+<script>
+        // Simple timer logic
+        let seconds = 754; // 12:34 start
+        const timerElement = document.getElementById('timer');
+        
+        setInterval(() => {
+            seconds++;
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            timerElement.innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
+        }, 1000);
+
+        // UI Toggle simulation
+        function toggleState(btn) {
+            const isActive = btn.classList.contains('bg-primary-container');
+            if(isActive) {
+                btn.classList.remove('bg-primary-container', 'text-on-primary-container');
+                btn.classList.add('text-on-surface-variant');
+            } else {
+                btn.classList.add('bg-primary-container', 'text-on-primary-container');
+                btn.classList.remove('text-on-surface-variant');
+            }
+        }
+    </script>
+<!-- Pedagogy Disclaimer Footer -->
+<div class="fixed bottom-2 left-1/2 -translate-x-1/2 z-10 w-full text-center pointer-events-none">
+<p class="text-[10px] text-white/40 uppercase tracking-widest font-label-sm">
+            Outil pédagogique El Comptabli — Non certifié expert-comptable
+        </p>
+</div>
+</body></html>

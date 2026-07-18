@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Analyse des dépenses - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "primary-fixed-dim": "#80d5cb",
+                    "on-secondary": "#ffffff",
+                    "tint-danger": "#FDE8E6",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-primary-fixed": "#00201d",
+                    "outline-variant": "#bdc9c6",
+                    "on-primary-container": "#a3faef",
+                    "tertiary": "#0d5b55",
+                    "inverse-on-surface": "#eff1f1",
+                    "tint-warning": "#FEF3E2",
+                    "tint-success": "#E6F5F3",
+                    "inverse-surface": "#2e3131",
+                    "status-success": "#16A34A",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "status-warning": "#D97706",
+                    "surface-container-highest": "#e1e3e3",
+                    "text-secondary": "#6B7280",
+                    "status-premium": "#7C3AED",
+                    "on-secondary-fixed": "#00201c",
+                    "tint-info": "#EEF2FF",
+                    "error": "#ba1a1a",
+                    "status-danger": "#DC2626",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f2f4f4",
+                    "secondary-fixed": "#71f8e4",
+                    "on-tertiary": "#ffffff",
+                    "surface-bright": "#f8fafa",
+                    "surface-variant": "#e1e3e3",
+                    "outline": "#6e7977",
+                    "primary": "#005c55",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#006f64",
+                    "tertiary-container": "#2f746d",
+                    "secondary-container": "#6df5e1",
+                    "primary-container": "#0f766e",
+                    "surface-dim": "#d8dada",
+                    "tertiary-fixed": "#abefe7",
+                    "background": "#f8fafa",
+                    "on-tertiary-container": "#b3f7ee",
+                    "on-primary-fixed-variant": "#00504a",
+                    "on-tertiary-fixed": "#00201d",
+                    "on-surface-variant": "#3e4947",
+                    "text-primary": "#1A1A1A",
+                    "surface-tint": "#006a63",
+                    "surface-container": "#eceeee",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed": "#9cf2e8",
+                    "on-background": "#191c1d",
+                    "on-surface": "#191c1d",
+                    "secondary": "#006b5f",
+                    "on-secondary-fixed-variant": "#005048",
+                    "on-error": "#ffffff",
+                    "surface-container-high": "#e6e8e8",
+                    "inverse-primary": "#80d5cb",
+                    "surface": "#f8fafa"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "brand": "24px"
+            },
+            "spacing": {
+                    "stack-sm": "12px",
+                    "container-padding": "20px",
+                    "base": "8px",
+                    "stack-xs": "4px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "stat-display": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .donut-segment {
+        transition: stroke-dashoffset 0.6s ease-in-out;
+      }
+      .card-shadow {
+        box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+      }
+      .active-nav-dot::after {
+        content: '';
+        width: 4px;
+        height: 4px;
+        background-color: #005c55;
+        border-radius: 50%;
+        margin-top: 4px;
+      }
+    </style>
+</head>
+<body class="bg-background min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="flex items-center w-full px-container-padding h-16 sticky top-0 bg-background/80 backdrop-blur-md z-50">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-primary Active: scale-95 transition-transform" data-icon="arrow_back">arrow_back</button>
+<div class="flex items-center gap-2">
+<img alt="El Comptabli Logo" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKIqIHZW3XHNiIOkk0Z_-ZXJJH6scJAXgRiEqmeW_51lX1XcbpgbzCP4Ch4KkrlmtY_prSsYZuGrm9nzB6GIzyngXxqlCHIkT84pgoQ4FDqfpZ_TlmwG1BeIGPF-A0rQBEHs81Arjq4WMa0C-DavqcRvofV_BDLQnIl3JYYc6IZ9vMqfl4vunOMnBN9V4wvKOTxeApoj6aEVt08UYUC7eGm1V7yNDSff4VjIB4rHw4aFjPBBa6X2ON--Q_MkCl8CPK7IrefA-7nA"/>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Analyse des dépenses</h1>
+</div>
+</div>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding pt-4 space-y-6">
+<!-- Month Selector -->
+<div class="flex justify-center">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container rounded-full text-on-surface-variant font-label-md transition-all active:scale-95">
+                Juillet 2026
+                <span class="material-symbols-outlined text-[18px]" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</button>
+</div>
+<!-- Donut Chart Card -->
+<section class="bg-surface-container-lowest rounded-brand p-6 card-shadow text-center relative overflow-hidden">
+<div class="relative w-64 h-64 mx-auto mb-4">
+<!-- SVG Donut Chart -->
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<!-- Loyer (35%) -->
+<circle class="donut-segment" cx="50" cy="50" fill="transparent" r="40" stroke="#005c55" stroke-dasharray="88 163.2" stroke-dashoffset="0" stroke-width="12"></circle>
+<!-- Achats (30%) -->
+<circle class="donut-segment" cx="50" cy="50" fill="transparent" r="40" stroke="#14B8A6" stroke-dasharray="75.4 175.8" stroke-dashoffset="-88" stroke-width="12"></circle>
+<!-- Autres (26%) -->
+<circle class="donut-segment" cx="50" cy="50" fill="transparent" r="40" stroke="#90d3cb" stroke-dasharray="65.3 185.9" stroke-dashoffset="-163.4" stroke-width="12"></circle>
+<!-- Carburant (9%) -->
+<circle class="donut-segment" cx="50" cy="50" fill="transparent" r="40" stroke="#00201c" stroke-dasharray="22.6 228.6" stroke-dashoffset="-228.7" stroke-width="12"></circle>
+</svg>
+<!-- Center Content -->
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-wider">Total</span>
+<span class="font-stat-display text-stat-display text-primary">1 960 DT</span>
+</div>
+</div>
+<!-- Legend Grid -->
+<div class="grid grid-cols-1 gap-stack-sm mt-8 border-t border-outline-variant/30 pt-6">
+<!-- Loyer -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-[#005c55]"></div>
+<span class="font-label-md text-on-surface">Loyer</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-on-surface-variant">35%</span>
+<span class="font-label-md text-on-surface-variant">=</span>
+</div>
+</div>
+<!-- Achats -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-[#14B8A6]"></div>
+<span class="font-label-md text-on-surface">Achats</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-on-surface-variant">30%</span>
+<span class="material-symbols-outlined text-status-warning text-[18px]" data-icon="trending_up">trending_up</span>
+</div>
+</div>
+<!-- Carburant -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-[#00201c]"></div>
+<span class="font-label-md text-on-surface">Carburant</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-on-surface-variant">9%</span>
+<div class="flex items-center text-status-danger">
+<span class="material-symbols-outlined text-[18px]" data-icon="trending_up">trending_up</span>
+<span class="font-label-sm font-bold">30%</span>
+</div>
+</div>
+</div>
+<!-- Autres -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-[#90d3cb]"></div>
+<span class="font-label-md text-on-surface">Autres</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-on-surface-variant">26%</span>
+<span class="font-label-md text-on-surface-variant">-</span>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Insight Card -->
+<div class="bg-tint-info rounded-brand p-5 flex gap-4 items-start border border-primary/5">
+<div class="bg-white p-2 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="lightbulb" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<p class="font-body-lg text-primary leading-relaxed">
+<span class="font-bold">Carburant en hausse :</span> 3 pleins ce mois vs 2 en juin. Prévoyez une provision fiscale ajustée.
+            </p>
+</div>
+<!-- Comparison Section -->
+<section class="bg-surface-container-low rounded-brand p-6 space-y-4">
+<h3 class="font-label-md text-on-surface-variant uppercase tracking-wider">Mois précédent</h3>
+<div class="flex items-end gap-6 h-24">
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-outline-variant/30 rounded-t-lg relative" style="height: 100%;">
+<div class="absolute bottom-0 w-full bg-primary/40 rounded-t-lg" style="height: 80%;"></div>
+</div>
+<span class="font-label-sm text-on-surface-variant">Juin</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-outline-variant/30 rounded-t-lg relative" style="height: 100%;">
+<div class="absolute bottom-0 w-full bg-primary rounded-t-lg" style="height: 100%;"></div>
+</div>
+<span class="font-label-sm text-on-surface-variant">Juillet</span>
+</div>
+<div class="flex-[2] flex flex-col justify-center gap-1">
+<span class="font-headline-sm text-primary">+240 DT</span>
+<span class="font-label-sm text-on-surface-variant">Augmentation par rapport à juin 2026</span>
+</div>
+</div>
+</section>
+<!-- Action Button -->
+<div class="pt-4 flex justify-center pb-8">
+<button class="flex items-center gap-2 px-6 py-3 text-primary font-label-md rounded-full hover:bg-primary/5 transition-colors border border-primary/20">
+<span class="material-symbols-outlined" data-icon="ios_share">ios_share</span>
+                Exporter l'analyse
+            </button>
+</div>
+<!-- Disclaimer Banner -->
+<div class="bg-surface-container-low p-4 rounded-xl text-center">
+<p class="text-[10px] text-on-surface-variant leading-tight opacity-70">
+                El Comptabli est un outil pédagogique. Ces analyses sont fournies à titre indicatif et ne remplacent pas les services d'un expert-comptable agréé.
+            </p>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[400px] z-50 flex justify-around items-center py-3 px-4 bg-surface-container-lowest/90 backdrop-blur-md rounded-full shadow-2xl border border-outline-variant/20">
+<!-- Accueil -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Accueil</span>
+</a>
+<!-- IA -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-label-sm text-label-sm">IA</span>
+</a>
+<!-- Scanner -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="center_focus_strong">center_focus_strong</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</a>
+<!-- Finance (Active) -->
+<a class="flex flex-col items-center justify-center text-primary active-nav-dot transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm">Finance</span>
+</a>
+<!-- Savoir -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-label-sm text-label-sm">Savoir</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for chart segments
+        document.querySelectorAll('.donut-segment').forEach(segment => {
+            segment.addEventListener('mouseenter', () => {
+                segment.style.strokeWidth = '14';
+                segment.style.filter = 'drop-shadow(0 0 2px rgba(0,0,0,0.2))';
+            });
+            segment.addEventListener('mouseleave', () => {
+                segment.style.strokeWidth = '12';
+                segment.style.filter = 'none';
+            });
+        });
+    </script>
+</body></html>

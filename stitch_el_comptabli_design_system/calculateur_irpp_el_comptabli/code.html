@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Calculateur IRPP - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#006f64",
+                    "status-success": "#16A34A",
+                    "on-tertiary-fixed": "#00201d",
+                    "on-secondary-fixed-variant": "#005048",
+                    "on-primary-container": "#a3faef",
+                    "tertiary-fixed": "#abefe7",
+                    "tint-warning": "#FEF3E2",
+                    "surface-container-highest": "#e1e3e3",
+                    "surface-variant": "#e1e3e3",
+                    "tint-info": "#EEF2FF",
+                    "text-primary": "#1A1A1A",
+                    "tertiary-container": "#2f746d",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#2e3131",
+                    "outline-variant": "#bdc9c6",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-primary-fixed": "#00201d",
+                    "tint-danger": "#FDE8E6",
+                    "on-tertiary-container": "#b3f7ee",
+                    "status-danger": "#DC2626",
+                    "tint-success": "#E6F5F3",
+                    "secondary-fixed": "#71f8e4",
+                    "surface-dim": "#d8dada",
+                    "error-container": "#ffdad6",
+                    "status-premium": "#7C3AED",
+                    "surface-bright": "#f8fafa",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "surface": "#f8fafa",
+                    "surface-tint": "#006a63",
+                    "secondary": "#006b5f",
+                    "on-secondary-fixed": "#00201c",
+                    "primary": "#005c55",
+                    "on-surface-variant": "#3e4947",
+                    "on-surface": "#191c1d",
+                    "outline": "#6e7977",
+                    "on-primary": "#ffffff",
+                    "background": "#f8fafa",
+                    "on-primary-fixed-variant": "#00504a",
+                    "surface-container-high": "#e6e8e8",
+                    "primary-fixed-dim": "#80d5cb",
+                    "primary-fixed": "#9cf2e8",
+                    "on-error-container": "#93000a",
+                    "status-warning": "#D97706",
+                    "inverse-primary": "#80d5cb",
+                    "primary-container": "#0f766e",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "error": "#ba1a1a",
+                    "text-secondary": "#6B7280",
+                    "surface-container": "#eceeee",
+                    "secondary-container": "#6df5e1",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#f2f4f4",
+                    "tertiary": "#0d5b55",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#eff1f1",
+                    "on-background": "#191c1d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "20px",
+                    "base": "8px",
+                    "stack-sm": "12px",
+                    "stack-xs": "4px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            color: #1A1A1A;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .nav-shadow {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .chat-tail-assistant { border-bottom-left-radius: 6px; }
+        .chat-tail-user { border-bottom-right-radius: 6px; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen pb-32">
+<!-- Top AppBar -->
+<header class="w-full top-0 sticky z-50 bg-surface dark:bg-on-background">
+<div class="flex items-center px-container-padding h-16 w-full max-w-[600px] mx-auto">
+<button class="mr-4 text-primary dark:text-primary-fixed hover:bg-surface-container-low transition-colors p-2 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed">Calculateur IRPP</h1>
+<div class="ml-auto">
+<img alt="El Comptabli Logo" class="w-10 h-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCD_CL5c7z6amd6LObXO4qaFOk5hYdYbQAgtLn9jbu18EuksdIWSa9qkLGzpYF8KWi_9moraglU194SjHQsT8N8CcU1UxcikXf-48BPSX7Rwwm_-7GufmdG7AuA2q1daO0-4DXcBxEDCxyBXmm6bPTwJTiVlCNTZqUyCcE9QK0rxaEZxyS2j4_rcBaSEH_UOGAd7aJcwnmWnXMlmHUpxItRA8o7TR7xs-JKWTpXsmgEQ8XP55LBKx1nDVLPj2O6cn9xVv2ETcs_w"/>
+</div>
+</div>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding pt-6 space-y-6">
+<!-- Input Section Card -->
+<section class="bg-white rounded-2xl p-6 soft-shadow space-y-6">
+<!-- Revenue Input -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-text-secondary block">Revenu net annuel</label>
+<div class="relative">
+<input class="w-full h-14 bg-surface-container-low border-none rounded-xl px-4 font-headline-sm text-headline-sm text-primary focus:ring-2 focus:ring-primary transition-all" readonly="" type="text" value="24 000 DT"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">payments</span>
+</div>
+</div>
+<!-- Situation Pills -->
+<div class="space-y-3">
+<label class="font-label-md text-label-md text-text-secondary block">Situation familiale</label>
+<div class="flex gap-2">
+<button class="flex-1 py-3 px-4 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md text-center transition-all active:scale-95">
+                        Célibataire
+                    </button>
+<button class="flex-1 py-3 px-4 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md text-center transition-all hover:bg-surface-container-highest active:scale-95">
+                        Chef de famille
+                    </button>
+</div>
+</div>
+<!-- Children Stepper -->
+<div class="flex items-center justify-between py-2">
+<label class="font-label-md text-label-md text-text-secondary">Nombre d'enfants</label>
+<div class="flex items-center gap-4 bg-surface-container-low rounded-full px-2 py-1">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-primary hover:bg-white transition-colors active:scale-90">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-headline-sm text-headline-sm min-w-[24px] text-center">0</span>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-primary hover:bg-white transition-colors active:scale-90">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<!-- Calculate Button -->
+<button class="w-full h-14 bg-primary text-on-primary rounded-full font-headline-sm text-headline-sm flex items-center justify-center gap-2 active:scale-95 transition-transform nav-shadow">
+<span>Calculer</span>
+<span class="material-symbols-outlined">calculate</span>
+</button>
+</section>
+<!-- Result Section -->
+<section class="space-y-4">
+<!-- Summary Card -->
+<div class="bg-tint-warning rounded-2xl p-6 border border-[#FDE68A] flex flex-col items-center text-center space-y-2">
+<span class="font-label-md text-label-md text-status-warning uppercase tracking-wider">Résultat estimé</span>
+<h2 class="font-stat-display text-stat-display text-primary">IRPP estimé : 4 450 DT</h2>
+<div class="flex items-center gap-2 text-text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span>Basé sur le barème 2024</span>
+</div>
+</div>
+<!-- Expandable Details -->
+<div class="bg-white rounded-2xl soft-shadow overflow-hidden transition-all duration-300" id="details-accordion">
+<button class="w-full px-6 py-4 flex items-center justify-between hover:bg-surface-container-low transition-colors" onclick="toggleDetails()">
+<span class="font-headline-sm text-headline-sm text-primary">Détails par tranches</span>
+<span class="material-symbols-outlined transition-transform duration-300" id="chevron">expand_more</span>
+</button>
+<div class="px-6 pb-6 space-y-4 hidden" id="details-content">
+<div class="h-px bg-surface-container-high mb-4"></div>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-text-secondary">Tranche 1 (0 - 5 000)</span>
+<span class="font-label-md text-label-md text-primary font-semibold">5 000 × 0% = 0</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-text-secondary">Tranche 2 (5 001 - 10 000)</span>
+<span class="font-label-md text-label-md text-primary font-semibold">5 000 × 15% = 750</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-text-secondary">Tranche 3 (10 001 - 20 000)</span>
+<span class="font-label-md text-label-md text-primary font-semibold">10 000 × 25% = 2 500</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-text-secondary">Tranche 4 (20 001 - 24 000)</span>
+<span class="font-label-md text-label-md text-primary font-semibold">4 000 × 30% = 1 200</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Warning Banner -->
+<div class="bg-[#F5F7F7] rounded-xl p-4 flex items-start gap-3">
+<span class="material-symbols-outlined text-outline text-[20px] mt-0.5">verified_user</span>
+<p class="font-label-sm text-label-sm text-text-secondary leading-relaxed">
+                Estimation indicative — pas un montant officiel. Ce calculateur est un outil pédagogique. Consulte un expert-comptable pour tes déclarations officielles.
+            </p>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[400px] rounded-full bg-surface-container-lowest dark:bg-inverse-surface nav-shadow z-50 flex justify-around items-center px-4 py-2">
+<button class="flex items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-container-high rounded-full transition-all active:scale-90">
+<span class="material-symbols-outlined">home</span>
+</button>
+<button class="flex items-center justify-center bg-primary-container text-on-primary-container rounded-full w-12 h-12 relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full active:scale-90 transition-all">
+<span class="material-symbols-outlined">calculate</span>
+</button>
+<button class="flex items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-container-high rounded-full transition-all active:scale-90">
+<span class="material-symbols-outlined">receipt_long</span>
+</button>
+<button class="flex items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-container-high rounded-full transition-all active:scale-90">
+<span class="material-symbols-outlined">chat</span>
+</button>
+<button class="flex items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-container-high rounded-full transition-all active:scale-90">
+<span class="material-symbols-outlined">person</span>
+</button>
+</nav>
+<script>
+        function toggleDetails() {
+            const content = document.getElementById('details-content');
+            const chevron = document.getElementById('chevron');
+            const isHidden = content.classList.contains('hidden');
+            
+            if (isHidden) {
+                content.classList.remove('hidden');
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Simple animation for the result card on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const resultCard = document.querySelector('.bg-tint-warning');
+            resultCard.style.opacity = '0';
+            resultCard.style.transform = 'translateY(10px)';
+            setTimeout(() => {
+                resultCard.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                resultCard.style.opacity = '1';
+                resultCard.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body></html>

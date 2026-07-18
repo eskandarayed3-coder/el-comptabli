@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli - Configuration Terminée</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-variant": "#e1e3e3",
+                "on-surface": "#191c1d",
+                "outline-variant": "#bdc9c6",
+                "surface-container": "#eceeee",
+                "tint-danger": "#FDE8E6",
+                "secondary-container": "#6df5e1",
+                "status-warning": "#D97706",
+                "secondary": "#006b5f",
+                "secondary-fixed": "#71f8e4",
+                "surface-container-lowest": "#ffffff",
+                "surface-dim": "#d8dada",
+                "tertiary-container": "#2f746d",
+                "on-primary-fixed": "#00201d",
+                "on-tertiary": "#ffffff",
+                "on-primary": "#ffffff",
+                "tint-info": "#EEF2FF",
+                "surface-bright": "#f8fafa",
+                "inverse-on-surface": "#eff1f1",
+                "inverse-primary": "#80d5cb",
+                "on-secondary-fixed-variant": "#005048",
+                "surface-container-highest": "#e1e3e3",
+                "text-primary": "#1A1A1A",
+                "status-danger": "#DC2626",
+                "error": "#ba1a1a",
+                "secondary-fixed-dim": "#4fdbc8",
+                "outline": "#6e7977",
+                "on-primary-fixed-variant": "#00504a",
+                "primary-fixed-dim": "#80d5cb",
+                "primary-fixed": "#9cf2e8",
+                "tertiary": "#0d5b55",
+                "on-secondary-fixed": "#00201c",
+                "tertiary-fixed": "#abefe7",
+                "status-success": "#16A34A",
+                "primary": "#005c55",
+                "background": "#f8fafa",
+                "on-primary-container": "#a3faef",
+                "surface": "#f8fafa",
+                "on-tertiary-fixed-variant": "#00504a",
+                "surface-container-low": "#f2f4f4",
+                "on-secondary-container": "#006f64",
+                "on-error-container": "#93000a",
+                "inverse-surface": "#2e3131",
+                "on-surface-variant": "#3e4947",
+                "error-container": "#ffdad6",
+                "text-secondary": "#6B7280",
+                "primary-container": "#0f766e",
+                "on-tertiary-container": "#b3f7ee",
+                "on-error": "#ffffff",
+                "status-premium": "#7C3AED",
+                "on-tertiary-fixed": "#00201d",
+                "surface-container-high": "#e6e8e8",
+                "on-background": "#191c1d",
+                "tint-success": "#E6F5F3",
+                "tertiary-fixed-dim": "#90d3cb",
+                "surface-tint": "#006a63",
+                "on-secondary": "#ffffff",
+                "tint-warning": "#FEF3E2"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "2xl": "1.5rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "stack-sm": "12px",
+                "stack-xs": "4px",
+                "element-gap": "16px",
+                "container-padding": "20px",
+                "base": "8px"
+            },
+            "fontFamily": {
+                "stat-display": ["Inter"],
+                "body-lg": ["Inter"],
+                "headline-md": ["Inter"],
+                "label-sm": ["Inter"],
+                "headline-lg": ["Inter"],
+                "headline-sm": ["Inter"],
+                "label-md": ["Inter"]
+            },
+            "fontSize": {
+                "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            overflow-x: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 4px;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #D97706;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: twinkle 3s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(0.5); opacity: 0.3; }
+            100% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+
+        .fab-shadow {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen items-center justify-center p-container-padding">
+<!-- Celebration Background -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none bg-background" id="celebration-container">
+<!-- Confetti elements will be injected here via JS -->
+</div>
+<!-- Main Content Container -->
+<main class="relative z-10 w-full max-w-[500px] flex flex-col items-center text-center space-y-8 py-10">
+<!-- Animated Success Checkmark -->
+<div class="w-64 h-64 flex items-center justify-center">
+
+</div>
+<!-- Headline -->
+<div class="space-y-2">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-text-primary tracking-tight">
+                Tout est prêt, Eskandar 🎉
+            </h1>
+<p class="font-body-lg text-body-lg text-text-secondary">
+                Votre profil fiscal a été configuré avec succès.
+            </p>
+</div>
+<!-- Summary Card -->
+<div class="w-full bg-tint-success rounded-2xl p-container-padding card-shadow border border-outline-variant/30 text-left">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-md text-label-md text-primary font-bold uppercase tracking-wider">Résumé du profil</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="grid grid-cols-1 gap-y-4">
+<!-- Item 1 -->
+<div class="flex items-center space-x-4 p-3 bg-white/50 rounded-xl">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-text-secondary">Statut</p>
+<p class="font-headline-sm text-headline-sm text-text-primary">Freelance</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center space-x-4 p-3 bg-white/50 rounded-xl">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="description">description</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-text-secondary">Régime fiscal</p>
+<p class="font-headline-sm text-headline-sm text-text-primary">Régime réel</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center space-x-4 p-3 bg-white/50 rounded-xl">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-text-secondary">Gouvernorat</p>
+<p class="font-headline-sm text-headline-sm text-text-primary">Nabeul</p>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="flex items-center space-x-4 p-3 bg-white/50 rounded-xl">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="card_membership">card_membership</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-text-secondary">Offre actuelle</p>
+<p class="font-headline-sm text-headline-sm text-text-primary">Plan gratuit</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Pedogogical Disclaimer -->
+<div class="bg-surface-container-low rounded-xl p-3 w-full">
+<p class="font-label-sm text-label-sm text-text-secondary text-center italic">
+                Note : El Comptabli est un outil d'accompagnement pédagogique. Pour des conseils certifiés, consultez un expert-comptable agréé.
+            </p>
+</div>
+</main>
+<!-- Footer Action -->
+<footer class="fixed bottom-0 left-0 right-0 p-container-padding flex justify-center bg-gradient-to-t from-background via-background to-transparent pt-10">
+<button class="w-full max-w-[500px] bg-primary text-white font-headline-sm text-headline-sm py-4 px-8 rounded-full fab-shadow flex items-center justify-center space-x-3 active:scale-95 transition-all hover:bg-primary-container">
+<span>Aller à mon dashboard</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</footer>
+<script>
+        // Micro-interaction: Confetti generation
+        function createConfetti() {
+            const container = document.getElementById('celebration-container');
+            const colors = ['#0F766E', '#14B8A6', '#FEF3E2', '#6df5e1', '#FEF3E2'];
+            
+            for (let i = 0; i < 40; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Random styles
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.backgroundColor = color;
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = (100 + Math.random() * 20) + 'vh';
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                confetti.style.width = (Math.random() * 8 + 6) + 'px';
+                confetti.style.height = (Math.random() * 8 + 6) + 'px';
+                confetti.style.opacity = Math.random();
+                
+                container.appendChild(confetti);
+            }
+
+            for (let i = 0; i < 15; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.top = Math.random() * 100 + 'vh';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(sparkle);
+            }
+        }
+
+        // Run on load
+        window.addEventListener('DOMContentLoaded', createConfetti);
+    </script>
+</body></html>

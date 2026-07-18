@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rapport Juillet 2026 - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#80d5cb",
+                        "surface": "#f8fafa",
+                        "status-danger": "#DC2626",
+                        "on-surface-variant": "#3e4947",
+                        "on-primary-fixed": "#00201d",
+                        "inverse-primary": "#80d5cb",
+                        "background": "#f8fafa",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8fafa",
+                        "secondary": "#006b5f",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f4f4",
+                        "outline": "#6e7977",
+                        "on-secondary-fixed": "#00201c",
+                        "on-primary-container": "#a3faef",
+                        "surface-tint": "#006a63",
+                        "on-secondary-container": "#006f64",
+                        "on-tertiary-container": "#b3f7ee",
+                        "tertiary-fixed": "#abefe7",
+                        "surface-container": "#eceeee",
+                        "outline-variant": "#bdc9c6",
+                        "on-error": "#ffffff",
+                        "on-surface": "#191c1d",
+                        "status-warning": "#D97706",
+                        "on-primary-fixed-variant": "#00504a",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#9cf2e8",
+                        "primary": "#005c55",
+                        "secondary-container": "#6df5e1",
+                        "tertiary-container": "#2f746d",
+                        "status-success": "#16A34A",
+                        "error": "#ba1a1a",
+                        "tertiary": "#0d5b55",
+                        "on-background": "#191c1d",
+                        "tint-warning": "#FEF3E2",
+                        "on-tertiary-fixed": "#00201d",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#e1e3e3",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "status-premium": "#7C3AED",
+                        "text-secondary": "#6B7280",
+                        "tint-danger": "#FDE8E6",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-error-container": "#93000a",
+                        "text-primary": "#1A1A1A",
+                        "primary-container": "#0f766e",
+                        "inverse-surface": "#2e3131",
+                        "inverse-on-surface": "#eff1f1",
+                        "surface-variant": "#e1e3e3",
+                        "surface-dim": "#d8dada",
+                        "secondary-fixed": "#71f8e4",
+                        "surface-container-high": "#e6e8e8",
+                        "tint-success": "#E6F5F3",
+                        "tertiary-fixed-dim": "#90d3cb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "xxl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "stack-xs": "4px",
+                        "element-gap": "16px",
+                        "stack-sm": "12px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f8fafa;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="text-on-surface pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md">
+<div class="flex items-center px-container-padding h-16 w-full max-w-[600px] mx-auto">
+<button class="mr-4 text-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-primary flex-1">Rapport Juillet 2026</h1>
+<img alt="El Comptabli Logo" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBR5fZr6HGaFTchqEjcBAtSwKhnyquQ0etwrhiuh_peHmpjnk1rK0Ia04n00pfueShF8ZG44G8MsZixK2Hil2AsilrF2e_zX06uLkzBRhqxTxsVVvLE7Q-_yHrSpomhe-3J1J5HKo3PGonOp6ptyy5qVIOpwoJFynKnkmyh4n6Y_ixnO0V_AwGaTZsiDQEQvmy6nua3vXperMAOvuAiEkhmd-2pMKtrQMf1RiuttIOAejnBEpRHmn2u1eokJtBj2N6qpPAmGnYgcw"/>
+</div>
+</header>
+<main class="mt-20 px-container-padding max-w-[600px] mx-auto space-y-6">
+<!-- Hero Card -->
+<section class="relative overflow-hidden rounded-xxl p-6 text-white shadow-lg" style="background: linear-gradient(135deg, #0F766E 0%, #14B8A6 100%);">
+<div class="relative z-10">
+<h2 class="font-label-md text-label-md opacity-90 mb-4">Ta situation en Juillet</h2>
+<div class="grid grid-cols-3 gap-2 text-center">
+<div class="bg-white/10 backdrop-blur-md rounded-xl py-3 border border-white/10">
+<p class="font-label-sm text-label-sm text-primary-fixed mb-1">Revenus</p>
+<p class="font-headline-sm text-headline-sm text-primary-fixed">3 200 <span class="text-[12px]">DT</span></p>
+</div>
+<div class="bg-white/10 backdrop-blur-md rounded-xl py-3 border border-white/10">
+<p class="font-label-sm text-label-sm text-tint-danger mb-1">Dépenses</p>
+<p class="font-headline-sm text-headline-sm text-white">1 960 <span class="text-[12px]">DT</span></p>
+</div>
+<div class="bg-white/20 backdrop-blur-md rounded-xl py-3 border border-white/20 ring-1 ring-white/30">
+<p class="font-label-sm text-label-sm text-primary-fixed mb-1">Profit</p>
+<p class="font-headline-md text-headline-md font-extrabold text-primary-fixed">1 240 <span class="text-[12px]">DT</span></p>
+</div>
+</div>
+</div>
+<!-- Abstract decorative element -->
+<div class="absolute -bottom-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+</section>
+<!-- Weekly Chart Card -->
+<section class="bg-surface-container-lowest rounded-xxl p-6 shadow-[0_4px_16px_rgba(15,92,86,0.08)]">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Par semaine</h3>
+<span class="font-label-sm text-label-sm text-outline">Performance: +12%</span>
+</div>
+<div class="flex items-end justify-between h-40 px-4">
+<!-- Week 1 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-10 bg-primary/20 rounded-t-full relative flex items-end justify-center overflow-hidden h-[40%] group-hover:bg-primary/30 transition-colors">
+<div class="w-full bg-primary rounded-t-full h-full transition-all duration-700" style="height: 65%;"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">S1</span>
+</div>
+<!-- Week 2 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-10 bg-primary/20 rounded-t-full relative flex items-end justify-center overflow-hidden h-full group-hover:bg-primary/30 transition-colors">
+<div class="w-full bg-primary rounded-t-full h-full transition-all duration-700" style="height: 85%;"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">S2</span>
+</div>
+<!-- Week 3 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-10 bg-primary/20 rounded-t-full relative flex items-end justify-center overflow-hidden h-full group-hover:bg-primary/30 transition-colors">
+<div class="w-full bg-primary rounded-t-full h-full transition-all duration-700" style="height: 45%;"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">S3</span>
+</div>
+<!-- Week 4 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-10 bg-primary/20 rounded-t-full relative flex items-end justify-center overflow-hidden h-full group-hover:bg-primary/30 transition-colors">
+<div class="w-full bg-primary rounded-t-full h-full transition-all duration-700" style="height: 95%;"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">S4</span>
+</div>
+</div>
+</section>
+<!-- Categories Card -->
+<section class="bg-surface-container-lowest rounded-xxl p-6 shadow-[0_4px_16px_rgba(15,92,86,0.08)]">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-6">Top catégories</h3>
+<div class="space-y-5">
+<!-- Loyer -->
+<div class="space-y-2">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface">Loyer</span>
+<span class="text-primary font-bold">680 DT</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 35%;"></div>
+</div>
+</div>
+<!-- Achats -->
+<div class="space-y-2">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface">Achats</span>
+<span class="text-primary font-bold">590 DT</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 30%;"></div>
+</div>
+</div>
+<!-- Carburant -->
+<div class="space-y-2">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface">Carburant</span>
+<span class="text-primary font-bold">180 DT</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 9%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- VAT Card -->
+<section class="bg-tint-warning rounded-xxl p-6 border border-status-warning/10">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-10 h-10 rounded-full bg-status-warning/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-status-warning">calculate</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Calcul TVA</h3>
+</div>
+<div class="space-y-2">
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                    Collectée <span class="font-semibold text-on-surface">1 900</span> − Déductible <span class="font-semibold text-on-surface">1 588</span>
+</p>
+<div class="flex items-center gap-2 pt-2 border-t border-status-warning/20">
+<span class="font-label-md text-label-md text-outline">Solde à payer :</span>
+<span class="font-headline-sm text-headline-sm text-status-warning">312 DT</span>
+</div>
+</div>
+</section>
+<!-- Export Actions -->
+<div class="flex items-center gap-3 pt-4">
+<button class="flex-1 bg-primary text-white h-14 rounded-full flex items-center justify-center gap-2 font-label-md text-label-md shadow-md active:scale-95 transition-all">
+<span class="material-symbols-outlined">download</span>
+                Export Excel
+            </button>
+<button class="px-6 h-14 rounded-full border border-primary/20 text-primary font-label-md text-label-md active:bg-primary/5 transition-all">
+                PDF
+            </button>
+</div>
+<!-- Footer -->
+<footer class="text-center pb-10">
+<p class="font-label-sm text-label-sm text-outline opacity-60">Généré par El Comptabli — indicatif</p>
+<div class="mt-4 p-4 rounded-xl bg-surface-container-low text-xs text-outline text-left">
+                Clause de non-responsabilité : Cette application est un outil pédagogique et ne remplace en aucun cas les services d'un expert-comptable agréé.
+            </div>
+</footer>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[560px] rounded-full z-50 bg-surface-container-lowest shadow-[0_8px_24px_rgba(0,0,0,0.12)] flex justify-around items-center py-4 px-6">
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">description</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for bar charts on scroll
+        const bars = document.querySelectorAll('.bg-primary.rounded-t-full');
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const originalHeight = entry.target.style.height;
+                    entry.target.style.height = '0%';
+                    setTimeout(() => {
+                        entry.target.style.height = originalHeight;
+                    }, 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        bars.forEach(bar => observer.observe(bar));
+    </script>
+</body></html>

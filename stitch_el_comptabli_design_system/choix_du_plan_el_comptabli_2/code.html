@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .premium-card-shadow {
+            box-shadow: 0 8px 24px rgba(15, 92, 86, 0.12);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tint-danger": "#FDE8E6",
+                      "surface-bright": "#f8fafa",
+                      "tint-info": "#EEF2FF",
+                      "background": "#f8fafa",
+                      "surface-variant": "#e1e3e3",
+                      "on-secondary-fixed": "#00201c",
+                      "surface-container-high": "#e6e8e8",
+                      "primary-fixed": "#9cf2e8",
+                      "on-secondary-container": "#006f64",
+                      "surface-container-highest": "#e1e3e3",
+                      "outline-variant": "#bdc9c6",
+                      "tertiary-container": "#2f746d",
+                      "surface-container": "#eceeee",
+                      "surface": "#f8fafa",
+                      "surface-container-low": "#f2f4f4",
+                      "on-tertiary-container": "#b3f7ee",
+                      "on-tertiary-fixed-variant": "#00504a",
+                      "on-primary-fixed-variant": "#00504a",
+                      "text-primary": "#1A1A1A",
+                      "status-premium": "#7C3AED",
+                      "status-warning": "#D97706",
+                      "secondary-container": "#6df5e1",
+                      "tint-warning": "#FEF3E2",
+                      "on-secondary-fixed-variant": "#005048",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "on-error-container": "#93000a",
+                      "on-error": "#ffffff",
+                      "outline": "#6e7977",
+                      "error": "#ba1a1a",
+                      "on-surface-variant": "#3e4947",
+                      "tertiary-fixed-dim": "#90d3cb",
+                      "status-danger": "#DC2626",
+                      "on-primary-container": "#a3faef",
+                      "on-background": "#191c1d",
+                      "status-success": "#16A34A",
+                      "inverse-surface": "#2e3131",
+                      "secondary-fixed": "#71f8e4",
+                      "primary": "#005c55",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed-dim": "#80d5cb",
+                      "on-primary-fixed": "#00201d",
+                      "primary-container": "#0f766e",
+                      "inverse-primary": "#80d5cb",
+                      "on-surface": "#191c1d",
+                      "tint-success": "#E6F5F3",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#d8dada",
+                      "inverse-on-surface": "#eff1f1",
+                      "on-tertiary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "surface-tint": "#006a63",
+                      "tertiary": "#0d5b55",
+                      "tertiary-fixed": "#abefe7",
+                      "surface-container-lowest": "#ffffff",
+                      "text-secondary": "#6B7280",
+                      "on-tertiary-fixed": "#00201d",
+                      "secondary": "#006b5f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px",
+                      "card": "24px"
+              },
+              "fontSize": {
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "headline-md-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="w-full top-0 px-5 py-4 bg-background dark:bg-background flex justify-between items-center max-w-[600px] mx-auto sticky z-40">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a Tunisian entrepreneur, wearing a modern business-casual outfit. The background is a soft, out-of-focus modern office with teal and white accents, matching the Fintech brand palette. The lighting is warm and welcoming, highlighting a confident yet friendly expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoCv2OiY6txzGvgjDlK7VrnVcE1x8-J33yFTRiq7HG2ftCvat1SvJNqhIiKiVha28LZSnze-kOMyFmCnjTRGRdQc79XXFbDJBmsmW3d-G-t7kQRUZuTU4540fTOFLawbZ0Ug5_lwh40xwkiuhYwMa3BxP5q_y6n63el3MIZNNk1QYVmKbz6ZFlM8Yd8YhRw_BiRDX1Y-Bpx5NIcD1TIh32Ap9tqPe6UaDm3sCniNYmhD5tmKsKITBsHHlFR3Qkhk1NWY_BfY_k7g"/>
+</div>
+<span class="font-headline-sm-mobile text-headline-sm-mobile text-primary">El Comptabli</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</header>
+<main class="max-w-[600px] mx-auto px-5 pt-4">
+<div class="mb-8">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-text-primary mb-2">Choisis ton plan</h1>
+<p class="font-body-lg text-body-lg text-text-secondary">Trouvez la solution adaptée à votre activité d'auto-entrepreneur.</p>
+</div>
+<div class="flex flex-col gap-6">
+<!-- Free Plan Card -->
+<div class="bg-surface-container-lowest rounded-card p-6 border border-surface-variant transition-all hover:border-primary-fixed-dim">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-text-primary">Gratuit</h2>
+<p class="font-label-sm text-label-sm text-text-secondary">Pour démarrer sereinement</p>
+</div>
+<div class="font-headline-sm text-headline-sm text-text-primary">0 DT</div>
+</div>
+<ul class="space-y-4 mb-8">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-status-success" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-lg text-body-lg text-text-primary">Questions limitées</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-status-success" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-lg text-body-lg text-text-primary">Calendrier fiscal</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-status-success" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-lg text-body-lg text-text-primary">Guides pédagogiques</span>
+</li>
+</ul>
+<button class="w-full py-4 rounded-full border-2 border-primary text-primary font-label-md text-label-md hover:bg-tint-success transition-colors active:scale-95 duration-200">
+                    Commencer gratuit
+                </button>
+</div>
+<!-- Premium Plan Card -->
+<div class="bg-tint-success rounded-card p-6 premium-card-shadow relative overflow-hidden border-2 border-primary-container">
+<!-- Popular Badge -->
+<div class="absolute top-4 right-4 bg-status-premium px-3 py-1 rounded-full">
+<span class="text-white font-label-sm text-label-sm font-bold uppercase tracking-wider">Populaire</span>
+</div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Premium</h2>
+<p class="font-label-sm text-label-sm text-text-secondary">Le pack complet pro</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline-sm text-headline-sm text-primary">20 DT</span>
+<span class="font-label-sm text-label-sm text-text-secondary">/ mois</span>
+</div>
+</div>
+<ul class="space-y-4 mb-8">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-lg text-body-lg text-text-primary">IA illimitée (24/7)</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-lg text-body-lg text-text-primary">Scanner de factures</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-lg text-body-lg text-text-primary">Exports PDF &amp; Excel</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-lg text-body-lg text-text-primary">Dashboard analytique</span>
+</li>
+</ul>
+<button class="w-full py-4 rounded-full bg-primary-container text-white font-label-md text-label-md shadow-lg hover:opacity-90 transition-all active:scale-95 duration-200">
+                    Essayer Premium
+                </button>
+</div>
+</div>
+<div class="mt-8 flex flex-col items-center gap-4">
+<a class="text-primary font-label-md text-label-md underline underline-offset-4 decoration-primary-fixed-dim hover:text-primary-container transition-colors" href="#">
+                Comparer les plans
+            </a>
+<div class="bg-surface-container-low p-4 rounded-xl max-w-sm">
+<p class="font-label-sm text-label-sm text-text-secondary text-center leading-relaxed">
+                    Note : El Comptabli est un outil pédagogique destiné à faciliter votre gestion. Il ne remplace pas les conseils d'un expert-comptable agréé.
+                </p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-[500px] rounded-full z-50 bg-surface-container-lowest dark:bg-surface-dim shadow-[0_8px_24px_rgba(0,0,0,0.12)] flex justify-around items-center px-4 py-3">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:scale-110 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Accueil</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:scale-110 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="event_upcoming">event_upcoming</span>
+<span class="font-label-sm text-label-sm">Échéances</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:scale-110 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="document_scanner">document_scanner</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:scale-110 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-sm text-label-sm">Suivi</span>
+</button>
+<!-- ACTIVE TAB: Profil (assuming plan selection is part of user account/settings) -->
+<button class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim font-bold after:content-[''] after:w-1 after:h-1 after:bg-primary after:rounded-full after:mt-1 hover:scale-110 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm">Profil</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('.rounded-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+                card.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0px)';
+            });
+        });
+    </script>
+</body></html>

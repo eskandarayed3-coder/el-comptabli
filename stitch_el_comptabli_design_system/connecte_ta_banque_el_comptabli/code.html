@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Connecte ta banque - FiscAssist TN</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#f2f4f4",
+                        "tertiary": "#0d5b55",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-background": "#191c1d",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "error": "#ba1a1a",
+                        "text-secondary": "#6B7280",
+                        "surface-container": "#eceeee",
+                        "secondary-container": "#6df5e1",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e6e8e8",
+                        "primary-fixed-dim": "#80d5cb",
+                        "primary-fixed": "#9cf2e8",
+                        "on-error-container": "#93000a",
+                        "status-warning": "#D97706",
+                        "inverse-primary": "#80d5cb",
+                        "primary-container": "#0f766e",
+                        "secondary": "#006b5f",
+                        "on-secondary-fixed": "#00201c",
+                        "primary": "#005c55",
+                        "on-surface-variant": "#3e4947",
+                        "on-surface": "#191c1d",
+                        "outline": "#6e7977",
+                        "on-primary": "#ffffff",
+                        "background": "#f8fafa",
+                        "on-primary-fixed-variant": "#00504a",
+                        "status-premium": "#7C3AED",
+                        "surface-bright": "#f8fafa",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "surface": "#f8fafa",
+                        "surface-tint": "#006a63",
+                        "on-tertiary-container": "#b3f7ee",
+                        "status-danger": "#DC2626",
+                        "tint-success": "#E6F5F3",
+                        "secondary-fixed": "#71f8e4",
+                        "surface-dim": "#d8dada",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#abefe7",
+                        "tint-warning": "#FEF3E2",
+                        "surface-container-highest": "#e1e3e3",
+                        "surface-variant": "#e1e3e3",
+                        "tint-info": "#EEF2FF",
+                        "text-primary": "#1A1A1A",
+                        "tertiary-container": "#2f746d",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2e3131",
+                        "outline-variant": "#bdc9c6",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "on-primary-fixed": "#00201d",
+                        "tint-danger": "#FDE8E6",
+                        "on-secondary-container": "#006f64",
+                        "status-success": "#16A34A",
+                        "on-tertiary-fixed": "#00201d",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-container": "#a3faef"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "card": "24px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "stack-xs": "4px",
+                        "container-padding": "20px",
+                        "base": "8px",
+                        "element-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "body-lg": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f8fafa;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bank-card-active {
+            border: 2px solid #005c55;
+            background-color: #f2f4f4;
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .floating-nav-shadow {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="flex justify-between items-center px-container-padding py-4 w-full bg-background sticky top-0 z-40">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A portrait of a professional Tunisian entrepreneur in a modern office, smiling confidently. The lighting is warm and natural, following a bright light-mode aesthetic with soft teal accents in the background. High-end photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVL_Ok_d5hydpTPvYPxWA1GteSSx6Xdl5gfySoZtGt93tXKoMy8mMBvycX9jd_rjVvQwRgLkgXYsv7M0MSLPcX9pIkaPeeRF9tPi57ty4F9GEQf2Ca2ZWtZpvo1OmM20R42zGsaQTiQFpMJrTBtieZUUrfPeymVPmvJwU3WKjUbZHmNVSbYbsbvXq2b5w0cSfZ_KpDgqCJNikb7bxnOxPoZQhjYNQtxNzABtcwU_H0sMwQzSJwztNvCSPebPRufZo10YXP50PqCg"/>
+</div>
+<span class="text-headline-sm-mobile font-headline-sm text-primary">FiscAssist TN</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</header>
+<main class="px-container-padding mt-6 space-y-6 max-w-[600px] mx-auto">
+<!-- Header Section -->
+<section class="space-y-2">
+<div class="flex items-center gap-3">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background">Connecte ta banque 🏦</h1>
+<span class="bg-tint-warning text-status-warning px-3 py-1 rounded-full text-label-sm font-label-sm">Bientôt</span>
+</div>
+<p class="text-on-surface-variant font-body-lg text-body-lg">Simplifie ton suivi fiscal en synchronisant tes transactions professionnelles automatiquement.</p>
+</section>
+<!-- Security Reassurance Card -->
+<section class="bg-tint-info p-container-padding rounded-card flex gap-4 items-start border border-indigo-100">
+<div class="bg-white p-3 rounded-2xl flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-[32px]" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+<div class="space-y-1">
+<h2 class="font-headline-sm text-headline-sm-mobile text-on-background">Connexion en lecture seule</h2>
+<p class="text-on-surface-variant text-label-md font-label-md">On ne peut jamais toucher ton argent. Tes identifiants sont chiffrés et sécurisés aux normes bancaires.</p>
+</div>
+</section>
+<!-- Bank Grid -->
+<section>
+<div class="grid grid-cols-2 gap-4">
+<!-- BIAT -->
+<button class="bank-card bg-surface-container-lowest p-5 rounded-card flex flex-col items-center justify-center gap-4 transition-all duration-200 border-2 border-transparent custom-shadow hover:scale-[1.02]" onclick="selectBank(this)">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img class="w-12 h-12 object-contain" data-alt="A minimalist logo for a Tunisian bank styled in clean geometric shapes. The color palette is professional blue and white, set against a clean studio background. Soft shadows and modern fintech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLNEA6VX66cegsdq5VOvP6X6xTyjBU3ndFBkArrdTe0skuMZabimSkbIyfhZ-JX0TmBkaIWsd2KJ999VwXOKn5nfdEyOWf9ZhRGZGq3eHfPqvsbhZL4RaGoZ8rYkm6OGvMyofouiMfkdSu3Wq5WZjFqEz4xSaDcOycl7gf7hOFCX9YY13YBb38NTQGThgnuBV885r-seZYrfbj67GvXT_DfDwvj7UdF9AK39EBYbWyP-ABTHu8M7d52lChxArd4HkPZcLO75GT6w"/>
+</div>
+<span class="font-label-md text-label-md text-on-surface">BIAT</span>
+</button>
+<!-- BNA -->
+<button class="bank-card bg-surface-container-lowest p-5 rounded-card flex flex-col items-center justify-center gap-4 transition-all duration-200 border-2 border-transparent custom-shadow hover:scale-[1.02]" onclick="selectBank(this)">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img class="w-12 h-12 object-contain" data-alt="Corporate identity icon for a national financial institution. Bold green and white color scheme, flat vector style with smooth corners. Modern lighting, clean and trustworthy fintech visual." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUeBHjllj2FBKi3DcAz5SOruSSgu-YfM0UodKkMVohVknlDVuT7ZqVqt4b_bYaw2Bt4_SMWCc9f0_yXiVlvBVZqUf8EUqtYwfssGRGEixHKRMgdxjfvPw3q4h-_oWXfxqjTvxb2Q5Wpn1c7Wx17u0Qh-R4mI5ygNSeo5o-8_DP5ic30O-jd92HIcGhN_hvNtGiUVcWygXbJISGiRtPhG0OmKiBS0n4dFsrQjPptCNo6NvDdpzaDqq_rsly_F3E6kHDxkjhLe9FHw"/>
+</div>
+<span class="font-label-md text-label-md text-on-surface">BNA</span>
+</button>
+<!-- Attijari -->
+<button class="bank-card bg-surface-container-lowest p-5 rounded-card flex flex-col items-center justify-center gap-4 transition-all duration-200 border-2 border-transparent custom-shadow hover:scale-[1.02]" onclick="selectBank(this)">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img class="w-12 h-12 object-contain" data-alt="Stylized bank emblem with warm yellow and gold tones, representing growth and finance. High-quality vector design, soft-edge typography, part of a professional banking app interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3xWDM1Yu1AqNTRELIVfsjo_O1howlgbWAgTROJxhSOjORIW9jYmye_86GQy3s6eGJcOuy2ra9mEGttL782nkVGSo3ZoCGV5k03VIgLPGzJIAdatGSWiXmh4--Qvh7_sMwCVP-imuU0E3124vxhjSJMqharEXihHAQ9DZuIwS89r9wubFnjxosvQ7O_MKAQ_R0_K6eaF3V9p5LIaSNm-KQDw67GnsynbDErRlsT7V37x4yXwYEU6gIOFSDzdu50Gt73hvrfzOCdA"/>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Attijari</span>
+</button>
+<!-- STB -->
+<button class="bank-card bg-surface-container-lowest p-5 rounded-card flex flex-col items-center justify-center gap-4 transition-all duration-200 border-2 border-transparent custom-shadow hover:scale-[1.02]" onclick="selectBank(this)">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img class="w-12 h-12 object-contain" data-alt="Modern blue and orange banking logo emblem. Minimalist design, high resolution, sharp details, optimized for mobile UI display. Part of a financial ecosystem aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCAV_EaVONt8uR476WuxBR_gsp-K-lSeDVCydoSTWGXqe04yVIDqkx63rhmMkfDJ6Gc2W_LugUgAfjXHKmowOokisgt8MN90zDDe9U96_sAc8DGw_Blp2x3CtX0sMV5UxWNEmBo6TaoaG1hHcxOVvmEAQ9OS101fCQNzahOnfKHJbPQd3GwS4HfA2vkD1YKZTeJkTUKierwVAlFMNJbwxgPMRsTi8bUrVgLobhDJoyzQJnUd8O4W2Iof8kTeMqtx9kps-EaNO6DQ"/>
+</div>
+<span class="font-label-md text-label-md text-on-surface">STB</span>
+</button>
+<!-- Amen -->
+<button class="bank-card bg-surface-container-lowest p-5 rounded-card flex flex-col items-center justify-center gap-4 transition-all duration-200 border-2 border-transparent custom-shadow hover:scale-[1.02]" onclick="selectBank(this)">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img class="w-12 h-12 object-contain" data-alt="Clean typographical bank logo for a private financial group. Primary focus on readability and trust. Soft gray and green colors, modern fintech card style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChgU2fqlBzkB_xi9J4fIlpiyb-fhTVTvHUQhUaJMFdaHyxBGdVeSCdVXa3Jx7VO7Yhg4DnmhdcvdoYkmuBXSWonz9ACWDKF_mlUzFbg7y4SAe-_vuncPyW7LlM_58n4WWMF2Jj1ZAagoQDr-tXkXfbxAXa3SF4hkaHW2Bx7q8ACyjoPSYZuu-pudEI3e80afF9rd08R397Vg0GXy-2SENKIjCU0XY4dbzUmfdL_JHclON5CfP9CzBd1d-Cbvw3JwvRUbYoGj3zew"/>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Amen</span>
+</button>
+<!-- Zitouna -->
+<button class="bank-card bg-surface-container-lowest p-5 rounded-card flex flex-col items-center justify-center gap-4 transition-all duration-200 border-2 border-transparent custom-shadow hover:scale-[1.02]" onclick="selectBank(this)">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img class="w-12 h-12 object-contain" data-alt="Traditional yet modern islamic banking logo featuring geometric patterns in teal and gold. Soft, approachable design, high quality digital art style for a premium app experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbvtEDpiNCgAq_-YuD0DXSUCZ_U_X4I7hFVbNDfUwy6QomzLIP9Me89Fh_rejuxV-B3ilxFUubw8d16bbxC3uC_TCq5ZQy4f1HRbs0Xpl_i8j44dEMwZ8hXlvXdHtevEsm3qRvYWjzfntsBhWGVJXsJRsZo57GKvAlgY-rD5PbulB4YExreRyPEkG8qTIRQ2S3xFufWYnQr6MQvGe6SjqBZzaphMUrnw4u10GnvzhM_kfhzxyz2owMshZr1qA6UH8L8qUfooZ5Bw"/>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Zitouna</span>
+</button>
+</div>
+</section>
+<!-- Waitlist Section -->
+<section class="bg-surface-container-low p-container-padding rounded-card space-y-4">
+<div class="space-y-1">
+<h3 class="font-headline-sm text-headline-sm-mobile text-on-background">Pas encore disponible pour ta banque ?</h3>
+<p class="text-on-surface-variant text-label-md font-label-md">Laisse-nous ton email pour être prévenu dès l'ouverture.</p>
+</div>
+<div class="flex flex-col gap-3">
+<input class="w-full bg-white border-outline-variant rounded-full px-6 py-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-outline" placeholder="Ton email" type="email"/>
+<button class="bg-primary text-on-primary py-4 rounded-full font-label-md text-label-md hover:bg-primary-container transition-all active:scale-95">Préviens-moi</button>
+</div>
+</section>
+<!-- Disclaimer -->
+<section class="bg-[#F5F7F7] p-4 rounded-xl text-center">
+<p class="text-[10px] text-on-surface-variant leading-tight">FiscAssist est un outil pédagogique et d'aide à la gestion fiscale. Il ne remplace en aucun cas les services d'un expert-comptable certifié.</p>
+</section>
+<!-- Main CTA -->
+<div class="pt-4">
+<button class="w-full py-5 rounded-full bg-outline-variant text-white font-headline-sm text-headline-sm-mobile cursor-not-allowed transition-all" disabled="" id="main-connect-btn">
+                Connecter
+            </button>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[400px] z-50 flex justify-around items-center px-2 bg-surface-container-lowest/80 backdrop-blur-md rounded-full h-16 floating-nav-shadow">
+<a class="flex items-center justify-center text-outline w-12 h-12 hover:scale-110 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="flex items-center justify-center text-outline w-12 h-12 hover:scale-110 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+</a>
+<a class="flex items-center justify-center bg-primary text-on-primary rounded-full w-12 h-12 hover:scale-110 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</a>
+<a class="flex items-center justify-center text-outline w-12 h-12 hover:scale-110 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">photo_camera</span>
+</a>
+<a class="flex items-center justify-center text-outline w-12 h-12 hover:scale-110 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+</a>
+</nav>
+<script>
+        function selectBank(element) {
+            // Remove active class from all
+            document.querySelectorAll('.bank-card').forEach(card => {
+                card.classList.remove('bank-card-active');
+                card.classList.remove('shadow-none');
+            });
+
+            // Add active to selected
+            element.classList.add('bank-card-active');
+            element.classList.add('shadow-none');
+
+            // Enable main button
+            const btn = document.getElementById('main-connect-btn');
+            btn.disabled = false;
+            btn.classList.remove('bg-outline-variant', 'cursor-not-allowed');
+            btn.classList.add('bg-primary', 'hover:bg-primary-container', 'active:scale-[0.98]');
+        }
+
+        // Simple animation on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
+            observer.observe(section);
+        });
+    </script>
+</body></html>

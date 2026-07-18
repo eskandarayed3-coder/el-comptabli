@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli - Insights ✨</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "surface-bright": "#f8fafa",
+                    "on-tertiary": "#ffffff",
+                    "tint-success": "#E6F5F3",
+                    "text-secondary": "#6B7280",
+                    "on-background": "#191c1d",
+                    "surface-container-low": "#f2f4f4",
+                    "surface-dim": "#d8dada",
+                    "surface-container-highest": "#e1e3e3",
+                    "primary-fixed": "#9cf2e8",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "primary": "#005c55",
+                    "on-primary-fixed": "#00201d",
+                    "status-warning": "#D97706",
+                    "surface-container": "#eceeee",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#006a63",
+                    "tertiary": "#0d5b55",
+                    "status-success": "#16A34A",
+                    "secondary-fixed": "#71f8e4",
+                    "surface-variant": "#e1e3e3",
+                    "outline-variant": "#bdc9c6",
+                    "error": "#ba1a1a",
+                    "tint-danger": "#FDE8E6",
+                    "on-surface-variant": "#3e4947",
+                    "on-secondary-fixed-variant": "#005048",
+                    "on-secondary-container": "#006f64",
+                    "background": "#f8fafa",
+                    "on-primary-fixed-variant": "#00504a",
+                    "on-secondary-fixed": "#00201c",
+                    "on-surface": "#191c1d",
+                    "on-primary": "#ffffff",
+                    "surface": "#f8fafa",
+                    "tertiary-fixed": "#abefe7",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#6df5e1",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#0f766e",
+                    "inverse-surface": "#2e3131",
+                    "text-primary": "#1A1A1A",
+                    "surface-container-high": "#e6e8e8",
+                    "status-premium": "#7C3AED",
+                    "on-tertiary-fixed": "#00201d",
+                    "tint-info": "#EEF2FF",
+                    "inverse-on-surface": "#eff1f1",
+                    "on-error-container": "#93000a",
+                    "inverse-primary": "#80d5cb",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "on-secondary": "#ffffff",
+                    "tint-warning": "#FEF3E2",
+                    "tertiary-container": "#2f746d",
+                    "secondary": "#006b5f",
+                    "status-danger": "#DC2626",
+                    "outline": "#6e7977",
+                    "primary-fixed-dim": "#80d5cb",
+                    "on-tertiary-container": "#b3f7ee",
+                    "on-primary-container": "#a3faef"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "xxl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "stack-sm": "12px",
+                    "stack-xs": "4px",
+                    "element-gap": "16px",
+                    "container-padding": "20px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "stat-display": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .perspective-lg { perspective: 1000px; }
+        .card-enter { animation: cardSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        @keyframes cardSlideUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 bg-surface dark:bg-on-background shadow-sm flex justify-between items-center px-container-padding py-base w-full z-50">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-primary">menu</span>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary dark:text-primary-fixed">El Comptabli</h1>
+</div>
+<span class="material-symbols-outlined text-primary">account_circle</span>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding pt-stack-sm">
+<!-- Header Section -->
+<div class="flex items-center justify-between mb-element-gap">
+<div class="flex items-center gap-stack-xs">
+<h2 class="font-headline-lg text-headline-lg-mobile text-on-surface">Insights ✨</h2>
+<span class="bg-status-premium text-white px-base py-stack-xs rounded-full text-label-sm font-bold tracking-wider">PREMIUM</span>
+</div>
+<button class="text-primary hover:bg-primary/5 p-base rounded-full transition-colors">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</div>
+<!-- Vertical Stack of Insight Cards -->
+<div class="flex flex-col gap-element-gap">
+<!-- Card 1: Soft Teal -->
+<div class="card-enter bg-tint-success rounded-xxl p-container-padding shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex flex-col gap-stack-sm" style="animation-delay: 0.1s;">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="payments">payments</span>
+</div>
+<span class="bg-primary/10 text-primary px-stack-sm py-1 rounded-full text-label-sm font-semibold uppercase">Optimisation</span>
+</div>
+<p class="font-body-lg text-on-surface leading-snug">💰 Tu peux récupérer 67 DT de TVA sur tes 3 factures non scannées</p>
+<div class="flex justify-end">
+<button class="bg-primary text-white font-label-md px-container-padding py-stack-sm rounded-full active:scale-95 transition-transform">Scanner</button>
+</div>
+</div>
+<!-- Card 2: Soft Coral/Danger -->
+<div class="card-enter bg-tint-danger rounded-xxl p-container-padding shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex flex-col gap-stack-sm" style="animation-delay: 0.2s;">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-xl bg-error/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-error" data-icon="trending_down">trending_down</span>
+</div>
+<span class="bg-error/10 text-error px-stack-sm py-1 rounded-full text-label-sm font-semibold uppercase">Alerte</span>
+</div>
+<p class="font-body-lg text-on-surface leading-snug">📉 Marge en baisse de 3pts vs juin</p>
+<div class="flex justify-end">
+<button class="bg-white border border-error text-error font-label-md px-container-padding py-stack-sm rounded-full active:scale-95 transition-transform">Voir pourquoi</button>
+</div>
+</div>
+<!-- Card 3: Soft Amber/Warning -->
+<div class="card-enter bg-tint-warning rounded-xxl p-container-padding shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex flex-col gap-stack-sm" style="animation-delay: 0.3s;">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-xl bg-status-warning/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-status-warning" data-icon="calendar_today">calendar_today</span>
+</div>
+<span class="bg-status-warning/10 text-status-warning px-stack-sm py-1 rounded-full text-label-sm font-semibold uppercase">Calendrier</span>
+</div>
+<p class="font-body-lg text-on-surface leading-snug">📅 Prévois 928 DT de solde après la TVA du 28</p>
+<div class="flex justify-end">
+<button class="bg-status-warning text-white font-label-md px-container-padding py-stack-sm rounded-full active:scale-95 transition-transform">Voir la tréso</button>
+</div>
+</div>
+<!-- Card 4: Soft Indigo/Info -->
+<div class="card-enter bg-tint-info rounded-xxl p-container-padding shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex flex-col gap-stack-sm" style="animation-delay: 0.4s;">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-xl bg-primary-container/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-container" data-icon="ads_click">ads_click</span>
+</div>
+<span class="bg-primary-container/10 text-primary-container px-stack-sm py-1 rounded-full text-label-sm font-semibold uppercase">Performance</span>
+</div>
+<p class="font-body-lg text-on-surface leading-snug">🎯 Objectif CA mensuel atteint à 91%</p>
+<div class="flex justify-end">
+<button class="bg-primary-container text-white font-label-md px-container-padding py-stack-sm rounded-full active:scale-95 transition-transform">Détail</button>
+</div>
+</div>
+<!-- Refresh Caption -->
+<div class="text-center py-element-gap">
+<p class="font-label-sm text-text-secondary">Mis à jour il y a 2h</p>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="flex flex-col items-center justify-center px-container-padding py-stack-sm w-full bg-surface-container-low dark:bg-on-background mb-[80px]">
+<p class="font-label-sm text-label-sm text-center text-text-secondary">Outil pédagogique - Non certifié par un expert-comptable.</p>
+</footer>
+<!-- Bottom Nav Bar -->
+<nav class="fixed bottom-element-gap left-0 w-full z-50 flex justify-around items-center px-container-padding">
+<div class="bg-surface-container/90 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.12)] rounded-full flex justify-between items-center px-stack-sm py-stack-xs w-full max-w-[500px] border border-white/20">
+<!-- Home -->
+<button class="flex items-center justify-center text-on-surface-variant dark:text-surface-variant w-12 h-12 hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">home</span>
+</button>
+<!-- Chat -->
+<button class="flex items-center justify-center text-on-surface-variant dark:text-surface-variant w-12 h-12 hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+<!-- Insights (ACTIVE) -->
+<button class="flex items-center justify-center bg-primary dark:bg-primary-fixed text-on-primary dark:text-on-primary-fixed rounded-full w-12 h-12 shadow-md hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">qr_code_scanner</span>
+</button>
+<!-- Wallet -->
+<button class="flex items-center justify-center text-on-surface-variant dark:text-surface-variant w-12 h-12 hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</button>
+<!-- Menu -->
+<button class="flex items-center justify-center text-on-surface-variant dark:text-surface-variant w-12 h-12 hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">menu_book</span>
+</button>
+</div>
+</nav>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Subtle haptic feedback emulation
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(10);
+                }
+            });
+        });
+
+        // Simulating auto-refresh every 2 hours logic for the caption
+        const refreshText = document.querySelector('.text-text-secondary');
+        let minutes = 120;
+        setInterval(() => {
+            minutes++;
+            if (minutes > 180) minutes = 1;
+            const hours = Math.floor(minutes / 60);
+            const displayMin = minutes % 60;
+            refreshText.innerText = `Mis à jour il y a ${hours}h ${displayMin > 0 ? displayMin + 'm' : ''}`;
+        }, 60000);
+    </script>
+</body></html>

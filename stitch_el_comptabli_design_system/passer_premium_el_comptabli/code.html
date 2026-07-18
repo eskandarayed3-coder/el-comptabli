@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .premium-gradient {
+            background: linear-gradient(135deg, #7C3AED 0%, #0F766E 100%);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#f2f4f4",
+                        "on-secondary-container": "#006f64",
+                        "tint-info": "#EEF2FF",
+                        "on-primary-fixed": "#00201d",
+                        "error-container": "#ffdad6",
+                        "text-secondary": "#6B7280",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#9cf2e8",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "on-secondary": "#ffffff",
+                        "status-danger": "#DC2626",
+                        "on-secondary-fixed": "#00201c",
+                        "surface-variant": "#e1e3e3",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-surface": "#191c1d",
+                        "outline": "#6e7977",
+                        "surface": "#f8fafa",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "background": "#f8fafa",
+                        "text-primary": "#1A1A1A",
+                        "primary": "#005c55",
+                        "secondary-fixed": "#71f8e4",
+                        "surface-container-highest": "#e1e3e3",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#0f766e",
+                        "tint-warning": "#FEF3E2",
+                        "status-success": "#16A34A",
+                        "inverse-primary": "#80d5cb",
+                        "surface-container": "#eceeee",
+                        "outline-variant": "#bdc9c6",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#006b5f",
+                        "tint-danger": "#FDE8E6",
+                        "on-background": "#191c1d",
+                        "surface-container-high": "#e6e8e8",
+                        "inverse-surface": "#2e3131",
+                        "surface-dim": "#d8dada",
+                        "error": "#ba1a1a",
+                        "tint-success": "#E6F5F3",
+                        "status-warning": "#D97706",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "tertiary": "#0d5b55",
+                        "secondary-container": "#6df5e1",
+                        "on-primary-container": "#a3faef",
+                        "primary-fixed-dim": "#80d5cb",
+                        "on-tertiary-fixed": "#00201d",
+                        "status-premium": "#7C3AED",
+                        "tertiary-fixed": "#abefe7",
+                        "on-tertiary-container": "#b3f7ee",
+                        "surface-tint": "#006a63",
+                        "surface-bright": "#f8fafa",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed-variant": "#00504a",
+                        "on-surface-variant": "#3e4947",
+                        "tertiary-container": "#2f746d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "stack-sm": "12px",
+                        "element-gap": "16px",
+                        "base": "8px",
+                        "stack-xs": "4px"
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-12">
+<!-- Top AppBar -->
+<header class="flex justify-between items-center px-container-padding h-16 w-full bg-surface sticky top-0 z-50">
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-low transition-colors rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<div class="flex items-center gap-2">
+<img alt="El Comptabli Logo" class="w-8 h-8 rounded-lg object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCstdAXjLNvWI1OJ9XKGINvuRq4m4YmvOPE240UeEG_SdN4vytkqZBUNuxSA9bebEFoUBFoA9TNLS-1kQeiA8nshxjmZK3v2qePuwidVEHknJN1p2I9ZG3mQYM2Hd24upPfUoNZ6sH_eExVx4ejkd5KMYPQrrjKZCPKdki3TMkSbqg49Vra3925sE1tGJ3yzs_s5wZaaTxFstzAnhLWTg3r4RZMCdLn2ljIxLVvMFOxNW1Weu9VGIqET_0WrjDTFzMdrJrPkyWf0A"/>
+<span class="font-headline-sm-mobile text-headline-sm-mobile text-primary font-bold">El Comptabli</span>
+</div>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</header>
+<main class="px-container-padding max-w-[600px] mx-auto space-y-element-gap mt-4">
+<!-- Hero Section -->
+<section class="premium-gradient rounded-2xl p-6 text-white relative overflow-hidden shadow-[0_8px_24px_rgba(124,58,237,0.2)]">
+<div class="relative z-10">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile mb-2">Passe à Premium ✨</h1>
+<p class="font-body-lg opacity-90">Libérez toute la puissance fiscale de votre entreprise avec des outils avancés et une assistance IA illimitée.</p>
+</div>
+<!-- Decorative circle -->
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl"></div>
+</section>
+<!-- Feature Comparison -->
+<section class="bg-surface-container-lowest rounded-2xl p-5 shadow-[0_4px_16px_rgba(15,92,86,0.08)]">
+<div class="grid grid-cols-3 mb-4 pb-2 border-b border-outline-variant">
+<div class="col-span-1"></div>
+<div class="text-center font-label-md text-text-secondary">Gratuit</div>
+<div class="text-center font-label-md text-status-premium font-bold">Premium</div>
+</div>
+<div class="space-y-4">
+<!-- Questions IA -->
+<div class="grid grid-cols-3 items-center">
+<div class="font-label-md text-on-surface">Questions IA</div>
+<div class="text-center font-label-sm text-text-secondary">10/mois</div>
+<div class="text-center font-label-sm text-status-premium font-bold">Illimitées</div>
+</div>
+<!-- Scanner -->
+<div class="grid grid-cols-3 items-center">
+<div class="font-label-md text-on-surface">Scanner</div>
+<div class="text-center">
+<span class="material-symbols-outlined text-status-danger text-[20px]">cancel</span>
+</div>
+<div class="text-center">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<!-- Exports -->
+<div class="grid grid-cols-3 items-center">
+<div class="font-label-md text-on-surface">Exports PDF/Excel</div>
+<div class="text-center">
+<span class="material-symbols-outlined text-status-danger text-[20px]">cancel</span>
+</div>
+<div class="text-center">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<!-- Rapports avancés -->
+<div class="grid grid-cols-3 items-center">
+<div class="font-label-md text-on-surface">Rapports</div>
+<div class="text-center">
+<span class="material-symbols-outlined text-status-danger text-[20px]">cancel</span>
+</div>
+<div class="text-center">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing Options -->
+<section class="space-y-stack-sm">
+<!-- Monthly Plan -->
+<label class="block relative cursor-pointer group">
+<input checked="" class="peer sr-only" name="plan" type="radio" value="monthly"/>
+<div class="bg-surface-container-lowest p-5 rounded-2xl border-2 border-transparent peer-checked:border-status-premium transition-all shadow-[0_4px_16px_rgba(0,0,0,0.04)]">
+<div class="flex justify-between items-center">
+<div>
+<span class="block font-label-md text-text-secondary">Mensuel</span>
+<span class="font-headline-sm-mobile text-headline-sm-mobile text-on-surface">20 DT / mois</span>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant peer-checked:bg-status-premium flex items-center justify-center">
+<div class="w-2 h-2 bg-white rounded-full"></div>
+</div>
+</div>
+</div>
+</label>
+<!-- Yearly Plan -->
+<label class="block relative cursor-pointer group">
+<input class="peer sr-only" name="plan" type="radio" value="yearly"/>
+<div class="bg-surface-container-lowest p-5 rounded-2xl border-2 border-transparent peer-checked:border-status-premium transition-all shadow-[0_4px_16px_rgba(0,0,0,0.04)]">
+<div class="flex justify-between items-center">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-md text-text-secondary">Annuel</span>
+<span class="bg-tint-success text-status-success font-label-sm px-2 py-0.5 rounded-full font-bold">-20%</span>
+</div>
+<span class="font-headline-sm-mobile text-headline-sm-mobile text-on-surface">192 DT / an</span>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant peer-checked:bg-status-premium flex items-center justify-center">
+<div class="w-2 h-2 bg-white rounded-full"></div>
+</div>
+</div>
+</div>
+</label>
+</section>
+<!-- Action Area -->
+<section class="pt-4 flex flex-col items-center gap-4">
+<button class="w-full bg-primary text-white font-headline-sm py-4 rounded-full shadow-[0_8px_24px_rgba(0,92,85,0.2)] active:scale-95 transition-transform">
+                Continuer
+            </button>
+<div class="bg-surface-container-high text-on-surface-variant font-label-sm px-4 py-1.5 rounded-full flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+                Essai 7 jours gratuit
+            </div>
+<p class="text-center font-label-sm text-text-secondary px-8">
+                Paiement sécurisé. Annulable à tout moment depuis les réglages de votre compte.
+            </p>
+</section>
+<!-- Pedagogical Disclaimer -->
+<footer class="mt-8 mb-4 p-4 bg-surface-container-low rounded-xl text-center">
+<p class="font-label-sm text-on-surface-variant leading-relaxed">
+                El Comptabli est un outil pédagogique destiné à faciliter votre gestion fiscale. Il ne remplace en aucun cas les services d'un expert-comptable certifié.
+            </p>
+</footer>
+</main>
+<script>
+        // Simple plan selection micro-interaction
+        document.querySelectorAll('input[name="plan"]').forEach(input => {
+            input.addEventListener('change', (e) => {
+                document.querySelectorAll('label > div').forEach(div => {
+                    div.classList.remove('border-status-premium', 'bg-white');
+                });
+                if(e.target.checked) {
+                    e.target.nextElementSibling.classList.add('border-status-premium');
+                }
+            });
+        });
+
+        // Toggle radio visual states (simulated as the peer-checked handles most of it)
+        const radioBtns = document.querySelectorAll('input[type="radio"]');
+        radioBtns.forEach(btn => {
+            btn.addEventListener('change', function() {
+                radioBtns.forEach(b => {
+                    const circle = b.nextElementSibling.querySelector('.w-6');
+                    circle.classList.remove('bg-status-premium', 'border-status-premium');
+                    circle.classList.add('border-outline-variant');
+                });
+                if(this.checked) {
+                    const circle = this.nextElementSibling.querySelector('.w-6');
+                    circle.classList.add('bg-status-premium', 'border-status-premium');
+                    circle.classList.remove('border-outline-variant');
+                }
+            });
+        });
+        
+        // Initial state for checked radio
+        document.querySelector('input[type="radio"]:checked').dispatchEvent(new Event('change'));
+    </script>
+</body></html>

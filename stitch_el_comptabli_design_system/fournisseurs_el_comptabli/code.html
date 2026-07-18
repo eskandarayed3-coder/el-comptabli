@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#eff1f1",
+                    "tint-warning": "#FEF3E2",
+                    "tertiary": "#0d5b55",
+                    "status-success": "#16A34A",
+                    "tint-success": "#E6F5F3",
+                    "inverse-surface": "#2e3131",
+                    "status-warning": "#D97706",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "text-secondary": "#6B7280",
+                    "status-premium": "#7C3AED",
+                    "on-secondary-fixed": "#00201c",
+                    "tint-info": "#EEF2FF",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#e1e3e3",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "primary-fixed-dim": "#80d5cb",
+                    "on-secondary": "#ffffff",
+                    "tint-danger": "#FDE8E6",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#bdc9c6",
+                    "on-primary-fixed": "#00201d",
+                    "on-primary-container": "#a3faef",
+                    "surface-tint": "#006a63",
+                    "on-surface-variant": "#3e4947",
+                    "text-primary": "#1A1A1A",
+                    "primary-fixed": "#9cf2e8",
+                    "on-background": "#191c1d",
+                    "surface-container": "#eceeee",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#005048",
+                    "on-error": "#ffffff",
+                    "secondary": "#006b5f",
+                    "on-surface": "#191c1d",
+                    "surface-container-high": "#e6e8e8",
+                    "inverse-primary": "#80d5cb",
+                    "surface": "#f8fafa",
+                    "surface-variant": "#e1e3e3",
+                    "error-container": "#ffdad6",
+                    "status-danger": "#DC2626",
+                    "surface-bright": "#f8fafa",
+                    "surface-container-low": "#f2f4f4",
+                    "secondary-fixed": "#71f8e4",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#005c55",
+                    "on-secondary-container": "#006f64",
+                    "on-primary": "#ffffff",
+                    "outline": "#6e7977",
+                    "on-tertiary-container": "#b3f7ee",
+                    "on-primary-fixed-variant": "#00504a",
+                    "tertiary-fixed": "#abefe7",
+                    "background": "#f8fafa",
+                    "tertiary-container": "#2f746d",
+                    "surface-dim": "#d8dada",
+                    "secondary-container": "#6df5e1",
+                    "primary-container": "#0f766e",
+                    "on-tertiary-fixed": "#00201d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "xxl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "12px",
+                    "container-padding": "20px",
+                    "base": "8px",
+                    "stack-xs": "4px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "stat-display": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8fafa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .fab-shadow {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-lg text-on-surface overflow-x-hidden pb-32">
+<!-- TopAppBar -->
+<header class="flex items-center justify-between px-container-padding w-full h-16 bg-surface dark:bg-on-background fixed top-0 z-50">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm-mobile text-primary">Fournisseurs 🚚</h1>
+</div>
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">search</span>
+</button>
+</header>
+<main class="mt-20 px-container-padding max-w-[600px] mx-auto space-y-element-gap">
+<!-- Summary Warning Card -->
+<section class="bg-tint-warning rounded-xxl p-container-padding flex items-center gap-4 soft-shadow border border-status-warning/10">
+<div class="bg-status-warning/10 p-3 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-status-warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div>
+<p class="font-label-md text-status-warning">Attention</p>
+<p class="font-headline-sm text-headline-sm-mobile text-on-surface">890 DT d'impayés fournisseurs</p>
+</div>
+</section>
+<!-- Supplier List Headline -->
+<div class="flex items-center justify-between pt-2">
+<h2 class="font-headline-sm text-headline-sm-mobile text-on-surface">Mes Partenaires</h2>
+<span class="font-label-sm text-text-secondary">3 Fournisseurs actifs</span>
+</div>
+<!-- Supplier Cards Container -->
+<div class="space-y-4">
+<!-- STEG -->
+<div class="bg-surface-container-lowest rounded-xxl p-container-padding soft-shadow active:scale-[0.98] transition-transform cursor-pointer">
+<div class="flex items-start justify-between mb-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-tint-info rounded-xl flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A minimalist logo for a utility company featuring blue thunderbolt icons and simple geometric patterns against a clean white background, representing the STEG Tunisian power company in a modern tech-fin style with soft indigo lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaHesu_3oPtK_aEkFtQkVZ9pdBxZWYf3BEKOghirsX5pyIvRo0UNSf5b4iTFTl5J9xF0EaEFECaDZq-BcAu8b9XTKIcqJiK7RrruoijJT6JodDJ2TiV4gKyvuzDGXGfsLkuyQrmyQ_a3vMUaFpOmS7h32DGguFJ9UhqriFYXlRxW84K5ipBAGySQykhJROIvG-n9_MYUwOTcvsKaIOZuUTiRDwgezRyYv7040-n0tFRiaUcsuOMyT8xC4e1NYivkE8HiQodcZhvw"/>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm-mobile text-on-surface">STEG</h3>
+<p class="font-label-sm text-text-secondary">Electricité & Gaz</p>
+</div>
+</div>
+<span class="bg-tint-success text-status-success text-[10px] font-bold px-2 py-1 rounded-full">À JOUR</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="font-label-sm text-text-secondary mb-1">Total dépensé</p>
+<p class="font-stat-display text-primary">1 240 DT</p>
+</div>
+<div class="text-right flex flex-col justify-end">
+<p class="font-label-sm text-text-secondary">TVA récupérée: <span class="text-status-success font-bold">198 DT</span></p>
+<p class="font-label-sm text-text-secondary">12 factures</p>
+</div>
+</div>
+</div>
+<!-- Station Agil -->
+<div class="bg-surface-container-lowest rounded-xxl p-container-padding soft-shadow active:scale-[0.98] transition-transform cursor-pointer">
+<div class="flex items-start justify-between mb-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-tint-warning rounded-xl flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A modern, abstract logo of a stylized flame or droplet in warm amber and orange tones, set against a pristine white background. The style is clean and professional, representing a fuel and energy supplier in a modern Tunisian financial app context with soft yellow light-mode vibes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4-1QBSyi18aH4LMPO2WEdt67MEk3hKh7-N0Tt0GM2l-AJh4exbJ3-V_5b1l3nMxDQuA-yyatpWYFgm8f8qHE_X-WtfEqI2oF8uCR_pVtT8HPWqSQ82SOkM1oqcNILMRtcC7fB3MB8sgmUZmSec3mwjylY4ZP6CAQd0v7eXBfUSG5BlTVogKpONQailSKCU197W6SqikGNrgWb7QxfRnrpnk5VKrkEKrt69LEJ1MNxwMakgSIMWg3ZFtytz3ubZ4EDJFzoAsUAbQ"/>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm-mobile text-on-surface">Station Agil</h3>
+<p class="font-label-sm text-text-secondary">Carburant</p>
+</div>
+</div>
+<span class="bg-tint-danger text-status-danger text-[10px] font-bold px-2 py-1 rounded-full">3 RETARDS</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="font-label-sm text-text-secondary mb-1">Total dépensé</p>
+<p class="font-stat-display text-primary">450 DT</p>
+</div>
+<div class="text-right flex flex-col justify-end">
+<p class="font-label-sm text-text-secondary">TVA récupérée: <span class="text-status-success font-bold">72 DT</span></p>
+<p class="font-label-sm text-text-secondary">5 factures</p>
+</div>
+</div>
+</div>
+<!-- Orange -->
+<div class="bg-surface-container-lowest rounded-xxl p-container-padding soft-shadow active:scale-[0.98] transition-transform cursor-pointer">
+<div class="flex items-start justify-between mb-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A clean, minimalist square logo representing a telecommunications company with a vibrant orange accent and a white sans-serif letter O, set in a modern fintech UI theme. The lighting is bright and airy, using soft shadows to create depth on a light mode background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTO2_zk_DAy8bRKNwUeEmAyy68xhfTBFhw_5qimCWiTedM1NnYrxafnQG9MxGU6F5ef6nwLNTyMsJLf-l_wEjbhx7JkVnPU6iSh3_77C1SdHsVQkAJ0G2cCPWBWPRRLpbjpvv67TULvixU6u60xCBucPYzvkZ2SjzgC-ssagjU9cEYclfGRTA-uTox9Uxqa7XVSWdkh-q32zbY7OLH7aN8Ipv0DheTMfM5oo70JbBxZzhSxl1gxYqBpVi7dTTT0jeU10CdZKLidA"/>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm-mobile text-on-surface">Orange</h3>
+<p class="font-label-sm text-text-secondary">Telecom & Internet</p>
+</div>
+</div>
+<span class="bg-tint-success text-status-success text-[10px] font-bold px-2 py-1 rounded-full">À JOUR</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="font-label-sm text-text-secondary mb-1">Total dépensé</p>
+<p class="font-stat-display text-primary">210 DT</p>
+</div>
+<div class="text-right flex flex-col justify-end">
+<p class="font-label-sm text-text-secondary">TVA récupérée: <span class="text-status-success font-bold">33 DT</span></p>
+<p class="font-label-sm text-text-secondary">3 factures</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Disclaimer Banner -->
+<footer class="pt-8 pb-4 text-center">
+<div class="bg-surface-container-low p-3 rounded-xl">
+<p class="font-label-sm text-[10px] text-text-secondary uppercase tracking-wider leading-relaxed">
+                    Cet outil est purement pédagogique. Les calculs de TVA et d'impayés ne remplacent pas l'avis d'un comptable agréé en Tunisie.
+                </p>
+</div>
+</footer>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-28 right-6 bg-primary text-on-primary flex items-center gap-2 px-6 py-4 rounded-full fab-shadow active:scale-90 transition-transform z-40">
+<span class="material-symbols-outlined">add</span>
+<span class="font-label-md">Fournisseur</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-6 pb-8 bg-surface-container-lowest dark:bg-inverse-surface h-24 rounded-t-[32px] shadow-[0_-8px_24px_rgba(0,0,0,0.05)]">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant w-12 h-12 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant w-12 h-12 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</button>
+<!-- Active: Finance/Scanner area (Description icon used for docs/finance) -->
+<button class="flex flex-col items-center justify-center bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container rounded-full w-14 h-14 shadow-lg active:scale-90 transition-transform -mt-12 border-4 border-background">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant w-12 h-12 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">local_shipping</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant w-12 h-12 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">person</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for clicking supplier cards
+        document.querySelectorAll('.cursor-pointer').forEach(card => {
+            card.addEventListener('click', () => {
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    card.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+    </script>
+</body></html>

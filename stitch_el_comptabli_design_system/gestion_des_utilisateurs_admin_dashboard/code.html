@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli Admin - Gestion des Utilisateurs</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f2f4f4",
+                    "tertiary-container": "#2f746d",
+                    "surface-container": "#eceeee",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#3e4947",
+                    "on-tertiary-fixed": "#00201d",
+                    "tertiary-fixed": "#abefe7",
+                    "secondary-fixed": "#71f8e4",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "tint-danger": "#FDE8E6",
+                    "on-secondary-fixed": "#00201c",
+                    "tint-info": "#EEF2FF",
+                    "secondary-container": "#6df5e1",
+                    "inverse-primary": "#80d5cb",
+                    "surface-bright": "#f8fafa",
+                    "primary-container": "#0f766e",
+                    "inverse-surface": "#2e3131",
+                    "on-primary-fixed-variant": "#00504a",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#d8dada",
+                    "tint-warning": "#FEF3E2",
+                    "tint-success": "#E6F5F3",
+                    "text-primary": "#1A1A1A",
+                    "on-error-container": "#93000a",
+                    "primary": "#005c55",
+                    "on-primary-container": "#a3faef",
+                    "surface-variant": "#e1e3e3",
+                    "secondary": "#006b5f",
+                    "on-primary-fixed": "#00201d",
+                    "status-warning": "#D97706",
+                    "surface": "#f8fafa",
+                    "on-tertiary-container": "#b3f7ee",
+                    "background": "#f8fafa",
+                    "tertiary": "#0d5b55",
+                    "inverse-on-surface": "#eff1f1",
+                    "surface-tint": "#006a63",
+                    "on-background": "#191c1d",
+                    "on-surface": "#191c1d",
+                    "on-secondary-container": "#006f64",
+                    "on-tertiary": "#ffffff",
+                    "status-success": "#16A34A",
+                    "status-danger": "#DC2626",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#e6e8e8",
+                    "status-premium": "#7C3AED",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "on-secondary-fixed-variant": "#005048",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "text-secondary": "#6B7280",
+                    "surface-container-highest": "#e1e3e3",
+                    "outline": "#6e7977",
+                    "primary-fixed": "#9cf2e8",
+                    "outline-variant": "#bdc9c6",
+                    "primary-fixed-dim": "#80d5cb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-xs": "4px",
+                    "stack-sm": "12px",
+                    "element-gap": "16px",
+                    "container-padding": "20px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "stat-display": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e1e3e3; border-radius: 10px; }
+        .detail-drawer-shadow { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); }
+        .active-dot::after { content: ''; display: block; width: 4px; height: 4px; background: currentColor; border-radius: 50%; margin-top: 2px; }
+    </style>
+</head>
+<body class="bg-background text-on-background overflow-hidden">
+<!-- Sidebar Layout -->
+<div class="flex h-screen w-full">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-outline-variant flex flex-col py-6 z-50">
+<div class="px-6 mb-8">
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">El Comptabli</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">Admin Console</p>
+</div>
+<nav class="flex-1 space-y-1 custom-scrollbar overflow-y-auto">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-full mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-lg text-body-lg">Dashboard</span>
+</a>
+<!-- Active Navigation: Users (Utilisateurs) -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-full mx-2 scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-body-lg text-body-lg font-semibold">Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-full mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-lg text-body-lg">Subscriptions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-full mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-body-lg text-body-lg">Knowledge Base</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-full mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-body-lg text-body-lg">AI Logs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-full mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-body-lg text-body-lg">Experts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-full mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined">article</span>
+<span class="font-body-lg text-body-lg">Content</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-full mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-body-lg text-body-lg">Notifications</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-full mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="font-body-lg text-body-lg">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-full mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-lg text-body-lg">Settings</span>
+</a>
+</nav>
+<div class="px-6 pt-6 border-t border-outline-variant mt-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a female administrative manager with a friendly expression, wearing a smart casual teal blazer, studio lighting, high resolution, minimalist office background, fintech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmwOHVLWRiyGrKQnnCcVpVr2hGtfo3lN7Dci2HR8-dTWYUD0CoQdxQ9DF5pbVqNHFwMq2puShHnGQnu2wWUqjEedxzaZNIHg7Sg_GE2C7FAyRx1UecNWR7JTMMv6a_ZjO5wTL2jbVTpRd7BbMcsbF2g6S-cX9-k3RGBddHBfyju3Pu_GzXEN2yCot_BgJ-o0B4p0GsPjD4lFZvjHcSKq9VKystYxURu9OBLer1HSOMdLregUzjsFbNJ8VPaNpqwkv8jYbfZcRERQ"/>
+</div>
+<div>
+<p class="text-label-md font-label-md font-bold text-on-surface">Admin Mode</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Sofia K.</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 flex flex-col relative bg-surface-bright min-h-screen overflow-hidden">
+<!-- TopNavBar -->
+<header class="h-16 flex justify-between items-center px-8 bg-surface/80 backdrop-blur-md border-b border-outline-variant z-40 sticky top-0">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Utilisateurs</h2>
+<span class="bg-surface-container px-2 py-0.5 rounded-full text-label-sm font-label-sm text-on-surface-variant">2 847 au total</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full w-64 focus:ring-2 focus:ring-primary transition-all text-label-md" placeholder="Rechercher un utilisateur..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">help</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<!-- Filters Bar -->
+<div class="flex flex-wrap items-center gap-4 mb-8">
+<div class="flex items-center gap-2">
+<label class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-tighter">Plan</label>
+<select class="bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-1.5 text-label-md focus:ring-primary outline-none">
+<option>Tous les plans</option>
+<option>Gratuit</option>
+<option>Premium</option>
+</select>
+</div>
+<div class="flex items-center gap-2">
+<label class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-tighter">Régime</label>
+<select class="bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-1.5 text-label-md focus:ring-primary outline-none">
+<option>Tous les régimes</option>
+<option>Forfaitaire</option>
+<option>Réel</option>
+<option>Non défini</option>
+</select>
+</div>
+<div class="flex items-center gap-2">
+<label class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-tighter">Ville</label>
+<select class="bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-1.5 text-label-md focus:ring-primary outline-none">
+<option>Toutes les villes</option>
+<option>Tunis</option>
+<option>Sousse</option>
+<option>Nabeul</option>
+<option>Sfax</option>
+</select>
+</div>
+<button class="ml-auto flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-full font-label-md text-label-md hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        Inviter un utilisateur
+                    </button>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="p-4 w-12 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></th>
+<th class="p-4 text-label-md font-label-md text-on-surface-variant">Nom &amp; Email</th>
+<th class="p-4 text-label-md font-label-md text-on-surface-variant">Plan</th>
+<th class="p-4 text-label-md font-label-md text-on-surface-variant">Régime</th>
+<th class="p-4 text-label-md font-label-md text-on-surface-variant">Inscrit le</th>
+<th class="p-4 text-label-md font-label-md text-on-surface-variant">Dernière activité</th>
+<th class="p-4 text-center"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<!-- Selected Row -->
+<tr class="hover:bg-surface-container-high transition-colors bg-secondary-container/10">
+<td class="p-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-bold text-on-primary-fixed border-2 border-surface-container-lowest">EN</div>
+<div>
+<p class="text-label-md font-bold text-on-surface">Eskandar N.</p>
+<p class="text-label-sm text-on-surface-variant">eskandar.n@business.tn</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="px-3 py-1 rounded-full bg-[#ede9fe] text-[#7C3AED] font-label-sm text-label-sm border border-[#7C3AED]/10">Premium</span>
+</td>
+<td class="p-4 text-label-md text-on-surface">Réel</td>
+<td class="p-4 text-label-md text-on-surface">12 Oct 2023</td>
+<td class="p-4 text-label-md text-on-surface-variant">Il y a 2 min</td>
+<td class="p-4 text-center">
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<!-- Other Rows -->
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="p-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover grayscale" data-alt="A portrait photo of a young Tunisian male entrepreneur, sharp business casual attire, warm smile, soft natural lighting, depth of field, high-end photography, set against a clean modern architectural background in Tunis." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdQmzVklPqn8O46lh09XF6dpCqEc0WS0ScvKsDtEcGJq4dQ6G-e7jUUek3zN6aB_KDDZAkaIMuarVsTzIfRJogPo13gSvjgZ-AtewgubRzWZH5t9RGVBFfjOHtw1PzMr4SVnXhJJddkPh37oJUx7HbX5b8xZd5juauWa7Fq4BF5wrCSkq1o6J_DUdbpif8ZgdTrT4oRbCZW_ob-BHFWwZO1EZzwt5EHlo82PM10sUAAie9NOiMYF1yxtKRFMFPgiWI8sZk5U_vgg"/>
+<div>
+<p class="text-label-md font-bold text-on-surface">Ahmed Ben Salah</p>
+<p class="text-label-sm text-on-surface-variant">ahmed.bs@startup.tn</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Gratuit</span>
+</td>
+<td class="p-4 text-label-md text-on-surface">Forfaitaire</td>
+<td class="p-4 text-label-md text-on-surface">15 Oct 2023</td>
+<td class="p-4 text-label-md text-on-surface-variant">Il y a 1h</td>
+<td class="p-4 text-center">
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="p-4 text-center"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center font-bold text-on-tertiary-fixed">MT</div>
+<div>
+<p class="text-label-md font-bold text-on-surface">Meriem Tounsi</p>
+<p class="text-label-sm text-on-surface-variant">meriem.t@freelance.tn</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="px-3 py-1 rounded-full bg-[#ede9fe] text-[#7C3AED] font-label-sm text-label-sm border border-[#7C3AED]/10">Premium</span>
+</td>
+<td class="p-4 text-label-md text-on-surface">Réel</td>
+<td class="p-4 text-label-md text-on-surface">18 Oct 2023</td>
+<td class="p-4 text-label-md text-on-surface-variant">Hier</td>
+<td class="p-4 text-center">
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<!-- Repeating rows for fidelity -->
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="p-4 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Close-up portrait of a woman with glasses, smiling confidently, high-key studio lighting, warm soft tones, clean background, modern professional look, high resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByV0QvZOaardmkV29VeGn_IWAMAe48UD8u4PPXv5_5XDLtwpKWOozyOjyq-Z4coRb1FTO8Jt_6R03wb4jKm2SixKOt7OAWLx5JoR5cMVrYREkZVJJln0ScxZ-YcMUFzIi0-OhQ3DkdUQRJrPy_b8GNG_DOgMhhfExblbTBAPI59BV7laNGhuw34ON_2ZV72-S653dppzkgzleYeHtZ9IitaagxEZMUnDpaBZY6QIVFLYMC7_TWP6cMHOmK3smRech4UZu5CnSsUQ"/>
+<div>
+<p class="text-label-md font-bold text-on-surface">Leila Mansour</p>
+<p class="text-label-sm text-on-surface-variant">l.mansour@gmail.com</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Gratuit</span>
+</td>
+<td class="p-4 text-label-md text-on-surface">Non défini</td>
+<td class="p-4 text-label-md text-on-surface">20 Oct 2023</td>
+<td class="p-4 text-label-md text-on-surface-variant">Il y a 3j</td>
+<td class="p-4 text-center">
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<!-- More rows to fill space -->
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="p-4 text-center"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/></td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center font-bold text-on-surface">SK</div>
+<div>
+<p class="text-label-md font-bold text-on-surface">Sami Karray</p>
+<p class="text-label-sm text-on-surface-variant">sami.kar@corp.tn</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="px-3 py-1 rounded-full bg-[#ede9fe] text-[#7C3AED] font-label-sm text-label-sm border border-[#7C3AED]/10">Premium</span>
+</td>
+<td class="p-4 text-label-md text-on-surface">Réel</td>
+<td class="p-4 text-label-md text-on-surface">22 Oct 2023</td>
+<td class="p-4 text-label-md text-on-surface-variant">Il y a 5j</td>
+<td class="p-4 text-center">
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="px-6 py-4 flex items-center justify-between border-t border-outline-variant">
+<span class="text-label-sm font-label-sm text-on-surface-variant">Affichage 1-10 sur 2 847</span>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary text-on-primary font-label-md">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container transition-colors font-label-md">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container transition-colors font-label-md">3</button>
+<span class="px-2">...</span>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container transition-colors font-label-md">285</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Disclaimer -->
+<div class="mt-8 bg-surface-container-low p-3 rounded-xl border border-outline-variant/30 flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">info</span>
+<p class="text-label-sm font-label-sm text-on-surface-variant">El Comptabli est un outil pédagogique de gestion fiscale. Les informations présentées ici ne remplacent pas l'avis d'un comptable agréé.</p>
+</div>
+</div>
+<!-- Bulk Action Bar -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-40">
+<div class="bg-inverse-surface text-inverse-on-surface flex items-center gap-6 px-6 py-3 rounded-full shadow-lg border border-outline-variant">
+<div class="flex items-center gap-3 border-r border-outline-variant/20 pr-6">
+<span class="bg-primary text-on-primary w-6 h-6 rounded-full flex items-center justify-center text-[12px] font-bold">3</span>
+<span class="text-label-md font-label-md">utilisateurs sélectionnés</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 hover:text-primary-fixed transition-colors text-label-md font-label-md">
+<span class="material-symbols-outlined text-[20px]">ios_share</span> Exporter
+                        </button>
+<button class="flex items-center gap-2 hover:text-primary-fixed transition-colors text-label-md font-label-md">
+<span class="material-symbols-outlined text-[20px]">stars</span> Modifier le plan
+                        </button>
+<button class="flex items-center gap-2 text-error-container hover:text-error transition-colors text-label-md font-label-md">
+<span class="material-symbols-outlined text-[20px]">delete</span> Supprimer
+                        </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Detail Drawer -->
+<aside class="fixed right-0 top-0 h-screen w-[400px] bg-surface-container-lowest border-l border-outline-variant z-[60] flex flex-col detail-drawer-shadow transform transition-transform duration-300 translate-x-0" id="detail-drawer">
+<div class="p-6 flex items-center justify-between border-b border-outline-variant">
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface">Profil Utilisateur</h3>
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors" onclick="document.getElementById('detail-drawer').classList.add('translate-x-full')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6">
+<!-- Header Info -->
+<div class="flex flex-col items-center text-center mb-8">
+<div class="relative mb-4">
+<div class="w-24 h-24 rounded-full bg-primary-fixed flex items-center justify-center text-[32px] font-bold text-on-primary-fixed border-4 border-surface-container">EN</div>
+<div class="absolute bottom-1 right-1 w-6 h-6 bg-status-success rounded-full border-2 border-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-white" style="font-variation-settings: 'wght' 700;">check</span>
+</div>
+</div>
+<h4 class="text-headline-sm font-headline-sm font-bold text-on-surface">Eskandar N.</h4>
+<p class="text-body-lg text-on-surface-variant">eskandar.n@business.tn</p>
+<div class="flex gap-2 mt-4">
+<span class="px-3 py-1 rounded-full bg-[#ede9fe] text-[#7C3AED] font-label-md text-label-md border border-[#7C3AED]/20">Premium</span>
+<span class="px-3 py-1 rounded-full bg-tint-success text-status-success font-label-md text-label-md">Actif</span>
+</div>
+</div>
+<!-- Sections -->
+<div class="space-y-8">
+<!-- Fiscal Details -->
+<div>
+<h5 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest mb-4">Détails fiscaux</h5>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface p-3 rounded-xl border border-outline-variant/30">
+<p class="text-label-sm text-on-surface-variant mb-1">Régime</p>
+<p class="text-label-md font-bold text-on-surface">Réel</p>
+</div>
+<div class="bg-surface p-3 rounded-xl border border-outline-variant/30">
+<p class="text-label-sm text-on-surface-variant mb-1">Ville</p>
+<p class="text-label-md font-bold text-on-surface">Nabeul</p>
+</div>
+<div class="bg-surface p-3 rounded-xl border border-outline-variant/30 col-span-2">
+<p class="text-label-sm text-on-surface-variant mb-1">Dernière déclaration</p>
+<p class="text-label-md font-bold text-on-surface">T3 2023 - Validée</p>
+</div>
+</div>
+</div>
+<!-- Activity Timeline -->
+<div>
+<h5 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest mb-4">Activité récente</h5>
+<div class="space-y-4">
+<div class="flex gap-3">
+<div class="mt-1 w-8 h-8 rounded-full bg-tint-info flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px] text-primary">smart_toy</span>
+</div>
+<div class="pb-4 border-b border-outline-variant/20 flex-1">
+<p class="text-label-md font-bold text-on-surface">Question IA</p>
+<p class="text-label-sm text-on-surface-variant italic">"Comment déduire les frais de déplacement ?"</p>
+<p class="text-label-sm text-on-surface-variant mt-1">Il y a 2 min</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="mt-1 w-8 h-8 rounded-full bg-tint-warning flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px] text-status-warning">document_scanner</span>
+</div>
+<div class="pb-4 border-b border-outline-variant/20 flex-1">
+<p class="text-label-md font-bold text-on-surface">Scan de facture</p>
+<p class="text-label-sm text-on-surface-variant">Facture STEG 02/2024</p>
+<p class="text-label-sm text-on-surface-variant mt-1">Aujourd'hui, 09:45</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="mt-1 w-8 h-8 rounded-full bg-tint-success flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px] text-status-success">payments</span>
+</div>
+<div class="flex-1">
+<p class="text-label-md font-bold text-on-surface">Renouvellement Premium</p>
+<p class="text-label-sm text-on-surface-variant">Abonnement annuel</p>
+<p class="text-label-sm text-on-surface-variant mt-1">12 Janv 2024</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-outline-variant mt-auto bg-surface-container-lowest">
+<button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-error/30 text-error font-label-md text-label-md hover:bg-error/5 transition-colors">
+<span class="material-symbols-outlined">block</span>
+                    Suspendre l'utilisateur
+                </button>
+</div>
+</aside>
+</div>
+<!-- Micro-interaction Scripts -->
+<script>
+        // Drawer toggle logic simulation
+        window.toggleDrawer = function() {
+            const drawer = document.getElementById('detail-drawer');
+            drawer.classList.toggle('translate-x-full');
+        };
+
+        // Bulk action bar animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const bulkBar = document.querySelector('.fixed.bottom-8');
+            bulkBar.classList.add('animate-bounce-subtle');
+        });
+    </script>
+<style>
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, -4px); }
+        }
+        .animate-bounce-subtle {
+            animation: bounce-subtle 4s ease-in-out infinite;
+        }
+    </style>
+</body></html>

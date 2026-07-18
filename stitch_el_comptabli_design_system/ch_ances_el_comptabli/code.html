@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Échéances - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Shared Style & Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#006a63",
+                    "on-tertiary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eff1f1",
+                    "surface-dim": "#d8dada",
+                    "tertiary-fixed": "#abefe7",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#0d5b55",
+                    "secondary": "#006b5f",
+                    "on-tertiary-fixed": "#00201d",
+                    "text-secondary": "#6B7280",
+                    "inverse-surface": "#2e3131",
+                    "status-success": "#16A34A",
+                    "primary-fixed-dim": "#80d5cb",
+                    "primary": "#005c55",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#71f8e4",
+                    "inverse-primary": "#80d5cb",
+                    "primary-container": "#0f766e",
+                    "on-primary-fixed": "#00201d",
+                    "error-container": "#ffdad6",
+                    "tint-success": "#E6F5F3",
+                    "on-surface": "#191c1d",
+                    "on-primary-fixed-variant": "#00504a",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-tertiary-container": "#b3f7ee",
+                    "surface-container-low": "#f2f4f4",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "on-secondary-fixed-variant": "#005048",
+                    "tint-warning": "#FEF3E2",
+                    "secondary-container": "#6df5e1",
+                    "status-warning": "#D97706",
+                    "status-premium": "#7C3AED",
+                    "text-primary": "#1A1A1A",
+                    "on-surface-variant": "#3e4947",
+                    "outline": "#6e7977",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#a3faef",
+                    "on-background": "#191c1d",
+                    "status-danger": "#DC2626",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "surface-variant": "#e1e3e3",
+                    "background": "#f8fafa",
+                    "tint-info": "#EEF2FF",
+                    "tint-danger": "#FDE8E6",
+                    "surface-bright": "#f8fafa",
+                    "on-secondary-container": "#006f64",
+                    "surface-container-high": "#e6e8e8",
+                    "primary-fixed": "#9cf2e8",
+                    "on-secondary-fixed": "#00201c",
+                    "outline-variant": "#bdc9c6",
+                    "surface-container-highest": "#e1e3e3",
+                    "surface": "#f8fafa",
+                    "tertiary-container": "#2f746d",
+                    "surface-container": "#eceeee"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "card": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "stack-sm": "12px",
+                    "container-padding": "20px",
+                    "stack-xs": "4px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "stat-display": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .shadow-soft {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .shadow-lift {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+    </style>
+</head>
+<body class="max-w-[600px] mx-auto min-h-screen relative pb-32">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky z-40 bg-surface dark:bg-on-background flex justify-between items-center px-container-padding py-stack-sm mx-auto">
+<div class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Juillet 2026</h1>
+<span class="material-symbols-outlined text-primary">expand_more</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-on-surface">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary/10 overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMOWLty7N-nKZUDa5C6cs8NpmYPbRLSKkf5cMFzD7gDN6muvNDembSgDY3QdR3B0VocVywIQIyie8fiBfv-Rgch3o4h1esQ6TRHPcVOsSq_jmirTmwq0-oY9oLphHwMd_QSqfcBJkXgs5v3ztrtEZxt810nlI9sa0sIfTaPqTmvUEqav2u-lz-74MhMBy9JaPN4PzWNHJijXj9ijS7mvyslyn_IZiSeSGNED_zGGx7PPT45doOtSGqgrGsOZt7wDA4f1s83gXt_A"/>
+</div>
+</div>
+</header>
+<!-- Horizontal Week Strip -->
+<section class="mt-4 px-container-padding">
+<div class="flex overflow-x-auto hide-scrollbar gap-element-gap py-2">
+<!-- Day Items -->
+<div class="flex flex-col items-center gap-1 min-w-[48px]">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Lun</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-full bg-white border border-surface-variant transition-all hover:bg-surface-container">
+<span class="font-headline-sm text-headline-sm">13</span>
+<div class="w-1.5 h-1.5 rounded-full bg-status-warning mt-1"></div>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1 min-w-[48px]">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mar</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-full bg-white border border-surface-variant">
+<span class="font-headline-sm text-headline-sm">14</span>
+<div class="w-1.5 h-1.5 rounded-full bg-status-danger mt-1"></div>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1 min-w-[48px]">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mer</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-full bg-white border border-surface-variant">
+<span class="font-headline-sm text-headline-sm">15</span>
+</div>
+</div>
+<!-- Today -->
+<div class="flex flex-col items-center gap-1 min-w-[48px]">
+<span class="font-label-sm text-label-sm font-bold text-primary">Jeu</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-full bg-primary text-on-primary shadow-soft transform scale-105">
+<span class="font-headline-sm text-headline-sm">16</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1 min-w-[48px]">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Ven</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-full bg-white border border-surface-variant">
+<span class="font-headline-sm text-headline-sm">17</span>
+<div class="w-1.5 h-1.5 rounded-full bg-status-warning mt-1"></div>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1 min-w-[48px]">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sam</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-full bg-white border border-surface-variant">
+<span class="font-headline-sm text-headline-sm">18</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1 min-w-[48px]">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Dim</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-full bg-white border border-surface-variant">
+<span class="font-headline-sm text-headline-sm">19</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Stat Cards Row -->
+<section class="mt-8 px-container-padding grid grid-cols-3 gap-3">
+<div class="bg-tint-warning p-4 rounded-card border border-status-warning/10 transition-transform active:scale-95">
+<span class="font-label-sm text-label-sm text-status-warning block mb-1">Cette semaine</span>
+<span class="font-stat-display text-stat-display text-status-warning">1</span>
+</div>
+<div class="bg-tint-success p-4 rounded-card border border-primary/10 transition-transform active:scale-95">
+<span class="font-label-sm text-label-sm text-primary block mb-1">Ce mois</span>
+<span class="font-stat-display text-stat-display text-primary">3</span>
+</div>
+<div class="bg-tint-danger p-4 rounded-card border border-status-danger/10 transition-transform active:scale-95">
+<span class="font-label-sm text-label-sm text-status-danger block mb-1">En retard</span>
+<span class="font-stat-display text-stat-display text-status-danger">1</span>
+</div>
+</section>
+<!-- Filter Pills -->
+<section class="mt-8 px-container-padding">
+<div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-soft whitespace-nowrap">Toutes</button>
+<button class="px-6 py-2.5 rounded-full bg-white border border-outline-variant text-on-surface-variant font-label-md text-label-md whitespace-nowrap hover:bg-surface-container transition-colors">TVA</button>
+<button class="px-6 py-2.5 rounded-full bg-white border border-outline-variant text-on-surface-variant font-label-md text-label-md whitespace-nowrap hover:bg-surface-container transition-colors">IRPP</button>
+<button class="px-6 py-2.5 rounded-full bg-white border border-outline-variant text-on-surface-variant font-label-md text-label-md whitespace-nowrap hover:bg-surface-container transition-colors">Social</button>
+<button class="px-6 py-2.5 rounded-full bg-white border border-outline-variant text-on-surface-variant font-label-md text-label-md whitespace-nowrap hover:bg-surface-container transition-colors">Autres</button>
+</div>
+</section>
+<!-- Deadline Cards List -->
+<section class="mt-6 px-container-padding space-y-4">
+<!-- Coral Card (Late) -->
+<div class="bg-tint-danger p-5 rounded-card border border-status-danger/10 shadow-soft relative overflow-hidden group transition-all">
+<div class="absolute top-0 right-0 w-16 h-16 bg-status-danger/5 rounded-bl-full transform translate-x-4 -translate-y-4"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="px-3 py-1 rounded-full bg-status-danger text-white font-label-sm text-label-sm">En retard</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">TVA juin</h3>
+<p class="font-body-lg text-label-md text-on-surface-variant mb-6">Règlement immédiat conseillé pour éviter des pénalités.</p>
+<div class="flex items-center justify-between pt-4 border-t border-status-danger/10">
+<div class="flex items-center gap-2 text-status-danger">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+<span class="font-label-md text-label-md font-bold">Urgent</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-status-danger"></div>
+<span class="ml-2 font-label-sm text-label-sm text-on-surface-variant">🔔 Me rappeler</span>
+</label>
+</div>
+</div>
+<!-- Amber Card (Upcoming) -->
+<div class="bg-tint-warning p-5 rounded-card border border-status-warning/10 shadow-soft">
+<div class="flex justify-between items-start mb-2">
+<span class="px-3 py-1 rounded-full bg-status-warning text-white font-label-sm text-label-sm">28 juillet</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">TVA juillet</h3>
+<p class="font-body-lg text-label-md text-on-surface-variant mb-6">Tu déclares la TVA collectée moins la TVA payée sur tes achats.</p>
+<div class="flex items-center justify-between pt-4 border-t border-status-warning/10">
+<div class="flex items-center gap-2 text-status-warning">
+<span class="material-symbols-outlined text-[20px]">event</span>
+<span class="font-label-md text-label-md font-bold">Bientôt</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-status-warning"></div>
+<span class="ml-2 font-label-sm text-label-sm text-on-surface-variant">🔔 Me rappeler</span>
+</label>
+</div>
+</div>
+<!-- Amber Card (Provisionnel) -->
+<div class="bg-tint-warning p-5 rounded-card border border-status-warning/10 shadow-soft">
+<div class="flex justify-between items-start mb-2">
+<span class="px-3 py-1 rounded-full bg-status-warning text-white font-label-sm text-label-sm">25 sept</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Acompte provisionnel</h3>
+<p class="font-body-lg text-label-md text-on-surface-variant mb-6">Deuxième acompte de l'année basé sur ton chiffre d'affaires précédent.</p>
+<div class="flex items-center justify-between pt-4 border-t border-status-warning/10">
+<div class="flex items-center gap-2 text-status-warning">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+<span class="font-label-md text-label-md font-bold">À venir</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-status-warning"></div>
+<span class="ml-2 font-label-sm text-label-sm text-on-surface-variant">🔔 Me rappeler</span>
+</label>
+</div>
+</div>
+<!-- Teal Card (Paid) -->
+<div class="bg-tint-success p-5 rounded-card border border-primary/10 shadow-soft">
+<div class="flex justify-between items-start mb-2">
+<span class="px-3 py-1 rounded-full bg-primary text-white font-label-sm text-label-sm">Payée ✓</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">TVA mai</h3>
+<p class="font-body-lg text-label-md text-on-surface-variant mb-6">Enregistrée le 24 juin. Paiement validé par la recette des finances.</p>
+<div class="flex items-center justify-between pt-4 border-t border-primary/10">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span class="font-label-md text-label-md font-bold">Terminé</span>
+</div>
+<button class="flex items-center gap-1 font-label-md text-label-md text-primary hover:underline transition-all">
+                    Détails <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Pedagogical Disclaimer -->
+<div class="mt-8 px-container-padding pb-12">
+<div class="bg-surface-container-low p-4 rounded-xl flex items-start gap-3">
+<span class="material-symbols-outlined text-outline text-[20px]">info</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant leading-relaxed">
+                El Comptabli est un outil pédagogique pour vous guider. Cette liste n'est pas exhaustive et ne remplace pas l'avis d'un comptable certifié.
+            </p>
+</div>
+</div>
+<!-- Floating Action Button -->
+<button class="fixed bottom-[100px] right-container-padding bg-primary text-on-primary flex items-center gap-2 py-4 px-6 rounded-full shadow-lift active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined">add</span>
+<span class="font-label-md text-label-md font-bold">+ Rappel</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-base left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[560px] rounded-full z-50 bg-surface-container-highest dark:bg-surface-container-lowest shadow-[0_8px_24px_rgba(0,0,0,0.12)] flex justify-around items-center py-stack-sm px-container-padding">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant/50 rounded-full transition-colors active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Accueil</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant/50 rounded-full transition-colors active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm">IA</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant/50 rounded-full transition-colors active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">document_scanner</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant/50 rounded-full transition-colors active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm">Finance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed font-bold relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full hover:bg-surface-variant/50 rounded-full transition-colors active:scale-90 p-2" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-sm text-label-sm">Savoir</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interactions for checkboxes and buttons
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const parent = this.closest('.rounded-card');
+                if (this.checked) {
+                    parent.classList.add('shadow-md');
+                } else {
+                    parent.classList.remove('shadow-md');
+                }
+            });
+        });
+
+        // Prevent body scroll bounce on iOS
+        document.body.addEventListener('touchmove', function(e) {
+            if (e.target.closest('.overflow-x-auto')) return;
+        }, { passive: true });
+    </script>
+</body></html>

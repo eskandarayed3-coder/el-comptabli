@@ -1,0 +1,13 @@
+{
+  "name": "El Comptabli",
+  "short_name": "El Comptabli",
+  "description": "Ton assistant fiscal & comptable IA 🇹🇳",
+  "start_url": "/home",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#0F5C56",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

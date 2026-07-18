@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#005048",
+                    "outline": "#6e7977",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#80d5cb",
+                    "text-secondary": "#6B7280",
+                    "text-primary": "#1A1A1A",
+                    "tint-info": "#EEF2FF",
+                    "tertiary-fixed": "#abefe7",
+                    "tertiary-container": "#2f746d",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#00201d",
+                    "tertiary": "#0d5b55",
+                    "secondary-container": "#6df5e1",
+                    "tint-danger": "#FDE8E6",
+                    "surface-container-high": "#e6e8e8",
+                    "on-secondary-fixed": "#00201c",
+                    "surface-container": "#eceeee",
+                    "secondary": "#006b5f",
+                    "surface-tint": "#006a63",
+                    "surface-container-low": "#f2f4f4",
+                    "on-surface-variant": "#3e4947",
+                    "background": "#f8fafa",
+                    "tint-success": "#E6F5F3",
+                    "on-tertiary-container": "#b3f7ee",
+                    "on-primary-container": "#a3faef",
+                    "primary-fixed": "#9cf2e8",
+                    "status-danger": "#DC2626",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#71f8e4",
+                    "primary": "#005c55",
+                    "status-warning": "#D97706",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#f8fafa",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "primary-container": "#0f766e",
+                    "outline-variant": "#bdc9c6",
+                    "on-surface": "#191c1d",
+                    "on-secondary-container": "#006f64",
+                    "on-background": "#191c1d",
+                    "surface-container-highest": "#e1e3e3",
+                    "status-premium": "#7C3AED",
+                    "on-primary-fixed-variant": "#00504a",
+                    "status-success": "#16A34A",
+                    "surface-dim": "#d8dada",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "inverse-primary": "#80d5cb",
+                    "tint-warning": "#FEF3E2",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#eff1f1",
+                    "on-tertiary-fixed": "#00201d",
+                    "surface-variant": "#e1e3e3",
+                    "inverse-surface": "#2e3131",
+                    "surface": "#f8fafa",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "12px",
+                    "base": "8px",
+                    "element-gap": "16px",
+                    "container-padding": "20px",
+                    "stack-xs": "4px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-pill-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.12);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-lg text-on-surface">
+<!-- Header (TopAppBar mapping) -->
+<header class="flex items-center justify-between px-container-padding w-full h-16 bg-surface z-50 sticky top-0">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary text-[28px]">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Réserver avec Mounir B.</h1>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a Tunisian financial consultant named Mounir B., wearing a modern smart-casual outfit. He has a friendly and welcoming expression, set against a blurred office background with warm, natural lighting. The image style is clean and premium, consistent with a high-end fintech application aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVbboJ7VaHZouoYS3EtQOwLOnuUusa57sKPbespai3aTWUaJ5cL0V08FP9jaW1PJs28M8W80f4tu8hA599dW-RvPZ3rJ3psTgvDiQpGpjh5OxZCFDftVRqF3lo8dQYbBGPw7ssEO-G3ZtSoHWnJ0roTYsP5zh7u5Er_C3Zm-wmkTh8aQ9qsk9ne_fMDx0qsV3_4hoLsajiKmKAbqGcuCVmrt4HhyB-QYTPPm9quCE42FWm-lwlNV9yvWWB9bnwfC0gQlJ1hRpowA"/>
+</div>
+</header>
+<main class="max-w-[600px] mx-auto pb-32 px-container-padding">
+<!-- Service Selector Section -->
+<section class="mt-6">
+<h2 class="font-label-md text-label-md text-outline uppercase tracking-wider mb-4">Choisir un service</h2>
+<div class="flex flex-col gap-3">
+<!-- Selected Service -->
+<div class="p-5 bg-tint-success border-2 border-primary rounded-2xl flex justify-between items-center transition-all">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Consultation 30 min</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Conseils fiscaux personnalisés</p>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary">60 DT</span>
+</div>
+<!-- Other Services -->
+<div class="p-5 bg-surface-container-low rounded-2xl flex justify-between items-center hover:bg-surface-container-high transition-colors cursor-pointer">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Déclaration TVA</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Accompagnement trimestriel</p>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">90 DT</span>
+</div>
+<div class="p-5 bg-surface-container-low rounded-2xl flex justify-between items-center hover:bg-surface-container-high transition-colors cursor-pointer">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Création SUARL</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Dossier juridique complet</p>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">350 DT</span>
+</div>
+</div>
+</section>
+<!-- Date Selection Section -->
+<section class="mt-8">
+<div class="flex justify-between items-end mb-4">
+<h2 class="font-label-md text-label-md text-outline uppercase tracking-wider">Choisir la date</h2>
+<span class="font-label-md text-label-md text-primary">Juillet 2024</span>
+</div>
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+<!-- Day Chips -->
+<div class="flex-shrink-0 w-16 h-20 bg-surface-container-low rounded-2xl flex flex-col items-center justify-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-1">Lun</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">20</span>
+</div>
+<div class="flex-shrink-0 w-16 h-20 bg-surface-container-low rounded-2xl flex flex-col items-center justify-center opacity-40">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-1">Mar</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">21</span>
+</div>
+<div class="flex-shrink-0 w-16 h-20 bg-surface-container-low rounded-2xl flex flex-col items-center justify-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-1">Mer</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">22</span>
+</div>
+<!-- Selected Day -->
+<div class="flex-shrink-0 w-16 h-20 bg-primary-container text-on-primary-container rounded-2xl flex flex-col items-center justify-center active-pill-shadow">
+<span class="font-label-sm text-label-sm text-white/80 mb-1">Jeu</span>
+<span class="font-headline-sm text-headline-sm text-white">23</span>
+</div>
+<div class="flex-shrink-0 w-16 h-20 bg-surface-container-low rounded-2xl flex flex-col items-center justify-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-1">Ven</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">24</span>
+</div>
+<div class="flex-shrink-0 w-16 h-20 bg-surface-container-low rounded-2xl flex flex-col items-center justify-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-1">Sam</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">25</span>
+</div>
+</div>
+</section>
+<!-- Time Slots Section -->
+<section class="mt-8">
+<h2 class="font-label-md text-label-md text-outline uppercase tracking-wider mb-4">Créneaux disponibles</h2>
+<div class="grid grid-cols-2 gap-3">
+<button class="py-4 bg-surface-container-low rounded-full font-headline-sm text-headline-sm text-on-surface hover:bg-surface-container-high transition-colors">10:00</button>
+<button class="py-4 bg-primary text-white rounded-full font-headline-sm text-headline-sm active-pill-shadow">11:30</button>
+<button class="py-4 bg-surface-container-low rounded-full font-headline-sm text-headline-sm text-on-surface hover:bg-surface-container-high transition-colors">14:00</button>
+<button class="py-4 bg-surface-container-low rounded-full font-headline-sm text-headline-sm text-on-surface hover:bg-surface-container-high transition-colors">16:30</button>
+</div>
+</section>
+<!-- Mode Selector Section -->
+<section class="mt-8">
+<h2 class="font-label-md text-label-md text-outline uppercase tracking-wider mb-4">Mode de rendez-vous</h2>
+<div class="p-1.5 bg-surface-container-high rounded-full flex">
+<button class="flex-1 py-3 bg-white text-primary font-headline-sm text-headline-sm rounded-full shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">videocam</span>
+                    Visio
+                </button>
+<button class="flex-1 py-3 text-on-surface-variant font-headline-sm text-headline-sm rounded-full flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">apartment</span>
+                    Au cabinet
+                </button>
+</div>
+</section>
+<!-- Summary Card -->
+<div class="mt-10 p-6 bg-tint-info rounded-2xl flex items-start gap-4">
+<div class="p-3 bg-white rounded-xl text-primary">
+<span class="material-symbols-outlined text-[24px]">event_available</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-primary mb-1">Résumé de la réservation</p>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                    Jeudi 23 juillet · 11:30 · Visio · 60 DT
+                </p>
+</div>
+</div>
+<!-- Disclaimer Banner -->
+<div class="mt-8 p-4 bg-surface-container-low rounded-xl text-center">
+<p class="font-label-sm text-label-sm text-outline leading-tight">
+                Cette application est un outil pédagogique destiné aux entrepreneurs tunisiens. Elle ne remplace pas les conseils d'un expert-comptable certifié ou les obligations légales officielles.
+            </p>
+</div>
+</main>
+<!-- Floating Action Bar -->
+<div class="fixed bottom-0 left-0 w-full p-container-padding bg-gradient-to-t from-surface via-surface to-transparent z-50">
+<div class="max-w-[600px] mx-auto">
+<button class="w-full h-16 bg-primary text-white rounded-full flex items-center justify-center gap-3 active:scale-[0.98] transition-all shadow-xl hover:opacity-95">
+<span class="font-headline-sm text-headline-sm">Confirmer et payer</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        document.querySelectorAll('button, .cursor-pointer').forEach(el => {
+            el.addEventListener('click', () => {
+                // Simple feedback logic can be added here
+                console.log('Interaction detected');
+            });
+        });
+    </script>
+</body></html>

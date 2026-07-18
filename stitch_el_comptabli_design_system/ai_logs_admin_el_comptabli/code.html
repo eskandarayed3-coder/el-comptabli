@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=1440, initial-scale=1.0" name="viewport"/>
+<title>FiscalGuide Admin - Logs IA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "tertiary-container": "#2f746d",
+                        "secondary-fixed": "#71f8e4",
+                        "background": "#f8fafa",
+                        "on-secondary-container": "#006f64",
+                        "secondary-container": "#6df5e1",
+                        "on-tertiary-fixed": "#00201d",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-primary-fixed": "#00201d",
+                        "on-primary-fixed-variant": "#00504a",
+                        "primary-fixed-dim": "#80d5cb",
+                        "outline": "#6e7977",
+                        "on-error": "#ffffff",
+                        "surface-container": "#eceeee",
+                        "on-tertiary-container": "#b3f7ee",
+                        "surface-variant": "#e1e3e3",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#a3faef",
+                        "tint-info": "#EEF2FF",
+                        "secondary": "#006b5f",
+                        "status-warning": "#D97706",
+                        "surface-tint": "#006a63",
+                        "status-premium": "#7C3AED",
+                        "primary-container": "#0f766e",
+                        "on-surface-variant": "#3e4947",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f4f4",
+                        "primary": "#005c55",
+                        "inverse-surface": "#2e3131",
+                        "tint-danger": "#FDE8E6",
+                        "status-danger": "#DC2626",
+                        "on-secondary-fixed-variant": "#005048",
+                        "inverse-primary": "#80d5cb",
+                        "status-success": "#16A34A",
+                        "text-secondary": "#6B7280",
+                        "tint-success": "#E6F5F3",
+                        "outline-variant": "#bdc9c6",
+                        "on-surface": "#191c1d",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#0d5b55",
+                        "on-background": "#191c1d",
+                        "surface-container-highest": "#e1e3e3",
+                        "surface-dim": "#d8dada",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f8fafa",
+                        "tertiary-fixed": "#abefe7",
+                        "surface-container-high": "#e6e8e8",
+                        "tint-warning": "#FEF3E2",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "primary-fixed": "#9cf2e8",
+                        "text-primary": "#1A1A1A",
+                        "surface": "#f8fafa",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "stack-xs": "4px",
+                        "stack-sm": "12px",
+                        "element-gap": "16px",
+                        "container-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "stat-display": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .custom-shadow { box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08); }
+        .drawer-shadow { box-shadow: -8px 0 24px rgba(0,0,0,0.06); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface overflow-hidden">
+<!-- Layout Container -->
+<div class="flex h-screen w-full">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-inverse-surface shadow-sm z-50">
+<div class="flex flex-col h-full py-6 px-4 space-y-2">
+<div class="px-4 mb-8">
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed">FiscalGuide</h1>
+<p class="text-label-sm text-on-surface-variant">Admin Dashboard</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<!-- Active State: AI Logs -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container dark:bg-primary-container text-on-secondary-container dark:text-on-primary-container rounded-xl font-bold transition-transform duration-200 scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md">AI Logs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-md text-label-md">Subscriptions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-label-md text-label-md">Knowledge Base</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+<span class="font-label-md text-label-md">Experts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="article">article</span>
+<span class="font-label-md text-label-md">Content</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-md text-label-md">Notifications</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+</nav>
+<div class="pt-4 border-t border-outline-variant/30">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-highest rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen relative overflow-hidden bg-[#f8fafa]">
+<!-- Top Navigation Bar -->
+<header class="h-16 flex justify-between items-center px-8 w-full backdrop-blur-md bg-surface/80 dark:bg-surface-dim/80 z-40 sticky top-0">
+<div class="flex items-center gap-4">
+<div class="bg-surface-container flex items-center px-4 py-2 rounded-full w-96">
+<span class="material-symbols-outlined text-on-surface-variant mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md w-full placeholder-on-surface-variant" placeholder="Rechercher un log ou un utilisateur..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<div class="text-right">
+<p class="text-label-md font-bold text-on-surface">Admin El Comptabli</p>
+<p class="text-label-sm text-on-surface-variant">Directeur des Opérations</p>
+</div>
+<img class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm" data-alt="Professional headshot of a mature business administrator in a modern office, soft lighting, fintech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo-ifzDo1me0Wx2xpiODFtU__GGxnmNBMC8XtSGO1-HHWXrqJk4ZEqnCFkZlbFWbHDttQiEekgAt0PYKPDhNNGUCgHeYBo2RDJVh3yu-I6qLUoG-nQH_oZOhCZ1JnqanKqvte__hGzdPw2AHboVlFYLuTDRcD5QTFLV_Mqs4JsGEzYBeUJITw41R0sb4XJktKzanKGmiZ1w4Lok9Aoor7MXlQtcctRbJWorWn_By5n-hjz5l_6x_tHFm6M-Ztqw_noODbQc-x9mw"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Canvas -->
+<div class="p-8 space-y-8 overflow-y-auto no-scrollbar flex-1 pb-24">
+<!-- KPI Section -->
+<div class="grid grid-cols-2 gap-8">
+<div class="bg-surface-container-lowest p-6 rounded-2xl custom-shadow border border-outline-variant/20 flex flex-col justify-between">
+<div>
+<p class="text-label-md text-on-surface-variant mb-2">Taux de réponses sourcées</p>
+<h2 class="text-headline-lg font-stat-display text-primary">94%</h2>
+</div>
+<div class="mt-4 flex items-center text-status-success gap-1 bg-tint-success px-3 py-1 rounded-full w-fit">
+<span class="material-symbols-outlined text-[18px]" data-icon="trending_up">trending_up</span>
+<span class="text-label-sm font-bold">+2.4% vs mois dernier</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl custom-shadow border border-outline-variant/20 flex flex-col justify-between">
+<div>
+<p class="text-label-md text-on-surface-variant mb-2">Escalades expert</p>
+<h2 class="text-headline-lg font-stat-display text-on-surface">3%</h2>
+</div>
+<div class="mt-4 flex items-center text-on-surface-variant gap-1 bg-surface-variant px-3 py-1 rounded-full w-fit">
+<span class="material-symbols-outlined text-[18px]" data-icon="remove">remove</span>
+<span class="text-label-sm font-bold">Stable</span>
+</div>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="flex items-center justify-between bg-surface-container-lowest p-4 rounded-2xl border border-outline-variant/20 custom-shadow">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-xl border border-outline-variant/10 cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="calendar_today">calendar_today</span>
+<span class="text-label-md font-medium">7 derniers jours</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-xl border border-outline-variant/10 cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="text-label-md font-medium text-on-surface-variant">Statut :</span>
+<span class="text-label-md font-medium">Tous</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-surface-container-low rounded-xl border border-outline-variant/10 cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="text-label-md font-medium text-on-surface-variant">Source :</span>
+<span class="text-label-md font-medium">Toutes</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+</div>
+<button class="flex items-center gap-2 text-primary font-bold hover:underline transition-all">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+<span class="text-label-md">Exporter CSV</span>
+</button>
+</div>
+<!-- Log Table Area -->
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/20 custom-shadow overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant/20">
+<th class="px-6 py-4 text-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Horodatage</th>
+<th class="px-6 py-4 text-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Question</th>
+<th class="px-6 py-4 text-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Sources RAG</th>
+<th class="px-6 py-4 text-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Confiance %</th>
+<th class="px-6 py-4 text-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Statut</th>
+<th class="px-6 py-4 text-label-sm font-bold text-on-surface-variant uppercase tracking-wider">User</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1: Selected -->
+<tr class="hover:bg-primary/5 transition-colors cursor-pointer bg-primary/10">
+<td class="px-6 py-4 text-label-md font-medium">16 juil, 14:30</td>
+<td class="px-6 py-4 text-label-md max-w-xs truncate">Quelle est la TVA pour un consultant en design ?</td>
+<td class="px-6 py-4">
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-0.5 bg-tint-info text-on-secondary-container text-[11px] font-bold rounded-full border border-secondary/20">Code IRPP</span>
+<span class="px-2 py-0.5 bg-tint-info text-on-secondary-container text-[11px] font-bold rounded-full border border-secondary/20">Loi Finances 2026</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-status-success" style="width: 98%"></div>
+</div>
+<span class="text-label-md font-bold text-status-success">98%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-tint-success text-status-success text-[12px] font-bold rounded-full">Sourcé</span>
+</td>
+<td class="px-6 py-4 text-label-md text-on-surface-variant">USR-8921</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-primary/5 transition-colors cursor-pointer">
+<td class="px-6 py-4 text-label-md font-medium">16 juil, 14:12</td>
+<td class="px-6 py-4 text-label-md max-w-xs truncate">Comment déclarer les revenus de freelance ?</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-tint-info text-on-secondary-container text-[11px] font-bold rounded-full border border-secondary/20">Art. 12 Code TVA</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-status-success" style="width: 85%"></div>
+</div>
+<span class="text-label-md font-bold text-status-success">85%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-tint-success text-status-success text-[12px] font-bold rounded-full">Sourcé</span>
+</td>
+<td class="px-6 py-4 text-label-md text-on-surface-variant">USR-7632</td>
+</tr>
+<!-- Row 3: Warning -->
+<tr class="hover:bg-primary/5 transition-colors cursor-pointer">
+<td class="px-6 py-4 text-label-md font-medium">16 juil, 13:55</td>
+<td class="px-6 py-4 text-label-md max-w-xs truncate">Puis-je déduire l'achat d'un voilier ?</td>
+<td class="px-6 py-4">
+<span class="text-label-sm italic text-outline">Aucune source trouvée</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-status-danger" style="width: 32%"></div>
+</div>
+<span class="text-label-md font-bold text-status-danger">32%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-tint-danger text-status-danger text-[12px] font-bold rounded-full">Sans source</span>
+</td>
+<td class="px-6 py-4 text-label-md text-on-surface-variant">USR-1029</td>
+</tr>
+<!-- Dummy Rows -->
+<tr class="hover:bg-primary/5 transition-colors cursor-pointer">
+<td class="px-6 py-4 text-label-md font-medium">16 juil, 13:40</td>
+<td class="px-6 py-4 text-label-md max-w-xs truncate">Régime forfaitaire vs réel...</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-tint-info text-on-secondary-container text-[11px] font-bold rounded-full border border-secondary/20">Guide Pratique 2024</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-status-success" style="width: 92%"></div>
+</div>
+<span class="text-label-md font-bold text-status-success">92%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-tint-success text-status-success text-[12px] font-bold rounded-full">Sourcé</span>
+</td>
+<td class="px-6 py-4 text-label-md text-on-surface-variant">USR-5541</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors cursor-pointer">
+<td class="px-6 py-4 text-label-md font-medium">16 juil, 12:15</td>
+<td class="px-6 py-4 text-label-md max-w-xs truncate">Délai pour dépôt bilan...</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-tint-info text-on-secondary-container text-[11px] font-bold rounded-full border border-secondary/20">Code Commerce</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-12 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-status-success" style="width: 99%"></div>
+</div>
+<span class="text-label-md font-bold text-status-success">99%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-tint-success text-status-success text-[12px] font-bold rounded-full">Sourcé</span>
+</td>
+<td class="px-6 py-4 text-label-md text-on-surface-variant">USR-8911</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pedagogical Disclaimer Banner -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 text-center">
+<p class="text-label-sm text-on-surface-variant">Cet outil est une plateforme pédagogique. Les logs IA sont anonymisés. El Comptabli n'est pas un cabinet d'expertise comptable certifié.</p>
+</div>
+</div>
+<!-- Detail Drawer (Open state) -->
+<aside class="fixed right-0 top-16 bottom-0 w-[420px] bg-surface-container-lowest drawer-shadow z-40 flex flex-col border-l border-outline-variant/20">
+<div class="p-6 border-b border-outline-variant/20 flex justify-between items-center">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Conversation USR-8921</h3>
+<p class="text-label-sm text-on-surface-variant">16 juillet 2025 • 14:30</p>
+</div>
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-8 no-scrollbar">
+<!-- Question Stack -->
+<div class="space-y-4">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+<span class="text-label-md font-bold uppercase tracking-wide">Question Utilisateur</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl border border-outline-variant/10 text-body-lg">
+                            "Quelle est la TVA pour un consultant en design ?"
+                        </div>
+</div>
+<!-- Answer Stack -->
+<div class="space-y-4">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="smart_toy">smart_toy</span>
+<span class="text-label-md font-bold uppercase tracking-wide">Réponse Assistant</span>
+</div>
+<div class="bg-tint-info p-5 rounded-2xl border border-primary/10 leading-relaxed text-on-surface">
+                            Pour un consultant en design exerçant en Tunisie, le taux de TVA standard applicable est de <span class="bg-primary/20 text-primary font-bold px-1 rounded">19% [1]</span>. Cependant, si vous travaillez pour des clients à l'étranger (exportation de services), vous pouvez bénéficier d'une exonération sous certaines conditions <span class="bg-primary/20 text-primary font-bold px-1 rounded">[2]</span>.
+                        </div>
+</div>
+<!-- Retrieved Chunks Stack -->
+<div class="space-y-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="menu_book">menu_book</span>
+<span class="text-label-md font-bold uppercase tracking-wide">Sources Utilisées (RAG)</span>
+</div>
+<!-- Chunk 1 -->
+<div class="bg-surface-container-low p-4 rounded-xl border-l-4 border-primary space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-label-sm font-bold text-primary">[1] Code de la TVA - Art. 7</span>
+<span class="text-label-sm text-on-surface-variant">Similitude: 0.94</span>
+</div>
+<p class="text-label-md text-on-surface-variant italic">"Sont soumis à la taxe sur la valeur ajoutée au taux de 19% les prestations de services n'entrant pas dans les catégories exonérées..."</p>
+</div>
+<!-- Chunk 2 -->
+<div class="bg-surface-container-low p-4 rounded-xl border-l-4 border-primary space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-label-sm font-bold text-primary">[2] Loi de Finances 2026</span>
+<span class="text-label-sm text-on-surface-variant">Similitude: 0.88</span>
+</div>
+<p class="text-label-md text-on-surface-variant italic">"L'exportation de services numériques et créatifs bénéficie d'une suspension de TVA pour les entreprises titulaires d'une carte d'exportateur..."</p>
+</div>
+</div>
+</div>
+<!-- Actions Footer -->
+<div class="p-6 border-t border-outline-variant/20 bg-surface-container-lowest grid grid-cols-2 gap-4">
+<button class="bg-primary text-white py-3 rounded-full font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]" data-icon="rate_review">rate_review</span>
+<span>Réviser</span>
+</button>
+<button class="border border-outline text-on-surface py-3 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="refresh">refresh</span>
+<span>Re-générer</span>
+</button>
+</div>
+</aside>
+</main>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+        // Simple logic for row selection visualization
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                document.querySelectorAll('tbody tr').forEach(r => r.classList.remove('bg-primary/10'));
+                row.classList.add('bg-primary/10');
+            });
+        });
+    </script>
+</body></html>

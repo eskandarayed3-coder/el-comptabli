@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Alertes intelligentes - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "status-danger": "#DC2626",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "on-primary-container": "#a3faef",
+                    "on-background": "#191c1d",
+                    "on-error-container": "#93000a",
+                    "on-error": "#ffffff",
+                    "outline": "#6e7977",
+                    "error": "#ba1a1a",
+                    "on-surface-variant": "#3e4947",
+                    "status-premium": "#7C3AED",
+                    "text-primary": "#1A1A1A",
+                    "secondary-container": "#6df5e1",
+                    "status-warning": "#D97706",
+                    "tint-warning": "#FEF3E2",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "on-secondary-fixed-variant": "#005048",
+                    "on-tertiary-container": "#b3f7ee",
+                    "surface-container-low": "#f2f4f4",
+                    "on-primary-fixed-variant": "#00504a",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "tertiary-container": "#2f746d",
+                    "surface-container": "#eceeee",
+                    "surface": "#f8fafa",
+                    "surface-container-highest": "#e1e3e3",
+                    "outline-variant": "#bdc9c6",
+                    "on-secondary-fixed": "#00201c",
+                    "surface-container-high": "#e6e8e8",
+                    "primary-fixed": "#9cf2e8",
+                    "on-secondary-container": "#006f64",
+                    "tint-danger": "#FDE8E6",
+                    "surface-bright": "#f8fafa",
+                    "background": "#f8fafa",
+                    "tint-info": "#EEF2FF",
+                    "surface-variant": "#e1e3e3",
+                    "text-secondary": "#6B7280",
+                    "on-tertiary-fixed": "#00201d",
+                    "secondary": "#006b5f",
+                    "tertiary": "#0d5b55",
+                    "tertiary-fixed": "#abefe7",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#eff1f1",
+                    "surface-dim": "#d8dada",
+                    "on-tertiary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#006a63",
+                    "on-surface": "#191c1d",
+                    "tint-success": "#E6F5F3",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#00201d",
+                    "primary-container": "#0f766e",
+                    "inverse-primary": "#80d5cb",
+                    "secondary-fixed": "#71f8e4",
+                    "primary": "#005c55",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#80d5cb",
+                    "status-success": "#16A34A",
+                    "inverse-surface": "#2e3131"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "stack-sm": "12px",
+                    "container-padding": "20px",
+                    "stack-xs": "4px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "stat-display": ["Inter", "sans-serif"],
+                    "headline-sm": ["Inter", "sans-serif"],
+                    "headline-lg": ["Inter", "sans-serif"],
+                    "body-lg": ["Inter", "sans-serif"],
+                    "label-sm": ["Inter", "sans-serif"],
+                    "headline-md": ["Inter", "sans-serif"],
+                    "label-md": ["Inter", "sans-serif"]
+            },
+            "fontSize": {
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .toggle-switch:checked + .toggle-bg {
+            background-color: #006a63;
+        }
+        .toggle-switch:checked + .toggle-bg::after {
+            transform: translateX(20px);
+        }
+        .toggle-bg::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.2s ease-in-out;
+        }
+        .back-blur {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            color: #1A1A1A;
+        }
+        .premium-shimmer {
+            background: linear-gradient(90deg, #7C3AED, #9333EA, #7C3AED);
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-background/80 back-blur">
+<div class="flex justify-between items-center px-container-padding py-stack-sm w-full max-w-[600px] mx-auto">
+<div class="flex items-center gap-3">
+<button aria-label="Retour" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors active:scale-95">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<div class="flex items-center gap-2">
+<h1 class="text-headline-sm font-headline-sm text-primary">Alertes intelligentes ✨</h1>
+<span class="premium-shimmer text-white text-[10px] px-2 py-0.5 rounded-full font-bold tracking-wider uppercase">Premium</span>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A clean, professional close-up of a smiling young Tunisian entrepreneur in a minimalist office setting with soft sunlight. The photo has a high-end, light-mode fintech aesthetic with natural skin tones and a blurred background of a modern workspace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZKmWSn_rRp7WoqKfQZtlyTzz7z83ONxsGLq80aFTXhPYjM_-sokFD6_vZ-vVg5QEJisyr-Hy61xKZQNbh_HVRKzwhzyJuybbIpiLu7Mqqv7CLLulCGZLWiIlUWXCuRGaEG84keONf3pUN7WCSP1uwgYX_XAqraYP_DsNPrkVNSccCiRU5XvmvAF6czHE_9zt_TNLB10ijpNA4u-cYdYwIDOaIrUptfhqyeW_a_pfyoKV9efGzrzMeeDI25kz5Ip6Nkaf5z8RlrA"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-container-padding max-w-[600px] mx-auto space-y-element-gap">
+<!-- Welcome/Context Section -->
+<div class="py-4">
+<p class="text-label-md font-label-md text-text-secondary leading-relaxed">
+                Personnalisez vos notifications automatiques basées sur l'analyse prédictive de votre fiscalité tunisienne.
+            </p>
+</div>
+<!-- Notification Cards Grid -->
+<div class="space-y-4">
+<!-- Card 1: Anomalies -->
+<div class="bg-tint-info p-container-padding rounded-2xl flex items-start justify-between gap-4 shadow-[0_4px_16px_rgba(15,92,86,0.04)] hover:shadow-md transition-shadow duration-300">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-status-premium">query_stats</span>
+<h3 class="text-body-lg font-bold text-text-primary">Anomalies de dépenses</h3>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant">préviens-moi si une catégorie explose</p>
+</div>
+<div class="relative inline-block w-10 h-5 align-middle select-none transition duration-200 ease-in mt-1">
+<input checked="" class="toggle-switch absolute block w-0 h-0 opacity-0 cursor-pointer" id="toggle1" name="toggle1" type="checkbox"/>
+<label class="toggle-bg block overflow-hidden h-5 rounded-full bg-outline-variant cursor-pointer relative" for="toggle1"></label>
+</div>
+</div>
+<!-- Card 2: Trésorerie -->
+<div class="bg-tint-warning p-container-padding rounded-2xl flex flex-col gap-4 shadow-[0_4px_16px_rgba(15,92,86,0.04)]">
+<div class="flex items-start justify-between gap-4">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-status-warning">account_balance_wallet</span>
+<h3 class="text-body-lg font-bold text-text-primary">Trésorerie basse</h3>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant">si mon solde projeté &lt; 500 DT</p>
+</div>
+<div class="relative inline-block w-10 h-5 align-middle select-none transition duration-200 ease-in mt-1">
+<input checked="" class="toggle-switch absolute block w-0 h-0 opacity-0 cursor-pointer" id="toggle2" name="toggle2" type="checkbox"/>
+<label class="toggle-bg block overflow-hidden h-5 rounded-full bg-outline-variant cursor-pointer relative" for="toggle2"></label>
+</div>
+</div>
+<div class="flex items-center gap-3 pt-2 border-t border-status-warning/10">
+<span class="text-label-sm font-label-sm text-status-warning">Seuil d'alerte (DT)</span>
+<input class="w-24 bg-white/50 border border-status-warning/20 rounded-lg px-3 py-1 text-label-md font-bold text-status-warning focus:ring-status-warning focus:border-status-warning outline-none" type="number" value="500"/>
+</div>
+</div>
+<!-- Card 3: TVA -->
+<div class="bg-tint-success p-container-padding rounded-2xl flex items-start justify-between gap-4 shadow-[0_4px_16px_rgba(15,92,86,0.04)]">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-status-success">receipt_long</span>
+<h3 class="text-body-lg font-bold text-text-primary">TVA récupérable oubliée</h3>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant">L'IA détecte si tu as oublié de déduire la TVA sur un achat</p>
+</div>
+<div class="relative inline-block w-10 h-5 align-middle select-none transition duration-200 ease-in mt-1">
+<input checked="" class="toggle-switch absolute block w-0 h-0 opacity-0 cursor-pointer" id="toggle3" name="toggle3" type="checkbox"/>
+<label class="toggle-bg block overflow-hidden h-5 rounded-full bg-outline-variant cursor-pointer relative" for="toggle3"></label>
+</div>
+</div>
+<!-- Card 4: Opportunités -->
+<div class="bg-surface-container-low p-container-padding rounded-2xl flex items-start justify-between gap-4 shadow-[0_4px_16px_rgba(15,92,86,0.02)] opacity-80">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-outline">lightbulb</span>
+<h3 class="text-body-lg font-bold text-text-primary">Opportunités d'économie</h3>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant">Conseils personnalisés pour optimiser ta fiscalité</p>
+</div>
+<div class="relative inline-block w-10 h-5 align-middle select-none transition duration-200 ease-in mt-1">
+<input class="toggle-switch absolute block w-0 h-0 opacity-0 cursor-pointer" id="toggle4" name="toggle4" type="checkbox"/>
+<label class="toggle-bg block overflow-hidden h-5 rounded-full bg-outline-variant cursor-pointer relative" for="toggle4"></label>
+</div>
+</div>
+</div>
+<!-- Bottom Caption -->
+<footer class="pt-8 text-center">
+<p class="text-[10px] text-text-secondary opacity-70 mb-4">L'IA n'envoie jamais tes données à des tiers</p>
+<div class="w-full py-stack-sm px-container-padding text-center">
+<p class="text-label-sm font-label-sm-mobile text-text-secondary opacity-60">
+                    Application pédagogique, non certifiée par un expert-comptable.
+                </p>
+<div class="mt-2">
+<a class="text-label-sm font-label-sm-mobile text-text-secondary no-underline hover:text-primary transition-colors" href="#">Mentions légales</a>
+</div>
+</div>
+</footer>
+</main>
+<!-- Navigation Shell: BottomNavBar -->
+<nav class="fixed bottom-base left-0 right-0 z-50 flex justify-around items-center px-element-gap py-stack-sm mx-auto max-w-[560px] w-[calc(100%-40px)] bg-surface-container-highest/90 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.12)] rounded-full">
+<!-- Accueil -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="text-label-sm font-label-sm-mobile">Accueil</span>
+</a>
+<!-- IA -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">smart_toy</span>
+<span class="text-label-sm font-label-sm-mobile">IA</span>
+</a>
+<!-- Scanner -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">document_scanner</span>
+<span class="text-label-sm font-label-sm-mobile">Scanner</span>
+</a>
+<!-- Finance -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">payments</span>
+<span class="text-label-sm font-label-sm-mobile">Finance</span>
+</a>
+<!-- Savoir -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">menu_book</span>
+<span class="text-label-sm font-label-sm-mobile">Savoir</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for toggle switches
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const card = this.closest('.rounded-2xl');
+                if (this.checked) {
+                    card.style.opacity = '1';
+                    card.classList.remove('grayscale-[0.3]');
+                    this.parentElement.nextElementSibling?.classList.remove('opacity-50');
+                } else {
+                    card.style.opacity = '0.7';
+                    card.classList.add('grayscale-[0.3]');
+                }
+            });
+        });
+
+        // Interactive threshold field
+        const thresholdInput = document.querySelector('input[type="number"]');
+        if(thresholdInput) {
+            thresholdInput.addEventListener('focus', () => {
+                thresholdInput.parentElement.classList.add('scale-[1.02]');
+                thresholdInput.parentElement.style.transition = 'transform 0.2s ease-out';
+            });
+            thresholdInput.addEventListener('blur', () => {
+                thresholdInput.parentElement.classList.remove('scale-[1.02]');
+            });
+        }
+    </script>
+</body></html>

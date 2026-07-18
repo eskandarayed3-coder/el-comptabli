@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Guides compta 📒 - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "surface-container-high": "#e6e8e8",
+                    "surface-tint": "#006a63",
+                    "secondary-fixed": "#71f8e4",
+                    "surface-bright": "#f8fafa",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "tertiary-container": "#2f746d",
+                    "tertiary-fixed": "#abefe7",
+                    "surface-container-low": "#f2f4f4",
+                    "status-danger": "#DC2626",
+                    "text-primary": "#1A1A1A",
+                    "on-secondary-fixed": "#00201c",
+                    "background": "#f8fafa",
+                    "surface-container": "#eceeee",
+                    "on-surface-variant": "#3e4947",
+                    "tertiary": "#0d5b55",
+                    "secondary": "#006b5f",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#0f766e",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "on-secondary-container": "#006f64",
+                    "primary": "#005c55",
+                    "surface-dim": "#d8dada",
+                    "on-primary-fixed-variant": "#00504a",
+                    "status-warning": "#D97706",
+                    "tint-danger": "#FDE8E6",
+                    "status-premium": "#7C3AED",
+                    "on-tertiary-fixed": "#00201d",
+                    "inverse-primary": "#80d5cb",
+                    "on-tertiary-container": "#b3f7ee",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#eff1f1",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e1e3e3",
+                    "on-primary-fixed": "#00201d",
+                    "text-secondary": "#6B7280",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#005048",
+                    "on-error": "#ffffff",
+                    "surface": "#f8fafa",
+                    "on-primary-container": "#a3faef",
+                    "tint-warning": "#FEF3E2",
+                    "on-secondary": "#ffffff",
+                    "tint-success": "#E6F5F3",
+                    "on-surface": "#191c1d",
+                    "status-success": "#16A34A",
+                    "outline-variant": "#bdc9c6",
+                    "outline": "#6e7977",
+                    "surface-container-highest": "#e1e3e3",
+                    "on-background": "#191c1d",
+                    "error": "#ba1a1a",
+                    "tint-info": "#EEF2FF",
+                    "secondary-container": "#6df5e1",
+                    "inverse-surface": "#2e3131",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#80d5cb",
+                    "primary-fixed": "#9cf2e8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "20px",
+                    "base": "8px",
+                    "stack-xs": "4px",
+                    "element-gap": "16px",
+                    "stack-sm": "12px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "stat-display": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-sm-mobile": ["18px", {"lineHeight": "26px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "34px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soft-shadow {
+            shadow-[0_4px_16px_rgba(15,92,86,0.08)];
+        }
+        .guide-card-radius {
+            border-radius: 24px;
+        }
+        ::-webkit-scrollbar { display: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-text-primary min-h-screen pb-32">
+<!-- Top AppBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md">
+<div class="flex justify-between items-center w-full px-container-padding py-base max-w-[600px] mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-label-sm">
+                    EP
+                </div>
+<h1 class="font-headline-sm-mobile text-headline-sm-mobile font-bold text-primary">El Comptabli</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-[600px] mx-auto pt-20 px-container-padding">
+<!-- Search & Title -->
+<section class="mb-8">
+<h2 class="font-headline-md-mobile text-headline-md-mobile mb-element-gap">Guides compta 📒</h2>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-4 text-outline" data-icon="search">search</span>
+<input class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-none rounded-2xl focus:ring-2 focus:ring-primary/20 text-body-lg placeholder:text-outline transition-all" placeholder="Rechercher un guide..." type="text"/>
+</div>
+</section>
+<!-- Filters Section -->
+<section class="mb-8 overflow-hidden">
+<div class="flex gap-stack-sm overflow-x-auto pb-2 scroll-smooth">
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-primary text-on-tertiary font-label-md transition-all active:scale-95">
+                    Débutant
+                </button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-white border border-outline-variant text-on-surface-variant font-label-md hover:bg-surface-container-low transition-all active:scale-95">
+                    Intermédiaire
+                </button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-white border border-outline-variant text-on-surface-variant font-label-md hover:bg-surface-container-low transition-all active:scale-95">
+                    Avancé
+                </button>
+</div>
+</section>
+<!-- Guide Cards List -->
+<section class="space-y-element-gap">
+<!-- Card 1 -->
+<div class="bg-tint-info guide-card-radius p-container-padding flex flex-col gap-stack-sm shadow-[0_4px_16px_rgba(15,92,86,0.04)] active:scale-[0.98] transition-transform cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary" data-icon="coffee">coffee</span>
+</div>
+<span class="px-3 py-1 bg-tint-success text-status-success rounded-full font-label-sm text-label-sm font-medium">Débutant</span>
+</div>
+<div>
+<h3 class="font-headline-sm-mobile text-headline-sm-mobile text-text-primary leading-tight">La partie double expliquée avec un café</h3>
+<div class="flex items-center gap-2 mt-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+<span class="font-label-sm text-label-sm">4 min de lecture</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-tint-info guide-card-radius p-container-padding flex flex-col gap-stack-sm shadow-[0_4px_16px_rgba(15,92,86,0.04)] active:scale-[0.98] transition-transform cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary" data-icon="menu_book">menu_book</span>
+</div>
+<span class="px-3 py-1 bg-tint-success text-status-success rounded-full font-label-sm text-label-sm font-medium">Débutant</span>
+</div>
+<div>
+<h3 class="font-headline-sm-mobile text-headline-sm-mobile text-text-primary leading-tight">Plan comptable tunisien : les bases</h3>
+<div class="flex items-center gap-2 mt-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+<span class="font-label-sm text-label-sm">6 min de lecture</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-tint-info guide-card-radius p-container-padding flex flex-col gap-stack-sm shadow-[0_4px_16px_rgba(15,92,86,0.04)] active:scale-[0.98] transition-transform cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<span class="px-3 py-1 bg-tint-success text-status-success rounded-full font-label-sm text-label-sm font-medium">Débutant</span>
+</div>
+<div>
+<h3 class="font-headline-sm-mobile text-headline-sm-mobile text-text-primary leading-tight">Journal, grand livre, balance : qui fait quoi</h3>
+<div class="flex items-center gap-2 mt-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+<span class="font-label-sm text-label-sm">5 min de lecture</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-tint-info guide-card-radius p-container-padding flex flex-col gap-stack-sm shadow-[0_4px_16px_rgba(15,92,86,0.04)] active:scale-[0.98] transition-transform cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary" data-icon="visibility">visibility</span>
+</div>
+<span class="px-3 py-1 bg-tint-success text-status-success rounded-full font-label-sm text-label-sm font-medium">Débutant</span>
+</div>
+<div>
+<h3 class="font-headline-sm-mobile text-headline-sm-mobile text-text-primary leading-tight">Lire un bilan sans paniquer</h3>
+<div class="flex items-center gap-2 mt-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+<span class="font-label-sm text-label-sm">8 min de lecture</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Disclaimer from JSON -->
+<footer class="w-full flex flex-col justify-center items-center py-stack-xs mt-12 mb-8 opacity-60">
+<p class="font-label-sm text-label-sm text-center text-on-surface-variant px-container-padding">
+                El Comptabli - Outil pédagogique, non certifié expert-comptable.
+            </p>
+</footer>
+</main>
+<!-- BottomNavBar - "Savoir" active -->
+<nav class="fixed bottom-0 left-0 right-0 w-full z-50 flex justify-around items-center px-4 pb-6 max-w-[600px] mx-auto">
+<div class="bg-surface-container-lowest shadow-[0_8px_24px_rgba(0,0,0,0.12)] rounded-full w-full py-4 px-6 flex justify-around items-center">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm mt-1">Accueil</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-label-sm text-label-sm mt-1">IA</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-200" href="#">
+<div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center shadow-lg -mt-8">
+<span class="material-symbols-outlined" data-icon="document_scanner">document_scanner</span>
+</div>
+<span class="font-label-sm text-label-sm mt-1">Scanner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-1">Finance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold after:content-['\2022'] after:text-[8px] after:mt-0 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+<span class="font-label-sm text-label-sm mt-1">Savoir</span>
+</a>
+</div>
+</nav>
+<script>
+        // Simple micro-interaction for chips
+        const chips = document.querySelectorAll('button.rounded-full');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => {
+                    c.classList.remove('bg-primary', 'text-on-tertiary');
+                    c.classList.add('bg-white', 'border', 'border-outline-variant', 'text-on-surface-variant');
+                });
+                chip.classList.remove('bg-white', 'border', 'border-outline-variant', 'text-on-surface-variant');
+                chip.classList.add('bg-primary', 'text-on-tertiary');
+            });
+        });
+
+        // Add reading progress simulation
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            // Potentially add a progress bar if needed, but keeping it minimal for now
+        });
+    </script>
+</body></html>

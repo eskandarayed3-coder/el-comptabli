@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#80d5cb",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "surface-dim": "#d8dada",
+                    "status-success": "#16A34A",
+                    "on-primary-fixed-variant": "#00504a",
+                    "surface-container-highest": "#e1e3e3",
+                    "status-premium": "#7C3AED",
+                    "on-background": "#191c1d",
+                    "error-container": "#ffdad6",
+                    "surface": "#f8fafa",
+                    "inverse-surface": "#2e3131",
+                    "surface-variant": "#e1e3e3",
+                    "on-tertiary-fixed": "#00201d",
+                    "inverse-on-surface": "#eff1f1",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "tint-warning": "#FEF3E2",
+                    "on-tertiary": "#ffffff",
+                    "surface-bright": "#f8fafa",
+                    "status-warning": "#D97706",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#006f64",
+                    "primary-container": "#0f766e",
+                    "outline-variant": "#bdc9c6",
+                    "on-surface": "#191c1d",
+                    "on-error": "#ffffff",
+                    "primary-fixed": "#9cf2e8",
+                    "on-tertiary-container": "#b3f7ee",
+                    "on-background": "#191c1d",
+                    "tint-success": "#E6F5F3",
+                    "background": "#f8fafa",
+                    "on-surface-variant": "#3e4947",
+                    "surface-container-low": "#f2f4f4",
+                    "primary": "#005c55",
+                    "secondary-fixed": "#71f8e4",
+                    "on-primary": "#ffffff",
+                    "status-danger": "#DC2626",
+                    "on-primary-fixed": "#00201d",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "tertiary-fixed": "#abefe7",
+                    "tertiary-container": "#2f746d",
+                    "tint-info": "#EEF2FF",
+                    "text-secondary": "#6B7280",
+                    "text-primary": "#1A1A1A",
+                    "primary-fixed-dim": "#80d5cb",
+                    "on-secondary": "#ffffff",
+                    "outline": "#6e7977",
+                    "on-secondary-fixed-variant": "#005048",
+                    "surface-tint": "#006a63",
+                    "secondary": "#006b5f",
+                    "surface-container": "#eceeee",
+                    "on-secondary-fixed": "#00201c",
+                    "surface-container-high": "#e6e8e8",
+                    "tint-danger": "#FDE8E6",
+                    "tertiary": "#0d5b55",
+                    "secondary-container": "#6df5e1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "4px",
+                    "lg": "8px",
+                    "xl": "12px",
+                    "2xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "element-gap": "16px",
+                    "container-padding": "20px",
+                    "stack-sm": "12px",
+                    "base": "8px",
+                    "stack-xs": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f8fafa;
+        }
+        .message-thread {
+            flex-grow: 1;
+            padding: 20px;
+            padding-bottom: 120px;
+            overflow-y: auto;
+        }
+        .bubble-expert {
+            border-bottom-left-radius: 6px;
+        }
+        .bubble-user {
+            border-bottom-right-radius: 6px;
+        }
+        .floating-input {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(229, 231, 235, 0.5);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<div class="chat-container relative">
+<!-- TopAppBar -->
+<header class="fixed top-0 z-50 w-full max-w-[600px] h-16 bg-surface shadow-[0_4px_16px_rgba(15,92,86,0.08)] flex items-center justify-between px-container-padding">
+<div class="flex items-center gap-3">
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-cover bg-center border-2 border-white shadow-sm" data-alt="A professional portrait of a Tunisian male fiscal expert in his late 40s. He is wearing a sharp, dark teal suit and a crisp white shirt, radiating trust and competence. The background is a soft-focus modern office in Tunis with warm natural light. The overall aesthetic is clean, light, and professional, aligning with a premium fintech design." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCGEiGFVI7f198l3keT6L8QRGx3WlPAVUAnDkplsNV9sl3x7DjU48lvF5fln3JHWBDqVxhH_kobcHbOga5SBsWG5IiMlY3As12E85CuqsoqdsVs-p6j_HtMYlXts8B1M-Zu_6TbP2SsOAS5RETuTPneRNK_rcpjC9pSrji-haE17o_CFwRpvVbR-5oCRRm7jmFCfHnycijMQ1qeBDkKyheL9dNmMqESli2ndOIx67TMs2GfGnqyEuSL5W7VnhIvTfSNp7U-BWOQ4w')"></div>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-status-success border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<h1 class="font-headline-sm text-headline-sm text-primary flex items-center gap-1.5">
+                        Mounir B.
+                    </h1>
+<span class="text-[10px] font-medium text-status-success uppercase tracking-wider">En ligne</span>
+</div>
+</div>
+<div class="flex items-center">
+<button class="material-symbols-outlined text-primary p-2 hover:opacity-80 active:scale-95 transition-all">more_vert</button>
+</div>
+</header>
+<!-- Main Body -->
+<main class="pt-16">
+<!-- Context Banner -->
+<div class="w-full bg-surface-container-low px-container-padding py-4 flex items-center gap-3 border-b border-outline-variant/20">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface-variant">Consultation liée à ton dossier TVA juillet</p>
+<p class="text-[11px] text-primary/70 font-medium">Référence : FIS-2024-07-TUN</p>
+</div>
+</div>
+<!-- Message Thread -->
+<div class="message-thread space-y-6">
+<!-- Expert Message -->
+<div class="flex items-end gap-2 max-w-[85%]">
+<div class="w-8 h-8 rounded-full bg-cover bg-center shrink-0 mb-1" data-alt="Close up of a professional male face, slightly smiling, approachable and friendly, looking directly at the camera with warm brown eyes. Soft lighting and high-end photographic quality, fitting a trustworthy financial service app." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD8hRI_hW6TzS0DKz3tVWIoBxCOE0R6dCP4JKUvY4-dHjStmtwBCBBDBakRgVv3gynIyUjL7LhkD3PYorEMsk9C8fRtYxsXYDzMlXYUqS5liBiQ4TQNB4JQ1VMMirh7iHs6gnthUcp9V3EqHd26a_Po5X4Xjuv_mXGrrNRSsBMwR02F2gTsPAlbnSX_xEy6H1msb7RRbC6oBp12CTYQsA3HfoNG61CSz3jNh-1WchryXpg3d0QIEHeu_f0KR_r8kkvAnXJ4I8XnrA')"></div>
+<div class="flex flex-col gap-1">
+<div class="bg-white p-4 rounded-2xl bubble-expert shadow-[0_4px_16px_rgba(15,92,86,0.06)]">
+<p class="font-body-lg text-on-surface">Bonjour Eskandar, j'ai bien reçu tes documents pour la TVA de juillet. On peut faire le point ?</p>
+</div>
+<span class="text-[10px] text-outline font-medium self-start ml-1">09:15</span>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex flex-col items-end gap-1 ml-auto max-w-[85%]">
+<div class="bg-primary-container text-white p-4 rounded-2xl bubble-user shadow-md">
+<p class="font-body-lg">Ahla Mounir, super. J'ai ajouté la facture STEG manquante.</p>
+</div>
+<span class="text-[10px] text-outline font-medium mr-1">09:18</span>
+</div>
+<!-- Shared Document Card -->
+<div class="flex flex-col items-end gap-2 ml-auto max-w-[80%]">
+<div class="w-full bg-surface-container-lowest border border-outline-variant/30 p-4 rounded-2xl shadow-sm flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-tint-danger flex items-center justify-center text-status-danger">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+</div>
+<div class="flex-grow overflow-hidden">
+<h4 class="font-label-md text-on-surface truncate">Facture STEG.pdf</h4>
+<p class="text-label-sm text-outline">1.2 MB • PDF</p>
+</div>
+<button class="text-primary font-label-md hover:underline decoration-2 underline-offset-4">Visualiser</button>
+</div>
+</div>
+<!-- Expert Message 2 -->
+<div class="flex items-end gap-2 max-w-[85%]">
+<div class="w-8 h-8 rounded-full bg-cover bg-center shrink-0 mb-1" data-alt="Minimalist headshot of a professional expert, bright clean lighting, soft professional background, consistent with high-end fintech brand identity." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBIrgAXoerVU_AmC7jxRbdIRaRR-3kpMNIdl1pAMK1PRw7bjiCsq0kogfKWVxXZWda3tbr8y9plRmchNYZy6v1K3quQo2GLWqafwZrOvE4ipz-t06RjEyOj6m3xbuWtQGExz2oAU5AZrO_x39t8jlUI2bcRKbY9rtdWDdywrAKCBCe6tGCz_Hv4LhYgqoHv_sdOCEs0Bg2COFkxzpEsHanVuVj9Xj6DFJt2VCmlv_gmnD-FrwGvSInFTaUmMpbUFi2b_dW3LZCIaw')"></div>
+<div class="flex flex-col gap-1">
+<div class="bg-white p-4 rounded-2xl bubble-expert shadow-[0_4px_16px_rgba(15,92,86,0.06)] flex items-center gap-2">
+<p class="font-body-lg text-on-surface">Parfait, je vérifie ça tout de suite.</p>
+<span class="material-symbols-outlined text-[16px] text-primary animate-pulse">sync</span>
+</div>
+<span class="text-[10px] text-outline font-medium self-start ml-1">09:20</span>
+</div>
+</div>
+<!-- Disclaimer Footer -->
+<div class="pt-4 flex flex-col items-center">
+<div class="bg-surface-container-low/50 px-4 py-2 rounded-full flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-outline">info</span>
+<p class="text-[10px] text-outline-variant font-medium tracking-tight">Outil pédagogique • Non substitut d'expert certifié</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Input Bar Area -->
+<div class="fixed bottom-0 w-full max-w-[600px] z-50">
+<div class="floating-input px-container-padding pt-4 pb-6 flex flex-col gap-3">
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-outline-variant hover:text-primary transition-colors active:scale-90">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<div class="flex-grow relative">
+<input class="w-full h-12 bg-surface-container border-none rounded-full px-6 focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-outline font-body-lg transition-all" placeholder="Tape ton message..." type="text"/>
+</div>
+<button class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-all hover:bg-primary-container">
+<span class="material-symbols-outlined ml-0.5" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+<div class="flex items-center justify-center gap-1.5 opacity-60">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span class="text-[11px] font-medium text-outline">Réponse sous 24h en moyenne</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Micro-interaction for input -->
+<script>
+        const input = document.querySelector('input');
+        const sendBtn = document.querySelector('button .material-symbols-outlined[style*="FILL"]');
+        
+        input.addEventListener('input', (e) => {
+            if (e.target.value.trim() !== "") {
+                sendBtn.parentElement.classList.add('scale-105');
+                sendBtn.parentElement.classList.replace('bg-primary', 'bg-primary-container');
+            } else {
+                sendBtn.parentElement.classList.remove('scale-105');
+                sendBtn.parentElement.classList.replace('bg-primary-container', 'bg-primary');
+            }
+        });
+
+        // Simple scroll to bottom on load
+        window.onload = () => {
+            const thread = document.querySelector('.message-thread');
+            thread.scrollTop = thread.scrollHeight;
+        };
+    </script>
+</body></html>

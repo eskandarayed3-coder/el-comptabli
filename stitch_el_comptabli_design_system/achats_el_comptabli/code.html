@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#a3faef",
+                        "on-secondary-container": "#006f64",
+                        "status-success": "#16A34A",
+                        "on-tertiary-fixed": "#00201d",
+                        "on-secondary-fixed-variant": "#005048",
+                        "tint-info": "#EEF2FF",
+                        "text-primary": "#1A1A1A",
+                        "tertiary-container": "#2f746d",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2e3131",
+                        "outline-variant": "#bdc9c6",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "on-primary-fixed": "#00201d",
+                        "tint-danger": "#FDE8E6",
+                        "tertiary-fixed": "#abefe7",
+                        "tint-warning": "#FEF3E2",
+                        "surface-container-highest": "#e1e3e3",
+                        "surface-variant": "#e1e3e3",
+                        "surface-dim": "#d8dada",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#b3f7ee",
+                        "status-danger": "#DC2626",
+                        "tint-success": "#E6F5F3",
+                        "secondary-fixed": "#71f8e4",
+                        "surface-tint": "#006a63",
+                        "status-premium": "#7C3AED",
+                        "surface-bright": "#f8fafa",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "surface": "#f8fafa",
+                        "outline": "#6e7977",
+                        "on-primary": "#ffffff",
+                        "background": "#f8fafa",
+                        "on-primary-fixed-variant": "#00504a",
+                        "secondary": "#006b5f",
+                        "on-secondary-fixed": "#00201c",
+                        "primary": "#005c55",
+                        "on-surface-variant": "#3e4947",
+                        "on-surface": "#191c1d",
+                        "primary-fixed": "#9cf2e8",
+                        "on-error-container": "#93000a",
+                        "status-warning": "#D97706",
+                        "inverse-primary": "#80d5cb",
+                        "primary-container": "#0f766e",
+                        "surface-container-high": "#e6e8e8",
+                        "primary-fixed-dim": "#80d5cb",
+                        "text-secondary": "#6B7280",
+                        "surface-container": "#eceeee",
+                        "secondary-container": "#6df5e1",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#eff1f1",
+                        "on-background": "#191c1d",
+                        "surface-container-low": "#f2f4f4",
+                        "tertiary": "#0d5b55"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "stack-xs": "4px",
+                        "container-padding": "20px",
+                        "base": "8px",
+                        "element-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-sm-mobile": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .fab-shadow {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-container-padding h-16 w-full max-w-[600px] mx-auto">
+<div class="flex items-center gap-3">
+<img alt="El Comptabli Logo" class="w-8 h-8 rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD722q9z4VVBU1pKmX5B5GS9MEtsgk4D3kV39c4LMORoO3n9eqG9JEVG5SS-IlGhujY6ED_uuwx4rHfhXiOunLPiw0IopDeOMaU1AEL25JHpG8erphA2T7pabDjPOBVWMlgwY7iCAJeJrH6b3QhbZ3er0ijbkA4dG4aOxBRcIOlW0AeUNd3ABZ-LGie9K8IIp02PLjQ-CkbynO9yAWSL8pU1XOTUGp6cvU9oDCXy1FLmc7DUnq0G0OyZwc0UHB5YB_Dtv5C0X3KOg"/>
+<h1 class="font-headline-md text-headline-sm-mobile text-primary tracking-tight">Achats</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-[600px] mx-auto px-container-padding pt-20 pb-32">
+<!-- Summary Card -->
+<section class="mb-6">
+<div class="bg-tint-warning p-6 rounded-2xl flex flex-col gap-2 custom-shadow">
+<div class="flex items-center gap-2 text-status-warning">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+<span class="font-label-md text-label-md">Paiement imminent</span>
+</div>
+<h2 class="font-headline-lg text-headline-md text-primary">890 DT <span class="text-headline-sm font-medium">à payer</span></h2>
+<p class="text-on-surface-variant font-body-lg">Échéance globale sous 15 jours</p>
+</div>
+</section>
+<!-- Suppliers Link -->
+<section class="mb-8">
+<a class="flex items-center justify-between p-4 bg-white rounded-2xl custom-shadow hover:bg-surface-container transition-colors group" href="#">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tint-info flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">group</span>
+</div>
+<span class="font-label-md text-label-md text-text-primary">Voir mes fournisseurs</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</a>
+</section>
+<!-- Orders List -->
+<section class="space-y-4">
+<h3 class="font-headline-sm text-headline-sm-mobile text-on-surface-variant px-1">Commandes récentes</h3>
+<!-- Order Card 1 -->
+<div class="bg-white p-5 rounded-2xl custom-shadow flex flex-col gap-4 border border-transparent hover:border-outline-variant/30 transition-all">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<h4 class="font-headline-sm text-headline-sm-mobile text-text-primary">Bureau Vallée</h4>
+<p class="text-label-sm text-text-secondary">16 juillet 2026</p>
+</div>
+<div class="bg-tint-info text-primary px-3 py-1 rounded-full text-label-sm font-medium">
+                        Commandé
+                    </div>
+</div>
+<div class="flex justify-between items-end pt-2">
+<div class="flex flex-col">
+<span class="text-label-sm text-text-secondary">Total Facturé</span>
+<span class="font-headline-md text-headline-sm text-primary">450 DT</span>
+</div>
+<button class="bg-surface-container-low p-2 rounded-xl text-primary hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">receipt_long</span>
+</button>
+</div>
+</div>
+<!-- Order Card 2 -->
+<div class="bg-white p-5 rounded-2xl custom-shadow flex flex-col gap-4 border border-transparent hover:border-outline-variant/30 transition-all">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<h4 class="font-headline-sm text-headline-sm-mobile text-text-primary">STEG</h4>
+<p class="text-label-sm text-text-secondary">12 juillet 2026</p>
+</div>
+<div class="bg-tint-warning text-status-warning px-3 py-1 rounded-full text-label-sm font-medium">
+                        Reçu
+                    </div>
+</div>
+<div class="flex justify-between items-end pt-2">
+<div class="flex flex-col">
+<span class="text-label-sm text-text-secondary">Total Facturé</span>
+<span class="font-headline-md text-headline-sm text-primary">120 DT</span>
+</div>
+<button class="bg-surface-container-low p-2 rounded-xl text-primary hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">payments</span>
+</button>
+</div>
+</div>
+<!-- Order Card 3 -->
+<div class="bg-white p-5 rounded-2xl custom-shadow flex flex-col gap-4 border border-transparent hover:border-outline-variant/30 transition-all opacity-80">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<h4 class="font-headline-sm text-headline-sm-mobile text-text-primary">Orange Business</h4>
+<p class="text-label-sm text-text-secondary">05 juillet 2026</p>
+</div>
+<div class="bg-tint-success text-status-success px-3 py-1 rounded-full text-label-sm font-medium">
+                        Payé
+                    </div>
+</div>
+<div class="flex justify-between items-end pt-2">
+<div class="flex flex-col">
+<span class="text-label-sm text-text-secondary">Total Facturé</span>
+<span class="font-headline-md text-headline-sm text-primary">320 DT</span>
+</div>
+<span class="text-status-success material-symbols-outlined text-[24px]">check_circle</span>
+</div>
+</div>
+</section>
+<!-- Disclaimer -->
+<footer class="mt-12 mb-8 px-4 text-center">
+<div class="bg-surface-container-low rounded-xl p-4">
+<p class="text-label-sm text-text-secondary leading-relaxed">
+                    FiscAssist est un outil pédagogique. Ces données ne constituent pas une certification comptable officielle. Veuillez consulter un expert-comptable agréé pour vos déclarations.
+                </p>
+</div>
+</footer>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-24 right-6 bg-primary text-white flex items-center gap-2 px-6 py-4 rounded-full fab-shadow active:scale-90 transition-transform z-40">
+<span class="material-symbols-outlined">add</span>
+<span class="font-label-md font-bold text-label-md">+ Commande</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[560px] h-16 rounded-full glass-nav bg-surface-container-lowest/90 flex justify-around items-center px-6 z-50 shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+</a>
+<!-- Active Tab: Achats (Receipts/Finance mapping) -->
+<a class="flex flex-col items-center justify-center text-primary relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for scroll depth
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-sm');
+            } else {
+                header.classList.remove('shadow-sm');
+            }
+        });
+    </script>
+</body></html>

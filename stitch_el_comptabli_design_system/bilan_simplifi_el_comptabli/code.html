@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bilan Simplifié — 30 juin 2026</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#00201d",
+                        "inverse-primary": "#80d5cb",
+                        "background": "#f8fafa",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8fafa",
+                        "secondary": "#006b5f",
+                        "surface": "#f8fafa",
+                        "primary-fixed-dim": "#80d5cb",
+                        "status-danger": "#DC2626",
+                        "on-surface-variant": "#3e4947",
+                        "outline-variant": "#bdc9c6",
+                        "on-error": "#ffffff",
+                        "on-surface": "#191c1d",
+                        "status-warning": "#D97706",
+                        "on-primary-fixed-variant": "#00504a",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f4f4",
+                        "outline": "#6e7977",
+                        "on-secondary-fixed": "#00201c",
+                        "on-primary-container": "#a3faef",
+                        "on-secondary-container": "#006f64",
+                        "surface-tint": "#006a63",
+                        "on-tertiary-container": "#b3f7ee",
+                        "tertiary-fixed": "#abefe7",
+                        "surface-container": "#eceeee",
+                        "tint-warning": "#FEF3E2",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#00201d",
+                        "surface-container-highest": "#e1e3e3",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "tint-info": "#EEF2FF",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#6df5e1",
+                        "primary-fixed": "#9cf2e8",
+                        "primary": "#005c55",
+                        "tertiary-container": "#2f746d",
+                        "status-success": "#16A34A",
+                        "error": "#ba1a1a",
+                        "tertiary": "#0d5b55",
+                        "on-background": "#191c1d",
+                        "inverse-on-surface": "#eff1f1",
+                        "primary-container": "#0f766e",
+                        "inverse-surface": "#2e3131",
+                        "surface-variant": "#e1e3e3",
+                        "surface-dim": "#d8dada",
+                        "secondary-fixed": "#71f8e4",
+                        "surface-container-high": "#e6e8e8",
+                        "tint-success": "#E6F5F3",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "status-premium": "#7C3AED",
+                        "text-secondary": "#6B7280",
+                        "tint-danger": "#FDE8E6",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-error-container": "#93000a",
+                        "text-primary": "#1A1A1A"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "base": "8px",
+                        "stack-xs": "4px",
+                        "container-padding": "20px",
+                        "element-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .active-dot::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            width: 4px;
+            height: 4px;
+            background-color: #006b5f;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface dark:bg-surface-dim transition-colors h-16 flex items-center px-container-padding max-w-[600px] mx-auto">
+<div class="flex items-center justify-between w-full">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform p-2 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-primary">Bilan Simplifié</h1>
+</div>
+<img alt="Logo" class="w-8 h-8 rounded-lg object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv2i0E71b4lHyJSpRABoox_7MEN8ckBs0vb2Z3EluJTUHbEj5CGOTGajAqdHxGeptuOPtM51UvTSSBYS3vwSkoN-4XQDuo2WxVi0vCLUi5_omDmtW7oWCXbrEkjNKavL7iwdqabzMnWmwgX1zxJmODXLPQ2xoZkK2p35e8KqUmX6m2jQIk_N9oMPUSGZSqXC8lEOVGKOXql6vdxDfKJrT2HSNzonia6VzwoRiUEroMTE0m4izP4F_1d1GKAHVhc9x2nHs4qyUJaQ"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 pb-32 px-container-padding max-w-[600px] mx-auto space-y-6">
+<!-- Date Header -->
+<div class="flex flex-col gap-1">
+<p class="font-label-sm text-label-sm text-outline">Période clôturée au</p>
+<h2 class="font-headline-md text-headline-md text-on-surface">30 juin 2026</h2>
+</div>
+<!-- Balance Indicator Pill (Contextual) -->
+<div class="flex justify-center">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 bg-tint-success border border-status-success/20 rounded-full">
+<span class="material-symbols-outlined text-status-success text-[18px]" style="font-variation-settings: 'wght' 700;">check_circle</span>
+<span class="font-label-md text-label-md text-status-success font-bold">Équilibré</span>
+</div>
+</div>
+<!-- Assets Card (Actif) -->
+<section class="bg-tint-success p-5 rounded-2xl soft-shadow border border-secondary/5 space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-primary">Actif</h3>
+<span class="material-symbols-outlined text-primary/40">account_balance</span>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center py-1 border-b border-secondary/10">
+<span class="font-label-md text-label-md text-on-surface-variant">Immobilisations</span>
+<span class="font-label-md text-label-md text-on-surface">2 400 DT</span>
+</div>
+<div class="flex justify-between items-center py-1 border-b border-secondary/10">
+<span class="font-label-md text-label-md text-on-surface-variant">Créances clients</span>
+<span class="font-label-md text-label-md text-on-surface">1 250 DT</span>
+</div>
+<div class="flex justify-between items-center py-1 border-b border-secondary/10">
+<span class="font-label-md text-label-md text-on-surface-variant">Banque</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">3 180 DT</span>
+</div>
+<div class="flex justify-between items-center py-1">
+<span class="font-label-md text-label-md text-on-surface-variant">Caisse</span>
+<span class="font-label-md text-label-md text-on-surface">220 DT</span>
+</div>
+</div>
+<div class="pt-2 flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm text-primary">Total Actif</span>
+<span class="font-stat-display text-[22px] text-primary">7 050 DT</span>
+</div>
+</section>
+<!-- Liabilities Card (Passif) -->
+<section class="bg-tint-info p-5 rounded-2xl soft-shadow border border-tertiary/5 space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-tertiary">Passif</h3>
+<span class="material-symbols-outlined text-tertiary/40">payments</span>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center py-1 border-b border-tertiary/10">
+<span class="font-label-md text-label-md text-on-surface-variant">Capital</span>
+<span class="font-label-md text-label-md text-on-surface">3 000 DT</span>
+</div>
+<div class="flex justify-between items-center py-1 border-b border-tertiary/10">
+<span class="font-label-md text-label-md text-on-surface-variant">Résultat (Bénéfice)</span>
+<span class="font-label-md text-label-md text-status-success font-semibold">2 738 DT</span>
+</div>
+<div class="flex justify-between items-center py-1 border-b border-tertiary/10">
+<span class="font-label-md text-label-md text-on-surface-variant">Dettes fournisseurs</span>
+<span class="font-label-md text-label-md text-on-surface">890 DT</span>
+</div>
+<div class="flex justify-between items-center py-1 border-b border-tertiary/10">
+<span class="font-label-md text-label-md text-on-surface-variant">TVA à payer</span>
+<span class="font-label-md text-label-md text-status-warning">312 DT</span>
+</div>
+<div class="flex justify-between items-center py-1">
+<span class="font-label-md text-label-md text-on-surface-variant">Emprunts</span>
+<span class="font-label-md text-label-md text-on-surface">110 DT</span>
+</div>
+</div>
+<div class="pt-2 flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm text-tertiary">Total Passif</span>
+<span class="font-stat-display text-[22px] text-tertiary">7 050 DT</span>
+</div>
+</section>
+<!-- Disclaimer Banner -->
+<footer class="mt-8 px-4 py-3 bg-surface-container-low rounded-xl text-center">
+<p class="font-label-sm text-[10px] uppercase tracking-wider text-outline leading-relaxed">
+                Indicatif — certification par expert-comptable requise pour usage officiel
+            </p>
+</footer>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-surface-container-lowest dark:bg-inverse-surface shadow-[0_8px_24px_rgba(0,0,0,0.12)] max-w-[600px] mx-auto rounded-t-3xl md:rounded-full md:bottom-4 md:left-4 md:right-4">
+<!-- Accueil -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-all active:scale-90">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="font-label-sm text-label-sm mt-1">Accueil</span>
+</button>
+<!-- Finance (Active) -->
+<button class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed font-bold relative active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-1">Finance</span>
+<div class="w-1 h-1 bg-secondary rounded-full mt-0.5"></div>
+</button>
+<!-- Savoir -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-all active:scale-90">
+<span class="material-symbols-outlined text-[24px]">school</span>
+<span class="font-label-sm text-label-sm mt-1">Savoir</span>
+</button>
+<!-- Messagerie -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-all active:scale-90">
+<span class="material-symbols-outlined text-[24px]">chat_bubble</span>
+<span class="font-label-sm text-label-sm mt-1">Messagerie</span>
+</button>
+<!-- Profil -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-all active:scale-90">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profil</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction: Scroll reveal for cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('section');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = `all 0.6s cubic-bezier(0.23, 1, 0.32, 1) ${index * 0.15}s`;
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100);
+            });
+        });
+    </script>
+</body></html>

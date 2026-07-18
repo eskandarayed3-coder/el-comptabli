@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Signature électronique - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "secondary-fixed": "#71f8e4",
+                    "tint-warning": "#FEF3E2",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#00504a",
+                    "tertiary-container": "#2f746d",
+                    "secondary-container": "#6df5e1",
+                    "secondary": "#006b5f",
+                    "primary-container": "#0f766e",
+                    "outline": "#6e7977",
+                    "background": "#f8fafa",
+                    "status-warning": "#D97706",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#3e4947",
+                    "surface-container-low": "#f2f4f4",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "surface-variant": "#e1e3e3",
+                    "surface-tint": "#006a63",
+                    "inverse-primary": "#80d5cb",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#e6e8e8",
+                    "on-tertiary-fixed": "#00201d",
+                    "tertiary-fixed": "#abefe7",
+                    "primary-fixed-dim": "#80d5cb",
+                    "tertiary": "#0d5b55",
+                    "tint-info": "#EEF2FF",
+                    "status-premium": "#7C3AED",
+                    "on-secondary-container": "#006f64",
+                    "tint-success": "#E6F5F3",
+                    "primary": "#005c55",
+                    "on-secondary-fixed": "#00201c",
+                    "surface": "#f8fafa",
+                    "surface-container-highest": "#e1e3e3",
+                    "primary-fixed": "#9cf2e8",
+                    "on-error-container": "#93000a",
+                    "tint-danger": "#FDE8E6",
+                    "on-secondary": "#ffffff",
+                    "status-success": "#16A34A",
+                    "on-surface": "#191c1d",
+                    "text-secondary": "#6B7280",
+                    "on-primary-fixed": "#00201d",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "status-danger": "#DC2626",
+                    "inverse-on-surface": "#eff1f1",
+                    "surface-container": "#eceeee",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed-variant": "#005048",
+                    "outline-variant": "#bdc9c6",
+                    "error": "#ba1a1a",
+                    "text-primary": "#1A1A1A",
+                    "on-tertiary-container": "#b3f7ee",
+                    "on-primary-container": "#a3faef",
+                    "surface-dim": "#d8dada",
+                    "on-background": "#191c1d",
+                    "surface-bright": "#f8fafa",
+                    "inverse-surface": "#2e3131"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "card": "24px"
+            },
+            "spacing": {
+                    "container-padding": "20px",
+                    "element-gap": "16px",
+                    "stack-xs": "4px",
+                    "stack-sm": "12px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "400px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        
+        .signature-stroke {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 2s ease-in-out forwards;
+        }
+
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .glass-overlay {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            color: #191c1d;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="bg-surface docked full-width top-0 z-40">
+<div class="flex justify-between items-center w-full px-container-padding h-16">
+<button class="transition-transform active:scale-95 text-primary hover:bg-surface-container-low p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-primary">Signature électronique</h1>
+<button class="transition-transform active:scale-95 text-primary hover:bg-surface-container-low p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+</div>
+</header>
+<main class="px-container-padding pt-4 space-y-6 max-w-[600px] mx-auto">
+<!-- Document Preview Card -->
+<section class="relative group">
+<div class="bg-white rounded-card p-5 shadow-[0_4px_16px_rgba(15,92,86,0.08)] overflow-hidden">
+<div class="space-y-4 opacity-30 select-none pointer-events-none">
+<div class="h-4 bg-surface-variant rounded w-3/4"></div>
+<div class="h-4 bg-surface-variant rounded w-1/2"></div>
+<div class="space-y-2">
+<div class="h-3 bg-surface-variant rounded w-full"></div>
+<div class="h-3 bg-surface-variant rounded w-full"></div>
+<div class="h-3 bg-surface-variant rounded w-11/12"></div>
+</div>
+<div class="h-40 bg-surface-variant/50 rounded-xl w-full flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl opacity-20" data-icon="description">description</span>
+</div>
+<div class="space-y-2">
+<div class="h-3 bg-surface-variant rounded w-full"></div>
+<div class="h-3 bg-surface-variant rounded w-3/4"></div>
+</div>
+</div>
+<!-- Interactive Signature Zone Overlay -->
+<div class="absolute inset-0 flex items-center justify-center p-8">
+<div class="w-full h-32 border-2 border-dashed border-primary-container rounded-xl flex flex-col items-center justify-center bg-primary-container/5 glass-overlay transition-all hover:bg-primary-container/10">
+<span class="material-symbols-outlined text-primary mb-2" data-icon="draw">draw</span>
+<p class="font-label-md text-primary font-semibold">Place ta signature ici</p>
+</div>
+</div>
+</div>
+<p class="text-center mt-2 font-label-sm text-on-surface-variant">Document : Contrat_Prestataire_V1.pdf</p>
+</section>
+<!-- Identity Verification Row -->
+<div class="flex gap-3 justify-center">
+<div class="flex items-center gap-1.5 px-4 py-2 bg-[#DCFCE7] text-[#16A34A] rounded-full border border-[#16A34A]/20">
+<span class="material-symbols-outlined text-[18px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-md">CIN vérifiée ✓</span>
+</div>
+<div class="flex items-center gap-1.5 px-4 py-2 bg-[#DCFCE7] text-[#16A34A] rounded-full border border-[#16A34A]/20">
+<span class="material-symbols-outlined text-[18px]" data-icon="face" style="font-variation-settings: 'FILL' 1;">face</span>
+<span class="font-label-md">Selfie vérifié ✓</span>
+</div>
+</div>
+<!-- Signature Pad Card -->
+<section class="bg-tint-info rounded-card p-5 space-y-4 shadow-[0_4px_16px_rgba(15,92,86,0.08)]">
+<div class="flex justify-between items-center px-1">
+<h2 class="font-label-md text-primary font-bold">Zone de traçage</h2>
+<div class="flex gap-2">
+<button class="font-label-sm text-on-surface-variant hover:text-error transition-colors px-3 py-1">Effacer</button>
+<button class="bg-primary text-white font-label-sm px-4 py-1.5 rounded-full shadow-sm active:scale-95 transition-transform">Valider le tracé</button>
+</div>
+</div>
+<div class="relative w-full h-48 bg-white rounded-xl border border-outline-variant overflow-hidden cursor-crosshair">
+<!-- Background Grid for realism -->
+<div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#000 1px, transparent 0); background-size: 20px 20px;"></div>
+<!-- SVG Signature Stroke -->
+<svg class="absolute inset-0 w-full h-full" viewbox="0 0 400 200">
+<path class="signature-stroke" d="M 80,110 C 100,100 130,80 160,100 C 190,120 210,140 230,120 C 250,100 280,70 310,90 S 340,130 320,140" fill="none" stroke="#006b5f" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+</svg>
+<div class="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
+<p class="font-label-sm text-outline-variant italic">Signez à l'aide de votre doigt ou d'un stylet</p>
+</div>
+</div>
+</section>
+<!-- Final Action Button -->
+<div class="pt-4">
+<button class="w-full bg-primary-container text-white h-14 rounded-full font-headline-sm flex items-center justify-center gap-3 shadow-lg active:scale-95 transition-all hover:bg-primary/90">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+                Signer le document
+            </button>
+</div>
+<!-- Footer Disclaimer -->
+<footer class="text-center px-4 pb-4">
+<p class="font-label-sm text-[10px] leading-tight text-on-surface-variant/70 uppercase tracking-wider">
+                Signature à valeur légale conformément à la loi en vigueur en Tunisie. Document certifié par El Comptabli.
+            </p>
+</footer>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 px-container-padding pb-6 flex justify-around items-center bg-surface-container-lowest dark:bg-surface-container-low shadow-[0_8px_24px_rgba(0,0,0,0.12)] rounded-full mb-4 mx-container-padding w-[calc(100%-40px)] left-0 right-0">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-all duration-200 active:scale-90 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Accueil</span>
+</a>
+<!-- Documents -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-all duration-200 active:scale-90 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-sm text-label-sm">Documents</span>
+</a>
+<!-- Signer (Active) -->
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim font-bold after:content-[''] after:w-1 after:h-1 after:bg-secondary after:rounded-full after:mt-1 transition-all duration-200 active:scale-90 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="draw" style="font-variation-settings: 'FILL' 1;">draw</span>
+<span class="font-label-sm text-label-sm">Signer</span>
+</a>
+<!-- Historique -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-all duration-200 active:scale-90 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-sm text-label-sm">Historique</span>
+</a>
+<!-- Profil -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-all duration-200 active:scale-90 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profil</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for the clear button
+        const clearBtn = document.querySelector('button:contains("Effacer")');
+        const signaturePath = document.querySelector('.signature-stroke');
+        
+        // Polyfill for :contains selector if needed or just handle by text
+        document.querySelectorAll('button').forEach(btn => {
+            if(btn.textContent === 'Effacer') {
+                btn.addEventListener('click', () => {
+                    signaturePath.style.opacity = '0';
+                    setTimeout(() => {
+                        signaturePath.style.animation = 'none';
+                        signaturePath.offsetHeight; // trigger reflow
+                        signaturePath.style.animation = 'draw 2s ease-in-out forwards';
+                        signaturePath.style.opacity = '1';
+                    }, 300);
+                });
+            }
+        });
+    </script>
+</body></html>

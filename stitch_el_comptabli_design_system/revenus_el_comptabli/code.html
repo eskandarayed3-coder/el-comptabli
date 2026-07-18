@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>El Comptabli - Revenus</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#006f64",
+                        "surface-container": "#eceeee",
+                        "secondary-container": "#6df5e1",
+                        "text-secondary": "#6B7280",
+                        "surface-container-high": "#e6e8e8",
+                        "surface-bright": "#f8fafa",
+                        "background": "#f8fafa",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "text-primary": "#1A1A1A",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "surface-container-lowest": "#ffffff",
+                        "tint-success": "#E6F5F3",
+                        "on-primary-container": "#a3faef",
+                        "on-primary-fixed": "#00201d",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2e3131",
+                        "surface-container-low": "#f2f4f4",
+                        "primary-fixed": "#9cf2e8",
+                        "primary-container": "#0f766e",
+                        "on-surface-variant": "#3e4947",
+                        "primary-fixed-dim": "#80d5cb",
+                        "secondary-fixed": "#71f8e4",
+                        "status-warning": "#D97706",
+                        "surface-tint": "#006a63",
+                        "on-tertiary-container": "#b3f7ee",
+                        "status-danger": "#DC2626",
+                        "surface": "#f8fafa",
+                        "outline": "#6e7977",
+                        "on-secondary": "#ffffff",
+                        "tint-warning": "#FEF3E2",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "status-success": "#16A34A",
+                        "inverse-on-surface": "#eff1f1",
+                        "tint-info": "#EEF2FF",
+                        "on-tertiary-fixed": "#00201d",
+                        "tint-danger": "#FDE8E6",
+                        "surface-container-highest": "#e1e3e3",
+                        "secondary": "#006b5f",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#abefe7",
+                        "status-premium": "#7C3AED",
+                        "on-background": "#191c1d",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#005048",
+                        "tertiary": "#0d5b55",
+                        "tertiary-container": "#2f746d",
+                        "on-secondary-fixed": "#00201c",
+                        "surface-dim": "#d8dada",
+                        "surface-variant": "#e1e3e3",
+                        "outline-variant": "#bdc9c6",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#00504a",
+                        "inverse-primary": "#80d5cb",
+                        "primary": "#005c55",
+                        "on-surface": "#191c1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "card": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-xs": "4px",
+                        "base": "8px",
+                        "container-padding": "20px",
+                        "stack-sm": "12px",
+                        "element-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "stat-display": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f8fafa;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .chart-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 2s ease-out forwards;
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+        .pill-active-shadow {
+            box-shadow: 0 4px 12px rgba(0, 92, 85, 0.15);
+        }
+        .smooth-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .smooth-scroll::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen items-center overflow-x-hidden">
+<!-- TopAppBar -->
+<nav class="bg-background dark:bg-background flex items-center justify-between px-container-padding h-16 w-full max-w-[600px] mx-auto sticky top-0 z-50">
+<button class="transition-transform duration-200 active:scale-95 text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed">Revenus</h1>
+<button class="transition-transform duration-200 active:scale-95 text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</nav>
+<!-- Main Content -->
+<main class="w-full max-w-[600px] px-container-padding pb-32 flex flex-col gap-6">
+<!-- Revenue Hero Card with Chart -->
+<section class="bg-surface-container-lowest rounded-card p-container-padding shadow-[0_4px_16px_rgba(15,92,86,0.08)]">
+<div class="flex justify-between items-end mb-4">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Total des revenus</p>
+<h2 class="font-stat-display text-stat-display text-primary">12 450 DT</h2>
+</div>
+<div class="flex items-center gap-1 text-status-success font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]" data-icon="trending_up">trending_up</span>
+<span>+12%</span>
+</div>
+</div>
+<!-- SVG Line Chart -->
+<div class="w-full h-48 relative mt-4">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 400 150">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#0F766E" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#0F766E" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Area Fill -->
+<path d="M 0 120 Q 80 110 160 80 Q 240 50 320 60 L 320 150 L 0 150 Z" fill="url(#chartGradient)"></path>
+<!-- Main Path (Solid) -->
+<path class="chart-path" d="M 0 120 Q 80 110 160 80 Q 240 50 320 60" fill="none" stroke="#0F766E" stroke-linecap="round" stroke-width="3"></path>
+<!-- Projection Path (Dotted) -->
+<path d="M 320 60 Q 360 40 400 30" fill="none" stroke="#0F766E" stroke-dasharray="6,4" stroke-linecap="round" stroke-width="3"></path>
+<!-- Points -->
+<circle cx="320" cy="60" fill="#ffffff" r="4" stroke="#0F766E" stroke-width="2"></circle>
+</svg>
+<!-- Chart Labels -->
+<div class="flex justify-between mt-2 font-label-sm text-label-sm text-outline">
+<span>Jan</span>
+<span>Mar</span>
+<span>Mai</span>
+<span class="text-primary font-medium flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        AI Projection
+                    </span>
+</div>
+</div>
+</section>
+<!-- Filter Pills -->
+<section class="flex gap-stack-sm overflow-x-auto smooth-scroll -mx-container-padding px-container-padding">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-5 py-2.5 rounded-full flex-shrink-0 pill-active-shadow">
+                Par client
+            </button>
+<button class="bg-surface-container-high/50 text-on-surface-variant font-label-md text-label-md px-5 py-2.5 rounded-full flex-shrink-0 transition-all hover:bg-surface-container-high">
+                Par catégorie
+            </button>
+<button class="bg-surface-container-high/50 text-on-surface-variant font-label-md text-label-md px-5 py-2.5 rounded-full flex-shrink-0 transition-all hover:bg-surface-container-high">
+                Par mois
+            </button>
+</section>
+<!-- Top Clients Section -->
+<section class="flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Meilleurs clients</h3>
+<span class="font-label-md text-label-md text-primary">Tout voir</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Client Bar 1 -->
+<div class="bg-surface-container-lowest rounded-card p-4 flex flex-col gap-3 transition-transform active:scale-[0.98]">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tint-info flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="corporate_fare">corporate_fare</span>
+</div>
+<span class="font-label-md text-label-md text-text-primary">Wafa Trading</span>
+</div>
+<span class="font-label-md text-label-md text-primary font-bold">2 400 DT</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<!-- Client Bar 2 -->
+<div class="bg-surface-container-lowest rounded-card p-4 flex flex-col gap-3 transition-transform active:scale-[0.98]">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tint-success flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="business_center">business_center</span>
+</div>
+<span class="font-label-md text-label-md text-text-primary">Amine SARL</span>
+</div>
+<span class="font-label-md text-label-md text-primary font-bold">1 100 DT</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary/60 rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<!-- Client Bar 3 -->
+<div class="bg-surface-container-lowest rounded-card p-4 flex flex-col gap-3 transition-transform active:scale-[0.98]">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tint-warning flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+</div>
+<span class="font-label-md text-label-md text-text-primary">Formation</span>
+</div>
+<span class="font-label-md text-label-md text-primary font-bold">950 DT</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary/40 rounded-full" style="width: 38%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Insight Card -->
+<section class="bg-tint-info rounded-card p-container-padding flex items-start gap-4 border border-primary/10">
+<div class="w-12 h-12 rounded-2xl bg-primary-container text-on-primary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined" data-icon="lightbulb" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-primary mb-1">Analyse intelligente</p>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                    Meilleur mois : <span class="font-bold text-primary">mai (4 100 DT)</span>. Votre activité est en croissance constante depuis 3 mois.
+                </p>
+</div>
+</section>
+<!-- Disclaimer Banner -->
+<footer class="bg-surface-container-low p-4 rounded-xl text-center">
+<p class="font-label-sm text-label-sm text-outline italic">
+                El Comptabli est un outil pédagogique. Consultez un expert-comptable pour vos déclarations officielles.
+            </p>
+</footer>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-0 right-0 z-50 flex justify-around items-center px-4 py-3 bg-surface-container-lowest/80 backdrop-blur-md border border-outline-variant/30 fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[400px] rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+<a class="flex items-center justify-center text-on-surface-variant dark:text-outline w-12 h-12 hover:bg-surface-container-high/50 transition-all duration-300 ease-out active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</a>
+<!-- Active Tab: Analytics -->
+<a class="flex items-center justify-center bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container rounded-full w-12 h-12 transition-all duration-300 ease-out active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</a>
+<a class="flex items-center justify-center text-on-surface-variant dark:text-outline w-12 h-12 hover:bg-surface-container-high/50 transition-all duration-300 ease-out active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</a>
+<a class="flex items-center justify-center text-on-surface-variant dark:text-outline w-12 h-12 hover:bg-surface-container-high/50 transition-all duration-300 ease-out active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+</a>
+<a class="flex items-center justify-center text-on-surface-variant dark:text-outline w-12 h-12 hover:bg-surface-container-high/50 transition-all duration-300 ease-out active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for filter chips
+        document.querySelectorAll('section.flex.gap-stack-sm button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('section.flex.gap-stack-sm button').forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-on-primary', 'pill-active-shadow');
+                    btn.classList.add('bg-surface-container-high/50', 'text-on-surface-variant');
+                });
+                this.classList.add('bg-primary', 'text-on-primary', 'pill-active-shadow');
+                this.classList.remove('bg-surface-container-high/50', 'text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html>

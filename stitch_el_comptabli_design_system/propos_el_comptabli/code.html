@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>À propos - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#006b5f",
+                        "surface-variant": "#e1e3e3",
+                        "surface": "#f8fafa",
+                        "status-warning": "#D97706",
+                        "on-primary-fixed": "#00201d",
+                        "surface-tint": "#006a63",
+                        "inverse-on-surface": "#eff1f1",
+                        "tertiary": "#0d5b55",
+                        "background": "#f8fafa",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-secondary-container": "#006f64",
+                        "on-surface": "#191c1d",
+                        "on-background": "#191c1d",
+                        "surface-container-high": "#e6e8e8",
+                        "status-premium": "#7C3AED",
+                        "error-container": "#ffdad6",
+                        "status-success": "#16A34A",
+                        "status-danger": "#DC2626",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "on-secondary-fixed-variant": "#005048",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "primary-fixed": "#9cf2e8",
+                        "text-secondary": "#6B7280",
+                        "surface-container-highest": "#e1e3e3",
+                        "outline": "#6e7977",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#80d5cb",
+                        "outline-variant": "#bdc9c6",
+                        "tertiary-container": "#2f746d",
+                        "surface-container": "#eceeee",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f2f4f4",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#00201c",
+                        "tint-danger": "#FDE8E6",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "tertiary-fixed": "#abefe7",
+                        "secondary-fixed": "#71f8e4",
+                        "on-tertiary-fixed": "#00201d",
+                        "on-surface-variant": "#3e4947",
+                        "primary-container": "#0f766e",
+                        "surface-bright": "#f8fafa",
+                        "inverse-primary": "#80d5cb",
+                        "tint-info": "#EEF2FF",
+                        "secondary-container": "#6df5e1",
+                        "on-primary-fixed-variant": "#00504a",
+                        "inverse-surface": "#2e3131",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d8dada",
+                        "tint-warning": "#FEF3E2",
+                        "tint-success": "#E6F5F3",
+                        "primary": "#005c55",
+                        "on-primary-container": "#a3faef",
+                        "text-primary": "#1A1A1A",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "base": "8px",
+                        "element-gap": "16px",
+                        "stack-xs": "4px",
+                        "stack-sm": "12px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-scale:active {
+            transform: scale(0.96);
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start max-w-[600px] mx-auto overflow-x-hidden">
+<!-- TopAppBar -->
+<nav class="flex items-center justify-between px-container-padding h-16 w-full sticky top-0 bg-background z-50">
+<div class="flex items-center gap-4">
+<button aria-label="Retour" class="active-scale transition-transform p-2 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-primary" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-primary">À propos</h1>
+</div>
+<div class="w-10"></div> <!-- Spacer for center-aligned feel -->
+</nav>
+<!-- Main Content Canvas -->
+<main class="w-full px-container-padding flex flex-col gap-8 pb-12">
+<!-- Logo & Version Section -->
+<section class="flex flex-col items-center justify-center pt-8">
+<div class="w-24 h-24 mb-4">
+<img alt="El Comptabli Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbzjh8QNZdIYgTc9BwJy2NcG7nFT5XefcordHTHYym5c2Z6QoCqk7V9suVoZ5figraYyI2pOfTPq8XGljrBBb48GZ24x7RdZ-qHuqb9NOtVsASV7CnY253PiKxPeIP3KlCB4OiNVrLhnDbMUSPGmdV3ODDKU5zqMQyYxJ85_u99j_W74v0FZGzjdkZbDVu3nk6vCYmbg2FGRYkJBrdejxRYdKiUFhNnihKgIY_6VtcYMvGU4X827P0Gdl0LL267Bq72xuchN33DQ"/>
+</div>
+<p class="font-label-md text-label-md text-outline">Version 1.0.0</p>
+</section>
+<!-- Mission Card -->
+<section class="bg-tint-success p-6 rounded-2xl flex flex-col items-center text-center custom-shadow">
+<p class="font-headline-sm text-headline-sm text-primary leading-tight">
+                Rendre la compta et la fiscalité simples pour chaque entrepreneur tunisien 🇹🇳
+            </p>
+</section>
+<!-- Actionable List Rows -->
+<section class="flex flex-col gap-3">
+<!-- Row: Conditions -->
+<button class="w-full flex items-center justify-between p-5 bg-surface-container-lowest rounded-xl custom-shadow active-scale transition-all hover:bg-surface-container-low group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="gavel">gavel</span>
+<span class="font-label-md text-label-md text-on-surface">Conditions d'utilisation</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Row: Confidentialité -->
+<button class="w-full flex items-center justify-between p-5 bg-surface-container-lowest rounded-xl custom-shadow active-scale transition-all hover:bg-surface-container-low group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="lock">lock</span>
+<span class="font-label-md text-label-md text-on-surface">Politique de confidentialité</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Row: Disclaimer (Amber Tint) -->
+<button class="w-full flex items-center justify-between p-5 bg-tint-warning rounded-xl custom-shadow active-scale transition-all hover:opacity-90 group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-status-warning" data-icon="error_outline">error_outline</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Disclaimer pédagogique</span>
+</div>
+<span class="material-symbols-outlined text-status-warning group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Row: Contact -->
+<button class="w-full flex items-center justify-between p-5 bg-surface-container-lowest rounded-xl custom-shadow active-scale transition-all hover:bg-surface-container-low group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="mail">mail</span>
+<span class="font-label-md text-label-md text-on-surface">Nous contacter</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Row: Noter l'app -->
+<button class="w-full flex items-center justify-between p-5 bg-surface-container-lowest rounded-xl custom-shadow active-scale transition-all hover:bg-surface-container-low group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="star">star</span>
+<span class="font-label-md text-label-md text-on-surface">Noter l'app</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</button>
+</section>
+<!-- Footer -->
+<footer class="flex flex-col items-center gap-stack-xs w-full mt-auto pb-8">
+<p class="font-label-sm text-label-sm text-outline text-center">
+                © 2024 El Comptabli. Made in Tunisia 🇹🇳 with ❤️
+            </p>
+<div class="flex gap-4 mt-2">
+<a class="font-label-sm text-label-sm text-outline hover:text-primary transition-colors" href="#">Mentions Légales</a>
+<span class="text-outline-variant">•</span>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+</footer>
+</main>
+<script>
+        // Simple micro-interaction for active states
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('touchstart', () => {
+                btn.style.transform = 'scale(0.96)';
+            });
+            btn.addEventListener('touchend', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

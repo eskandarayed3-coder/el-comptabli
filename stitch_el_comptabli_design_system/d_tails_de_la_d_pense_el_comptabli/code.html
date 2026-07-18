@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Détails de la dépense - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "surface": "#f8fafa",
+                    "status-premium": "#7C3AED",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "outline-variant": "#bdc9c6",
+                    "tint-danger": "#FDE8E6",
+                    "surface-container-low": "#f2f4f4",
+                    "outline": "#6e7977",
+                    "tertiary": "#0d5b55",
+                    "tertiary-container": "#2f746d",
+                    "primary-container": "#0f766e",
+                    "surface-container-highest": "#e1e3e3",
+                    "on-tertiary-container": "#b3f7ee",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#abefe7",
+                    "text-secondary": "#6B7280",
+                    "inverse-primary": "#80d5cb",
+                    "on-tertiary-fixed": "#00201d",
+                    "on-primary-fixed-variant": "#00504a",
+                    "surface-variant": "#e1e3e3",
+                    "surface-bright": "#f8fafa",
+                    "tint-warning": "#FEF3E2",
+                    "secondary-container": "#6df5e1",
+                    "primary-fixed-dim": "#80d5cb",
+                    "surface-container-high": "#e6e8e8",
+                    "inverse-on-surface": "#eff1f1",
+                    "surface-tint": "#006a63",
+                    "on-secondary-fixed": "#00201c",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "error": "#ba1a1a",
+                    "status-danger": "#DC2626",
+                    "background": "#f8fafa",
+                    "surface-container": "#eceeee",
+                    "on-surface": "#191c1d",
+                    "on-error": "#ffffff",
+                    "primary-fixed": "#9cf2e8",
+                    "on-surface-variant": "#3e4947",
+                    "text-primary": "#1A1A1A",
+                    "secondary-fixed": "#71f8e4",
+                    "on-primary-fixed": "#00201d",
+                    "tint-info": "#EEF2FF",
+                    "primary": "#005c55",
+                    "tint-success": "#E6F5F3",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#006f64",
+                    "on-secondary-fixed-variant": "#005048",
+                    "status-warning": "#D97706",
+                    "status-success": "#16A34A",
+                    "inverse-surface": "#2e3131",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#d8dada",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#191c1d",
+                    "secondary": "#006b5f",
+                    "on-primary-container": "#a3faef"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "24px": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "element-gap": "16px",
+                    "stack-sm": "12px",
+                    "container-padding": "20px",
+                    "stack-xs": "4px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+        .fab-shadow {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-surface sticky top-0 z-50 flex justify-between items-center w-full px-5 py-4 max-w-[600px] mx-auto">
+<button class="hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary text-headline-sm">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-primary">Détails de la dépense</h1>
+<button class="hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary text-headline-sm">share</span>
+</button>
+</header>
+<main class="max-w-[600px] mx-auto px-5 mt-6">
+<!-- Hero Section -->
+<section class="flex flex-col items-center text-center mb-8">
+<h2 class="font-stat-display text-[48px] text-status-danger mb-4">-420 DT</h2>
+<div class="w-16 h-16 rounded-full bg-tint-danger flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-status-danger text-3xl">local_gas_station</span>
+</div>
+<div class="px-3 py-1 rounded-full bg-tint-success text-status-success font-label-sm text-label-sm">
+                Validée
+            </div>
+</section>
+<!-- Main Information Card -->
+<div class="bg-surface-container-lowest rounded-24px p-5 soft-shadow mb-4">
+<div class="space-y-6">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md text-label-md">Fournisseur</span>
+<span class="text-on-surface font-headline-sm text-label-md">Station Agil</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md text-label-md">Catégorie</span>
+<span class="text-on-surface font-headline-sm text-label-md">Carburant</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md text-label-md">Date</span>
+<span class="text-on-surface font-headline-sm text-label-md">16 juillet 2026</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md text-label-md">TVA récupérable</span>
+<span class="text-on-surface font-headline-sm text-label-md">67 DT</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md text-label-md">Ajouté via</span>
+<span class="text-on-surface font-headline-sm text-label-md">Saisie manuelle</span>
+</div>
+</div>
+<!-- Receipt Section -->
+<div class="mt-8 pt-6 border-t border-outline-variant">
+<div class="flex items-center gap-4 p-3 bg-surface-container rounded-xl cursor-pointer hover:bg-surface-variant transition-colors group">
+<div class="w-12 h-12 rounded-lg bg-surface-dim overflow-hidden flex-shrink-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="A macro shot of a thermal paper receipt from a Tunisian Agil gas station, showing faded blue ink printing, a list of fuel prices, and a date of July 2026. The paper is slightly crumpled with a soft texture, photographed with high-key studio lighting on a neutral grey background to match a clean fintech mobile app aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBgazMxmIFslIKb3z3QbyiRhH009N7RhUqDLELMjnCSTsMU4Avwtwhvcro7KmEpPl-pqbxuo-8J1cqUX2C2lRM0yViCJh12LaEsD5dDZbr6w1g4y3cBuuhz2c6KQFMu2_UW6AYZraSJ3nbWDlxmX4Zr6iL7UP4_drlnbADzgfZg8xuyCaufMzB0JnRykHIX4JWvVz2zunwXxz6tEKRQpq2zvdhBMBLEvffVzzSmXsA6P5MTytDXVCfjjp-G5kgkv2jntzpSwfrdeA')"></div>
+</div>
+<div class="flex-grow">
+<p class="font-label-md text-label-md text-on-surface">Voir le reçu</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">IMG_20260716_1432.jpg</p>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">open_in_new</span>
+</div>
+</div>
+</div>
+<!-- AI Assistant Card -->
+<div class="bg-tint-info rounded-24px p-5 mb-8 flex items-start gap-4">
+<span class="material-symbols-outlined text-status-premium" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<p class="font-body-lg text-label-md text-on-surface">
+                3e dépense carburant ce mois (total 180 DT). Votre consommation est 15% plus élevée que le mois dernier.
+            </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-3 mb-10">
+<button class="flex items-center justify-center gap-2 w-full py-4 rounded-full border border-primary text-primary font-headline-sm text-label-md hover:bg-primary/5 transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined">edit</span>
+                Modifier
+            </button>
+<button class="flex items-center justify-center gap-2 w-full py-4 rounded-full text-status-danger font-headline-sm text-label-md hover:bg-tint-danger transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined">delete</span>
+                Supprimer la dépense
+            </button>
+</div>
+<!-- Pedagogical Disclaimer -->
+<div class="bg-surface-container-low rounded-xl p-4 text-center mb-12">
+<p class="font-label-sm text-label-sm text-outline">
+                Ces informations sont fournies à titre indicatif pour votre gestion fiscale. El Comptabli est un outil pédagogique et ne remplace pas l'avis d'un expert-comptable agréé.
+            </p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-4 left-0 right-0 w-[calc(100%-40px)] max-w-[400px] mx-auto z-50 flex justify-around items-center h-20 px-4 bg-surface-container-lowest rounded-full shadow-lg shadow-[rgba(15,92,86,0.12)]">
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:bg-surface-container-high rounded-full transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-1">Accueil</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full p-2 w-14 h-14 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+<span class="font-label-sm text-label-sm">Dépenses</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:bg-surface-container-high rounded-full transition-all" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-sm text-label-sm mt-1">IA</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:bg-surface-container-high rounded-full transition-all" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-1">Impôts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:bg-surface-container-high rounded-full transition-all" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-sm text-label-sm mt-1">Plus</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for rows
+        document.querySelectorAll('.MainInfoRow').forEach(row => {
+            row.addEventListener('click', () => {
+                row.classList.add('scale-[0.98]');
+                setTimeout(() => row.classList.remove('scale-[0.98]'), 100);
+            });
+        });
+    </script>
+</body></html>

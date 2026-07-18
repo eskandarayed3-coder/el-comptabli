@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=390, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed-variant": "#00504a",
+                        "text-secondary": "#6B7280",
+                        "text-primary": "#1A1A1A",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#b3f7ee",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2e3131",
+                        "on-background": "#191c1d",
+                        "secondary": "#006b5f",
+                        "tint-warning": "#FEF3E2",
+                        "tint-danger": "#FDE8E6",
+                        "outline": "#6e7977",
+                        "primary-fixed": "#9cf2e8",
+                        "on-secondary-fixed": "#00201c",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0f766e",
+                        "surface-variant": "#e1e3e3",
+                        "surface-container-high": "#e6e8e8",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "surface-container": "#eceeee",
+                        "on-tertiary-fixed": "#00201d",
+                        "tint-success": "#E6F5F3",
+                        "on-primary-container": "#a3faef",
+                        "secondary-fixed": "#71f8e4",
+                        "inverse-primary": "#80d5cb",
+                        "tertiary": "#0d5b55",
+                        "surface-dim": "#d8dada",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "tertiary-container": "#2f746d",
+                        "status-premium": "#7C3AED",
+                        "primary-fixed-dim": "#80d5cb",
+                        "surface-tint": "#006a63",
+                        "primary": "#005c55",
+                        "on-primary-fixed": "#00201d",
+                        "error": "#ba1a1a",
+                        "tint-info": "#EEF2FF",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f8fafa",
+                        "status-success": "#16A34A",
+                        "background": "#f8fafa",
+                        "on-secondary-container": "#006f64",
+                        "secondary-container": "#6df5e1",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#eff1f1",
+                        "surface-container-highest": "#e1e3e3",
+                        "surface": "#f8fafa",
+                        "tertiary-fixed": "#abefe7",
+                        "outline-variant": "#bdc9c6",
+                        "on-surface-variant": "#3e4947",
+                        "status-warning": "#D97706",
+                        "on-surface": "#191c1d",
+                        "status-danger": "#DC2626",
+                        "surface-container-low": "#f2f4f4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "24px": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "element-gap": "16px",
+                        "base": "8px",
+                        "stack-xs": "4px",
+                        "container-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f8fafa;
+            font-family: 'Inter', sans-serif;
+            color: #191c1d;
+            margin: 0;
+            padding-bottom: 100px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chart-mask {
+            mask-image: linear-gradient(to right, black 66%, transparent 66%, transparent 67%, black 67%);
+        }
+        .gradient-band {
+            background: linear-gradient(180deg, rgba(0, 92, 85, 0.08) 0%, rgba(0, 92, 85, 0) 100%);
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="max-w-[390px] mx-auto min-h-screen relative overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-container-padding h-16 bg-surface dark:bg-on-background fixed top-0 z-50">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-primary hover:bg-surface-container-low transition-colors p-2 rounded-full active:scale-95 duration-150">menu</button>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">Prévisions ✨</span>
+<span class="bg-status-premium/10 text-status-premium text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Premium</span>
+</div>
+</div>
+<button class="material-symbols-outlined text-primary hover:bg-surface-container-low transition-colors p-2 rounded-full active:scale-95 duration-150">workspace_premium</button>
+</header>
+<main class="pt-20 px-container-padding space-y-6">
+<!-- Scenario Filter -->
+<section class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+<button class="px-5 py-2.5 rounded-full bg-primary text-white font-label-md text-label-md shadow-sm transition-all active:scale-95">Réaliste</button>
+<button class="px-5 py-2.5 rounded-full bg-white text-text-secondary font-label-md text-label-md border border-outline-variant/30 transition-all active:scale-95">Optimiste</button>
+<button class="px-5 py-2.5 rounded-full bg-white text-text-secondary font-label-md text-label-md border border-outline-variant/30 transition-all active:scale-95">Prudent</button>
+</section>
+<!-- Main Forecast Chart -->
+<section class="bg-white rounded-24px p-5 custom-shadow space-y-6">
+<div class="flex justify-between items-start">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary">Croissance du CA</h2>
+<p class="font-label-sm text-label-sm text-text-secondary">Projection sur 3 mois</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-status-success font-bold">+8.4%</span>
+<span class="text-[10px] text-text-secondary uppercase">vs an dernier</span>
+</div>
+</div>
+<!-- SVG Chart Placeholder Logic -->
+<div class="relative w-full h-48 mt-4">
+<svg class="w-full h-full" viewbox="0 0 350 180">
+<!-- Confidence Band -->
+<path d="M 230 110 L 350 70 L 350 150 L 230 110" fill="rgba(0, 92, 85, 0.05)"></path>
+<!-- Grid Lines (Subtle) -->
+<line stroke="#F1F5F9" stroke-width="1" x1="0" x2="350" y1="40" y2="40"></line>
+<line stroke="#F1F5F9" stroke-width="1" x1="0" x2="350" y1="90" y2="90"></line>
+<line stroke="#F1F5F9" stroke-width="1" x1="0" x2="350" y1="140" y2="140"></line>
+<!-- History Line (Solid) -->
+<path d="M 0 150 Q 40 145 70 120 T 130 110 T 180 130 T 230 110" fill="none" stroke="#005c55" stroke-linecap="round" stroke-width="3"></path>
+<!-- Projection Line (Dashed) -->
+<path d="M 230 110 Q 280 90 350 75" fill="none" stroke="#005c55" stroke-dasharray="6 4" stroke-linecap="round" stroke-width="3"></path>
+<!-- Current Position Indicator -->
+<circle cx="230" cy="110" fill="#005c55" r="5"></circle>
+<circle cx="230" cy="110" fill="#005c55" fill-opacity="0.2" r="8"></circle>
+</svg>
+<!-- X-Axis Labels -->
+<div class="flex justify-between mt-4 px-1">
+<span class="text-[10px] text-text-secondary">Fév</span>
+<span class="text-[10px] text-text-secondary">Mar</span>
+<span class="text-[10px] text-text-secondary">Avr</span>
+<span class="text-[10px] text-text-secondary">Mai</span>
+<span class="text-[10px] text-text-secondary">Juin</span>
+<span class="text-[10px] text-text-secondary font-bold text-primary">Juil</span>
+<span class="text-[10px] text-primary/40 italic">Août</span>
+<span class="text-[10px] text-primary/40 italic">Sept</span>
+</div>
+</div>
+</section>
+<!-- Forecast Stat Cards -->
+<section class="grid grid-cols-2 gap-4">
+<div class="bg-tint-success rounded-24px p-5 flex flex-col justify-between min-h-[120px] transition-transform active:scale-[0.98]">
+<div class="space-y-1">
+<span class="text-[10px] font-bold text-secondary uppercase tracking-tight">CA août prévu</span>
+<p class="font-stat-display text-stat-display text-primary">3 450 DT</p>
+</div>
+<span class="text-label-sm font-label-sm text-text-secondary">±12% de marge</span>
+</div>
+<div class="bg-tint-success rounded-24px p-5 flex flex-col justify-between min-h-[120px] transition-transform active:scale-[0.98]">
+<div class="space-y-1">
+<span class="text-[10px] font-bold text-secondary uppercase tracking-tight">Tréso fin sept</span>
+<p class="font-stat-display text-stat-display text-primary">2 100 DT</p>
+</div>
+<div class="flex items-center gap-1 text-status-success">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span class="text-[10px] font-bold">+400 DT</span>
+</div>
+</div>
+</section>
+<!-- Data Source Info -->
+<section class="bg-tint-info rounded-xl p-4 flex gap-3 items-center">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant leading-snug">
+                Basé sur 14 mois de données historiques et les tendances du marché tunisien.
+            </p>
+</section>
+<!-- Pedagogical Disclaimer -->
+<footer class="bg-[#F5F7F7] rounded-lg p-3 text-center">
+<p class="text-[10px] text-text-secondary leading-relaxed uppercase tracking-widest">
+                El Comptabli est un outil pédagogique. Ces projections ne constituent pas un conseil comptable certifié.
+            </p>
+</footer>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-0 right-0 mx-auto w-[90%] max-w-[400px] h-16 flex justify-around items-center px-6 z-50 bg-surface-container-lowest/90 backdrop-blur-md rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+<button class="flex items-center justify-center text-on-surface-variant/60 hover:opacity-80 transition-opacity active:scale-90 duration-200">
+<span class="material-symbols-outlined">home</span>
+</button>
+<!-- Analytics is the parent of Forecast, so marked as active -->
+<button class="flex items-center justify-center text-secondary relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-secondary after:rounded-full hover:opacity-80 transition-opacity active:scale-90 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</button>
+<button class="flex items-center justify-center text-on-surface-variant/60 hover:opacity-80 transition-opacity active:scale-90 duration-200">
+<span class="material-symbols-outlined">smart_toy</span>
+</button>
+<button class="flex items-center justify-center text-on-surface-variant/60 hover:opacity-80 transition-opacity active:scale-90 duration-200">
+<span class="material-symbols-outlined">history_edu</span>
+</button>
+<button class="flex items-center justify-center text-on-surface-variant/60 hover:opacity-80 transition-opacity active:scale-90 duration-200">
+<span class="material-symbols-outlined">person</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('.transition-transform').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.add('scale-95');
+                setTimeout(() => card.classList.remove('scale-95'), 150);
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Récupération - El Comptabli</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "status-warning": "#D97706",
+                        "on-primary-fixed": "#00201d",
+                        "surface": "#f8fafa",
+                        "surface-variant": "#e1e3e3",
+                        "secondary": "#006b5f",
+                        "on-background": "#191c1d",
+                        "on-surface": "#191c1d",
+                        "on-secondary-container": "#006f64",
+                        "background": "#f8fafa",
+                        "on-tertiary-container": "#b3f7ee",
+                        "tertiary": "#0d5b55",
+                        "surface-tint": "#006a63",
+                        "inverse-on-surface": "#eff1f1",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "tertiary-fixed-dim": "#90d3cb",
+                        "on-secondary-fixed-variant": "#005048",
+                        "status-success": "#16A34A",
+                        "status-danger": "#DC2626",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#e6e8e8",
+                        "status-premium": "#7C3AED",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#bdc9c6",
+                        "primary-fixed-dim": "#80d5cb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#9cf2e8",
+                        "text-secondary": "#6B7280",
+                        "surface-container-highest": "#e1e3e3",
+                        "outline": "#6e7977",
+                        "on-surface-variant": "#3e4947",
+                        "on-tertiary-fixed": "#00201d",
+                        "on-tertiary-fixed-variant": "#00504a",
+                        "tertiary-fixed": "#abefe7",
+                        "secondary-fixed": "#71f8e4",
+                        "on-secondary-fixed": "#00201c",
+                        "tint-danger": "#FDE8E6",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f2f4f4",
+                        "tertiary-container": "#2f746d",
+                        "surface-container": "#eceeee",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2e3131",
+                        "on-primary-fixed-variant": "#00504a",
+                        "inverse-primary": "#80d5cb",
+                        "tint-info": "#EEF2FF",
+                        "secondary-container": "#6df5e1",
+                        "surface-bright": "#f8fafa",
+                        "primary-container": "#0f766e",
+                        "surface-dim": "#d8dada",
+                        "on-secondary": "#ffffff",
+                        "primary": "#005c55",
+                        "on-primary-container": "#a3faef",
+                        "text-primary": "#1A1A1A",
+                        "on-error-container": "#93000a",
+                        "tint-warning": "#FEF3E2",
+                        "tint-success": "#E6F5F3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "xxl": "24px",
+                        "pill": "9999px"
+                    },
+                    "spacing": {
+                        "stack-xs": "4px",
+                        "stack-sm": "12px",
+                        "element-gap": "16px",
+                        "container-padding": "20px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "stat-display": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soft-shadow {
+            shadow-[0_4px_16px_rgba(15,92,86,0.08)];
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col items-center">
+<!-- Top Bar Component -->
+<header class="bg-surface w-full top-0 sticky flex items-center justify-between px-container-padding py-stack-sm z-50">
+<button aria-label="Retour" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h2 class="font-headline-sm text-headline-sm text-primary">Récupération</h2>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</header>
+<main class="w-full max-w-[600px] flex-grow flex flex-col px-container-padding pt-8 pb-12 overflow-y-auto">
+<!-- Welcome Section -->
+<div class="mb-10 text-left">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary-container mb-2">Mot de passe oublié ?</h1>
+<p class="font-body-lg text-body-lg text-text-secondary">On t'envoie un lien de réinitialisation</p>
+</div>
+<!-- Request Form Section -->
+<section class="fade-in" id="forgot-password-form">
+<div class="bg-surface-container-lowest rounded-xxl p-container-padding shadow-[0_4px_16px_rgba(15,92,86,0.08)] mb-8">
+<div class="space-y-6">
+<div class="flex flex-col space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1" for="email">Adresse e-mail</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary transition-all outline-none" id="email" placeholder="exemple@domain.tn" type="email"/>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container font-headline-sm text-headline-sm py-4 rounded-pill shadow-md active:scale-[0.98] transition-transform duration-150 hover:brightness-110 flex items-center justify-center space-x-2" onclick="showSuccess()">
+<span>Envoyer le lien</span>
+</button>
+</div>
+</div>
+<div class="flex justify-center">
+<button class="font-label-md text-label-md text-primary flex items-center space-x-1 py-3 px-6 rounded-pill hover:bg-primary/5 transition-colors">
+<span>Retour à la connexion</span>
+</button>
+</div>
+</section>
+<!-- Success State Section (Hidden by default) -->
+<section class="hidden fade-in" id="success-state">
+<div class="bg-tint-success rounded-xxl p-container-padding flex flex-col items-center text-center space-y-4 shadow-sm">
+<div class="w-16 h-16 bg-status-success/10 rounded-full flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-status-success text-4xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Email envoyé !</h3>
+<p class="font-body-lg text-body-lg text-primary">
+                    Un lien de réinitialisation a été envoyé à <span class="font-bold">esk***@gmail.com</span>. Vérifie ta boîte de réception.
+                </p>
+<div class="bg-white/50 p-4 rounded-xl mt-4 text-sm text-on-surface-variant italic">
+                    Astuce : Si tu ne trouves rien, vérifie ton dossier de courriers indésirables (Spams).
+                </div>
+</div>
+<div class="flex justify-center mt-10">
+<button class="font-label-md text-label-md text-primary flex items-center space-x-1 py-3 px-6 rounded-pill hover:bg-primary/5 transition-colors border border-primary/20" onclick="resetView()">
+<span class="material-symbols-outlined text-sm">refresh</span>
+<span>Renvoyer l'e-mail</span>
+</button>
+</div>
+</section>
+<!-- Visual Decorative Element (Abstract shapes) -->
+<div class="mt-12 opacity-40 select-none pointer-events-none flex justify-center">
+<div class="w-32 h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent rounded-full"></div>
+</div>
+</main>
+<!-- Pedagogical Disclaimer Footer -->
+<footer class="w-full bg-surface-container-low py-4 px-container-padding text-center">
+<p class="font-label-sm text-label-sm text-outline max-w-xs mx-auto leading-tight">
+            El Comptabli est un assistant pédagogique. Pour toute validation fiscale certifiée, veuillez consulter un expert-comptable agréé.
+        </p>
+</footer>
+<script>
+        function showSuccess() {
+            const form = document.getElementById('forgot-password-form');
+            const success = document.getElementById('success-state');
+            
+            form.classList.add('hidden');
+            success.classList.remove('hidden');
+            
+            // Minimal haptic feedback simulation
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(20);
+            }
+        }
+
+        function resetView() {
+            const form = document.getElementById('forgot-password-form');
+            const success = document.getElementById('success-state');
+            
+            success.classList.add('hidden');
+            form.classList.remove('hidden');
+        }
+
+        // Handle navigation clicks for visual feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const rect = btn.getBoundingClientRect();
+                const ripple = document.createElement('div');
+                ripple.className = 'absolute bg-white/20 rounded-full pointer-events-none transform -translate-x-1/2 -translate-y-1/2 animate-ping';
+                ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+                ripple.style.left = (e.clientX - rect.left) + 'px';
+                ripple.style.top = (e.clientY - rect.top) + 'px';
+                btn.style.position = 'relative';
+                btn.style.overflow = 'hidden';
+                btn.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EC Fintech - Paramètres Système</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#006f64",
+                    "status-premium": "#7C3AED",
+                    "inverse-on-surface": "#eff1f1",
+                    "error-container": "#ffdad6",
+                    "tint-warning": "#FEF3E2",
+                    "surface-container-low": "#f2f4f4",
+                    "status-danger": "#DC2626",
+                    "secondary-container": "#6df5e1",
+                    "on-surface-variant": "#3e4947",
+                    "surface-bright": "#f8fafa",
+                    "on-secondary-fixed": "#00201c",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed-variant": "#00504a",
+                    "on-primary-fixed": "#00201d",
+                    "status-success": "#16A34A",
+                    "primary": "#005c55",
+                    "on-background": "#191c1d",
+                    "on-primary-fixed-variant": "#00504a",
+                    "error": "#ba1a1a",
+                    "background": "#f8fafa",
+                    "on-tertiary-fixed": "#00201d",
+                    "surface-container": "#eceeee",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e1e3e3",
+                    "inverse-surface": "#2e3131",
+                    "primary-fixed-dim": "#80d5cb",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#90d3cb",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#006a63",
+                    "text-primary": "#1A1A1A",
+                    "primary-container": "#0f766e",
+                    "secondary-fixed": "#71f8e4",
+                    "tint-info": "#EEF2FF",
+                    "outline-variant": "#bdc9c6",
+                    "surface": "#f8fafa",
+                    "on-tertiary-container": "#b3f7ee",
+                    "status-warning": "#D97706",
+                    "tint-success": "#E6F5F3",
+                    "on-primary-container": "#a3faef",
+                    "status-success": "#16A34A",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#80d5cb",
+                    "on-error-container": "#93000a",
+                    "surface-dim": "#d8dada",
+                    "tint-danger": "#FDE8E6",
+                    "tertiary-container": "#2f746d",
+                    "tertiary": "#0d5b55",
+                    "text-secondary": "#6B7280",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "secondary": "#006b5f",
+                    "outline": "#6e7977",
+                    "on-secondary-fixed-variant": "#005048",
+                    "surface-variant": "#e1e3e3",
+                    "primary-fixed": "#9cf2e8",
+                    "on-surface": "#191c1d",
+                    "tertiary-fixed": "#abefe7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "xxl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "container-padding": "20px",
+                    "stack-sm": "12px",
+                    "stack-xs": "4px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "stat-display": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "stat-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .card-shadow { box-shadow: 0 4px 16px rgba(15, 92, 86, 0.08); }
+        .nav-shadow { box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #E5E7EB;
+            border-radius: 5px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #005c55;
+            cursor: pointer;
+            transition: scale 0.15s ease-in-out;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover { scale: 1.1; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Persistent SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col py-6 gap-2 bg-surface dark:bg-inverse-surface shadow-sm z-50">
+<div class="px-6 mb-8">
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-inverse-primary">EC Fintech</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant opacity-70">Admin Console</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-md text-label-md">Subscriptions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-label-md text-label-md">Knowledge Base</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="font-label-md text-label-md">AI Logs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-label-md text-label-md">Experts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="article">article</span>
+<span class="font-label-md text-label-md">Content</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl mx-2 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-md text-label-md">Notifications</span>
+</a>
+<!-- Active State: Settings -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl mx-2 transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<div class="bg-surface-container-low rounded-xxl p-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-white font-bold">
+                    EC
+                </div>
+<div>
+<p class="text-label-md font-bold text-on-surface">Admin User</p>
+<p class="text-[10px] uppercase tracking-wider text-on-surface-variant opacity-60">Super Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 h-16 bg-surface dark:bg-background border-b border-outline-variant flex justify-between items-center px-6 w-[calc(100%-16rem)] ml-64 z-40">
+<div class="flex items-center bg-surface-container-highest rounded-full px-4 py-1.5 w-96">
+<span class="material-symbols-outlined text-on-surface-variant text-sm mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md w-full placeholder:text-on-surface-variant/50" placeholder="Rechercher un paramètre..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors transition-opacity duration-150 hover:opacity-80">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="hub">hub</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors transition-opacity duration-150 hover:opacity-80">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="brightness_4">brightness_4</span>
+</button>
+<button class="flex items-center gap-2 p-1 pl-3 hover:bg-surface-container-high rounded-full transition-colors transition-opacity duration-150 hover:opacity-80">
+<span class="font-label-md text-on-surface-variant">Admin</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 pt-16 min-h-screen">
+<div class="max-w-[1200px] mx-auto p-10 space-y-8">
+<!-- Header Section -->
+<header class="mb-10 animate-fade-in">
+<h2 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">Paramètres Système</h2>
+<p class="font-body-lg text-body-lg text-text-secondary mt-1">Configuration technique et taux fiscaux globaux</p>
+</header>
+<div class="grid grid-cols-12 gap-8">
+<!-- API Keys Card (Bento Row 1 Left) -->
+<section class="col-span-12 lg:col-span-7 bg-white rounded-xxl p-8 card-shadow border border-outline-variant/30">
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="key">key</span>
+<h3 class="font-headline-sm text-headline-sm">Clés API</h3>
+</div>
+<button class="text-primary font-label-md hover:underline">Voir l'historique</button>
+</div>
+<div class="space-y-4">
+<!-- Key Item 1 -->
+<div class="flex items-center justify-between p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-tint-info rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-status-premium" data-icon="smart_toy">smart_toy</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Anthropic (Claude)</p>
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-mono text-on-surface-variant">sk-ant-••••••••••••w9z</span>
+<div class="w-2 h-2 rounded-full bg-status-success shadow-[0_0_8px_rgba(22,163,74,0.5)]"></div>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-outline text-label-sm hover:bg-white transition-colors">Afficher</button>
+<button class="px-3 py-1.5 rounded-lg bg-primary text-white text-label-sm hover:opacity-90 transition-opacity flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="refresh">refresh</span>
+                                    Tourner
+                                </button>
+</div>
+</div>
+<!-- Key Item 2 -->
+<div class="flex items-center justify-between p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-tint-success rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="document_scanner">document_scanner</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Service OCR (AWS Textract)</p>
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-mono text-on-surface-variant">aws-iam-••••••••••••7x2</span>
+<div class="w-2 h-2 rounded-full bg-status-success shadow-[0_0_8px_rgba(22,163,74,0.5)]"></div>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-outline text-label-sm hover:bg-white transition-colors">Afficher</button>
+<button class="px-3 py-1.5 rounded-lg bg-primary text-white text-label-sm hover:opacity-90 transition-opacity flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="refresh">refresh</span>
+                                    Tourner
+                                </button>
+</div>
+</div>
+</div>
+</section>
+<!-- RAG Configuration Card (Bento Row 1 Right) -->
+<section class="col-span-12 lg:col-span-5 bg-white rounded-xxl p-8 card-shadow border border-outline-variant/30">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-status-premium" data-icon="memory">memory</span>
+<h3 class="font-headline-sm text-headline-sm">Configuration RAG (IA)</h3>
+</div>
+<div class="space-y-6">
+<!-- Slider 1 -->
+<div>
+<div class="flex justify-between items-center mb-2">
+<label class="text-label-md font-bold text-on-surface">Taille des blocs (Chunk size)</label>
+<span class="bg-tint-info text-status-premium px-2 py-0.5 rounded text-label-sm font-bold">1024 tokens</span>
+</div>
+<input max="2048" min="256" step="128" type="range" value="1024"/>
+<p class="text-label-sm text-on-surface-variant mt-2">Optimise la segmentation des documents fiscaux.</p>
+</div>
+<!-- Slider 2 -->
+<div>
+<div class="flex justify-between items-center mb-2">
+<label class="text-label-md font-bold text-on-surface">Top-K (Sources)</label>
+<span class="bg-tint-info text-status-premium px-2 py-0.5 rounded text-label-sm font-bold">5 sources</span>
+</div>
+<input max="10" min="1" step="1" type="range" value="5"/>
+<p class="text-label-sm text-on-surface-variant mt-2">Nombre de fragments de texte récupérés par requête.</p>
+</div>
+<!-- Slider 3 -->
+<div>
+<div class="flex justify-between items-center mb-2">
+<label class="text-label-md font-bold text-on-surface">Seuil de confiance</label>
+<span class="bg-tint-info text-status-premium px-2 py-0.5 rounded text-label-sm font-bold">85%</span>
+</div>
+<input max="100" min="50" step="1" type="range" value="85"/>
+<p class="text-label-sm text-on-surface-variant mt-2">Précision minimale requise pour valider une réponse.</p>
+</div>
+</div>
+</section>
+<!-- Global Tax Rates Table (Bento Row 2 Full) -->
+<section class="col-span-12 lg:col-span-8 bg-white rounded-xxl p-8 card-shadow border border-outline-variant/30">
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="percent">percent</span>
+<h3 class="font-headline-sm text-headline-sm">Taux Fiscaux Globaux</h3>
+</div>
+<button class="bg-tint-success text-primary px-4 py-2 rounded-xl font-label-md hover:bg-secondary-container/50 transition-colors">
+                            Nouvel exercice fiscal
+                        </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="border-b border-outline-variant">
+<tr>
+<th class="py-4 font-label-md text-on-surface-variant">Type d'imposition</th>
+<th class="py-4 font-label-md text-on-surface-variant">Taux / Valeur</th>
+<th class="py-4 font-label-md text-on-surface-variant">Exercice</th>
+<th class="py-4 font-label-md text-on-surface-variant">Statut</th>
+<th class="py-4 font-label-md text-on-surface-variant">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-5 font-label-md font-bold">TVA (Standard)</td>
+<td class="py-5 font-label-md text-primary">19%</td>
+<td class="py-5 font-label-md">2026</td>
+<td class="py-5">
+<span class="bg-tint-success text-status-success text-[11px] font-bold uppercase tracking-wider px-2 py-1 rounded-full">Actif</span>
+</td>
+<td class="py-5">
+<button class="p-2 hover:bg-tint-info rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-5 font-label-md font-bold">TVA (Intermédiaire)</td>
+<td class="py-5 font-label-md text-primary">13%</td>
+<td class="py-5 font-label-md">2026</td>
+<td class="py-5">
+<span class="bg-tint-success text-status-success text-[11px] font-bold uppercase tracking-wider px-2 py-1 rounded-full">Actif</span>
+</td>
+<td class="py-5">
+<button class="p-2 hover:bg-tint-info rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-5 font-label-md font-bold">TVA (Réduit)</td>
+<td class="py-5 font-label-md text-primary">7%</td>
+<td class="py-5 font-label-md">2026</td>
+<td class="py-5">
+<span class="bg-tint-success text-status-success text-[11px] font-bold uppercase tracking-wider px-2 py-1 rounded-full">Actif</span>
+</td>
+<td class="py-5">
+<button class="p-2 hover:bg-tint-info rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-5 font-label-md font-bold">IS (Impôt Sociétés)</td>
+<td class="py-5 font-label-md text-primary">15%</td>
+<td class="py-5 font-label-md">2027 Proj.</td>
+<td class="py-5">
+<span class="bg-tint-warning text-status-warning text-[11px] font-bold uppercase tracking-wider px-2 py-1 rounded-full">À valider</span>
+</td>
+<td class="py-5">
+<button class="p-2 hover:bg-tint-info rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- System Controls Grid (Bento Row 2 Right) -->
+<section class="col-span-12 lg:col-span-4 space-y-8">
+<!-- Maintenance Mode -->
+<div class="bg-tint-danger rounded-xxl p-8 card-shadow border border-error/10 relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-status-danger" data-icon="warning">warning</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-outline rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-status-danger"></div>
+</label>
+</div>
+<h4 class="font-headline-sm text-on-surface">Mode Maintenance</h4>
+<p class="text-label-md text-on-surface-variant mt-2">Désactive l'accès public pour les utilisateurs finaux.</p>
+</div>
+</div>
+<!-- Backup Controls -->
+<div class="bg-white rounded-xxl p-8 card-shadow border border-outline-variant/30">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="cloud_upload">cloud_upload</span>
+<h4 class="font-headline-sm">Backups</h4>
+</div>
+<div class="space-y-4">
+<div>
+<label class="text-label-sm text-on-surface-variant block mb-1">Fréquence automatique</label>
+<select class="w-full bg-surface-container-low border-outline-variant/30 rounded-xl font-label-md py-3 px-4 focus:ring-primary focus:border-primary">
+<option>Quotidien (02:00)</option>
+<option>Hebdomadaire (Dimanche)</option>
+<option>Temps réel (Live Sync)</option>
+</select>
+</div>
+<button class="w-full py-3 bg-primary text-white rounded-xl font-label-md hover:shadow-lg transition-all active:scale-[0.98]">
+                                Lancer un backup immédiat
+                            </button>
+</div>
+</div>
+<!-- Audit Log Link -->
+<a class="group block bg-surface-container rounded-xxl p-6 card-shadow border border-outline-variant/30 hover:bg-tint-info transition-colors" href="#">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+</div>
+<div>
+<p class="font-headline-sm text-[18px]">Logs d'audit</p>
+<p class="text-label-sm text-on-surface-variant">Traçabilité complète des actions</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary translate-x-0 group-hover:translate-x-2 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</a>
+</section>
+</div>
+<!-- Global Disclaimer Footer -->
+<footer class="mt-12 py-6 bg-surface-container-low rounded-xl text-center">
+<p class="text-label-sm text-on-surface-variant max-w-2xl mx-auto italic">
+                    Note technique : Toute modification des taux fiscaux globaux affecte rétroactivement les calculs de l'exercice en cours pour l'ensemble du tenant Tunisien. El Comptabli est un outil pédagogique.
+                </p>
+</footer>
+</div>
+</main>
+<!-- FAB (Contextual for Settings Save) -->
+<button class="fixed bottom-10 right-10 flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-full nav-shadow hover:scale-105 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined" data-icon="save">save</span>
+<span class="font-label-md font-bold">Enregistrer les modifications</span>
+</button>
+<script>
+        // Micro-interaction for inputs
+        document.querySelectorAll('input[type="range"]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const badge = e.target.parentElement.querySelector('.bg-tint-info');
+                if(badge) {
+                    const unit = badge.innerText.split(' ')[1] || '%';
+                    badge.innerText = `${e.target.value}${unit === '%' ? '%' : ' ' + unit}`;
+                }
+            });
+        });
+
+        // Theme Toggle simple demo
+        const toggleTheme = () => {
+            document.documentElement.classList.toggle('dark');
+        };
+    </script>
+</body></html>
