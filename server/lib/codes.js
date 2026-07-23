@@ -7,14 +7,21 @@ import crypto from 'node:crypto';
 
 const SALT = process.env.CODE_SALT || 'elcomptabli-change-this-salt-in-env';
 
-// Owner's evergreen code: always valid, grants a month pass. Overridable via
-// MASTER_CODE in .env; set it to "off" to disable entirely.
+// Sellable evergreen code: always valid, grants a month pass — this is the
+// one customers get. Overridable via MASTER_CODE in .env; "off" disables it.
 const MASTER_CODE = (process.env.MASTER_CODE || '88888888').trim().toUpperCase();
 
+// Owner-only code: grants ~10 years (effectively permanent) so Eskandar never
+// has to re-activate. Kept separate from MASTER_CODE so the paid model for
+// real customers (1 month per activation) stays intact. Change it once via
+// OWNER_CODE in .env if you want it to not be "99999999".
+const OWNER_CODE = (process.env.OWNER_CODE || '99999999').trim().toUpperCase();
+
 export const PLANS = {
-  jour:    { id: 'jour',    letter: 'J', days: 1,  price: 1 },
-  semaine: { id: 'semaine', letter: 'S', days: 7,  price: 5 },
-  mois:    { id: 'mois',    letter: 'M', days: 30, price: 20 },
+  jour:    { id: 'jour',    letter: 'J', days: 1,     price: 1 },
+  semaine: { id: 'semaine', letter: 'S', days: 7,     price: 5 },
+  mois:    { id: 'mois',    letter: 'M', days: 30,    price: 20 },
+  owner:   { id: 'owner',   letter: 'O', days: 3650,  price: 0 },
 };
 
 function checksum(body) {
@@ -31,6 +38,10 @@ export function generateCode(planId) {
 
 export function validateCode(raw) {
   const input = String(raw || '').trim().toUpperCase();
+  if (OWNER_CODE !== 'OFF' && input === OWNER_CODE) {
+    const p = PLANS.owner;
+    return { planId: p.id, days: p.days, price: p.price };
+  }
   if (MASTER_CODE !== 'OFF' && input === MASTER_CODE) {
     const p = PLANS.mois;
     return { planId: p.id, days: p.days, price: p.price };

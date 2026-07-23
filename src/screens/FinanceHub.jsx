@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   TrendingUp, TrendingDown, Landmark, BookOpen, FileSpreadsheet, BarChart3,
   Calculator, CalendarClock, FolderOpen, Receipt, PieChart, Wallet,
-  Banknote, FileSignature, Package, ShoppingCart, Users, Sparkles, Target, Search, Settings, ChevronRight,
+  Users, Sparkles, Target, Search, Settings, ChevronRight,
   LayoutGrid, List,
 } from 'lucide-react';
 import { useStore, monthTotals } from '../lib/store.jsx';
@@ -153,25 +153,22 @@ export default function FinanceHub() {
         { to: '/documents/export', icon: FileSpreadsheet, label: t('docs.exportTitle') },
       ]} />
 
-      <Section view={view} title={t('future.teaser')} navigate={navigate} items={[
-        { to: '/future/bank', icon: Banknote, label: t('future.bank') },
-        { to: '/future/bank-import', icon: Banknote, label: t('future.bankImport') },
-        { to: '/future/einvoice', icon: Receipt, label: t('future.einvoice') },
-        { to: '/future/signature', icon: FileSignature, label: t('future.signature') },
-        { to: '/future/payroll', icon: Users, label: t('future.payroll') },
-        { to: '/future/employees', icon: Users, label: t('future.employees') },
-        { to: '/future/inventory', icon: Package, label: t('future.inventory') },
-        { to: '/future/sales', icon: ShoppingCart, label: t('future.sales') },
-        { to: '/future/purchases', icon: ShoppingCart, label: t('future.purchases') },
-        { to: '/future/crm', icon: Users, label: t('future.crm') },
-        { to: '/future/suppliers', icon: Package, label: t('future.suppliers') },
-        { to: '/future/multi-company', icon: LayoutGrid, label: t('future.multi') },
-        { to: '/future/forecast', icon: Sparkles, label: t('future.forecast') },
-        { to: '/future/budget', icon: Target, label: t('future.budget') },
-        { to: '/future/audit', icon: Search, label: t('future.audit') },
+      <Section view={view} title={t('experts.find') + ' & ' + t('team.title')} navigate={navigate} items={[
         { to: '/experts', icon: Users, label: t('experts.find') },
         { to: '/team', icon: Users, label: t('team.title') },
       ]} />
+
+      {/* One honest roadmap card instead of 15 dead-end buttons (Payroll,
+          Inventory, CRM, Bank connection...) — none of those are wired to
+          real functionality yet, so listing them separately just looked
+          broken. This links to the single roadmap screen instead. */}
+      <button className="card row between" style={{ width: '100%', textAlign: 'start', opacity: 0.85 }} onClick={() => navigate('/future/roadmap')}>
+        <span className="col" style={{ gap: 2 }}>
+          <span className="small" style={{ fontWeight: 700 }}>{t('future.roadmapTitle')}</span>
+          <span className="tiny muted">{t('future.roadmapSub')}</span>
+        </span>
+        <ChevronRight size={16} color="var(--text-2)" />
+      </button>
       </>
       )}
     </div>

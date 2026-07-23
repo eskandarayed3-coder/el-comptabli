@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Bell, Plus } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
-import { fmtDT, fmtMonth, todayISO } from '../../lib/format.js';
+import { fmtDT, fmtDate, fmtMonth, todayISO } from '../../lib/format.js';
 import TopBar from '../../components/TopBar.jsx';
 import DayStrip from '../../components/DayStrip.jsx';
 import StatCard from '../../components/StatCard.jsx';
@@ -21,7 +21,9 @@ export default function TaxCalendar() {
   const { state, toast } = useStore();
   const { t, lang } = useT();
   const [filter, setFilter] = useState('all');
+  const [selectedDay, setSelectedDay] = useState(null);
   const month = todayISO().slice(0, 7);
+  const pickDay = (iso) => setSelectedDay((cur) => (cur === iso ? null : iso));
 
   const markedDays = useMemo(() => {
     const m = {};
@@ -31,7 +33,9 @@ export default function TaxCalendar() {
     return m;
   }, [state.deadlines]);
 
-  const filtered = state.deadlines.filter((d) => filter === 'all' || d.status === filter);
+  const filtered = state.deadlines
+    .filter((d) => filter === 'all' || d.status === filter)
+    .filter((d) => !selectedDay || d.date === selectedDay);
   const thisWeek = state.deadlines.filter((d) => d.status !== 'paid' && d.date.startsWith(month)).length;
   const thisMonthCount = state.deadlines.filter((d) => d.date.startsWith(month)).length;
   const lateCount = state.deadlines.filter((d) => d.status === 'late').length;
@@ -51,7 +55,13 @@ export default function TaxCalendar() {
         right={<button className="icon-btn" onClick={() => navigate('/notifications')}><Bell size={18} /></button>}
       />
 
-      <DayStrip month={month} markedDays={markedDays} lang={lang} onPick={() => {}} />
+      <DayStrip month={month} markedDays={markedDays} lang={lang} onPick={pickDay} selected={selectedDay} />
+
+      {selectedDay && (
+        <button className="pill teal num" style={{ alignSelf: 'flex-start' }} onClick={() => setSelectedDay(null)}>
+          {fmtDate(selectedDay, lang)} · ✕
+        </button>
+      )}
 
       <div className="grid-3">
         <StatCard label={t('tax.thisWeek')} value={thisWeek} tone="amber" />

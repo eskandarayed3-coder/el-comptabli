@@ -21,7 +21,10 @@ export default function AiIntro() {
         </div>
       </div>
 
-      <SuggestionChips items={t('home.chips')} onPick={() => {}} />
+      {/* Tapping a sample question finishes onboarding and drops the user
+          straight into the chat with that question ready — a live first taste
+          of the AI instead of a dead demo row. */}
+      <SuggestionChips items={t('home.chips')} onPick={(q) => navigate('/chat?q=' + encodeURIComponent(q))} />
 
       <div className="pill indigo" style={{ alignSelf: 'flex-start' }}>
         <ShieldCheck size={14} /> {t('onboarding.aiVerified')}

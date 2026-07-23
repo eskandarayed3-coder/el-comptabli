@@ -212,6 +212,7 @@ textarea.input { resize: vertical; min-height: 96px; }
 .day-cell .dom { font: 700 16px/1 var(--font-sans); }
 .day-cell.today { background: var(--teal-800); }
 .day-cell.today .dow, .day-cell.today .dom { color: #fff; }
+.day-cell.selected { box-shadow: 0 0 0 2px var(--teal-700) inset; }
 .day-cell .marks { display: flex; gap: 3px; height: 5px; }
 .day-cell .marks i { width: 5px; height: 5px; border-radius: 50%; }
 

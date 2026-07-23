@@ -83,8 +83,7 @@ export default function Settings() {
       </button>
 
       <h3>IA</h3>
-      <div className="field"><label>Langue des réponses</label><SegmentedControl options={[{ id: 'darija', label: 'Darija' }, { id: 'fr', label: 'FR' }]} value="darija" onChange={() => {}} /></div>
-      <div className="field"><label>Longueur des réponses</label><SegmentedControl options={[{ id: 'short', label: 'Courtes' }, { id: 'long', label: 'Détaillées' }]} value="short" onChange={() => {}} /></div>
+      <p className="tiny muted">{t('settings.aiAutoLang')}</p>
 
       <h3>À propos</h3>
       <div className="card row between"><span className="small">Version</span><span className="tiny muted num">1.0.0</span></div>

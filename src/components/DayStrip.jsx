@@ -3,7 +3,7 @@ import { todayISO } from '../lib/format.js';
 const DOW_FR = ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'];
 const DOW_AR = ['إثن', 'ثلا', 'أرب', 'خمي', 'جمع', 'سبت', 'أحد'];
 
-export default function DayStrip({ month, markedDays = {}, lang = 'fr', onPick }) {
+export default function DayStrip({ month, markedDays = {}, lang = 'fr', onPick, selected }) {
   const [y, m] = month.split('-').map(Number);
   const daysInMonth = new Date(y, m, 0).getDate();
   const today = todayISO();
@@ -19,7 +19,7 @@ export default function DayStrip({ month, markedDays = {}, lang = 'fr', onPick }
   return (
     <div className="day-strip">
       {cells.map((c) => (
-        <button key={c.iso} className={`day-cell ${c.isToday ? 'today' : ''}`} onClick={() => onPick?.(c.iso)}>
+        <button key={c.iso} className={`day-cell ${c.isToday ? 'today' : ''} ${selected === c.iso ? 'selected' : ''}`} onClick={() => onPick?.(c.iso)}>
           <span className="dow">{c.dow}</span>
           <span className="dom num">{c.day}</span>
           {c.marks.length > 0 && (

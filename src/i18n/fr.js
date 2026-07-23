@@ -484,9 +484,13 @@ export default {
     budget: 'Budget',
     audit: 'Assistant audit',
     teaser: 'Fonctionnalité à venir, voici un aperçu.',
+    roadmapTitle: 'Bientôt disponible',
+    roadmapSub: 'Banque, paie, stock, CRM... tout ce qui arrive',
+    roadmapIntro: 'Ces fonctionnalités sont prévues mais pas encore actives. Tape dessus pour voir un aperçu.',
   },
   settings: {
     textSize: 'Taille du texte',
+    aiAutoLang: 'L’IA répond automatiquement dans ta langue (darija ou français), pas besoin de régler quoi que ce soit.',
     textSmall: 'Petit', textNormal: 'Normal', textLarge: 'Grand',
   },
   finhub: {

@@ -170,6 +170,7 @@ export const manifest = [
   { path: '/profile/about', Component: L('profile/95-About'), label: '95. About', module: 'Profile' },
 
   // ---- Module 20 — Future Features ----
+  { path: '/future/roadmap', Component: L('future/Roadmap'), label: 'Roadmap (consolidated)', module: 'Future' },
   { path: '/future/bank', Component: L('future/106-BankConnection'), label: '106. Bank Account Connection', module: 'Future' },
   { path: '/future/bank-import', Component: L('future/107-BankImport'), label: '107. Bank Transaction Import', module: 'Future' },
   { path: '/future/einvoice', Component: L('future/108-EInvoice'), label: '108. E-Invoice', module: 'Future' },
