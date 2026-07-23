@@ -30,16 +30,16 @@ export default function ScanTaxDoc() {
         <button className="list-row" style={{ width: '100%', textAlign: 'start' }} onClick={() => navigate('/scanner/declaration-mensuelle')}>
           <span className="icon-wrap teal"><Calculator size={18} /></span>
           <span className="col grow" style={{ gap: 2 }}>
-            <span className="small" style={{ fontWeight: 700 }}>Préparer ma déclaration mensuelle</span>
-            <span className="tiny muted">Retenue à la source, par catégorie</span>
+            <span className="small" style={{ fontWeight: 700 }}>{t('scanner.declMensuelleEntry')}</span>
+            <span className="tiny muted">{t('scanner.declMensuelleEntrySub')}</span>
           </span>
           <ChevronRight size={16} color="var(--text-2)" />
         </button>
         <button className="list-row" style={{ width: '100%', textAlign: 'start' }} onClick={() => navigate('/scanner/plus-value')}>
           <span className="icon-wrap teal"><Home size={18} /></span>
           <span className="col grow" style={{ gap: 2 }}>
-            <span className="small" style={{ fontWeight: 700 }}>Calculer une plus-value immobilière</span>
-            <span className="tiny muted">Vente d’un bien, cas standard</span>
+            <span className="small" style={{ fontWeight: 700 }}>{t('scanner.declPlusValueEntry')}</span>
+            <span className="tiny muted">{t('scanner.declPlusValueEntrySub')}</span>
           </span>
           <ChevronRight size={16} color="var(--text-2)" />
         </button>

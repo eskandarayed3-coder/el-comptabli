@@ -28,14 +28,12 @@ export default function DeclarationMensuelle() {
 
   return (
     <div className="screen stagger">
-      <TopBar title="Déclaration mensuelle · Retenue à la source" />
+      <TopBar title={t('declMensuelle.title')} />
 
       <div className="card tint-amber">
         <div className="row" style={{ gap: 10, alignItems: 'flex-start' }}>
           <AlertTriangle size={18} color="var(--pill-warning-fg)" style={{ flexShrink: 0, marginTop: 2 }} />
-          <p className="tiny">
-            Outil de préparation, pas le formulaire officiel. Les taux affichés sont des repères courants — <strong>vérifie chaque taux avec le Code IRPP/IS en vigueur ou ton comptable</strong> avant de déclarer sur le site du contribuable.
-          </p>
+          <p className="tiny">{t('declMensuelle.warning')}</p>
         </div>
       </div>
 
@@ -47,12 +45,12 @@ export default function DeclarationMensuelle() {
       <div className="col" style={{ gap: 10 }}>
         {lines.map((l) => (
           <div key={l.id} className="card inner col" style={{ gap: 8 }}>
-            <span className="small" style={{ fontWeight: 600 }}>{l.label}</span>
+            <span className="small" style={{ fontWeight: 600 }}>{t(`declMensuelle.${l.labelKey}`)}</span>
             <div className="row" style={{ gap: 8 }}>
               <input
                 className="input num grow" type="number" min="0" step="0.001"
                 value={rows[l.id].base} onChange={(e) => setRow(l.id, 'base', e.target.value)}
-                placeholder="Base (DT)"
+                placeholder={t('declMensuelle.base')}
               />
               <div className="row" style={{ gap: 4, alignItems: 'center', flexShrink: 0 }}>
                 <input
@@ -62,14 +60,14 @@ export default function DeclarationMensuelle() {
                 <span className="small muted">%</span>
               </div>
             </div>
-            {l.montant > 0 && <span className="tiny muted num">= {fmtDT(l.montant)} de retenue</span>}
+            {l.montant > 0 && <span className="tiny muted num">= {fmtDT(l.montant)} {t('declMensuelle.montant')}</span>}
           </div>
         ))}
       </div>
 
       <div className="card tint-teal">
         <div className="row between">
-          <span className="small" style={{ fontWeight: 700 }}>Total retenue à la source</span>
+          <span className="small" style={{ fontWeight: 700 }}>{t('declMensuelle.total')}</span>
           <span className="num" style={{ fontWeight: 800, fontSize: 22, color: 'var(--teal-700)' }}>{fmtDT(total)}</span>
         </div>
       </div>
