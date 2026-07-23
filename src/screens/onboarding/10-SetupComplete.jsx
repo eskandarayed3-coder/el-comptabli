@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { CheckCircle2 } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
+import { syncUser } from '../../lib/api.js';
 
 const REGIME_KEY = { forfaitaire: 'regimeForfait', reel: 'regimeReel', unknown: 'regimeUnknown' };
 const TYPE_KEY = { freelance: 'whoFreelance', micro: 'whoMicro', company: 'whoCompany', accountant: 'whoAccountant' };
@@ -13,6 +14,7 @@ export default function SetupComplete() {
 
   const go = () => {
     patch('settings', { onboarded: true });
+    syncUser({ profile: state.profile, plan: state.settings.plan });
     navigate('/home');
   };
 

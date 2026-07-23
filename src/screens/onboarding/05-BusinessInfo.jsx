@@ -8,15 +8,23 @@ export default function BusinessInfo() {
   const { state, patch } = useStore();
   const { t } = useT();
   const [form, setForm] = useState({
+    name: state.profile.name || '',
+    email: state.profile.email || '',
     activity: state.profile.activity || '',
     city: state.profile.city || 'Nabeul',
     sector: state.profile.sector || 'Services numériques',
     taxId: state.profile.taxId || '',
   });
 
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim());
+  const nameValid = form.name.trim().length > 1;
+  const canContinue = nameValid && emailValid;
+
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const confirm = (skip) => {
-    if (!skip) patch('profile', form);
+    // Name + email are always saved — everything else is optional and can
+    // be filled in later from Profil.
+    patch('profile', skip ? { name: form.name, email: form.email } : form);
     navigate('/tax-regime');
   };
 
@@ -28,6 +36,15 @@ export default function BusinessInfo() {
       </div>
 
       <div className="col" style={{ gap: 16 }}>
+        <div className="field">
+          <label>{t('onboarding.yourName')}</label>
+          <input className="input" value={form.name} onChange={set('name')} placeholder="Eskandar Ayed" />
+        </div>
+        <div className="field">
+          <label>{t('onboarding.yourEmail')}</label>
+          <input className="input" type="email" value={form.email} onChange={set('email')} placeholder="toi@exemple.com" />
+          {!emailValid && form.email.length > 0 && <span className="tiny" style={{ color: 'var(--coral-700, #B91C1C)' }}>{t('onboarding.emailInvalid')}</span>}
+        </div>
         <div className="field">
           <label>{t('onboarding.bizName')}</label>
           <input className="input" value={form.activity} onChange={set('activity')} placeholder="Studio Eskandar Design" />
@@ -51,8 +68,8 @@ export default function BusinessInfo() {
       </div>
 
       <div style={{ flex: 1 }} />
-      <button className="btn btn-primary btn-block" onClick={() => confirm(false)}>{t('common.continue')}</button>
-      <button className="btn btn-ghost btn-block" onClick={() => confirm(true)}>{t('common.later')}</button>
+      <button className="btn btn-primary btn-block" disabled={!canContinue} onClick={() => confirm(false)}>{t('common.continue')}</button>
+      <button className="btn btn-ghost btn-block" disabled={!canContinue} onClick={() => confirm(true)}>{t('common.later')}</button>
     </div>
   );
 }

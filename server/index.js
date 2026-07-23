@@ -7,6 +7,7 @@ import scanRouter from './routes/scan.js';
 import insightsRouter from './routes/insights.js';
 import examRouter from './routes/exam.js';
 import activateRouter from './routes/activate.js';
+import usersRouter from './routes/users.js';
 import { providerInfo } from './ai.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -22,6 +23,7 @@ app.use('/api/scan', scanRouter);
 app.use('/api/insights', insightsRouter);
 app.use('/api/exam', examRouter);
 app.use('/api/activate', activateRouter);
+app.use('/api/users', usersRouter);
 
 // Small standalone admin page (not part of the React app / Vite proxy) to
 // hand out fresh activation codes — works the same in dev and prod.

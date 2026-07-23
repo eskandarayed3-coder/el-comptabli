@@ -92,6 +92,25 @@ export async function activateCode(code) {
   return json;
 }
 
+// Best-effort sync of the local profile to the real users database — used
+// once onboarding collects a real email, and again whenever plan/regime
+// change. Never blocks the UI: failures (offline, DB not configured) are
+// swallowed since this is a background sync, not a user-facing action.
+export async function syncUser({ profile, plan }) {
+  const email = String(profile?.email || '').trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+  try {
+    await fetch('/api/users', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: profile.name, email, plan: plan || 'gratuit', regime: profile.regime,
+        userType: profile.userType, city: profile.city, activity: profile.activity,
+      }),
+    });
+  } catch { /* offline or DB not configured — non-blocking */ }
+}
+
 export async function generateInsight({ prompt, data, profile, system, maxTokens }) {
   const res = await fetch('/api/insights', {
     method: 'POST',

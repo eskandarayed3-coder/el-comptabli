@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { seedState } from './seed.js';
 import { uid } from './format.js';
+import { syncUser } from './api.js';
 
 const KEY = 'elcomptabli:v1';
 const StoreContext = createContext(null);
@@ -135,6 +136,7 @@ export function StoreProvider({ children }) {
       const current = state.settings.premiumUntil ? new Date(state.settings.premiumUntil).getTime() : 0;
       const until = new Date(Math.max(now, current) + days * 86400000).toISOString();
       dispatch({ type: 'PATCH', slice: 'settings', data: { plan: 'premium', premiumUntil: until } });
+      syncUser({ profile: state.profile, plan: 'premium' });
     },
   }), [state]);
 
