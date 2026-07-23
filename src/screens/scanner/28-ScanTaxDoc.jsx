@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FileScan, Sparkles } from 'lucide-react';
+import { FileScan, Sparkles, Calculator, Home, ChevronRight } from 'lucide-react';
 import { useT } from '../../i18n/index.js';
 import TopBar from '../../components/TopBar.jsx';
 import FilterPills from '../../components/FilterPills.jsx';
@@ -22,6 +22,29 @@ export default function ScanTaxDoc() {
   return (
     <div className="screen stagger">
       <TopBar title={t('scanner.taxDoc')} />
+
+      {/* Preparing a real declaration is a different job than scanning a
+          document — link straight to the worksheet builders instead of
+          burying them behind a generic photo upload. */}
+      <div className="col" style={{ gap: 8 }}>
+        <button className="list-row" style={{ width: '100%', textAlign: 'start' }} onClick={() => navigate('/scanner/declaration-mensuelle')}>
+          <span className="icon-wrap teal"><Calculator size={18} /></span>
+          <span className="col grow" style={{ gap: 2 }}>
+            <span className="small" style={{ fontWeight: 700 }}>Préparer ma déclaration mensuelle</span>
+            <span className="tiny muted">Retenue à la source, par catégorie</span>
+          </span>
+          <ChevronRight size={16} color="var(--text-2)" />
+        </button>
+        <button className="list-row" style={{ width: '100%', textAlign: 'start' }} onClick={() => navigate('/scanner/plus-value')}>
+          <span className="icon-wrap teal"><Home size={18} /></span>
+          <span className="col grow" style={{ gap: 2 }}>
+            <span className="small" style={{ fontWeight: 700 }}>Calculer une plus-value immobilière</span>
+            <span className="tiny muted">Vente d’un bien, cas standard</span>
+          </span>
+          <ChevronRight size={16} color="var(--text-2)" />
+        </button>
+      </div>
+
       <FilterPills options={TYPES.map((x) => ({ id: x, label: x }))} value={type} onChange={setType} />
 
       <label

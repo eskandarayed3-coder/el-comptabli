@@ -300,6 +300,7 @@ export default {
   analytics: {
     kpi: 'لوحة المؤشرات',
     revenue: 'المداخيل',
+    expenses: 'المصاريف',
     performance: 'الأداء',
     insights: 'تحاليل الذكاء',
     vsLastMonth: 'مقارنة بالشهر الفارط',
@@ -504,6 +505,8 @@ export default {
     eVat: 'الـ TVA متاعي', eVatSub: 'احسب الـ TVA',
     eInvest: 'مردودية مشروع', eInvestSub: 'VAN، TRI، المدة',
     eTax: 'ضرايبي', eTaxSub: 'IRPP، الآجال، CNSS',
+    forfaitNoteTitle: 'ما فماش محاسبة كاملة تمسكها',
+    forfaitNoteBody: 'في النظام التقديري، موش مجبور تمسك يومية ولا دفتر كبير ولا ميزانية. الضريبة متاعك تتحسب بسيط على رقم معاملاتك (شوف ضرايبي).',
   },
   cnss: {
     title: 'مساهمات CNSS',

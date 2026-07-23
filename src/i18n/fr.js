@@ -299,6 +299,7 @@ export default {
   analytics: {
     kpi: 'Tableau de bord KPI',
     revenue: 'Revenus',
+    expenses: 'Dépenses',
     performance: 'Performance',
     insights: 'Insights IA',
     vsLastMonth: 'vs mois dernier',
@@ -503,6 +504,8 @@ export default {
     eVat: 'Ma TVA', eVatSub: 'Calcule ta TVA',
     eInvest: 'Rentabilité projet', eInvestSub: 'VAN, TRI, délai',
     eTax: 'Mes impôts', eTaxSub: 'IRPP, échéances, CNSS',
+    forfaitNoteTitle: 'Pas de comptabilité complète à tenir',
+    forfaitNoteBody: 'En régime forfaitaire, tu n’es pas obligé de tenir un journal, un grand livre ou un bilan. Ton impôt est calculé simplement sur ton chiffre d’affaires (voir Mes impôts).',
   },
   cnss: {
     title: 'Cotisations CNSS',

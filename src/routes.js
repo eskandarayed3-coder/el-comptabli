@@ -69,6 +69,8 @@ export const manifest = [
   { path: '/scanner', Component: L('scanner/26-ScanInvoice'), label: '26. Scan Invoice', module: 'AI Scanner', mvp: true },
   { path: '/scanner/receipt', Component: L('scanner/27-ScanReceipt'), label: '27. Scan Receipt', module: 'AI Scanner' },
   { path: '/scanner/tax-doc', Component: L('scanner/28-ScanTaxDoc'), label: '28. Scan Tax Document', module: 'AI Scanner' },
+  { path: '/scanner/declaration-mensuelle', Component: L('scanner/DeclarationMensuelle'), label: 'Déclaration mensuelle (retenue à la source)', module: 'AI Scanner' },
+  { path: '/scanner/plus-value', Component: L('scanner/DeclarationPlusValue'), label: 'Plus-value immobilière', module: 'AI Scanner' },
   { path: '/scanner/review', Component: L('scanner/29-OcrReview'), label: '29. OCR Review', module: 'AI Scanner', mvp: true },
   { path: '/scanner/validation', Component: L('scanner/30-DocumentValidation'), label: '30. Document Validation', module: 'AI Scanner' },
   { path: '/documents/:id', Component: L('scanner/31-DocumentDetails'), label: '31. Document Details', module: 'AI Scanner', mvp: true },

@@ -44,13 +44,18 @@ function Section({ title, items, navigate, view }) {
   );
 }
 
-const ESSENTIALS = [
+// Forfaitaire is legally exempt from TVA and from full double-entry
+// bookkeeping (per the app's own guides), so those items are just noise for
+// that regime — shown to everyone else since real/unknown may need them.
+const ESSENTIALS_BASE = [
   { to: '/income', icon: TrendingUp, key: 'eIncome' },
   { to: '/expenses', icon: TrendingDown, key: 'eExpense' },
   { to: '/income/invoice', icon: Receipt, key: 'eInvoice' },
+  { to: '/tax', icon: Landmark, key: 'eTax' },
+];
+const ESSENTIALS_REEL_ONLY = [
   { to: '/tax/vat', icon: Calculator, key: 'eVat' },
   { to: '/tax/investment', icon: BarChart3, key: 'eInvest' },
-  { to: '/tax', icon: Landmark, key: 'eTax' },
 ];
 
 export default function FinanceHub() {
@@ -63,6 +68,8 @@ export default function FinanceHub() {
   const setView = (v) => patch('settings', { financeView: v });
   const showAll = state.settings.financeAll || false;
   const toggleAll = () => patch('settings', { financeAll: !showAll });
+  const isForfait = state.profile.regime === 'forfaitaire';
+  const ESSENTIALS = isForfait ? ESSENTIALS_BASE : [...ESSENTIALS_BASE, ...ESSENTIALS_REEL_ONLY];
 
   return (
     <div className="screen stagger">
@@ -126,13 +133,20 @@ export default function FinanceHub() {
         { to: '/tax/history', icon: FileSpreadsheet, label: t('tax.historyTitle') },
       ]} />
 
-      <Section view={view} title={t('accounting.title')} navigate={navigate} items={[
-        { to: '/accounting', icon: BookOpen, label: t('accounting.title') },
-        { to: '/accounting/journal', icon: FileSpreadsheet, label: t('accounting.journal') },
-        { to: '/accounting/trial-balance', icon: BarChart3, label: t('accounting.trial') },
-        { to: '/accounting/ledger', icon: BookOpen, label: t('accounting.ledger') },
-        { to: '/accounting/reports', icon: FileSpreadsheet, label: t('accounting.reports') },
-      ]} />
+      {isForfait ? (
+        <div className="card tint-amber">
+          <span className="small" style={{ fontWeight: 700 }}>{t('finhub.forfaitNoteTitle')}</span>
+          <p className="tiny muted" style={{ marginTop: 4 }}>{t('finhub.forfaitNoteBody')}</p>
+        </div>
+      ) : (
+        <Section view={view} title={t('accounting.title')} navigate={navigate} items={[
+          { to: '/accounting', icon: BookOpen, label: t('accounting.title') },
+          { to: '/accounting/journal', icon: FileSpreadsheet, label: t('accounting.journal') },
+          { to: '/accounting/trial-balance', icon: BarChart3, label: t('accounting.trial') },
+          { to: '/accounting/ledger', icon: BookOpen, label: t('accounting.ledger') },
+          { to: '/accounting/reports', icon: FileSpreadsheet, label: t('accounting.reports') },
+        ]} />
+      )}
 
       <Section view={view} title={t('reports.monthly') + ' & ' + t('analytics.performance')} navigate={navigate} items={[
         { to: '/reports/monthly', icon: FileSpreadsheet, label: t('reports.monthly') },
