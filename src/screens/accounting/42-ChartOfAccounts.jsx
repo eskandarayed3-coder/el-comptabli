@@ -53,8 +53,8 @@ export default function ChartOfAccounts() {
                 {expanded ? <ChevronDown size={16} style={{ flexShrink: 0 }} /> : <ChevronRight size={16} style={{ flexShrink: 0 }} />}
               </button>
 
-              {expanded && (
-                <div className="col" style={{ gap: 4, marginTop: 10 }}>
+              <div className={`accordion-body${expanded ? ' open' : ''}`}>
+                <div className="accordion-inner col" style={{ gap: 4, marginTop: expanded ? 10 : 0 }}>
                   {c.sections.map((s) => (
                     <div key={s.num} className="col" style={{ gap: 6, marginBottom: 8 }}>
                       <div className="row" style={{ gap: 8, background: 'var(--bg-2)', borderRadius: 10, padding: '8px 10px' }}>
@@ -72,7 +72,7 @@ export default function ChartOfAccounts() {
                     </div>
                   ))}
                 </div>
-              )}
+              </div>
             </div>
           );
         })}
