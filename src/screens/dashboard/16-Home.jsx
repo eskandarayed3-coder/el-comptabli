@@ -27,6 +27,11 @@ export default function Home() {
   const ym = new Date().toISOString().slice(0, 7);
   const hour = new Date().getHours();
   const greetKey = hour < 12 ? 'greetingMorning' : hour < 18 ? 'greetingAfternoon' : 'greetingEvening';
+  // The greeting strings are "Hi, {name} 👋" — clean up the stray comma when
+  // there's no name yet (e.g. right after a data reset, before onboarding).
+  const greeting = state.profile.name
+    ? t(`home.${greetKey}`, { name: state.profile.name })
+    : t(`home.${greetKey}`, { name: '' }).replace(/[,،]/g, '').replace(/\s{2,}/g, ' ').trim();
   const totals = useMemo(() => monthTotals(state.transactions, ym), [state.transactions, ym]);
 
   const nextDeadline = state.deadlines
@@ -53,7 +58,7 @@ export default function Home() {
           >
             {(state.profile.name || '?').slice(0, 1).toUpperCase()}
           </div>
-          <h1>{t(`home.${greetKey}`, { name: state.profile.name })}</h1>
+          <h1>{greeting}</h1>
         </div>
         <div className="row" style={{ gap: 8 }}>
           <button className="icon-btn" onClick={() => navigate('/profile/settings')} title="Paramètres">
@@ -127,10 +132,10 @@ export default function Home() {
         </div>
       </div>
 
-      <TintCard tone="indigo" onClick={() => navigate('/ai-recommendations')}>
+      <TintCard tone="indigo" onClick={() => navigate(state.transactions.length ? '/ai-recommendations' : '/expenses/add')}>
         <div className="row" style={{ gap: 10 }}>
           <AgentAvatar agent={AGENTS[0]} size={28} />
-          <span className="small" style={{ fontWeight: 600 }}>{t('home.aiInsight')}</span>
+          <span className="small" style={{ fontWeight: 600 }}>{state.transactions.length ? t('home.aiInsight') : t('home.aiInsightEmpty')}</span>
           <ChevronRight size={16} style={{ marginInlineStart: 'auto' }} />
         </div>
       </TintCard>

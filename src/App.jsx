@@ -4,6 +4,8 @@ import BottomNav from './components/BottomNav.jsx';
 import Toast from './components/Toast.jsx';
 import LockScreen from './components/LockScreen.jsx';
 import Sidebar from './components/admin/Sidebar.jsx';
+import AdminAuthGate from './components/admin/AdminAuthGate.jsx';
+import { AdminSecretProvider } from './lib/adminAuth.jsx';
 import { useStore, isPremium } from './lib/store.jsx';
 import { isPaywallAllowed } from './lib/paywall.js';
 import { manifest, adminManifest } from './routes.js';
@@ -54,25 +56,30 @@ function MobileShell({ onboarded }) {
 
 function AdminShell() {
   // Admin is an internal French-only ops tool (per the design spec) — always LTR,
-  // independent of the mobile app's user-facing language setting.
+  // independent of the mobile app's user-facing language setting. Now shows real
+  // customer data, so it's gated behind ADMIN_SECRET (see AdminAuthGate).
   return (
-    <div className="admin-frame" dir="ltr">
-      <Sidebar />
-      <div className="admin-main">
-        <Suspense fallback={<p className="muted">Chargement…</p>}>
-          <Routes>
-            {adminManifest.map(({ path, Component }) => {
-              // Nested <Routes> match relative to the parent's matched segment
-              // ("/admin/*"), so absolute manifest paths must be stripped here.
-              const rel = path.replace(/^\/admin\/?/, '');
-              return rel === ''
-                ? <Route key={path} index element={<Component />} />
-                : <Route key={path} path={rel} element={<Component />} />;
-            })}
-          </Routes>
-        </Suspense>
-      </div>
-    </div>
+    <AdminSecretProvider>
+      <AdminAuthGate>
+        <div className="admin-frame" dir="ltr">
+          <Sidebar />
+          <div className="admin-main">
+            <Suspense fallback={<p className="muted">Chargement…</p>}>
+              <Routes>
+                {adminManifest.map(({ path, Component }) => {
+                  // Nested <Routes> match relative to the parent's matched segment
+                  // ("/admin/*"), so absolute manifest paths must be stripped here.
+                  const rel = path.replace(/^\/admin\/?/, '');
+                  return rel === ''
+                    ? <Route key={path} index element={<Component />} />
+                    : <Route key={path} path={rel} element={<Component />} />;
+                })}
+              </Routes>
+            </Suspense>
+          </div>
+        </div>
+      </AdminAuthGate>
+    </AdminSecretProvider>
   );
 }
 

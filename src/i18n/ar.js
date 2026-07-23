@@ -151,6 +151,7 @@ export default {
     statAI: 'أسئلة الذكاء',
     todaySection: 'اليوم',
     aiInsight: '💡 مصاريف الإسانس زادت 30% هالشهر',
+    aiInsightEmpty: '💡 زيد أول مصروف باش تشوف التحليلات هنا',
     chips: ['شنوة النظام التقديري؟', 'شنوة نصرّح هالشهر؟', 'كيفاش نحسب TVA؟', 'CNSS للمستقلين؟'],
     overviewTitle: 'نظرة عامة',
     fullReport: '📊 التقرير الكامل',
@@ -484,6 +485,8 @@ export default {
     questionsLeft: 'باقيلك {n} أسئلة',
     daysLeft: 'باقي {n} يوم',
     allScreens: 'شوف كل الشاشات',
+    noName: 'زيد اسمك',
+    noEmail: 'زيد الإيميل متاعك',
   },
   backup: {
     title: 'النسخة الاحتياطية والمعطيات',

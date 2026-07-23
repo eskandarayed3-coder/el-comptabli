@@ -150,6 +150,7 @@ export default {
     statAI: 'Questions IA',
     todaySection: 'Aujourd’hui',
     aiInsight: '💡 Tes dépenses carburant +30 % ce mois',
+    aiInsightEmpty: '💡 Ajoute ta première dépense pour voir tes analyses ici',
     chips: ['C’est quoi le régime forfaitaire ?', 'Je déclare quoi ce mois ?', 'Comment calculer ma TVA ?', 'CNSS indépendant ?'],
     overviewTitle: 'Vue d’ensemble',
     fullReport: '📊 Rapport complet',
@@ -483,6 +484,8 @@ export default {
     questionsLeft: '{n} questions restantes',
     daysLeft: '{n} jour(s) restant(s)',
     allScreens: 'Explorer tous les écrans',
+    noName: 'Ajoute ton nom',
+    noEmail: 'Ajoute ton email',
   },
   backup: {
     title: 'Sauvegarde & données',

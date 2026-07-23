@@ -197,6 +197,7 @@ export const manifest = [
 export const adminManifest = [
   { path: '/admin', Component: L('admin/96-AdminDashboard'), label: '96. Admin Dashboard' },
   { path: '/admin/users', Component: L('admin/97-UsersManagement'), label: '97. Users Management' },
+  { path: '/admin/codes', Component: L('admin/CodesManagement'), label: 'Activation Codes' },
   { path: '/admin/subscriptions', Component: L('admin/98-SubscriptionsManagement'), label: '98. Subscriptions Management' },
   { path: '/admin/knowledge', Component: L('admin/99-KnowledgeBaseManagement'), label: '99. Knowledge Base Management' },
   { path: '/admin/ai-logs', Component: L('admin/100-AiLogs'), label: '100. AI Logs' },

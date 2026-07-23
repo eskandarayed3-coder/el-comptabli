@@ -33,8 +33,8 @@ export default function MyProfile() {
         <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'var(--tint-teal)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, fontWeight: 700, color: 'var(--teal-800)' }}>
           {(state.profile.name || '?').slice(0, 1).toUpperCase()}
         </div>
-        <h2>{state.profile.name}</h2>
-        <span className="tiny muted">{state.profile.email || 'eskandar@example.com'}</span>
+        <h2>{state.profile.name || t('profile.noName')}</h2>
+        <span className="tiny muted">{state.profile.email || t('profile.noEmail')}</span>
         <span className="pill teal">
           {t(`onboarding.${REGIME_KEY[state.profile.regime] || 'regimeReel'}`)} · {t(`onboarding.${TYPE_KEY[state.profile.userType] || 'whoFreelance'}`)}
         </span>

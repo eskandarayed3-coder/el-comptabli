@@ -1,12 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard, Users, CreditCard, BookOpen, ScrollText,
-  UserCog, FileText, Bell, BarChart3, Settings,
+  UserCog, FileText, Bell, BarChart3, Settings, KeyRound,
 } from 'lucide-react';
+import { AdminLogoutButton } from './AdminAuthGate.jsx';
 
 const ITEMS = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
   { to: '/admin/users', icon: Users, label: 'Utilisateurs' },
+  { to: '/admin/codes', icon: KeyRound, label: 'Codes d’activation' },
   { to: '/admin/subscriptions', icon: CreditCard, label: 'Abonnements' },
   { to: '/admin/knowledge', icon: BookOpen, label: 'Base de savoir' },
   { to: '/admin/ai-logs', icon: ScrollText, label: 'Logs IA' },
@@ -29,6 +31,7 @@ export default function Sidebar() {
           {label}
         </NavLink>
       ))}
+      <AdminLogoutButton />
     </aside>
   );
 }
