@@ -505,6 +505,12 @@ export default {
     notFound: 'Aucun compte trouvé avec cet email.',
     settingsLink: 'Récupérer mon accès (nouvel appareil)',
   },
+  guide: {
+    title: 'Guide d’utilisation',
+    intro: 'Tout ce qu’il faut savoir pour utiliser El Comptabli, étape par étape.',
+    waCta: 'Une question ? Contacter sur WhatsApp',
+    aboutLink: 'Guide d’utilisation',
+  },
   admin: {
     dashboard: 'Dashboard',
     users: 'Utilisateurs',

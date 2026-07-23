@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Download, Upload, RotateCcw, Trash2, MailSearch } from 'lucide-react';
+import { Download, Upload, RotateCcw, Trash2, MailSearch, BookOpen } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import TopBar from '../../components/TopBar.jsx';
@@ -38,6 +38,9 @@ export default function Settings() {
       <TopBar title={`${t('profile.settings')} ⚙️`} />
 
       <h3>Général</h3>
+      <button className="card row between" style={{ width: '100%' }} onClick={() => navigate('/guide')}>
+        <span className="small row" style={{ gap: 10 }}><BookOpen size={16} color="var(--teal-700)" /> {t('guide.aboutLink')}</span>
+      </button>
       <button className="card row between" style={{ width: '100%' }} onClick={() => navigate('/profile/language')}>
         <span className="small">{t('profile.language')}</span><span className="tiny muted">{state.settings.lang === 'ar' ? 'عربي' : 'Français'}</span>
       </button>

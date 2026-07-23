@@ -10,6 +10,7 @@ export default function About() {
   const navigate = useNavigate();
   const { t } = useT();
   const ROWS = [
+    { label: t('guide.aboutLink'), onClick: () => navigate('/guide') },
     { label: 'Conditions d’utilisation', onClick: () => navigate('/legal/terms') },
     { label: 'Politique de confidentialité', onClick: () => navigate('/legal/privacy') },
     { label: 'Nous contacter', onClick: () => window.open(`https://wa.me/${WHATSAPP}`, '_blank', 'noopener') },
