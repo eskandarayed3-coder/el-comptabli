@@ -107,7 +107,8 @@ export default {
     permStorage: 'Stockage', permStorageEx: 'pour importer des PDF',
     finish: 'Terminer',
     doneTitle: 'Tout est prêt, {name} 🎉',
-    goDash: 'Aller à mon dashboard',
+    trialNote: '1 jour gratuit pour essayer, ensuite à partir de 1 DT/jour.',
+    goDash: 'Commencer mon jour gratuit',
   },
   auth: {
     loginTitle: 'Content de te revoir 👋',
@@ -475,6 +476,7 @@ export default {
     language: 'Langue',
     about: 'À propos',
     logout: 'Se déconnecter',
+    logoutConfirm: 'Se déconnecter effacera les données locales de cet appareil (ton abonnement reste récupérable par email). Continuer ?',
     resetDemo: 'Réinitialiser les données démo',
     version: 'Version',
     plan: 'Plan',

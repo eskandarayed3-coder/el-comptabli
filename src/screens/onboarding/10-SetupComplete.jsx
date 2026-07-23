@@ -1,20 +1,21 @@
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Gift } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
-import { syncUser } from '../../lib/api.js';
 
 const REGIME_KEY = { forfaitaire: 'regimeForfait', reel: 'regimeReel', unknown: 'regimeUnknown' };
 const TYPE_KEY = { freelance: 'whoFreelance', micro: 'whoMicro', company: 'whoCompany', accountant: 'whoAccountant' };
 
 export default function SetupComplete() {
   const navigate = useNavigate();
-  const { state, patch } = useStore();
+  const { state, patch, activatePlan } = useStore();
   const { t } = useT();
 
+  // Every real, freshly-onboarded account gets 1 free day before the
+  // paywall kicks in — activatePlan already syncs the trial to Supabase.
   const go = () => {
     patch('settings', { onboarded: true });
-    syncUser({ profile: state.profile, plan: state.settings.plan });
+    activatePlan(1);
     navigate('/home');
   };
 
@@ -36,8 +37,12 @@ export default function SetupComplete() {
           <span className="pill teal">{t(`onboarding.${TYPE_KEY[state.profile.userType] || 'whoFreelance'}`)}</span>
           <span className="pill indigo">{t(`onboarding.${REGIME_KEY[state.profile.regime] || 'regimeReel'}`)}</span>
           <span className="pill white">{state.profile.city}</span>
-          <span className="pill success">{state.settings.plan === 'premium' ? 'Premium' : t('common.free')}</span>
         </div>
+      </div>
+
+      <div className="card tint-teal row" style={{ gap: 10, width: '100%', alignItems: 'center' }}>
+        <Gift size={20} color="var(--teal-700)" />
+        <span className="small" style={{ fontWeight: 600 }}>{t('onboarding.trialNote')}</span>
       </div>
 
       <div style={{ flex: 1 }} />

@@ -108,7 +108,8 @@ export default {
     permStorage: 'التخزين', permStorageEx: 'باش تدخّل ملفات PDF',
     finish: 'كمّل',
     doneTitle: 'الكل حاضر، {name} 🎉',
-    goDash: 'امشي للداشبورد',
+    trialNote: 'يوم مجاني باش تجرّب، بعدها بداية من 1 د.ت/يوم.',
+    goDash: 'ابدا يومي المجاني',
   },
   auth: {
     loginTitle: 'مرحبا بيك مرة أخرى 👋',
@@ -476,6 +477,7 @@ export default {
     language: 'اللغة',
     about: 'على البرنامج',
     logout: 'اخرج',
+    logoutConfirm: 'الخروج يمسح المعطيات المحلية متاع الجهاز هذا (الاشتراك يرجع بالإيميل). تكمل؟',
     resetDemo: 'رجّع معطيات الديمو',
     version: 'النسخة',
     plan: 'البلان',

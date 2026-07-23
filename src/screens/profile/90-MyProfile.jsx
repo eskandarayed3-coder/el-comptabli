@@ -8,7 +8,7 @@ const TYPE_KEY = { freelance: 'whoFreelance', micro: 'whoMicro', company: 'whoCo
 
 export default function MyProfile() {
   const navigate = useNavigate();
-  const { state, patch, toast } = useStore();
+  const { state, patch, toast, reset } = useStore();
   const { t } = useT();
   const isPremium = checkPremium(state.settings);
   const daysLeft = premiumDaysLeft(state.settings);
@@ -67,7 +67,10 @@ export default function MyProfile() {
         ))}
       </div>
 
-      <button className="btn btn-danger-soft btn-block" onClick={() => { patch('settings', { onboarded: false }); navigate('/welcome'); }}>
+      <button
+        className="btn btn-danger-soft btn-block"
+        onClick={() => { if (confirm(t('profile.logoutConfirm'))) { reset(); navigate('/welcome'); } }}
+      >
         <LogOut size={16} /> {t('profile.logout')}
       </button>
       <p className="tiny center muted">{t('profile.version')} 1.0.0</p>
