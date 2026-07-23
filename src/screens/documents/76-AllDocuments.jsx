@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Plus, Search as SearchIcon, FolderOpen, Eye } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
@@ -16,7 +16,8 @@ export default function AllDocuments() {
   const navigate = useNavigate();
   const { state } = useStore();
   const { t, lang } = useT();
-  const [filter, setFilter] = useState('all');
+  const [searchParams] = useSearchParams();
+  const [filter, setFilter] = useState(searchParams.get('type') || 'all');
   const [q, setQ] = useState('');
 
   const filters = [

@@ -10,7 +10,7 @@ export default function PdfViewer() {
 
   return (
     <div className="screen no-nav stagger">
-      <TopBar title="Facture STEG juillet" subtitle="Page 1/2" />
+      <TopBar title="Aperçu du document" />
       <div style={{ flex: 1, borderRadius: 16, background: 'var(--bg-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 320 }}>
         <span style={{ fontSize: 40 }}>📄</span>
       </div>

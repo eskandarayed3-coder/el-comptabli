@@ -16,7 +16,8 @@ const TXT = {
   logout: { fr: 'Déconnecter', ar: 'اخرج' },
   deleteAcc: { fr: 'Supprimer mon compte', ar: 'فسخ حسابي' },
   irreversible: { fr: 'Cette action est irréversible.', ar: 'هذه العملية ما تتعوضش.' },
-  ago3d: { fr: 'il y a 3j', ar: 'من 3 أيام' },
+  thisDevice: { fr: 'Cet appareil', ar: 'الجهاز هذا' },
+  sessionsNote: { fr: 'Tes données restent sur cet appareil — pas de suivi de session multi-appareils pour l’instant.', ar: 'معطياتك تبقى في الجهاز هذا برك — ما فماش متابعة جلسات بين أجهزة عدة توا.' },
 };
 
 export default function Security() {
@@ -40,11 +41,8 @@ export default function Security() {
       <div className="card row between"><span className="small">{L('bio')}</span><Toggle on={bio} onClick={() => setBio((v) => !v)} /></div>
 
       <h3>{L('sessions')}</h3>
-      <div className="card row between"><span className="small">iPhone 13 · Nabeul</span><StatusPill tone="success">{L('current')}</StatusPill></div>
-      <div className="card row between">
-        <span className="small">Chrome Windows · {L('ago3d')}</span>
-        <button className="btn btn-ghost btn-sm" onClick={() => toast(t('common.saved'))}>{L('logout')}</button>
-      </div>
+      <div className="card row between"><span className="small">{L('thisDevice')}</span><StatusPill tone="success">{L('current')}</StatusPill></div>
+      <p className="tiny muted">{L('sessionsNote')}</p>
 
       <button className="card row between" style={{ width: '100%', color: 'var(--pill-danger-fg)' }}><span className="small">{L('deleteAcc')}</span></button>
       <p className="tiny muted">{L('irreversible')}</p>

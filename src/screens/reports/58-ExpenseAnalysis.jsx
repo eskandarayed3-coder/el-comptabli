@@ -12,6 +12,7 @@ export default function ExpenseAnalysis() {
   const { state, toast } = useStore();
   const { t, lang } = useT();
   const ym = new Date().toISOString().slice(0, 7);
+  const ymLast = (() => { const d = new Date(); d.setMonth(d.getMonth() - 1); return d.toISOString().slice(0, 7); })();
 
   const data = useMemo(() => {
     const map = {};
@@ -21,6 +22,20 @@ export default function ExpenseAnalysis() {
     const total = Object.values(map).reduce((a, b) => a + b, 0) || 1;
     return { total, items: Object.entries(map).map(([id, v]) => ({ id, label: categoryLabel(id, lang), v, pct: Math.round((v / total) * 100) })) };
   }, [state.transactions, ym, lang]);
+
+  const insight = useMemo(() => {
+    // Only surfaces if a category genuinely grew month-over-month — no
+    // fixed example text.
+    let best = null;
+    for (const c of data.items) {
+      const lastCount = state.transactions.filter((tx) => tx.kind === 'expense' && tx.category === c.id && tx.date.startsWith(ymLast)).length;
+      const thisCount = state.transactions.filter((tx) => tx.kind === 'expense' && tx.category === c.id && tx.date.startsWith(ym)).length;
+      if (thisCount > lastCount && (!best || thisCount - lastCount > best.diff)) {
+        best = { label: c.label, thisCount, lastCount, diff: thisCount - lastCount };
+      }
+    }
+    return best;
+  }, [data.items, state.transactions, ym, ymLast]);
 
   return (
     <div className="screen stagger">
@@ -47,7 +62,9 @@ export default function ExpenseAnalysis() {
           </div>
         ))}
       </div>
-      <div className="card tint-indigo"><span className="small">💡 Carburant en hausse : 3 pleins ce mois vs 2 en juin</span></div>
+      {insight && (
+        <div className="card tint-indigo"><span className="small">💡 {insight.label} en hausse : {insight.thisCount} opérations ce mois vs {insight.lastCount} le mois dernier</span></div>
+      )}
       <button className="btn btn-ghost btn-block" onClick={() => toast(t('reports.exported'))}>Exporter l’analyse</button>
     </div>
   );

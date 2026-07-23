@@ -1,15 +1,12 @@
-import { FileText } from 'lucide-react';
-import { useStore } from '../../lib/store.jsx';
+import { useStore, isPremium as checkPremium } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
+import { fmtDate } from '../../lib/format.js';
 import TopBar from '../../components/TopBar.jsx';
-
-const INVOICES = [
-  ['Juillet 2026', 20], ['Juin 2026', 20], ['Mai 2026', 20],
-];
 
 export default function BillingHistory() {
   const { state, patch, toast } = useStore();
-  const { t } = useT();
+  const { t, lang } = useT();
+  const isPremium = checkPremium(state.settings);
 
   const cancel = () => { patch('settings', { plan: 'free' }); toast(t('common.saved')); };
 
@@ -17,17 +14,23 @@ export default function BillingHistory() {
     <div className="screen stagger">
       <TopBar title={`${t('sub.billing')}`} />
       <div className="card row between">
-        <span className="col"><span style={{ fontWeight: 700 }}>Premium</span><span className="tiny muted">Prochaine échéance 16 août</span></span>
-        <button className="btn btn-ghost btn-sm">Gérer</button>
+        <span className="col">
+          <span style={{ fontWeight: 700 }}>{isPremium ? 'Premium' : t('common.free')}</span>
+          {isPremium && state.settings.premiumUntil && (
+            <span className="tiny muted">Actif jusqu’au {fmtDate(state.settings.premiumUntil, lang)}</span>
+          )}
+        </span>
       </div>
-      <div className="col" style={{ gap: 8 }}>
-        {INVOICES.map(([label, amount]) => (
-          <div key={label} className="row between small" style={{ padding: '10px 4px' }}>
-            <span className="row" style={{ gap: 8 }}><FileText size={16} color="var(--text-2)" /> {label} · {amount} DT · Payée ✓</span>
-          </div>
-        ))}
-      </div>
-      {state.settings.plan === 'premium' && (
+
+      {/* Paiement manuel par code WhatsApp, pas d'abonnement récurrent — il
+          n'y a donc pas d'historique de facturation à afficher ici. */}
+      <p className="small muted center">
+        {isPremium
+          ? 'Activation par code, pas de facturation récurrente à afficher ici.'
+          : 'Aucune activation pour l’instant.'}
+      </p>
+
+      {isPremium && (
         <button className="btn btn-danger-soft btn-block" onClick={cancel}>Annuler mon abonnement</button>
       )}
     </div>

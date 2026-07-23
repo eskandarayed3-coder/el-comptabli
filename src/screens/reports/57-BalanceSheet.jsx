@@ -1,24 +1,37 @@
+import { useMemo } from 'react';
+import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { fmtDT } from '../../lib/format.js';
 import TopBar from '../../components/TopBar.jsx';
 
-const ACTIF = [
-  [{ fr: 'Immobilisations', ar: 'الأصول الثابتة' }, 2400],
-  [{ fr: 'Créances clients', ar: 'مستحقات الحرفاء' }, 1250],
-  [{ fr: 'Banque', ar: 'البنك' }, 3180],
-  [{ fr: 'Caisse', ar: 'الصندوق' }, 220],
-];
-const PASSIF = [
-  [{ fr: 'Capital', ar: 'رأس المال' }, 3000],
-  [{ fr: 'Résultat', ar: 'النتيجة' }, 2738],
-  [{ fr: 'Dettes fournisseurs', ar: 'ديون الموردين' }, 890],
-  [{ fr: 'TVA à payer', ar: 'TVA للخلاص' }, 312],
-  [{ fr: 'Emprunts', ar: 'القروض' }, 110],
-];
-
 export default function BalanceSheet() {
-  const { lang } = useT();
+  const { state } = useStore();
+  const { lang, t } = useT();
   const L = (o) => o[lang] || o.fr;
+
+  // Derived from real transactions only — this app doesn't track capital,
+  // immobilisations, or loan balances, so those lines are omitted rather
+  // than shown as fabricated zeros or fake numbers.
+  const { tresorerie, resultat, tvaAPayer, hasData } = useMemo(() => {
+    const income = state.transactions.filter((tx) => tx.kind === 'income');
+    const expense = state.transactions.filter((tx) => tx.kind === 'expense');
+    const totalIncome = income.reduce((s, tx) => s + (tx.amountTTC ?? tx.amount ?? 0), 0);
+    const totalExpense = expense.reduce((s, tx) => s + (tx.amountTTC ?? tx.amount ?? 0), 0);
+    const tvaCollectee = income.reduce((s, tx) => s + (tx.tva ?? 0), 0);
+    const tvaDeductible = expense.reduce((s, tx) => s + (tx.tva ?? 0), 0);
+    return {
+      tresorerie: totalIncome - totalExpense,
+      resultat: totalIncome - totalExpense,
+      tvaAPayer: Math.max(0, tvaCollectee - tvaDeductible),
+      hasData: state.transactions.length > 0,
+    };
+  }, [state.transactions]);
+
+  const ACTIF = [[{ fr: 'Trésorerie (revenus − dépenses)', ar: 'الخزينة (المداخيل − المصاريف)' }, tresorerie]];
+  const PASSIF = [
+    [{ fr: 'Résultat', ar: 'النتيجة' }, resultat],
+    [{ fr: 'TVA à payer', ar: 'TVA للخلاص' }, tvaAPayer],
+  ];
   const totalActif = ACTIF.reduce((s, [, v]) => s + v, 0);
   const totalPassif = PASSIF.reduce((s, [, v]) => s + v, 0);
 
@@ -41,16 +54,19 @@ export default function BalanceSheet() {
 
   return (
     <div className="screen stagger">
-      <TopBar title={lang === 'ar' ? 'ميزانية مبسّطة · 30 جوان 2026' : 'Bilan simplifié · 30 juin 2026'} />
-      {block(lang === 'ar' ? 'الأصول' : 'Actif', ACTIF, totalActif)}
-      {block(lang === 'ar' ? 'الخصوم' : 'Passif', PASSIF, totalPassif)}
-      {totalActif === totalPassif && (
-        <div className="card tint-teal center"><span style={{ fontWeight: 700 }}>✓ {lang === 'ar' ? 'متوازنة' : 'Équilibré'}</span></div>
+      <TopBar title={lang === 'ar' ? 'ميزانية مبسّطة' : 'Bilan simplifié'} />
+      {!hasData ? (
+        <p className="small muted center">{t('money.noTx')}</p>
+      ) : (
+        <>
+          {block(lang === 'ar' ? 'الأصول' : 'Actif', ACTIF, totalActif)}
+          {block(lang === 'ar' ? 'الخصوم' : 'Passif', PASSIF, totalPassif)}
+        </>
       )}
       <p className="tiny center muted">
         {lang === 'ar'
-          ? 'أرقام تقريبية، المصادقة من خبير محاسبة ضرورية للاستعمال الرسمي'
-          : 'Indicatif, certification par expert-comptable requise pour usage officiel'}
+          ? 'مبسّطة من معاملاتك فقط (بلا رأس مال ولا أصول ثابتة ولا قروض) — استشر خبير محاسبة لبيان رسمي'
+          : 'Simplifié à partir de tes transactions uniquement (hors capital, immobilisations, emprunts) — consulte un expert-comptable pour un bilan officiel'}
       </p>
     </div>
   );
