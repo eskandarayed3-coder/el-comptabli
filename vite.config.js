@@ -8,6 +8,7 @@ export default defineConfig({
     host: true, // listen on the LAN too, not just localhost — lets your phone reach it
     proxy: {
       '/api': 'http://localhost:3001',
+      '/admin': 'http://localhost:3001',
     },
   },
 });

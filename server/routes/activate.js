@@ -39,6 +39,20 @@ router.get('/stock', async (req, res) => {
   res.json({ backend: supabaseCodes.supabaseConfigured() ? 'supabase' : 'file', ...(await backend().batchStats()) });
 });
 
+// Owner-only: fetch one still-unused code for a plan, to hand out via
+// WhatsApp — guaranteed fresh (read straight from the source of truth), so
+// there's no separate list to keep in sync manually.
+router.get('/next', async (req, res) => {
+  const secret = process.env.ADMIN_SECRET;
+  if (!secret || req.query.secret !== secret) {
+    return res.status(403).json({ error: { code: 'forbidden', message: 'Accès refusé.' } });
+  }
+  const plan = ['jour', 'semaine', 'mois'].includes(req.query.plan) ? req.query.plan : 'jour';
+  const code = await backend().peekUnusedCode(plan);
+  if (!code) return res.status(404).json({ error: { code: 'empty', message: 'Plus de codes disponibles pour ce plan.' } });
+  res.json({ plan, code });
+});
+
 // Owner-only code generator. Protected by ADMIN_SECRET (set it in .env).
 // Example: /api/activate/gen?secret=XXX&plan=mois&n=10
 router.get('/gen', (req, res) => {

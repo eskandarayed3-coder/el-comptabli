@@ -23,6 +23,10 @@ app.use('/api/insights', insightsRouter);
 app.use('/api/exam', examRouter);
 app.use('/api/activate', activateRouter);
 
+// Small standalone admin page (not part of the React app / Vite proxy) to
+// hand out fresh activation codes — works the same in dev and prod.
+app.use('/admin', express.static(path.join(__dirname, 'public')));
+
 if (process.env.NODE_ENV === 'production') {
   const dist = path.join(__dirname, '..', 'dist');
   app.use(express.static(dist));

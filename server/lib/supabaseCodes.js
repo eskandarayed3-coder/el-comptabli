@@ -58,6 +58,19 @@ export async function redeemSingleUseCode(rawCode) {
   return { planId: p.id, days: p.days, price: p.price };
 }
 
+// Returns one still-unused code for a plan, without marking it used — see
+// peek_unused_code in schema.sql. Lets the owner hand out a guaranteed-fresh
+// code (e.g. via /admin/codes) with zero manual bookkeeping.
+export async function peekUnusedCode(plan) {
+  const sb = getClient();
+  const { data, error } = await sb.rpc('peek_unused_code', { p_plan: plan });
+  if (error) {
+    console.error('supabase peek error:', error.message);
+    return null;
+  }
+  return data || null;
+}
+
 export async function batchStats() {
   const sb = getClient();
   const { data, error } = await sb.rpc('activation_code_stats');

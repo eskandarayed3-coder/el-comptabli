@@ -76,3 +76,20 @@ $$;
 
 revoke all on function public.activation_code_stats() from public;
 grant execute on function public.activation_code_stats() to anon, authenticated;
+
+-- Lets the owner fetch one still-unused code for a plan (to hand out via
+-- WhatsApp) without exposing the table or marking anything used.
+create or replace function public.peek_unused_code(p_plan text)
+returns text
+language sql
+security definer
+set search_path = public
+as $$
+  select code from activation_codes
+  where plan = p_plan and used = false
+  order by code
+  limit 1;
+$$;
+
+revoke all on function public.peek_unused_code(text) from public;
+grant execute on function public.peek_unused_code(text) to anon, authenticated;

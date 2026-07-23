@@ -58,6 +58,15 @@ export function redeemSingleUseCode(rawCode) {
   return { planId: p.id, days: p.days, price: p.price };
 }
 
+// Returns one still-unused code for a plan, without marking it used — lets
+// the owner hand it out (e.g. via /admin/codes) knowing it's guaranteed
+// fresh, without any manual bookkeeping in a separate list.
+export function peekUnusedCode(plan) {
+  const batch = loadState();
+  const entry = batch.find((c) => c.plan === plan && !c.used);
+  return entry ? entry.code : null;
+}
+
 // Owner-facing stock counter, e.g. for a small admin check.
 export function batchStats() {
   const batch = loadState();
