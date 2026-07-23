@@ -90,7 +90,8 @@
   font: var(--small); font-weight: 500;
   border: 1.5px solid var(--hairline); color: var(--text);
   background: var(--bg); white-space: nowrap;
-  transition: all var(--t-fast) var(--ease);
+  transition: background-color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
 }
 .chip:active { transform: scale(0.96); }
 .chip.active { background: var(--teal-800); border-color: var(--teal-800); color: #fff; }
@@ -122,7 +123,7 @@ textarea.input { resize: vertical; min-height: 96px; }
 .segmented button {
   flex: 1; min-height: 42px; border-radius: var(--r-pill);
   font: 600 14px/1 var(--font-sans); color: var(--text-2);
-  transition: all var(--t-fast) var(--ease);
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
 }
 .segmented button.active { background: var(--teal-800); color: #fff; box-shadow: var(--shadow-card); }
 
@@ -334,7 +335,7 @@ textarea.input { resize: vertical; min-height: 96px; }
   display: flex; align-items: center; gap: 14px; width: 100%;
   padding: 18px; border-radius: var(--r-inner); text-align: start;
   background: var(--bg-2); border: 2px solid transparent;
-  transition: all var(--t-fast) var(--ease);
+  transition: background-color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
 }
 .option-card:active { transform: scale(0.98); }
 .option-card.selected { background: var(--tint-teal); border-color: var(--teal-400); }
@@ -364,7 +365,7 @@ textarea.input { resize: vertical; min-height: 96px; }
   display: flex; align-items: center; gap: 12px;
   padding: 12px 14px; border-radius: var(--r-input);
   color: rgba(255, 255, 255, 0.75); font: var(--small); font-weight: 500;
-  transition: all var(--t-fast);
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
 }
 .admin-sidebar a.active, .admin-sidebar a:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
 .admin-main { flex: 1; padding: 32px 40px; display: flex; flex-direction: column; gap: 24px; min-width: 0; }
@@ -417,7 +418,7 @@ button.card:active, .list-row:active, [role='button']:active,
 .bottom-nav a.active svg { animation: nav-pop 260ms var(--ease); }
 @keyframes nav-pop { 0% { transform: scale(1); } 45% { transform: scale(1.22); } 100% { transform: scale(1); } }
 .bottom-nav a.active::after { animation: dot-in 260ms var(--ease) backwards; }
-@keyframes dot-in { from { transform: scale(0); opacity: 0; } }
+@keyframes dot-in { from { transform: scale(0.4); opacity: 0; } }
 
 /* Chat bubbles pop in from the bottom */
 .bubble, .bubble-row { animation: bubble-in 220ms var(--ease) backwards; }
