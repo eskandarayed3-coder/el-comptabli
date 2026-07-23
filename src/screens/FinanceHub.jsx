@@ -114,27 +114,21 @@ export default function FinanceHub() {
       {showAll && (
       <>
       <Section view={view} title={t('common.incomes') + ' & ' + t('common.expenses')} navigate={navigate} items={[
-        { to: '/income', icon: TrendingUp, label: t('money.incomeList') },
-        { to: '/expenses', icon: TrendingDown, label: t('money.expenseList') },
         { to: '/expenses/categories', icon: FolderOpen, label: t('money.categories') },
         { to: '/overview', icon: PieChart, label: t('home.overviewTitle') },
       ]} />
 
       <Section view={view} title={t('tax.dashTitle')} navigate={navigate} items={[
-        { to: '/tax', icon: Landmark, label: t('tax.dashTitle') },
-        { to: '/tax/vat', icon: Calculator, label: t('tax.vatCalcTitle') },
         { to: '/tax/irpp', icon: Calculator, label: t('tax.irppCalcTitle') },
         { to: '/tax/calendar', icon: CalendarClock, label: t('tax.calendarTitle') },
         { to: '/tax/estimate', icon: Receipt, label: t('tax.estimTitle') },
         { to: '/tax/cnss', icon: Landmark, label: t('cnss.title') },
-        { to: '/tax/investment', icon: TrendingUp, label: t('invest.title') },
         { to: '/tax/history', icon: FileSpreadsheet, label: t('tax.historyTitle') },
       ]} />
 
       <Section view={view} title={t('accounting.title')} navigate={navigate} items={[
         { to: '/accounting', icon: BookOpen, label: t('accounting.title') },
         { to: '/accounting/journal', icon: FileSpreadsheet, label: t('accounting.journal') },
-        { to: '/accounting/accounts', icon: BookOpen, label: t('accounting.accounts') },
         { to: '/accounting/trial-balance', icon: BarChart3, label: t('accounting.trial') },
         { to: '/accounting/ledger', icon: BookOpen, label: t('accounting.ledger') },
         { to: '/accounting/reports', icon: FileSpreadsheet, label: t('accounting.reports') },

@@ -162,12 +162,12 @@ export default {
   },
   agents: {
     pick: 'اختار الوكيل متاعك',
-    general: { name: 'وكيل عام', tagline: 'مساعد ذكاء اصطناعي أساسي' },
-    comptabilite: { name: 'وكيل المحاسبة', tagline: 'مختص في المحاسبة' },
-    fiscalite: { name: 'وكيل الجباية', tagline: 'خبير في الضرايب' },
-    droit: { name: 'وكيل القانون', tagline: 'مختص في قانون الأعمال' },
-    finance: { name: 'وكيل المالية', tagline: 'خبير في التحليل المالي' },
-    tunisie: { name: 'وكيل تونس', tagline: 'قاعدة معرفة محلية' },
+    general: { name: 'وكيل عام', tagline: 'نسمعك ونوجّهك للمختص' },
+    comptabilite: { name: 'وكيل المحاسبة', tagline: 'القيود، الحسابات، الميزانية (SCE)' },
+    fiscalite: { name: 'وكيل الجباية', tagline: 'TVA، IRPP، آجال التصريح' },
+    droit: { name: 'وكيل القانون', tagline: 'الشركة، العقود، الشغل' },
+    finance: { name: 'وكيل المالية', tagline: 'أرقامك، الهامش، المردودية' },
+    tunisie: { name: 'وكيل الإجراءات', tagline: 'أنا مكتب، أنا وثيقة، وقتاش' },
   },
   chat: {
     title: 'الكمبتابلي 🤖',
@@ -485,6 +485,10 @@ export default {
     budget: 'الميزانية',
     audit: 'مساعد التدقيق',
     teaser: 'خاصية جاية، هذا أفانبروميار.',
+  },
+  settings: {
+    textSize: 'حجم الكتابة',
+    textSmall: 'صغير', textNormal: 'عادي', textLarge: 'كبير',
   },
   finhub: {
     essential: 'الأساسي',

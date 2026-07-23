@@ -106,3 +106,23 @@
     --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.5);
   }
 }
+
+/* ============ Text size (Réglages → Taille du texte) ============ */
+/* Overrides the type tokens; every .small/.tiny/h1..h3 and `font: var(--body)`
+   surface scales together. Applied via data-text-size on <html> (store.jsx). */
+:root[data-text-size='small'] {
+  --h1: 700 28px/1.2 var(--font-sans);
+  --h2: 700 21px/1.25 var(--font-sans);
+  --h3: 600 18px/1.3 var(--font-sans);
+  --body: 400 14px/1.5 var(--font-sans);
+  --small: 500 13px/1.4 var(--font-sans);
+  --tiny: 400 11px/1.4 var(--font-sans);
+}
+:root[data-text-size='large'] {
+  --h1: 700 37px/1.2 var(--font-sans);
+  --h2: 700 28px/1.25 var(--font-sans);
+  --h3: 600 23px/1.3 var(--font-sans);
+  --body: 400 18px/1.5 var(--font-sans);
+  --small: 500 16px/1.4 var(--font-sans);
+  --tiny: 400 13px/1.4 var(--font-sans);
+}

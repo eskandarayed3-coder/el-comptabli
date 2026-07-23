@@ -13,6 +13,7 @@ export default function Settings() {
   const { t } = useT();
   const fileRef = useRef(null);
   const theme = state.settings.theme || 'light';
+  const textSize = state.settings.textSize || 'normal';
   const currency = state.settings.currency || 'DT';
 
   const onImportFile = (e) => {
@@ -53,6 +54,14 @@ export default function Settings() {
           options={[{ id: 'light', label: t('common.themeLight') }, { id: 'dark', label: t('common.themeDark') }, { id: 'auto', label: t('common.themeAuto') }]}
           value={theme}
           onChange={(id) => patch('settings', { theme: id })}
+        />
+      </div>
+      <div className="field">
+        <label>{t('settings.textSize')}</label>
+        <SegmentedControl
+          options={[{ id: 'small', label: t('settings.textSmall') }, { id: 'normal', label: t('settings.textNormal') }, { id: 'large', label: t('settings.textLarge') }]}
+          value={textSize}
+          onChange={(id) => patch('settings', { textSize: id })}
         />
       </div>
 

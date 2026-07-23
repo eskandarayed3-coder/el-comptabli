@@ -161,12 +161,12 @@ export default {
   },
   agents: {
     pick: 'Choisis ton agent',
-    general: { name: 'Agent Général', tagline: 'Assistant IA par défaut' },
-    comptabilite: { name: 'Agent Comptabilité', tagline: 'Spécialiste en comptabilité' },
-    fiscalite: { name: 'Agent Fiscalité', tagline: 'Expert en fiscalité & taxes' },
-    droit: { name: 'Agent Droit', tagline: 'Spécialiste en droit des affaires' },
-    finance: { name: 'Agent Finance', tagline: 'Expert en finance & analyse' },
-    tunisie: { name: 'Agent Tunisie', tagline: 'Base de connaissances locales' },
+    general: { name: 'Agent Général', tagline: 'Je t’écoute et je t’oriente' },
+    comptabilite: { name: 'Agent Comptabilité', tagline: 'Écritures, comptes, bilan (SCE)' },
+    fiscalite: { name: 'Agent Fiscalité', tagline: 'TVA, IRPP, dates limites' },
+    droit: { name: 'Agent Droit', tagline: 'Société, contrats, travail' },
+    finance: { name: 'Agent Finance', tagline: 'Tes chiffres, marge, rentabilité' },
+    tunisie: { name: 'Agent Démarches', tagline: 'Quel bureau, quel papier, quand' },
   },
   chat: {
     title: 'El Comptabli 🤖',
@@ -484,6 +484,10 @@ export default {
     budget: 'Budget',
     audit: 'Assistant audit',
     teaser: 'Fonctionnalité à venir, voici un aperçu.',
+  },
+  settings: {
+    textSize: 'Taille du texte',
+    textSmall: 'Petit', textNormal: 'Normal', textLarge: 'Grand',
   },
   finhub: {
     essential: 'L’essentiel',

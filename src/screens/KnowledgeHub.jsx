@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Landmark, Scale, Newspaper, HelpCircle, Search, Settings, ChevronRight, GraduationCap, Sparkles, Target } from 'lucide-react';
+import { BookOpen, Landmark, Scale, Newspaper, HelpCircle, Search, Settings, ChevronRight, GraduationCap, Sparkles, Target, ListTree } from 'lucide-react';
 import { useT } from '../i18n/index.js';
 
 export default function KnowledgeHub() {
@@ -8,6 +8,7 @@ export default function KnowledgeHub() {
 
   const LINKS = [
     { to: '/knowledge/guides', icon: BookOpen, label: t('knowledge.guides') },
+    { to: '/accounting/accounts', icon: ListTree, label: t('accounting.accounts') },
     { to: '/knowledge/tax-guides', icon: Landmark, label: t('knowledge.taxGuides') },
     { to: '/knowledge/laws', icon: Scale, label: t('knowledge.laws') },
     { to: '/knowledge/law-updates', icon: Newspaper, label: t('knowledge.lawUpdates') },

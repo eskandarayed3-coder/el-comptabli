@@ -82,7 +82,7 @@ export default function Payment() {
         <a className="btn btn-block" href={waLink} target="_blank" rel="noreferrer" style={{ background: '#25D366', color: '#fff' }}>
           <MessageCircle size={18} /> {t('pay.waCta')}
         </a>
-        <p className="tiny muted num" dir="ltr" style={{ textAlign: lang === 'ar' ? 'right' : 'left' }}>{t('pay.waNumber')} : 28 456 450</p>
+        <p className="tiny muted">{t('pay.waNumber')} : <span className="num" style={{ fontWeight: 700, direction: 'ltr', unicodeBidi: 'isolate' }}>+216 28 456 450</span></p>
       </div>
 
       {/* Step 3 — type the code you received */}

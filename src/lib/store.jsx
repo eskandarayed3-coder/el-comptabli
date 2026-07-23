@@ -100,6 +100,10 @@ export function StoreProvider({ children }) {
     document.documentElement.dataset.theme = state.settings.theme || 'light';
   }, [state.settings.theme]);
 
+  useEffect(() => {
+    document.documentElement.dataset.textSize = state.settings.textSize || 'normal';
+  }, [state.settings.textSize]);
+
   const api = useMemo(() => ({
     state,
     dispatch,
