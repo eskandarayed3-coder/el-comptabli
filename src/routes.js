@@ -170,6 +170,9 @@ export const manifest = [
   { path: '/profile/security', Component: L('profile/93-Security'), label: '93. Security', module: 'Profile' },
   { path: '/profile/language', Component: L('profile/94-Language'), label: '94. Language', module: 'Profile' },
   { path: '/profile/about', Component: L('profile/95-About'), label: '95. About', module: 'Profile' },
+  { path: '/profile/recover', Component: L('profile/RecoverAccess'), label: 'Recover Access', module: 'Profile' },
+  { path: '/legal/terms', Component: L('legal/Terms'), label: 'Terms of Use', module: 'Legal' },
+  { path: '/legal/privacy', Component: L('legal/Privacy'), label: 'Privacy Policy', module: 'Legal' },
 
   // ---- Module 20 — Future Features ----
   { path: '/future/roadmap', Component: L('future/Roadmap'), label: 'Roadmap (consolidated)', module: 'Future' },

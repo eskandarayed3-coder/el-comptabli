@@ -19,7 +19,7 @@ const METHODS = [
 export default function Payment() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const { activatePlan, toast } = useStore();
+  const { state, activatePlan, toast } = useStore();
   const { t, lang } = useT();
 
   const plan = PRICE[params.get('plan')] ? params.get('plan') : 'semaine';
@@ -37,7 +37,7 @@ export default function Payment() {
     if (!code.trim() || busy) return;
     setBusy(true);
     try {
-      const { days } = await activateCode(code.trim());
+      const { days } = await activateCode(code.trim(), state.profile.email);
       activatePlan(days);
       toast(t('pay.activated'));
       navigate('/profile');

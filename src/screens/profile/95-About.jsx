@@ -1,11 +1,19 @@
+import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Star } from 'lucide-react';
 import { useT } from '../../i18n/index.js';
 import TopBar from '../../components/TopBar.jsx';
 import Logo from '../../components/Logo.jsx';
 
+const WHATSAPP = '21628456450';
+
 export default function About() {
+  const navigate = useNavigate();
   const { t } = useT();
-  const ROWS = ['Conditions d’utilisation', 'Politique de confidentialité', 'Nous contacter'];
+  const ROWS = [
+    { label: 'Conditions d’utilisation', onClick: () => navigate('/legal/terms') },
+    { label: 'Politique de confidentialité', onClick: () => navigate('/legal/privacy') },
+    { label: 'Nous contacter', onClick: () => window.open(`https://wa.me/${WHATSAPP}`, '_blank', 'noopener') },
+  ];
 
   return (
     <div className="screen stagger">
@@ -22,8 +30,8 @@ export default function About() {
 
       <div className="col" style={{ gap: 4 }}>
         {ROWS.map((r) => (
-          <button key={r} className="row between" style={{ padding: '14px 4px', width: '100%' }}>
-            <span className="small">{r}</span><ChevronRight size={16} color="var(--text-2)" />
+          <button key={r.label} className="row between" style={{ padding: '14px 4px', width: '100%' }} onClick={r.onClick}>
+            <span className="small">{r.label}</span><ChevronRight size={16} color="var(--text-2)" />
           </button>
         ))}
         <div className="card tint-amber">

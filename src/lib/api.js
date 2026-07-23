@@ -81,11 +81,11 @@ export async function solveExam({ system, prompt, image, maxTokens }) {
 }
 
 // Confirm an activation code with the server → { planId, days, price }.
-export async function activateCode(code) {
+export async function activateCode(code, email) {
   const res = await fetch('/api/activate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ code }),
+    body: JSON.stringify({ code, email }),
   });
   const json = await res.json().catch(() => ({}));
   if (!res.ok) throw Object.assign(new Error(json?.error?.message || 'Code invalide'), { friendly: json?.error });
@@ -96,7 +96,7 @@ export async function activateCode(code) {
 // once onboarding collects a real email, and again whenever plan/regime
 // change. Never blocks the UI: failures (offline, DB not configured) are
 // swallowed since this is a background sync, not a user-facing action.
-export async function syncUser({ profile, plan }) {
+export async function syncUser({ profile, plan, premiumUntil }) {
   const email = String(profile?.email || '').trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
   try {
@@ -105,10 +105,19 @@ export async function syncUser({ profile, plan }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name: profile.name, email, plan: plan || 'gratuit', regime: profile.regime,
-        userType: profile.userType, city: profile.city, activity: profile.activity,
+        userType: profile.userType, city: profile.city, activity: profile.activity, premiumUntil,
       }),
     });
   } catch { /* offline or DB not configured — non-blocking */ }
+}
+
+// Recover access on a new device / after clearing browser data — looks up
+// the account by email and returns what's needed to restore local state.
+export async function recoverAccess(email) {
+  const res = await fetch(`/api/users/recover?email=${encodeURIComponent(email)}`);
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) throw Object.assign(new Error(json?.error?.message || 'Compte introuvable'), { friendly: json?.error });
+  return json;
 }
 
 export async function generateInsight({ prompt, data, profile, system, maxTokens }) {

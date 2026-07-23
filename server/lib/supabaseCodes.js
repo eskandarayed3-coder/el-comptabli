@@ -71,6 +71,27 @@ export async function peekUnusedCode(plan) {
   return data || null;
 }
 
+// Records one successful redemption in the append-only transaction log —
+// separate from activation_codes (which only tracks used/unused) so the
+// owner has a real purchase history: every sale, in order, with plan/price/
+// email. Fire-and-forget from the caller's perspective; failures here must
+// never block the activation the customer is waiting on.
+export async function logActivation({ code, plan, price, email }) {
+  const sb = getClient();
+  const { error } = await sb.rpc('log_activation', { p_code: code, p_plan: plan, p_price: price, p_email: email || null });
+  if (error) console.error('supabase log_activation error:', error.message);
+}
+
+export async function listActivationLog() {
+  const sb = getClient();
+  const { data, error } = await sb.rpc('list_activation_log');
+  if (error) {
+    console.error('supabase list_activation_log error:', error.message);
+    return [];
+  }
+  return data || [];
+}
+
 export async function batchStats() {
   const sb = getClient();
   const { data, error } = await sb.rpc('activation_code_stats');

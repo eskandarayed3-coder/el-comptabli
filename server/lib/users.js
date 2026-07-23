@@ -17,7 +17,7 @@ function getClient() {
   return client;
 }
 
-export async function upsertUser({ name, email, plan, regime, userType, city, activity }) {
+export async function upsertUser({ name, email, plan, regime, userType, city, activity, premiumUntil }) {
   const sb = getClient();
   const { error } = await sb.rpc('upsert_app_user', {
     p_name: name || '',
@@ -27,6 +27,7 @@ export async function upsertUser({ name, email, plan, regime, userType, city, ac
     p_user_type: userType || '',
     p_city: city || '',
     p_activity: activity || '',
+    p_premium_until: premiumUntil || null,
   });
   if (error) throw new Error(error.message);
 }
@@ -36,4 +37,14 @@ export async function listUsers() {
   const { data, error } = await sb.rpc('list_app_users');
   if (error) throw new Error(error.message);
   return data || [];
+}
+
+// Used by account recovery: looks up plan/premiumUntil/profile basics by
+// email so a user can restore access on a new device or after clearing
+// their browser data — the one thing that was purely local-only before.
+export async function getUserByEmail(email) {
+  const sb = getClient();
+  const { data, error } = await sb.rpc('get_app_user_by_email', { p_email: email });
+  if (error) throw new Error(error.message);
+  return data?.[0] || null;
 }

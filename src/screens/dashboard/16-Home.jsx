@@ -37,6 +37,9 @@ export default function Home() {
   const aiUsed = state.settings.aiQuestionsUsed || 0;
   const todayTasks = state.tasks;
   const doneCount = todayTasks.filter((x) => x.done).length;
+  // Nothing pending → fully on track (100%); otherwise the real completion
+  // ratio. Was previously a hardcoded 80% regardless of actual data.
+  const healthPct = todayTasks.length ? Math.round((doneCount / todayTasks.length) * 100) : 100;
 
   return (
     <div className="screen stagger">
@@ -97,7 +100,7 @@ export default function Home() {
               {t('common.see')}
             </button>
           </div>
-          <ProgressRing pct={80} />
+          <ProgressRing pct={healthPct} />
         </div>
       </HeroCard>
 

@@ -1,11 +1,10 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Download, Upload, RotateCcw, Trash2 } from 'lucide-react';
+import { Download, Upload, RotateCcw, Trash2, MailSearch } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import TopBar from '../../components/TopBar.jsx';
 import SegmentedControl from '../../components/SegmentedControl.jsx';
-import Toggle from '../../components/Toggle.jsx';
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -74,7 +73,9 @@ export default function Settings() {
         <span className="small row" style={{ gap: 10 }}><Upload size={16} color="var(--teal-700)" /> {t('backup.import')}</span>
       </button>
       <input ref={fileRef} type="file" accept="application/json,.json" hidden onChange={onImportFile} />
-      <div className="card row between"><span className="small">Sauvegarde cloud</span><Toggle on={false} onClick={() => toast(t('common.soon'))} /></div>
+      <button className="card row between" style={{ width: '100%' }} onClick={() => navigate('/profile/recover')}>
+        <span className="small row" style={{ gap: 10 }}><MailSearch size={16} color="var(--teal-700)" /> {t('recover.settingsLink')}</span>
+      </button>
       <button className="card row between" style={{ width: '100%' }} onClick={() => { if (confirm(t('backup.resetConfirm'))) { reset(); toast(t('common.saved')); } }}>
         <span className="small row" style={{ gap: 10 }}><RotateCcw size={16} color="var(--text-2)" /> {t('backup.reset')}</span>
       </button>

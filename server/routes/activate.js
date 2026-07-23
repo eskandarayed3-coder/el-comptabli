@@ -27,6 +27,12 @@ router.post('/', async (req, res) => {
   if (!result) {
     return res.status(400).json({ error: { code: 'bad_code', message: 'Code invalide.' } });
   }
+  // Real transaction log — every successful redemption, so the owner can
+  // see actual sales history (admin-transactions.html), not just current
+  // per-user snapshots. Never let a logging failure block the customer.
+  try {
+    await backend().logActivation({ code: String(raw).trim().toUpperCase(), plan: result.planId, price: result.price, email: req.body?.email });
+  } catch { /* non-blocking */ }
   res.json(result);
 });
 
@@ -51,6 +57,15 @@ router.get('/next', async (req, res) => {
   const code = await backend().peekUnusedCode(plan);
   if (!code) return res.status(404).json({ error: { code: 'empty', message: 'Plus de codes disponibles pour ce plan.' } });
   res.json({ plan, code });
+});
+
+// Owner-only: real transaction history (every successful redemption).
+router.get('/transactions', async (req, res) => {
+  const secret = process.env.ADMIN_SECRET;
+  if (!secret || req.query.secret !== secret) {
+    return res.status(403).json({ error: { code: 'forbidden', message: 'Accès refusé.' } });
+  }
+  res.json(await backend().listActivationLog());
 });
 
 // Owner-only code generator. Protected by ADMIN_SECRET (set it in .env).

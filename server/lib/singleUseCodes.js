@@ -78,3 +78,23 @@ export function batchStats() {
   }
   return byPlan;
 }
+
+// Same append-only transaction log as supabaseCodes.js, but on disk — only
+// used when Supabase isn't configured (local dev). Subject to the same
+// ephemeral-disk caveat as the codes state file above.
+const LOG_FILE = path.join(DATA_DIR, 'activation-log.json');
+
+export function logActivation({ code, plan, price, email }) {
+  let log = [];
+  if (fs.existsSync(LOG_FILE)) {
+    try { log = JSON.parse(fs.readFileSync(LOG_FILE, 'utf8')); } catch { /* corrupt — start fresh */ }
+  }
+  log.unshift({ code, plan, price, email: email || null, created_at: new Date().toISOString() });
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+  fs.writeFileSync(LOG_FILE, JSON.stringify(log.slice(0, 500)));
+}
+
+export function listActivationLog() {
+  if (!fs.existsSync(LOG_FILE)) return [];
+  try { return JSON.parse(fs.readFileSync(LOG_FILE, 'utf8')); } catch { return []; }
+}

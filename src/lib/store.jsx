@@ -136,7 +136,7 @@ export function StoreProvider({ children }) {
       const current = state.settings.premiumUntil ? new Date(state.settings.premiumUntil).getTime() : 0;
       const until = new Date(Math.max(now, current) + days * 86400000).toISOString();
       dispatch({ type: 'PATCH', slice: 'settings', data: { plan: 'premium', premiumUntil: until } });
-      syncUser({ profile: state.profile, plan: 'premium' });
+      syncUser({ profile: state.profile, plan: 'premium', premiumUntil: until });
     },
   }), [state]);
 
