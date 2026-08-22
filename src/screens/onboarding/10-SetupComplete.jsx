@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useRef } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CheckCircle2, Gift } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
@@ -10,16 +11,18 @@ const TYPE_KEY = { freelance: 'whoFreelance', micro: 'whoMicro', company: 'whoCo
 
 export default function SetupComplete() {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
   const { state, patch, activatePlan, toast } = useStore();
-  const { user, requestMagicLink } = useAuth();
+  const { user } = useAuth();
   const { t } = useT();
+  const startHandled = useRef(false);
 
   // Every real, freshly-onboarded account gets 1 free day before the
   // paywall kicks in — activatePlan already syncs the trial to Supabase.
-  const go = async () => {
+  const go = useCallback(async () => {
     if (!user) {
-      await requestMagicLink(state.profile.email, '/setup-complete');
-      toast('Vérifie ta boîte mail pour terminer la création du compte.');
+      const next = '/setup-complete?start=1';
+      navigate(`/login?${new URLSearchParams({ email: state.profile.email || '', next }).toString()}`);
       return;
     }
     try {
@@ -30,7 +33,13 @@ export default function SetupComplete() {
     }
     patch('settings', { onboarded: true });
     navigate('/home');
-  };
+  }, [activatePlan, navigate, patch, state.profile.email, toast, user]);
+
+  useEffect(() => {
+    if (!user || params.get('start') !== '1' || startHandled.current) return;
+    startHandled.current = true;
+    go();
+  }, [go, params, user]);
 
   return (
     <div className="screen no-nav center" style={{ justifyContent: 'center', alignItems: 'center', gap: 20 }}>
