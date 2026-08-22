@@ -1,5 +1,10 @@
 const MAX_UPLOAD_BYTES = 8 * 1024 * 1024;
-const ALLOWED_UPLOAD_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'application/pdf']);
+const ALLOWED_UPLOAD_TYPES = new Map([
+  ['image/jpeg', ['.jpg', '.jpeg']],
+  ['image/png', ['.png']],
+  ['image/webp', ['.webp']],
+  ['application/pdf', ['.pdf']],
+]);
 
 async function json(response) {
   const body = await response.json().catch(() => ({}));
@@ -13,7 +18,8 @@ async function apiFetch(path, options = {}) {
 }
 
 function validateFile(file) {
-  if (!file || !ALLOWED_UPLOAD_TYPES.has(file.type)) throw new Error('Format accepté : JPG, PNG, WebP ou PDF.');
+  const extension = `.${String(file?.name || '').split('.').pop().toLowerCase()}`;
+  if (!file || !ALLOWED_UPLOAD_TYPES.get(file.type)?.includes(extension)) throw new Error('Format accepté : JPG, PNG, WebP ou PDF.');
   if (file.size > MAX_UPLOAD_BYTES) throw new Error('Fichier trop volumineux (8 Mo maximum).');
 }
 

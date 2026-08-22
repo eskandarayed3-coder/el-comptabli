@@ -5,7 +5,12 @@ import { useT } from '../../i18n/index.js';
 import TintCard from '../../components/TintCard.jsx';
 import StatusPill from '../../components/StatusPill.jsx';
 
-const ACCEPTED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'application/pdf']);
+const ACCEPTED_TYPES = new Map([
+  ['image/jpeg', ['.jpg', '.jpeg']],
+  ['image/png', ['.png']],
+  ['image/webp', ['.webp']],
+  ['application/pdf', ['.pdf']],
+]);
 const MAX_FILE_SIZE = 8 * 1024 * 1024;
 
 export default function ScanInvoice() {
@@ -17,7 +22,8 @@ export default function ScanInvoice() {
     const file = event.target.files?.[0];
     event.target.value = '';
     if (!file) return;
-    if (!ACCEPTED_TYPES.has(file.type) || file.size > MAX_FILE_SIZE) {
+    const extension = `.${String(file.name || '').split('.').pop().toLowerCase()}`;
+    if (!ACCEPTED_TYPES.get(file.type)?.includes(extension) || file.size > MAX_FILE_SIZE) {
       toast(t('scanner.fileHint'), 'error');
       return;
     }

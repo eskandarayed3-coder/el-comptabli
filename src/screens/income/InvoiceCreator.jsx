@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Trash2, Printer, Save } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
@@ -9,6 +9,7 @@ import TopBar from '../../components/TopBar.jsx';
 import Toggle from '../../components/Toggle.jsx';
 
 const TIMBRE_FISCAL = 1; // DT — droit de timbre par facture (indicatif, LF en vigueur)
+const INVOICE_DRAFT_KEY = 'elcomptabli:invoice-from-scan';
 
 const emptyLine = () => ({ id: uid(), desc: '', qty: 1, price: '', rate: 19 });
 
@@ -23,6 +24,25 @@ export default function InvoiceCreator() {
   const [lines, setLines] = useState([emptyLine()]);
   const [withTva, setWithTva] = useState(state.profile?.regime !== 'forfaitaire');
   const [withTimbre, setWithTimbre] = useState(true);
+  const [scanNotice, setScanNotice] = useState('');
+
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem(INVOICE_DRAFT_KEY);
+      if (!raw) return;
+      sessionStorage.removeItem(INVOICE_DRAFT_KEY);
+      const draft = JSON.parse(raw);
+      const amountHT = Math.max(0, Number(draft.amountHT) || 0);
+      setClient(String(draft.client || ''));
+      setDate(/^\d{4}-\d{2}-\d{2}$/.test(String(draft.date || '')) ? draft.date : todayISO());
+      setWithTva(Number(draft.tva) > 0);
+      setWithTimbre(false);
+      setLines([{ id: uid(), desc: draft.reference ? `${t('invoice.fromScanLine')} ${draft.reference}` : t('invoice.fromScanLine'), qty: 1, price: amountHT || '', rate: Number(draft.tvaRate) || 19 }]);
+      setScanNotice(t('invoice.scanPrefill'));
+    } catch {
+      sessionStorage.removeItem(INVOICE_DRAFT_KEY);
+    }
+  }, [t]);
 
   const seq = (state.settings.invoiceSeq || 0) + 1;
   const number = `FAC-${new Date().getFullYear()}-${String(seq).padStart(3, '0')}`;
@@ -67,6 +87,8 @@ export default function InvoiceCreator() {
   return (
     <div className="screen stagger">
       <TopBar title={`${t('invoice.title')} 🧾`} />
+
+      {scanNotice && <div className="card tint-teal" role="status"><span className="small" style={{ fontWeight: 600 }}>{scanNotice}</span></div>}
 
       <div className="card tint-indigo row between">
         <span className="small" style={{ fontWeight: 700 }}>{number}</span>

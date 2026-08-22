@@ -4,11 +4,12 @@ import { validateImagePayload } from '../lib/validation.js';
 
 const router = Router();
 
-const SCAN_PROMPT = `Analyse ce document (facture, reçu ou document fiscal tunisien).
+const SCAN_PROMPT = `Analyse ce document comptable tunisien : facture, reçu, avoir, devis ou document fiscal.
 Extrais les champs demandés. Montants en dinars tunisiens (nombre décimal, sans "DT").
 Si un champ est illisible ou absent, mets null. Pour "category", choisis parmi :
-loyer, achats, carburant, electricite, telecom, salaires, impots, autres.
-Pour "kind" : "income" si c'est une facture émise par l'utilisateur, sinon "expense".`;
+loyer, achats, carburant, electricite, telecom, salaires, impots, ventes, autres.
+Pour "kind" : "income" si c'est une facture émise par l'utilisateur, sinon "expense".
+Ne déduis jamais un montant ni un numéro de référence : laisse null si tu ne peux pas le lire.`;
 
 // Gemini responseSchema (ignored by OpenAI-compatible providers, which use json_object).
 const SCHEMA = {
@@ -23,6 +24,7 @@ const SCHEMA = {
     category: { type: 'STRING', nullable: true },
     kind: { type: 'STRING', nullable: true },
     reference: { type: 'STRING', nullable: true },
+    documentType: { type: 'STRING', nullable: true },
   },
 };
 

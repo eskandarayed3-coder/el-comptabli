@@ -12,8 +12,9 @@ test('activation codes are opaque, valid, and not repeated in a reasonable batch
 });
 
 test('image payload validation only permits bounded supported uploads', () => {
-  assert.equal(validateImagePayload({ mimeType: 'image/jpeg', dataBase64: 'aGVsbG8=' }).ok, true);
+  assert.equal(validateImagePayload({ mimeType: 'image/jpeg', dataBase64: '/9j/aGVsbG8=' }).ok, true);
   assert.equal(validateImagePayload({ mimeType: 'text/html', dataBase64: 'aGVsbG8=' }).ok, false);
+  assert.equal(validateImagePayload({ mimeType: 'application/pdf', dataBase64: 'aGVsbG8=' }).ok, false);
   assert.equal(validateImagePayload({ mimeType: 'image/png', dataBase64: 'x'.repeat(Math.ceil(MAX_IMAGE_BYTES * 4 / 3) + 4) }).ok, false);
 });
 

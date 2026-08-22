@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { Download, Share2, Trash2 } from 'lucide-react';
+import { CheckCircle2, FileOutput, Trash2 } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { fmtDT, fmtDate } from '../../lib/format.js';
@@ -10,10 +10,11 @@ import StatusPill from '../../components/StatusPill.jsx';
 export default function DocumentDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { state, remove, toast } = useStore();
+  const { state, remove, update, toast } = useStore();
   const { t, lang } = useT();
   const doc = state.documents.find((d) => d.id === id) || state.documents[0];
-  const tx = state.transactions.find((t2) => t2.vendor && doc?.name.includes(t2.vendor));
+  const tx = state.transactions.find((t2) => t2.id === doc?.transactionId)
+    || state.transactions.find((t2) => t2.vendor && doc?.name.includes(t2.vendor));
 
   if (!doc) return null;
 
@@ -23,6 +24,11 @@ export default function DocumentDetails() {
     navigate('/documents');
   };
 
+  const markReviewed = () => {
+    update('documents', doc.id, { reviewed: true });
+    toast(t('docs.reviewed'));
+  };
+
   return (
     <div className="screen stagger">
       <TopBar title={t('scanner.detailTitle')} />
@@ -30,7 +36,7 @@ export default function DocumentDetails() {
 
       <div className="row between">
         <h2>{doc.name}</h2>
-        <StatusPill tone="success">{t('scanner.scanned')}</StatusPill>
+        <StatusPill tone={doc.scanned ? 'success' : 'warning'}>{doc.scanned ? t('scanner.scanned') : t('docs.document')}</StatusPill>
       </div>
 
       <div className="card">
@@ -39,6 +45,7 @@ export default function DocumentDetails() {
             [t('common.ttc'), tx ? fmtDT(tx.amountTTC) : 'N/D'],
             [t('common.tva'), tx ? fmtDT(tx.tva) : 'N/D'],
             [t('common.category'), tx ? categoryLabel(tx.category, lang) : 'N/D'],
+            [t('scanner.reference'), doc.reference || tx?.reference || 'N/D'],
             [t('common.date'), fmtDate(doc.date, lang)],
           ].map(([k, v]) => (
             <div key={k} className="row between small">
@@ -49,9 +56,12 @@ export default function DocumentDetails() {
         </div>
       </div>
 
+      {doc.scanned && !doc.reviewed && (
+        <button className="btn btn-soft btn-block" onClick={markReviewed}><CheckCircle2 size={16} /> {t('docs.markReviewed')}</button>
+      )}
+
       <div className="row" style={{ gap: 10 }}>
-        <button className="btn btn-ghost grow" onClick={() => toast(t('common.saved'))}><Download size={16} /> PDF</button>
-        <button className="btn btn-ghost grow" onClick={() => toast(t('common.saved'))}><Share2 size={16} /></button>
+        <button className="btn btn-ghost grow" onClick={() => navigate('/documents/export')}><FileOutput size={16} /> {t('docs.export')}</button>
         <button className="btn btn-danger-soft grow" onClick={del}><Trash2 size={16} /></button>
       </div>
     </div>

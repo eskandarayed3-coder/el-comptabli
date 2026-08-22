@@ -5,8 +5,18 @@ import { cleanText, validEmail } from '../lib/validation.js';
 const router = Router();
 router.use(requireUser);
 
+function safeText(value) {
+  const text = cleanText(value, 500);
+  return /^[=+@-]/.test(text) ? `'${text}` : text;
+}
+
+function safeAmount(value) {
+  const amount = Number(value);
+  return Number.isFinite(amount) && Math.abs(amount) < 1_000_000_000 ? Math.round(amount * 1000) / 1000 : 0;
+}
+
 function csvEscape(value) {
-  const text = String(value ?? '');
+  const text = safeText(value);
   return /[;\n"]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
 }
 
@@ -18,8 +28,21 @@ router.post('/email', async (req, res) => {
   if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL) {
     return res.status(503).json({ error: { code: 'email_not_configured', message: 'L’envoi email n’est pas encore configuré.' } });
   }
-  const header = ['Date', 'Type', 'Libellé', 'Catégorie', 'HT', 'TVA', 'TTC'];
-  const csv = [header, ...rows.map((row) => [row.date, row.kind, row.label || row.vendor, row.category, row.amountHT, row.tva, row.amountTTC])]
+  const header = ['Date', 'Type', 'Libellé', 'Catégorie', 'Référence', 'HT', 'TVA', 'TTC', 'Justificatif'];
+  const csv = [header, ...rows.map((candidate) => {
+    const row = candidate && typeof candidate === 'object' ? candidate : {};
+    return [
+      row.date,
+      row.type || (row.kind === 'income' ? 'Recette' : 'Dépense'),
+      row.label || row.vendor,
+      row.category,
+      row.reference || row.invoice?.number,
+      safeAmount(row.amountHT),
+      safeAmount(row.tva),
+      safeAmount(row.amountTTC),
+      row.proof || (row.scanned ? 'Scanné IA' : 'Justificatif à joindre'),
+    ];
+  })]
     .map((line) => line.map(csvEscape).join(';')).join('\n');
   try {
     const upstream = await fetch('https://api.resend.com/emails', {
