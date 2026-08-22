@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ZoomIn } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
@@ -11,6 +11,7 @@ export default function OcrReview() {
   const navigate = useNavigate();
   const { add, logActivity, toast } = useStore();
   const { t, lang } = useT();
+  const id = useId();
   const [busy, setBusy] = useState(true);
   const [error, setError] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -22,9 +23,12 @@ export default function OcrReview() {
   useEffect(() => {
     const file = window.__pendingScanFile;
     if (!file) { navigate('/scanner'); return; }
-    setPreview(URL.createObjectURL(file));
+    const previewUrl = URL.createObjectURL(file);
+    let active = true;
+    setPreview(previewUrl);
     scanDocument(file)
       .then((f) => {
+        if (!active) return;
         setFields((prev) => ({
           ...prev,
           vendor: f.vendor || '',
@@ -37,14 +41,21 @@ export default function OcrReview() {
           kind: f.kind || 'expense',
         }));
       })
-      .catch((e) => setError(e.friendly?.code ? t(`aiOff.codes.${e.friendly.code}`) : t('aiOff.codes.upstream_error')))
-      .finally(() => setBusy(false));
+      .catch((e) => { if (active) setError(e.friendly?.code ? t(`aiOff.codes.${e.friendly.code}`) : t('aiOff.codes.upstream_error')); })
+      .finally(() => { if (active) setBusy(false); });
+    return () => {
+      active = false;
+      URL.revokeObjectURL(previewUrl);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const set = (k) => (e) => setFields((f) => ({ ...f, [k]: e.target.value }));
 
+  const canSave = fields.vendor.trim() && fields.amountTTC !== '' && Number.isFinite(Number(fields.amountTTC));
+
   const save = () => {
+    if (!canSave) return;
     add('transactions', {
       kind: fields.kind,
       vendor: fields.vendor,
@@ -80,12 +91,12 @@ export default function OcrReview() {
       {preview && (
         <div className="row" style={{ gap: 10 }}>
           <img src={preview} alt="" style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: 12 }} />
-          <ZoomIn size={16} color="var(--text-2)" />
+          <ZoomIn size={16} color="var(--text-2)" aria-hidden="true" />
         </div>
       )}
 
       {error && (
-        <div className="card tint-amber">
+        <div className="card tint-amber" role="alert">
           <p className="small" style={{ fontWeight: 600 }}>{error}</p>
           <p className="tiny muted">{t('scanner.confidence')}</p>
         </div>
@@ -93,38 +104,38 @@ export default function OcrReview() {
 
       <div className="grid-2">
         <div className="field">
-          <label>{t('scanner.vendor')}</label>
-          <input className="input" value={fields.vendor} onChange={set('vendor')} />
+          <label htmlFor={`${id}-vendor`}>{t('scanner.vendor')}</label>
+          <input id={`${id}-vendor`} className="input" autoComplete="organization" value={fields.vendor} onChange={set('vendor')} />
         </div>
         <div className="field">
-          <label>{t('scanner.reference')}</label>
-          <input className="input" value={fields.reference} onChange={set('reference')} />
+          <label htmlFor={`${id}-reference`}>{t('scanner.reference')}</label>
+          <input id={`${id}-reference`} className="input" value={fields.reference} onChange={set('reference')} />
         </div>
         <div className="field">
-          <label>{t('common.date')}</label>
-          <input className="input" type="date" value={fields.date} onChange={set('date')} />
+          <label htmlFor={`${id}-date`}>{t('common.date')}</label>
+          <input id={`${id}-date`} className="input" type="date" value={fields.date} onChange={set('date')} />
         </div>
         <div className="field">
-          <label>{t('common.category')}</label>
-          <select className="input" value={fields.category} onChange={set('category')}>
+          <label htmlFor={`${id}-category`}>{t('common.category')}</label>
+          <select id={`${id}-category`} className="input" value={fields.category} onChange={set('category')}>
             {CATEGORIES.map((c) => <option key={c.id} value={c.id}>{c[lang === 'ar' ? 'ar' : 'fr']}</option>)}
           </select>
         </div>
         <div className="field">
-          <label>{t('common.ht')}</label>
-          <input className="input num" type="number" value={fields.amountHT} onChange={set('amountHT')} />
+          <label htmlFor={`${id}-ht`}>{t('common.ht')}</label>
+          <input id={`${id}-ht`} className="input num" type="number" inputMode="decimal" step="0.001" value={fields.amountHT} onChange={set('amountHT')} />
         </div>
         <div className="field">
-          <label>{t('common.tva')}</label>
-          <input className="input num" type="number" value={fields.tva} onChange={set('tva')} />
+          <label htmlFor={`${id}-tva`}>{t('common.tva')}</label>
+          <input id={`${id}-tva`} className="input num" type="number" inputMode="decimal" step="0.001" value={fields.tva} onChange={set('tva')} />
         </div>
         <div className="field" style={{ gridColumn: '1 / -1' }}>
-          <label>{t('common.ttc')}</label>
-          <input className="input num" type="number" value={fields.amountTTC} onChange={set('amountTTC')} />
+          <label htmlFor={`${id}-ttc`}>{t('common.ttc')}</label>
+          <input id={`${id}-ttc`} className="input num" type="number" inputMode="decimal" step="0.001" value={fields.amountTTC} onChange={set('amountTTC')} />
         </div>
       </div>
 
-      <button className="btn btn-primary btn-block" onClick={save}>{t('scanner.saveAs')} {t(`common.${fields.kind}`)}</button>
+      <button type="button" className="btn btn-primary btn-block" disabled={!canSave} onClick={save}>{t('scanner.saveAs')} {t(`common.${fields.kind}`)}</button>
     </div>
   );
 }

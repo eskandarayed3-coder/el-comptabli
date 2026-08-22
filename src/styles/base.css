@@ -8,7 +8,14 @@ body {
   color: var(--text);
   background: var(--page-bg);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   transition: background var(--t-med) var(--ease);
+}
+
+::selection { background: var(--tint-teal); color: var(--teal-800); }
+:focus-visible {
+  outline: 3px solid var(--teal-400);
+  outline-offset: 3px;
 }
 
 img, svg, video { display: block; max-width: 100%; }
@@ -16,9 +23,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; background: none; border: none; padding: 0; }
 a { color: inherit; text-decoration: none; }
 
-h1 { font: var(--h1); }
-h2 { font: var(--h2); }
-h3 { font: var(--h3); }
+h1 { font: var(--h1); text-wrap: balance; }
+h2 { font: var(--h2); text-wrap: balance; }
+h3 { font: var(--h3); text-wrap: balance; }
+p, .small, .tiny { text-wrap: pretty; }
 
 .num { font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; overflow-wrap: anywhere; }
 
@@ -53,6 +61,10 @@ h3 { font: var(--h3); }
 }
 .screen.no-nav { padding-bottom: 28px; }
 
+@media (min-width: 500px) {
+  .screen { padding-bottom: calc(var(--nav-h) + 32px); }
+}
+
 @keyframes screen-in {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
@@ -79,6 +91,7 @@ h3 { font: var(--h3); }
 .small { font: var(--small); }
 .tiny { font: var(--tiny); }
 .center { text-align: center; }
+.truncate { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .scroll-x {
   display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;
   scrollbar-width: none; margin-inline: calc(-1 * var(--pad-screen));

@@ -2,13 +2,15 @@ import { useNavigate } from 'react-router-dom';
 import { Languages, Building2, Bell, Download, Shield, FileText, UserCog, LogOut, ChevronRight, Settings, CreditCard, LayoutGrid, Activity } from 'lucide-react';
 import { useStore, isPremium as checkPremium, premiumDaysLeft } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
+import { useAuth } from '../../lib/auth.jsx';
 
 const REGIME_KEY = { forfaitaire: 'regimeForfait', reel: 'regimeReel', unknown: 'regimeUnknown' };
 const TYPE_KEY = { freelance: 'whoFreelance', micro: 'whoMicro', company: 'whoCompany', accountant: 'whoAccountant' };
 
 export default function MyProfile() {
   const navigate = useNavigate();
-  const { state, patch, toast, reset } = useStore();
+  const { state, toast, reset } = useStore();
+  const { signOut } = useAuth();
   const { t } = useT();
   const isPremium = checkPremium(state.settings);
   const daysLeft = premiumDaysLeft(state.settings);
@@ -24,21 +26,23 @@ export default function MyProfile() {
     { icon: Shield, label: t('profile.security'), to: '/profile/security' },
     { icon: FileText, label: t('profile.disclaimerMentions'), to: '/profile/about' },
     { icon: UserCog, label: t('profile.contactExpert'), to: '/experts', badge: t('common.soon') },
-    { icon: LayoutGrid, label: t('profile.allScreens'), to: '/screens' },
+    ...(import.meta.env.DEV ? [{ icon: LayoutGrid, label: t('profile.allScreens'), to: '/screens' }] : []),
   ];
 
   return (
     <div className="screen stagger">
-      <div className="col center" style={{ alignItems: 'center', gap: 8, paddingTop: 12 }}>
-        <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'var(--tint-teal)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, fontWeight: 700, color: 'var(--teal-800)' }}>
+      <header className="profile-hero">
+        <div className="avatar" aria-hidden="true">
           {(state.profile.name || '?').slice(0, 1).toUpperCase()}
         </div>
-        <h2>{state.profile.name || t('profile.noName')}</h2>
-        <span className="tiny muted">{state.profile.email || t('profile.noEmail')}</span>
-        <span className="pill teal">
-          {t(`onboarding.${REGIME_KEY[state.profile.regime] || 'regimeReel'}`)} · {t(`onboarding.${TYPE_KEY[state.profile.userType] || 'whoFreelance'}`)}
-        </span>
-      </div>
+        <div className="col grow" style={{ gap: 4, textAlign: 'start' }}>
+          <h1 style={{ font: 'var(--h2)' }}>{state.profile.name || t('profile.noName')}</h1>
+          <span className="tiny muted">{state.profile.email || t('profile.noEmail')}</span>
+          <span className="pill teal" style={{ alignSelf: 'flex-start' }}>
+            {t(`onboarding.${REGIME_KEY[state.profile.regime] || 'regimeReel'}`)} · {t(`onboarding.${TYPE_KEY[state.profile.userType] || 'whoFreelance'}`)}
+          </span>
+        </div>
+      </header>
 
       <div className="card tint-indigo">
         <div className="row between">
@@ -51,25 +55,35 @@ export default function MyProfile() {
         </div>
       </div>
 
-      <div className="col" style={{ gap: 4 }}>
+      <nav className="profile-menu" aria-label={t('profile.title')}>
         {ROWS.map((r) => (
-          <button key={r.to} className="row between" style={{ padding: '14px 4px', width: '100%' }} onClick={() => navigate(r.to)}>
+          <button key={r.to} type="button" className="list-row row between" style={{ width: '100%' }} onClick={() => navigate(r.to)}>
             <span className="row" style={{ gap: 12 }}>
-              <span className="icon-wrap teal"><r.icon size={16} /></span>
+              <span className="icon-wrap teal"><r.icon size={16} aria-hidden="true" /></span>
               <span className="small" style={{ fontWeight: 500 }}>{r.label}</span>
             </span>
             <span className="row" style={{ gap: 8 }}>
               {r.trailing && <span className="tiny muted">{r.trailing}</span>}
               {r.badge && <span className="pill teal">{r.badge}</span>}
-              <ChevronRight size={16} color="var(--text-2)" />
+              <ChevronRight size={16} color="var(--text-2)" aria-hidden="true" />
             </span>
           </button>
         ))}
-      </div>
+      </nav>
 
       <button
         className="btn btn-danger-soft btn-block"
-        onClick={() => { if (confirm(t('profile.logoutConfirm'))) { reset(); navigate('/welcome'); } }}
+        type="button"
+        onClick={async () => {
+          if (!confirm(t('profile.logoutConfirm'))) return;
+          try {
+            await signOut();
+            reset();
+            navigate('/welcome');
+          } catch (error) {
+            toast(error.message || t('profile.logoutError'), 'error');
+          }
+        }}
       >
         <LogOut size={16} /> {t('profile.logout')}
       </button>

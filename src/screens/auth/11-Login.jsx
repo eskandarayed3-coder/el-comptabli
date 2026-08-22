@@ -16,6 +16,8 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [sentTo, setSentTo] = useState('');
+  const emailId = 'login-email';
+  const errorId = 'login-email-error';
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   const requestedNext = params.get('next') || '/home';
@@ -80,25 +82,25 @@ export default function Login() {
         <p className="small muted">{t('recover.explain')}</p>
       </div>
 
-      <div className="field">
-        <label>{t('auth.email')}</label>
-        <input
-          className="input" type="email" value={email}
-          onChange={(e) => { setEmail(e.target.value); setError(''); }}
-          placeholder="ton@email.com"
-          onKeyDown={(e) => { if (e.key === 'Enter' && emailValid) submit(); }}
-        />
-        {error && <span className="tiny" role="alert" style={{ color: 'var(--coral-700, #B91C1C)' }}>{error}</span>}
-      </div>
-
-      <button className="btn btn-primary btn-block" disabled={!emailValid || loading} onClick={submit}>
-        {loading ? <Loader2 size={16} className="spin" /> : t('auth.continueWithEmail')}
-      </button>
+      <form className="col" style={{ gap: 16 }} onSubmit={(event) => { event.preventDefault(); submit(); }}>
+        <div className="field">
+          <label htmlFor={emailId}>{t('auth.email')}</label>
+          <input
+            id={emailId} className="input" type="email" value={email} autoComplete="email"
+            onChange={(event) => { setEmail(event.target.value); setError(''); }}
+            placeholder="ton@email.com" aria-invalid={Boolean(error)} aria-describedby={error ? errorId : undefined}
+          />
+          {error && <span id={errorId} className="tiny" role="alert" style={{ color: 'var(--coral-700, #B91C1C)' }}>{error}</span>}
+        </div>
+        <button type="submit" className="btn btn-primary btn-block" disabled={!emailValid || loading}>
+          {loading ? <Loader2 size={16} className="spin" /> : t('auth.continueWithEmail')}
+        </button>
+      </form>
 
       <p className="tiny center muted" style={{ margin: 0 }}>{t('auth.noPasswordNeeded')}</p>
 
       <p className="small center muted">
-        {t('auth.noAccount')} <button style={{ color: 'var(--teal-700)', fontWeight: 600 }} onClick={() => navigate('/language')}>{t('auth.register')}</button>
+        {t('auth.noAccount')} <button type="button" style={{ color: 'var(--teal-700)', fontWeight: 600 }} onClick={() => navigate('/language')}>{t('auth.register')}</button>
       </p>
     </div>
   );

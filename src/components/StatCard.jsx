@@ -3,7 +3,12 @@ const TINTS = { teal: 'var(--tint-teal)', amber: 'var(--tint-amber)', coral: 'va
 export default function StatCard({ label, value, tone = 'teal', delta, onClick }) {
   const Tag = onClick ? 'button' : 'div';
   return (
-    <Tag className="stat-card" style={{ background: TINTS[tone] }} onClick={onClick}>
+    <Tag
+      className="stat-card"
+      style={{ background: TINTS[tone] }}
+      onClick={onClick}
+      {...(onClick ? { type: 'button', 'aria-label': `${label} : ${value}` } : {})}
+    >
       <span className="value num">{value}</span>
       <span className="label">{label}</span>
       {delta != null && (

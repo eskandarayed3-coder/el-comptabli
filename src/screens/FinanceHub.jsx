@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   TrendingUp, TrendingDown, Landmark, BookOpen, FileSpreadsheet, BarChart3,
@@ -9,22 +9,23 @@ import {
 import { useStore, monthTotals } from '../lib/store.jsx';
 import { useT } from '../i18n/index.js';
 import { fmtDT } from '../lib/format.js';
-import StatCard from '../components/StatCard.jsx';
+import HeroCard from '../components/HeroCard.jsx';
 
 function Section({ title, items, navigate, view }) {
   return (
-    <div className="col" style={{ gap: 8 }}>
-      <h3>{title}</h3>
+    <section className="col" style={{ gap: 8 }}>
+      <h2 style={{ font: 'var(--h3)' }}>{title}</h2>
       {view === 'grid' ? (
         <div className="grid-2">
           {items.map(({ to, icon: Icon, label }) => (
             <button
+              type="button"
               key={to + label}
               className="card inner"
               style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 10, textAlign: 'start' }}
               onClick={() => navigate(to)}
             >
-              <span className="icon-wrap teal"><Icon size={18} /></span>
+              <span className="icon-wrap teal"><Icon size={18} aria-hidden="true" /></span>
               <span className="small" style={{ fontWeight: 600, width: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
             </button>
           ))}
@@ -32,15 +33,15 @@ function Section({ title, items, navigate, view }) {
       ) : (
         <div className="col" style={{ gap: 6 }}>
           {items.map(({ to, icon: Icon, label }) => (
-            <button key={to + label} className="list-row" style={{ width: '100%', textAlign: 'start' }} onClick={() => navigate(to)}>
-              <span className="icon-wrap teal"><Icon size={18} /></span>
+            <button type="button" key={to + label} className="list-row" style={{ width: '100%', textAlign: 'start' }} onClick={() => navigate(to)}>
+              <span className="icon-wrap teal"><Icon size={18} aria-hidden="true" /></span>
               <span className="small grow" style={{ fontWeight: 600 }}>{label}</span>
-              <ChevronRight size={16} color="var(--text-2)" />
+              <ChevronRight size={16} color="var(--text-2)" aria-hidden="true" />
             </button>
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }
 
@@ -76,45 +77,54 @@ export default function FinanceHub() {
       <div className="row between">
         <h1>{t('nav.finance')}</h1>
         <div className="row" style={{ gap: 8 }}>
-          <div className="segmented" style={{ padding: 3, minHeight: 0 }}>
-            <button className={view === 'list' ? 'active' : ''} style={{ minHeight: 32, padding: '0 10px' }} onClick={() => setView('list')} title={t('common.listView')}>
-              <List size={16} />
+          <div className="segmented" style={{ padding: 3, minHeight: 0 }} aria-label={t('common.view')}>
+            <button type="button" className={view === 'list' ? 'active' : ''} aria-label={t('common.listView')} aria-pressed={view === 'list'} style={{ minHeight: 32, padding: '0 10px' }} onClick={() => setView('list')} title={t('common.listView')}>
+              <List size={16} aria-hidden="true" />
             </button>
-            <button className={view === 'grid' ? 'active' : ''} style={{ minHeight: 32, padding: '0 10px' }} onClick={() => setView('grid')} title={t('common.gridView')}>
-              <LayoutGrid size={16} />
+            <button type="button" className={view === 'grid' ? 'active' : ''} aria-label={t('common.gridView')} aria-pressed={view === 'grid'} style={{ minHeight: 32, padding: '0 10px' }} onClick={() => setView('grid')} title={t('common.gridView')}>
+              <LayoutGrid size={16} aria-hidden="true" />
             </button>
           </div>
-          <button className="icon-btn" onClick={() => navigate('/profile/settings')} title="Paramètres"><Settings size={18} /></button>
-          <button className="icon-btn" onClick={() => navigate('/screens')} title="Tous les écrans"><Search size={18} /></button>
+          <button className="icon-btn" type="button" onClick={() => navigate('/profile/settings')} aria-label={t('profile.settings')} title={t('profile.settings')}><Settings size={18} aria-hidden="true" /></button>
+          {import.meta.env.DEV && <button className="icon-btn" type="button" onClick={() => navigate('/screens')} aria-label={t('profile.allScreens')} title={t('profile.allScreens')}><Search size={18} aria-hidden="true" /></button>}
         </div>
       </div>
 
-      <div className="grid-3">
-        <StatCard label={t('common.incomes')} value={fmtDT(totals.income, { decimals: 0 })} tone="teal" onClick={() => navigate('/income')} />
-        <StatCard label={t('common.expenses')} value={fmtDT(totals.expense, { decimals: 0 })} tone="coral" onClick={() => navigate('/expenses')} />
-        <StatCard label={t('common.profit')} value={fmtDT(totals.profit, { sign: true, decimals: 0 })} tone="indigo" onClick={() => navigate('/overview')} />
-      </div>
+      <HeroCard className="summary">
+        <span className="small" style={{ fontWeight: 700 }}>{t('money.thisMonth')}</span>
+        <strong className="summary-value num">{fmtDT(totals.profit, { sign: true, decimals: 0 })}</strong>
+        <span className="tiny">{t('common.balance')}</span>
+        <div className="summary-grid">
+          <button className="summary-metric" type="button" onClick={() => navigate('/income')}>
+            <span>{t('common.incomes')}</span><strong className="num">{fmtDT(totals.income, { decimals: 0 })}</strong>
+          </button>
+          <button className="summary-metric" type="button" onClick={() => navigate('/expenses')}>
+            <span>{t('common.expenses')}</span><strong className="num">{fmtDT(totals.expense, { decimals: 0 })}</strong>
+          </button>
+        </div>
+      </HeroCard>
 
       {/* Essentiel — the 6 things most users need, each with a plain subtitle */}
-      <div className="col" style={{ gap: 8 }}>
-        <h3>{t('finhub.essential')}</h3>
+      <section className="col" style={{ gap: 8 }} aria-labelledby="finance-essential-title">
+        <div className="section-head"><h2 id="finance-essential-title">{t('finhub.essential')}</h2></div>
         <div className="grid-2">
           {ESSENTIALS.map(({ to, icon: Icon, key }) => (
             <button
               key={key}
               className="card inner"
               style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, textAlign: 'start' }}
+              type="button"
               onClick={() => navigate(to)}
             >
-              <span className="icon-wrap teal"><Icon size={18} /></span>
+              <span className="icon-wrap teal"><Icon size={18} aria-hidden="true" /></span>
               <span className="small" style={{ fontWeight: 700 }}>{t(`finhub.${key}`)}</span>
               <span className="tiny muted">{t(`finhub.${key}Sub`)}</span>
             </button>
           ))}
         </div>
-      </div>
+      </section>
 
-      <button className="btn btn-ghost btn-block" onClick={toggleAll}>
+      <button type="button" className="btn btn-ghost btn-block" onClick={toggleAll}>
         {showAll ? t('finhub.hide') : t('finhub.advanced')}
       </button>
 
@@ -176,12 +186,12 @@ export default function FinanceHub() {
           Inventory, CRM, Bank connection...) — none of those are wired to
           real functionality yet, so listing them separately just looked
           broken. This links to the single roadmap screen instead. */}
-      <button className="card row between" style={{ width: '100%', textAlign: 'start', opacity: 0.85 }} onClick={() => navigate('/future/roadmap')}>
+      <button type="button" className="card row between" style={{ width: '100%', textAlign: 'start', opacity: 0.85 }} onClick={() => navigate('/future/roadmap')}>
         <span className="col" style={{ gap: 2 }}>
           <span className="small" style={{ fontWeight: 700 }}>{t('future.roadmapTitle')}</span>
           <span className="tiny muted">{t('future.roadmapSub')}</span>
         </span>
-        <ChevronRight size={16} color="var(--text-2)" />
+        <ChevronRight size={16} color="var(--text-2)" aria-hidden="true" />
       </button>
       </>
       )}

@@ -3,6 +3,15 @@ import { Home, MessageCircle, ScanLine, Wallet, BookOpen, User } from 'lucide-re
 import { useT } from '../i18n/index.js';
 import { useAuth } from '../lib/auth.jsx';
 
+function NavItem({ to, icon: Icon, label, className = '' }) {
+  return (
+    <NavLink to={to} className={({ isActive }) => `${isActive ? 'active ' : ''}${className}`.trim()}>
+      <Icon size={className ? 24 : 20} strokeWidth={2} aria-hidden="true" />
+      <span>{label}</span>
+    </NavLink>
+  );
+}
+
 export default function BottomNav() {
   const { t } = useT();
   const { guest } = useAuth();
@@ -16,20 +25,13 @@ export default function BottomNav() {
     { to: '/profile', icon: User, label: t('nav.profile') },
   ];
 
-  const NavItem = ({ to, icon: Icon, label, className = '' }) => (
-    <NavLink key={to} to={to} className={({ isActive }) => `${isActive ? 'active ' : ''}${className}`.trim()}>
-      <Icon size={className ? 24 : 20} strokeWidth={2} />
-      <span>{label}</span>
-    </NavLink>
-  );
-
   // Keep the primary Scanner button visible for every visitor. A guest is
   // asked to create an account before an upload reaches the protected API.
   if (guest) {
     const guestLeftItems = [leftItems[0], rightItems[0]];
     const guestRightItems = rightItems.slice(1);
     return (
-      <nav className="bottom-nav">
+      <nav className="bottom-nav" aria-label={t('nav.navigation')}>
         <div className="bottom-nav-group bottom-nav-group-start">
           {guestLeftItems.map((item) => <NavItem key={item.to} {...item} />)}
         </div>
@@ -42,7 +44,7 @@ export default function BottomNav() {
   }
 
   return (
-    <nav className="bottom-nav">
+    <nav className="bottom-nav" aria-label={t('nav.navigation')}>
       <div className="bottom-nav-group bottom-nav-group-start">
         {leftItems.map((item) => <NavItem key={item.to} {...item} />)}
       </div>

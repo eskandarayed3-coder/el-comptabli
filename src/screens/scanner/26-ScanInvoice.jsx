@@ -1,23 +1,28 @@
 import { useNavigate } from 'react-router-dom';
-import { Camera, Upload, ReceiptText, Landmark, CheckSquare } from 'lucide-react';
+import { Camera, FileText, Landmark, ReceiptText, Upload } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
-import { fmtDT } from '../../lib/format.js';
 import TintCard from '../../components/TintCard.jsx';
 import StatusPill from '../../components/StatusPill.jsx';
 
+const ACCEPTED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'application/pdf']);
+const MAX_FILE_SIZE = 8 * 1024 * 1024;
+
 export default function ScanInvoice() {
   const navigate = useNavigate();
-  const { state } = useStore();
+  const { state, toast } = useStore();
   const { t } = useT();
 
-  const pickFile = (e) => {
-    const file = e.target.files?.[0];
+  const pickFile = (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
     if (!file) return;
-    const url = URL.createObjectURL(file);
-    sessionStorage.setItem('scan:pending', url);
-    sessionStorage.setItem('scan:pendingType', file.type);
-    // Store the actual File in a module-level cache the review screen can read.
+    if (!ACCEPTED_TYPES.has(file.type) || file.size > MAX_FILE_SIZE) {
+      toast(t('scanner.fileHint'), 'error');
+      return;
+    }
+
+    // The selected file only lives until the review screen is opened; it is never persisted in app storage.
     window.__pendingScanFile = file;
     navigate('/scanner/review');
   };
@@ -32,56 +37,53 @@ export default function ScanInvoice() {
       </div>
       <p className="muted small">{t('scanner.subtitle')}</p>
 
-      <label
-        className="card"
-        style={{
-          border: '2px dashed var(--teal-400)', background: 'var(--tint-teal)',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12,
-          padding: 40, cursor: 'pointer', textAlign: 'center',
-        }}
-      >
-        <Camera size={36} color="var(--teal-700)" />
-        <span className="small" style={{ fontWeight: 600 }}>{t('scanner.subtitle')}</span>
-        <input type="file" accept="image/*,application/pdf" hidden onChange={pickFile} />
+      <label className="document-dropzone">
+        <span className="drop-icon" aria-hidden="true"><Camera size={28} strokeWidth={1.8} /></span>
+        <strong>{t('scanner.uploadTitle')}</strong>
+        <span className="small muted">{t('scanner.uploadBody')}</span>
+        <span className="tiny muted">{t('scanner.fileHint')}</span>
+        <input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" hidden onChange={pickFile} />
       </label>
 
       <div className="col" style={{ gap: 10 }}>
         <label className="btn btn-primary btn-block" style={{ cursor: 'pointer' }}>
-          <Camera size={18} /> {t('scanner.take')}
-          <input type="file" accept="image/*" capture="environment" hidden onChange={pickFile} />
+          <Camera size={18} aria-hidden="true" /> {t('scanner.take')}
+          <input type="file" accept="image/jpeg,image/png,image/webp" capture="environment" hidden onChange={pickFile} />
         </label>
         <label className="btn btn-ghost btn-block" style={{ cursor: 'pointer' }}>
-          <Upload size={18} /> {t('scanner.import')}
-          <input type="file" accept="image/*,application/pdf" hidden onChange={pickFile} />
+          <Upload size={18} aria-hidden="true" /> {t('scanner.import')}
+          <input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" hidden onChange={pickFile} />
         </label>
       </div>
 
-      <div className="row" style={{ gap: 8 }}>
-        <button className="card inner grow col center" style={{ gap: 6, alignItems: 'center' }} onClick={() => navigate('/scanner/receipt')}>
-          <ReceiptText size={18} color="var(--teal-700)" />
-          <span className="tiny" style={{ fontWeight: 600 }}>{t('scanner.receipt')}</span>
-        </button>
-        <button className="card inner grow col center" style={{ gap: 6, alignItems: 'center' }} onClick={() => navigate('/scanner/tax-doc')}>
-          <Landmark size={18} color="var(--teal-700)" />
-          <span className="tiny" style={{ fontWeight: 600 }}>{t('scanner.taxDoc')}</span>
-        </button>
-        <button className="card inner grow col center" style={{ gap: 6, alignItems: 'center' }} onClick={() => navigate('/scanner/validation')}>
-          <CheckSquare size={18} color="var(--teal-700)" />
-          <span className="tiny" style={{ fontWeight: 600 }}>{t('common.see')}</span>
-        </button>
-      </div>
+      <section aria-labelledby="document-type-title">
+        <div className="section-head"><h2 id="document-type-title">{t('scanner.chooseType')}</h2></div>
+        <div className="document-type-grid">
+          <button type="button" className="document-type-card" onClick={() => navigate('/scanner/receipt')}>
+            <ReceiptText size={20} aria-hidden="true" /><span>{t('scanner.receipt')}</span>
+          </button>
+          <button type="button" className="document-type-card" onClick={() => navigate('/scanner/tax-doc')}>
+            <Landmark size={20} aria-hidden="true" /><span>{t('scanner.taxDoc')}</span>
+          </button>
+        </div>
+      </section>
 
-      <div className="col" style={{ gap: 10 }}>
-        <h3>{t('docs.title')}</h3>
-        {recent.map((d) => (
-          <TintCard key={d.id} tone="gray" onClick={() => navigate(`/documents/${d.id}`)}>
-            <div className="row between">
-              <span className="small" style={{ fontWeight: 600 }}>{d.name}</span>
-              <StatusPill tone={d.scanned ? 'success' : 'warning'}>{d.scanned ? t('scanner.scanned') : t('common.upcoming')}</StatusPill>
-            </div>
-          </TintCard>
-        ))}
-      </div>
+      <section aria-labelledby="recent-documents-title">
+        <div className="section-head"><h2 id="recent-documents-title">{t('scanner.recentDocuments')}</h2></div>
+        <div className="col" style={{ gap: 10 }}>
+          {recent.length ? recent.map((document) => (
+            <TintCard key={document.id} tone="gray" onClick={() => navigate(`/documents/${document.id}`)} ariaLabel={document.name}>
+              <div className="row between">
+                <div className="row" style={{ gap: 10, minWidth: 0 }}>
+                  <FileText size={18} color="var(--teal-700)" aria-hidden="true" />
+                  <span className="small truncate" style={{ fontWeight: 600 }}>{document.name}</span>
+                </div>
+                <StatusPill tone={document.scanned ? 'success' : 'warning'}>{document.scanned ? t('scanner.scanned') : t('common.upcoming')}</StatusPill>
+              </div>
+            </TintCard>
+          )) : <TintCard tone="gray"><p className="small muted">{t('scanner.noRecentDocuments')}</p></TintCard>}
+        </div>
+      </section>
     </div>
   );
 }

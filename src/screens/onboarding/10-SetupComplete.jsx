@@ -13,16 +13,22 @@ export default function SetupComplete() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const { state, patch, activatePlan, toast } = useStore();
-  const { user, startGuestPreview } = useAuth();
+  const { user, startFreeTrial } = useAuth();
   const { t } = useT();
   const startHandled = useRef(false);
 
-  // Every real, freshly-onboarded account gets 1 free day before the
-  // paywall kicks in — activatePlan already syncs the trial to Supabase.
+  // Every newly onboarded account gets one full day before the paywall kicks
+  // in. A no-email visitor receives the same trial through anonymous auth.
   const go = useCallback(async () => {
     if (!user) {
-      const next = '/setup-complete?start=1';
-      navigate(`/login?${new URLSearchParams({ email: state.profile.email || '', next }).toString()}`);
+      try {
+        const trial = await startFreeTrial();
+        activatePlan(trial.subscription?.premium_until);
+        patch('settings', { onboarded: true });
+        navigate('/home');
+      } catch {
+        toast(t('auth.trialUnavailable'), 'error');
+      }
       return;
     }
     try {
@@ -33,12 +39,7 @@ export default function SetupComplete() {
     }
     patch('settings', { onboarded: true });
     navigate('/home');
-  }, [activatePlan, navigate, patch, state.profile.email, toast, user]);
-
-  const tryFree = () => {
-    startGuestPreview();
-    navigate('/home');
-  };
+  }, [activatePlan, navigate, patch, startFreeTrial, t, toast, user]);
 
   useEffect(() => {
     if (!user || params.get('start') !== '1' || startHandled.current) return;
@@ -74,7 +75,6 @@ export default function SetupComplete() {
 
       <div style={{ flex: 1 }} />
       <button className="btn btn-primary btn-block" onClick={go}>{t('onboarding.goDash')}</button>
-      {!user && <button className="btn btn-ghost btn-block" onClick={tryFree}>{t('onboarding.tryFree')}</button>}
     </div>
   );
 }

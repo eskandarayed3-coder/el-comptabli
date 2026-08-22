@@ -76,9 +76,19 @@ export function AuthProvider({ children }) {
     }));
     endGuestPreview();
     setUser(data.user);
+    setSubscription(data.subscription || { plan: 'free', premium_until: null });
     setReady(true);
-    return data.user;
+    return { user: data.user, subscription: data.subscription || { plan: 'free', premium_until: null } };
   }, [endGuestPreview]);
+
+  const startFreeTrial = useCallback(async () => {
+    if (user) return { user, subscription };
+    if (!supabase) throw new Error('L’essai gratuit n’est pas configuré.');
+    const { data, error } = await supabase.auth.signInAnonymously();
+    if (error) throw error;
+    if (!data.session) throw new Error('Impossible de démarrer l’essai gratuit.');
+    return establishSession(data.session);
+  }, [establishSession, subscription, user]);
 
   useEffect(() => {
     restoreSession();
@@ -105,7 +115,7 @@ export function AuthProvider({ children }) {
   }, [establishSession]);
 
   const signOut = useCallback(async () => {
-    await fetch('/api/auth/signout', { method: 'POST', credentials: 'same-origin' });
+    await readJson(await fetch('/api/auth/signout', { method: 'POST', credentials: 'same-origin' }));
     endGuestPreview();
     setUser(null);
     setSubscription({ plan: 'free', premium_until: null });
@@ -121,8 +131,8 @@ export function AuthProvider({ children }) {
   const value = useMemo(() => ({
     user, subscription, setSubscription, ready, configured: supabaseConfigured,
     guest, startGuestPreview, endGuestPreview,
-    requestMagicLink, completeMagicLink, restoreSession, signOut, deleteAccount,
-  }), [user, subscription, ready, guest, startGuestPreview, endGuestPreview, requestMagicLink, completeMagicLink, restoreSession, signOut, deleteAccount]);
+    requestMagicLink, completeMagicLink, startFreeTrial, restoreSession, signOut, deleteAccount,
+  }), [user, subscription, ready, guest, startGuestPreview, endGuestPreview, requestMagicLink, completeMagicLink, startFreeTrial, restoreSession, signOut, deleteAccount]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

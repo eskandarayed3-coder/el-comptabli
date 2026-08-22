@@ -7,9 +7,12 @@ export function usersConfigured() {
 
 function profileFromState(user, state = {}) {
   const profile = state.profile || {};
+  // Anonymous Supabase users have no email. Store a private, unique placeholder
+  // so the profiles email uniqueness constraint still protects real accounts.
+  const email = cleanText(user.email, 254).toLowerCase() || `anonymous-${user.id}@trial.invalid`;
   return {
     id: user.id,
-    email: cleanText(user.email, 254).toLowerCase(),
+    email,
     name: cleanText(profile.name, 120),
     regime: cleanText(profile.regime, 40),
     user_type: cleanText(profile.userType, 40),

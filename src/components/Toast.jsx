@@ -30,8 +30,8 @@ export default function Toast() {
   const Icon = ICONS[shown.kind] || Info;
   return (
     <div className="toast-wrap">
-      <div className={`toast ${shown.kind}${leaving ? ' leaving' : ''}`} key={shown.id}>
-        <Icon size={16} />
+      <div className={`toast ${shown.kind}${leaving ? ' leaving' : ''}`} key={shown.id} role={shown.kind === 'error' ? 'alert' : 'status'} aria-live={shown.kind === 'error' ? 'assertive' : 'polite'} aria-atomic="true">
+        <Icon size={16} aria-hidden="true" />
         <span>{shown.message}</span>
       </div>
     </div>

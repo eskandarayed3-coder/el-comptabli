@@ -10,18 +10,29 @@ export default function ChooseLanguage() {
   const navigate = useNavigate();
   const { state, patch } = useStore();
   const { t } = useT();
-  const { startGuestPreview } = useAuth();
+  const { startFreeTrial } = useAuth();
   const [selected, setSelected] = useState(state.settings.lang || 'ar');
+  const [starting, setStarting] = useState(false);
+  const [error, setError] = useState('');
 
   const confirm = () => {
     patch('settings', { lang: selected });
     navigate('/user-type');
   };
 
-  const tryFree = () => {
+  const tryFree = async () => {
+    if (starting) return;
     patch('settings', { lang: selected });
-    startGuestPreview();
-    navigate('/home');
+    setStarting(true);
+    setError('');
+    try {
+      await startFreeTrial();
+      navigate('/home');
+    } catch {
+      setError(t('auth.trialUnavailable'));
+    } finally {
+      setStarting(false);
+    }
   };
 
   return (
@@ -40,8 +51,9 @@ export default function ChooseLanguage() {
         ))}
       </div>
       <div style={{ flex: 1 }} />
-      <button className="btn btn-primary btn-block" onClick={confirm}>{t('common.continue')}</button>
-      <button className="btn btn-ghost btn-block" onClick={tryFree}>{t('onboarding.tryFree')}</button>
+      {error && <p className="tiny center" role="alert" style={{ margin: 0, color: 'var(--pill-danger-fg)' }}>{error}</p>}
+      <button type="button" className="btn btn-primary btn-block" onClick={confirm}>{t('common.continue')}</button>
+      <button type="button" className="btn btn-ghost btn-block" disabled={starting} onClick={tryFree}>{starting ? t('common.loading') : t('onboarding.tryFree')}</button>
     </div>
   );
 }
