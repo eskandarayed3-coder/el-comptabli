@@ -21,9 +21,13 @@ export default function ChatBubble({ role, text, agent, sources, complexCase, on
   const bubble = (
     <div className={`bubble ${isUser ? 'user' : 'ai'}`}>
       {isUser ? text : <MarkdownLite text={text} />}
-      {!isUser && sources && (
+      {!isUser && sources && sources.length > 0 && (
         <div className="sources">
-          <span className="pill teal">{t('chat.sources', { s: sources })}</span>
+          {Array.isArray(sources) ? sources.slice(0, 3).map((source) => (
+            <a key={source.id || source.url} className="pill teal" href={source.url} target="_blank" rel="noreferrer">
+              {source.title}
+            </a>
+          )) : <span className="pill teal">{t('chat.sources', { s: sources })}</span>}
         </div>
       )}
       {!isUser && complexCase && (

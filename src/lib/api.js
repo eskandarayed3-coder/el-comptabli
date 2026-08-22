@@ -34,7 +34,7 @@ async function filePayload(file) {
   return { mimeType: file.type, dataBase64 };
 }
 
-export async function chatStream({ messages, profile, agentId, onChunk, signal }) {
+export async function chatStream({ messages, profile, agentId, onChunk, onMeta, signal }) {
   const res = await apiFetch('/api/chat', {
     method: 'POST', body: JSON.stringify({ messages, profile, agentId }), signal,
   });
@@ -59,6 +59,7 @@ export async function chatStream({ messages, profile, agentId, onChunk, signal }
       try {
         const item = JSON.parse(payload);
         if (item.error) throw Object.assign(new Error(item.error.message), { friendly: item.error });
+        if (item.meta) onMeta?.(item.meta);
         if (item.t) { full += item.t; onChunk?.(full, item.t); }
       } catch (error) {
         if (error.friendly) throw error;

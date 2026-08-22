@@ -3,6 +3,7 @@ import { streamChat } from '../ai.js';
 import { SYSTEM_INSTRUCTION, profileContext } from '../persona.js';
 import { agentFocus } from '../agents.js';
 import { cleanText, validateMessages } from '../lib/validation.js';
+import { buildKnowledgeContext } from '../knowledge.js';
 
 const router = Router();
 
@@ -21,13 +22,16 @@ router.post('/', async (req, res) => {
   const agentId = ['general', 'fiscalite', 'comptabilite', 'finance', 'droit', 'tunisie'].includes(req.body?.agentId) ? req.body.agentId : 'general';
   if (!messages) return res.status(400).json({ error: { code: 'no_messages', message: 'Message manquant ou trop long.' } });
 
-  const system = SYSTEM_INSTRUCTION + '\n\n' + agentFocus(agentId) + profileContext(profile);
+  const knowledge = buildKnowledgeContext(messages[messages.length - 1].text, { agentId });
+  const system = SYSTEM_INSTRUCTION + '\n\n' + agentFocus(agentId) + profileContext(profile) + knowledge.prompt;
 
   try {
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
     res.flushHeaders?.();
+
+    res.write(`data: ${JSON.stringify({ meta: { sources: knowledge.sources, matches: knowledge.matches } })}\n\n`);
 
     let started = false;
     await streamChat({

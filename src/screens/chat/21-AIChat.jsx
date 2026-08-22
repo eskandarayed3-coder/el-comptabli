@@ -61,6 +61,7 @@ export default function AIChat() {
     patch('settings', { aiQuestionsUsed: (state.settings.aiQuestionsUsed || 0) + 1 });
 
     let full = '';
+    let responseSources = [];
     setMessages((m) => [...m, { role: 'model', text: '' }]);
     try {
       abortRef.current = new AbortController();
@@ -69,9 +70,17 @@ export default function AIChat() {
         profile: state.profile,
         agentId,
         signal: abortRef.current.signal,
+        onMeta: (meta) => {
+          responseSources = Array.isArray(meta?.sources) ? meta.sources : [];
+          setMessages((m) => {
+            const copy = [...m];
+            copy[copy.length - 1] = { ...copy[copy.length - 1], sources: responseSources };
+            return copy;
+          });
+        },
         onChunk: (acc) => setMessages((m) => {
           const copy = [...m];
-          copy[copy.length - 1] = { role: 'model', text: acc };
+          copy[copy.length - 1] = { ...copy[copy.length - 1], role: 'model', text: acc };
           return copy;
         }),
       });
@@ -81,7 +90,7 @@ export default function AIChat() {
         agentId,
         pinned: false,
         updatedAt: new Date().toISOString(),
-        messages: [...next, { role: 'model', text: full }],
+        messages: [...next, { role: 'model', text: full, sources: responseSources }],
       });
     } catch (e) {
       const offCodes = ['api_disabled', 'bad_key', 'no_vision', 'no_credits'];
@@ -129,7 +138,7 @@ export default function AIChat() {
             role={m.role}
             text={m.text}
             agent={agent}
-            sources={m.role === 'model' && i > 0 ? 'TVA' : null}
+            sources={m.role === 'model' && i > 0 ? m.sources : null}
             complexCase={m.role === 'model' && i === messages.length - 1 && complex(m.text)}
             onFindExpert={() => navigate('/experts')}
           />
