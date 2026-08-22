@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Home, MessageCircle, ScanLine, Wallet, BookOpen, User } from 'lucide-react';
+import { Home, MessageCircle, ScanLine, Wallet, User } from 'lucide-react';
 import { useT } from '../i18n/index.js';
 import { useAuth } from '../lib/auth.jsx';
 
@@ -21,15 +21,14 @@ export default function BottomNav() {
   ];
   const rightItems = [
     { to: '/finance', icon: Wallet, label: t('nav.finance') },
-    { to: '/knowledge', icon: BookOpen, label: t('nav.learn') },
     { to: '/profile', icon: User, label: t('nav.profile') },
   ];
 
   // Keep the primary Scanner button visible for every visitor. A guest is
   // asked to create an account before an upload reaches the protected API.
   if (guest) {
-    const guestLeftItems = [leftItems[0], rightItems[0]];
-    const guestRightItems = rightItems.slice(1);
+    const guestLeftItems = [leftItems[0], leftItems[1]];
+    const guestRightItems = rightItems;
     return (
       <nav className="bottom-nav" aria-label={t('nav.navigation')}>
         <div className="bottom-nav-group bottom-nav-group-start">

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Languages, Building2, Bell, Download, Shield, FileText, UserCog, LogOut, ChevronRight, Settings, CreditCard, LayoutGrid, Activity } from 'lucide-react';
+import { Languages, Building2, Bell, Download, Shield, FileText, UserCog, LogOut, ChevronRight, Settings, CreditCard, LayoutGrid, Activity, BookOpen } from 'lucide-react';
 import { useStore, isPremium as checkPremium, premiumDaysLeft } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { useAuth } from '../../lib/auth.jsx';
@@ -21,6 +21,7 @@ export default function MyProfile() {
     { icon: Settings, label: t('profile.settings'), to: '/profile/settings' },
     { icon: Bell, label: t('profile.notifications'), to: '/notifications' },
     { icon: Activity, label: t('home.activityTitle'), to: '/activity' },
+    { icon: BookOpen, label: t('nav.learn'), to: '/knowledge' },
     { icon: Download, label: t('docs.exportTitle'), to: '/documents/export' },
     { icon: CreditCard, label: t('sub.billing'), to: '/billing' },
     { icon: Shield, label: t('profile.security'), to: '/profile/security' },
