@@ -15,7 +15,8 @@ export default function Login() {
   const [email, setEmail] = useState(() => params.get('email') || state.profile.email || '');
   const [loading, setLoading] = useState(false);
   const [startingTrial, setStartingTrial] = useState(false);
-  const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [trialError, setTrialError] = useState('');
   const [sentTo, setSentTo] = useState('');
   const emailId = 'login-email';
   const errorId = 'login-email-error';
@@ -27,13 +28,13 @@ export default function Login() {
   const submit = async () => {
     if (!emailValid || loading) return;
     setLoading(true);
-    setError('');
+    setEmailError('');
     try {
       const normalizedEmail = email.trim();
       await requestMagicLink(normalizedEmail, next);
       setSentTo(normalizedEmail);
     } catch (e) {
-      setError(e.friendly?.message || t('recover.notFound'));
+      setEmailError(e.friendly?.code === 'service_unavailable' ? t('auth.emailUnavailable') : (e.friendly?.message || t('auth.emailUnavailable')));
     } finally {
       setLoading(false);
     }
@@ -42,12 +43,12 @@ export default function Login() {
   const startTrial = async () => {
     if (loading || startingTrial) return;
     setStartingTrial(true);
-    setError('');
+    setTrialError('');
     try {
       await startFreeTrial();
       navigate(next);
     } catch (e) {
-      setError(e.friendly?.message || t('auth.trialUnavailable'));
+      setTrialError(t('auth.trialUnavailable'));
     } finally {
       setStartingTrial(false);
     }
@@ -82,7 +83,7 @@ export default function Login() {
         <button className="btn btn-ghost btn-block" disabled={loading} onClick={submit}>
           {loading ? <Loader2 size={16} className="spin" /> : t('auth.resendSecureLink')}
         </button>
-        <button className="btn btn-ghost btn-block" onClick={() => { setSentTo(''); setError(''); }}>
+        <button className="btn btn-ghost btn-block" onClick={() => { setSentTo(''); setEmailError(''); }}>
           {t('auth.useAnotherEmail')}
         </button>
       </div>
@@ -94,7 +95,7 @@ export default function Login() {
       <div className="col" style={{ gap: 8, textAlign: 'center', alignItems: 'center' }}>
         <Logo size={64} />
         <h1>{t('auth.loginTitle')}</h1>
-        <p className="small muted">{t('recover.explain')}</p>
+          <p className="small muted">{t('auth.loginIntro')}</p>
       </div>
 
       <form className="col" style={{ gap: 16 }} onSubmit={(event) => { event.preventDefault(); submit(); }}>
@@ -102,10 +103,10 @@ export default function Login() {
           <label htmlFor={emailId}>{t('auth.email')}</label>
           <input
             id={emailId} className="input" type="email" value={email} autoComplete="email"
-            onChange={(event) => { setEmail(event.target.value); setError(''); }}
-            placeholder="ton@email.com" aria-invalid={Boolean(error)} aria-describedby={error ? errorId : undefined}
+            onChange={(event) => { setEmail(event.target.value); setEmailError(''); }}
+            placeholder="ton@email.com" aria-invalid={Boolean(emailError)} aria-describedby={emailError ? errorId : undefined}
           />
-          {error && <span id={errorId} className="tiny" role="alert" style={{ color: 'var(--coral-700, #B91C1C)' }}>{error}</span>}
+          {emailError && <span id={errorId} className="tiny" role="alert" style={{ color: 'var(--coral-700, #B91C1C)' }}>{emailError}</span>}
         </div>
         <button type="submit" className="btn btn-primary btn-block" disabled={!emailValid || loading}>
           {loading ? <Loader2 size={16} className="spin" /> : t('auth.continueWithEmail')}
@@ -122,6 +123,7 @@ export default function Login() {
         <p className="tiny center muted" style={{ margin: -6 }}>
           {t('onboarding.tryFreeNote')}
         </p>
+        {trialError && <p className="tiny center" role="alert" style={{ margin: 0, color: 'var(--coral-700, #B91C1C)' }}>{trialError}</p>}
       </form>
 
       <p className="tiny center muted" style={{ margin: 0 }}>{t('auth.noPasswordNeeded')}</p>

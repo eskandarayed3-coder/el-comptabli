@@ -178,6 +178,35 @@ export const TAX_GUIDES = {
     ],
     infographic: { type: 'flow', steps: ['Contrat et salarié', 'Bulletin de paie', 'Écritures comptables', 'Paiement', 'Déclaration et archivage'] },
   },
+  'dossier-fiscal-entreprise': {
+    type: 'guide', min: 6, badge: 'à vérifier · source officielle',
+    title: 'Dossier fiscal : les documents à préparer toute l’année',
+    intro: 'Un dossier fiscal propre ne se construit pas la veille d’une déclaration. Il relie chaque chiffre à une preuve et garde les documents faciles à retrouver.',
+    sources: [
+      { label: 'JIBAYA — documentation fiscale', url: 'https://jibaya.tn/docs/' },
+      { label: 'Idaraty — démarches administratives', url: 'https://idaraty.tn/' },
+    ],
+    sections: [
+      { heading: 'Le dossier des ventes', body: 'Classe les factures émises, avoirs, bons de livraison, contrats, règlements et relances. Le numéro de facture doit pouvoir être retrouvé rapidement.' },
+      { heading: 'Le dossier des achats', body: 'Conserve les factures fournisseurs, contrats, bons de réception, preuves de paiement et documents liés à la TVA ou à une éventuelle retenue.' },
+      { heading: 'Le dossier des déclarations', body: 'Archive les déclarations déposées, accusés de réception, quittances, échanges avec l’administration et une feuille de calcul expliquant les montants.' },
+      { heading: 'La règle pratique', body: 'Pour chaque montant important : une pièce, une date, un libellé clair, un lien vers l’opération et un statut de vérification.' },
+    ],
+    infographic: { type: 'flow', steps: ['Recevoir la pièce', 'Classer par période', 'Vérifier les données', 'Rapprocher au paiement', 'Préparer la déclaration', 'Archiver preuve et accusé'] },
+  },
+  'controle-fiscal-preparation': {
+    type: 'guide', min: 6, badge: 'à vérifier · source officielle',
+    title: 'Préparer un contrôle fiscal sans stress',
+    intro: 'Le bon réflexe est de répondre avec des documents cohérents et une piste d’audit claire, jamais de reconstruire les chiffres dans l’urgence.',
+    sources: [{ label: 'JIBAYA — procédures et textes fiscaux', url: 'https://jibaya.tn/docs/' }],
+    sections: [
+      { heading: 'Centraliser la demande', body: 'Lis la période, les pièces demandées et le délai. Désigne une personne responsable de la réponse et conserve une copie de chaque échange.' },
+      { heading: 'Rassembler les preuves', body: 'Prépare journaux, factures, relevés, contrats, déclarations, paiements et rapprochements. Chaque total doit pouvoir être détaillé.' },
+      { heading: 'Documenter les écarts', body: 'Un écart expliqué est préférable à un chiffre modifié sans trace. Note la cause, la pièce et la correction proposée, puis fais valider le traitement.' },
+      { heading: 'Se faire accompagner', body: 'Un contrôle ou une demande complexe nécessite l’appui d’un expert-comptable ou conseil compétent. Ne transmet pas une réponse juridique improvisée.' },
+    ],
+    infographic: { type: 'flow', steps: ['Lire la demande', 'Geler les pièces', 'Rassembler et rapprocher', 'Expliquer les écarts', 'Faire valider', 'Répondre et archiver'] },
+  },
 };
 
 export const ACCOUNTING_GUIDES = {
@@ -309,6 +338,30 @@ export const ACCOUNTING_GUIDES = {
     ],
     infographic: { type: 'flow', steps: ['Saisir', 'Joindre la preuve', 'Faire valider', 'Payer ou comptabiliser', 'Conserver la trace'] },
   },
+  'stocks-inventaire': {
+    type: 'guide', min: 6, level: 'Intermédiaire',
+    title: 'Stocks et inventaire : compter, valoriser, expliquer',
+    intro: 'Le stock est un actif réel : il faut pouvoir le compter, l’identifier et relier son montant comptable à un inventaire physique.',
+    sections: [
+      { heading: 'Avant le comptage', body: 'Bloque ou note les mouvements pendant l’inventaire. Prépare une liste par emplacement, référence, unité et personne qui compte.' },
+      { heading: 'Pendant le comptage', body: 'Compte réellement, note les écarts, les produits abîmés, périmés ou non vendables. Une quantité théorique n’est pas une preuve de stock.' },
+      { heading: 'Après le comptage', body: 'Rapproche le physique et le système, explique les différences puis fais valider les ajustements. Conserve les feuilles de comptage datées.' },
+      { heading: 'Valorisation', body: 'La méthode de valorisation et les éventuelles dépréciations doivent être cohérentes, documentées et adaptées au référentiel applicable.' },
+    ],
+    infographic: { type: 'flow', steps: ['Préparer les références', 'Compter le physique', 'Comparer au système', 'Expliquer les écarts', 'Valider les ajustements', 'Archiver les feuilles'] },
+  },
+  'paie-comptabilisation': {
+    type: 'guide', min: 6, level: 'Intermédiaire',
+    title: 'Paie : du bulletin aux écritures comptables',
+    intro: 'La paie mélange données RH, obligations sociales, banque et comptabilité. Un bon processus contrôle ces éléments avant et après le paiement.',
+    sections: [
+      { heading: 'Données d’entrée', body: 'Contrat, salaire, absences, primes, avances et changements doivent être validés avant le calcul. Garde la date d’effet de chaque modification.' },
+      { heading: 'Contrôles du bulletin', body: 'Compare le brut, les retenues, le net à payer et les charges employeur à la période précédente. Toute variation inhabituelle doit être expliquée.' },
+      { heading: 'Banque et écritures', body: 'Le total payé en banque doit correspondre au total net des bulletins. Les dettes sociales et fiscales doivent rester suivies jusqu’au paiement et à la déclaration.' },
+      { heading: 'Confidentialité', body: 'Les données de paie sont sensibles. Limite les accès, conserve les justificatifs de manière sécurisée et évite l’envoi par messagerie non protégée.' },
+    ],
+    infographic: { type: 'flow', steps: ['Valider les données RH', 'Calculer les bulletins', 'Contrôler les variations', 'Comptabiliser', 'Payer', 'Déclarer et archiver'] },
+  },
 };
 
 export const FINANCE_GUIDES = {
@@ -367,6 +420,30 @@ export const FINANCE_GUIDES = {
       { heading: 'Obligations', body: 'Garde une vue des taxes, cotisations et échéances à venir ; une charge connue mais non provisionnée est un risque de trésorerie.' },
     ],
     infographic: { type: 'table', headers: ['Indicateur', 'Question'], rows: [['CA', 'Est-ce que je vends plus ou moins ?'], ['Marge', 'Est-ce que je gagne assez par vente ?'], ['Trésorerie', 'Puis-je payer cette semaine ?'], ['Impayés', 'Qui doit encore payer ?'], ['Charges', 'Qu’est-ce qui augmente ?'], ['Échéances', 'Qu’est-ce qui arrive ?']] },
+  },
+  'prix-de-vente': {
+    type: 'guide', min: 5, level: 'Débutant',
+    title: 'Fixer un prix de vente sans oublier tes coûts',
+    intro: 'Un prix trop bas peut augmenter les ventes tout en détruisant la marge. Il faut regarder les coûts directs, les charges fixes et la valeur proposée au client.',
+    sections: [
+      { heading: 'Coût direct', body: 'Calcule matière, achat, livraison, commission et temps directement nécessaires à une vente. Ce sont les coûts qui bougent avec le volume.' },
+      { heading: 'Charges fixes', body: 'Loyer, outils, salaires fixes et frais administratifs doivent aussi être couverts par la marge globale, même s’ils ne sont pas sur une seule facture.' },
+      { heading: 'Test de marge', body: 'Marge unitaire = prix de vente hors taxes − coût variable unitaire. Compare cette marge à tes charges fixes et à ton volume réaliste.' },
+      { heading: 'Réviser', body: 'Révise le prix lors d’un changement de fournisseur, de coût, de délai de paiement ou de positionnement. Documente la décision pour comprendre son effet.' },
+    ],
+    infographic: { type: 'formula', line1: 'Marge unitaire = prix HT − coût variable unitaire', example: '50 DT − 30 DT = 20 DT de marge unitaire' },
+  },
+  'recouvrement-clients': {
+    type: 'guide', min: 5, level: 'Débutant',
+    title: 'Recouvrement clients : protéger ta trésorerie',
+    intro: 'Chaque facture impayée immobilise de la trésorerie. Une relance claire, régulière et respectueuse améliore les encaissements sans attendre le dernier moment.',
+    sections: [
+      { heading: 'Avant la facture', body: 'Valide le client, le prix, la date d’échéance, le moyen de paiement et les coordonnées. Plus l’accord est clair, moins la relance est difficile.' },
+      { heading: 'Suivi hebdomadaire', body: 'Classe les factures : à échoir, échues, contestées, promise de paiement. Commence la relance dès l’échéance avec le numéro et le montant exacts.' },
+      { heading: 'Mesurer', body: 'Suis le montant échoué, le délai moyen d’encaissement et les principaux retards. Ces chiffres alimentent directement ta prévision de trésorerie.' },
+      { heading: 'Escalader proprement', body: 'Pour une contestation ou un retard persistant, conserve les échanges et applique le processus contractuel. Demande conseil avant toute action juridique.' },
+    ],
+    infographic: { type: 'flow', steps: ['Facturer clairement', 'Rappeler avant échéance', 'Relancer à l’échéance', 'Noter la promesse', 'Vérifier l’encaissement', 'Escalader si nécessaire'] },
   },
 };
 
