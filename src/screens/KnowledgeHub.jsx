@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Landmark, Scale, Newspaper, HelpCircle, Search, Settings, ChevronRight, GraduationCap, Sparkles, Target, ListTree } from 'lucide-react';
+import { BookOpen, Landmark, Scale, Newspaper, HelpCircle, Search, Settings, ChevronRight, GraduationCap, Sparkles, Target, ListTree, LineChart } from 'lucide-react';
 import { useT } from '../i18n/index.js';
 
 export default function KnowledgeHub() {
@@ -10,6 +10,7 @@ export default function KnowledgeHub() {
     { to: '/knowledge/guides', icon: BookOpen, label: t('knowledge.guides') },
     { to: '/accounting/accounts', icon: ListTree, label: t('accounting.accounts') },
     { to: '/knowledge/tax-guides', icon: Landmark, label: t('knowledge.taxGuides') },
+    { to: '/knowledge/finance-guides', icon: LineChart, label: t('knowledge.financeGuides') },
     { to: '/knowledge/laws', icon: Scale, label: t('knowledge.laws') },
     { to: '/knowledge/law-updates', icon: Newspaper, label: t('knowledge.lawUpdates') },
     { to: '/knowledge/faq', icon: HelpCircle, label: t('knowledge.faq') },
@@ -42,6 +43,16 @@ export default function KnowledgeHub() {
             <span className="tiny" style={{ maxWidth: 220 }}>{t('quiz.hint')}</span>
           </div>
           <Sparkles size={22} />
+        </div>
+      </button>
+
+      <button className="card tint-teal" style={{ width: '100%', textAlign: 'start' }} onClick={() => navigate('/knowledge/search')}>
+        <div className="row between" style={{ gap: 12 }}>
+          <span className="col" style={{ gap: 4 }}>
+            <span className="small" style={{ fontWeight: 700 }}>{t('knowledge.referenceLibrary')}</span>
+            <span className="tiny muted">{t('knowledge.referenceLibraryHint')}</span>
+          </span>
+          <Search size={19} color="var(--teal-700)" />
         </div>
       </button>
 

@@ -1,44 +1,59 @@
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { Sparkles } from 'lucide-react';
+import { ArrowRight, BookOpen, Sparkles } from 'lucide-react';
 import { useT } from '../../i18n/index.js';
+import { allKnowledgeItems } from '../../lib/knowledgeContent.js';
 import TopBar from '../../components/TopBar.jsx';
+import EmptyState from '../../components/EmptyState.jsx';
+import StatusPill from '../../components/StatusPill.jsx';
+
+const ITEMS = allKnowledgeItems();
+
+function matches(item, term) {
+  return [item.title, item.intro, item.category, item.badge, ...(item.sections || []).flatMap((section) => [section.heading, section.body])]
+    .join(' ')
+    .toLocaleLowerCase('fr')
+    .includes(term);
+}
 
 export default function SearchKnowledge() {
   const navigate = useNavigate();
   const { t } = useT();
-  const [q, setQ] = useState('forfaitaire');
+  const [query, setQuery] = useState('');
+  const term = query.trim().toLocaleLowerCase('fr');
+  const results = useMemo(() => (term ? ITEMS.filter((item) => matches(item, term)).slice(0, 12) : []), [term]);
 
   return (
     <div className="screen stagger">
       <TopBar title={t('knowledge.searchTitle')} />
-      <input className="input" value={q} onChange={(e) => setQ(e.target.value)} />
+      <div className="input-row"><input className="input" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t('knowledge.searchHint')} autoFocus /></div>
 
-      {q && (
-        <>
-          <div className="col" style={{ gap: 8 }}>
-            <h3 className="small muted">Guides</h3>
-            {['Le régime forfaitaire expliqué simplement', 'Comment passer du forfaitaire au réel'].map((g) => (
-              <div key={g} className="card inner small">{g}</div>
-            ))}
-          </div>
-          <div className="col" style={{ gap: 8 }}>
-            <h3 className="small muted">Lois</h3>
-            <div className="card inner small">Loi de finances 2026 · nouveau régime forfaitaire</div>
-          </div>
-          <div className="col" style={{ gap: 8 }}>
-            <h3 className="small muted">Questions fréquentes</h3>
-            {['C’est quoi le régime forfaitaire ?', 'Puis-je changer de régime en cours d’année ?'].map((g) => (
-              <div key={g} className="row small" style={{ gap: 8, padding: '6px 0' }}>• {g}</div>
-            ))}
-          </div>
-          <div className="card tint-indigo">
-            <div className="row between">
-              <span className="small">🤖 Demander directement à l’IA : C’est quoi le forfaitaire ?</span>
-              <button className="pill white" onClick={() => navigate('/chat?q=' + encodeURIComponent('C’est quoi le forfaitaire ?'))}>Poser la question</button>
-            </div>
-          </div>
-        </>
+      {!term && <div className="card tint-gray small muted">{t('knowledge.referenceLibraryHint')}</div>}
+      {term && results.length === 0 && <EmptyState text={t('knowledge.noSearchResult')} />}
+
+      {results.length > 0 && (
+        <div className="col" style={{ gap: 8 }}>
+          <span className="tiny muted">{t('knowledge.searchResults', { n: results.length })}</span>
+          {results.map((item) => (
+            <button key={`${item.routeType}-${item.slug}`} className="list-row" style={{ width: '100%', textAlign: 'start' }} onClick={() => navigate(`/knowledge/read/${item.routeType}/${item.slug}`)}>
+              <span className="icon-wrap teal"><BookOpen size={18} /></span>
+              <span className="col grow" style={{ gap: 3 }}>
+                <span className="small" style={{ fontWeight: 600 }}>{item.title}</span>
+                <span className="tiny muted">{item.category} · {t('knowledge.readTime', { n: item.min })}</span>
+              </span>
+              {item.badge && <StatusPill tone={/(vérifier|verify|cnss)/i.test(item.badge) ? 'warning' : 'success'}>{item.badge}</StatusPill>}
+              <ArrowRight size={16} color="var(--text-2)" />
+            </button>
+          ))}
+        </div>
+      )}
+
+      {term && (
+        <div className="card tint-indigo row" style={{ gap: 10, alignItems: 'center' }}>
+          <Sparkles size={18} color="var(--indigo-600)" />
+          <span className="small grow">{t('knowledge.askAI')}</span>
+          <button className="pill white" onClick={() => navigate(`/chat?q=${encodeURIComponent(query)}`)}>{t('knowledge.askAI')}</button>
+        </div>
       )}
     </div>
   );

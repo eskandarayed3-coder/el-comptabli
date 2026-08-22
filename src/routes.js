@@ -126,6 +126,7 @@ export const manifest = [
   // ---- Module 12 — Knowledge Center ----
   { path: '/knowledge/guides', Component: L('knowledge/64-AccountingGuides'), label: '64. Accounting Guides', module: 'Knowledge' },
   { path: '/knowledge/tax-guides', Component: L('knowledge/65-TaxGuides'), label: '65. Tax Guides', module: 'Knowledge', mvp: true },
+  { path: '/knowledge/finance-guides', Component: L('knowledge/FinanceGuides'), label: 'Finance Guides', module: 'Knowledge' },
   { path: '/knowledge/laws', Component: L('knowledge/66-TunisianLaws'), label: '66. Tunisian Laws', module: 'Knowledge' },
   { path: '/knowledge/law-updates', Component: L('knowledge/67-FinanceLawUpdates'), label: '67. Finance Law Updates', module: 'Knowledge', mvp: true },
   { path: '/knowledge/faq', Component: L('knowledge/68-Faq'), label: '68. FAQ', module: 'Knowledge' },

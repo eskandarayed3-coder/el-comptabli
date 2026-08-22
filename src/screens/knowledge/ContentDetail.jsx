@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, ExternalLink } from 'lucide-react';
 import { useT } from '../../i18n/index.js';
 import { findContent } from '../../lib/knowledgeContent.js';
 import TopBar from '../../components/TopBar.jsx';
@@ -120,8 +120,9 @@ function Infographic({ info }) {
 export default function ContentDetail() {
   const { type, slug } = useParams();
   const { t } = useT();
-  const kind = type === 'law' ? 'law' : type === 'tax-guide' ? 'tax-guide' : 'accounting-guide';
+  const kind = type === 'law' ? 'law' : type === 'tax-guide' ? 'tax-guide' : type === 'finance-guide' ? 'finance-guide' : 'accounting-guide';
   const item = findContent(kind, slug);
+  const needsVerification = /(vérifier|verify|cnss)/i.test(item?.badge || '');
 
   if (!item) {
     return (
@@ -138,7 +139,7 @@ export default function ContentDetail() {
       <div dir="ltr" className="col" style={{ gap: 16, textAlign: 'left' }}>
         <div className="col" style={{ gap: 8 }}>
           <div className="row" style={{ gap: 8 }}>
-            {item.badge && <StatusPill tone={item.badge.includes('LF') || item.badge.includes('jour') ? 'warning' : 'success'}>{item.badge}</StatusPill>}
+            {item.badge && <StatusPill tone={needsVerification ? 'warning' : 'success'}>{item.badge}</StatusPill>}
             {item.date && <span className="tiny muted num">{item.date}</span>}
             {item.min && <span className="tiny muted">{t('knowledge.readTime', { n: item.min })}</span>}
           </div>
@@ -148,6 +149,12 @@ export default function ContentDetail() {
 
         <Infographic info={item.infographic} />
 
+        {needsVerification && (
+          <div className="card tint-amber small" role="note">
+            {t('knowledge.verifyNotice')}
+          </div>
+        )}
+
         <div className="col" style={{ gap: 16 }}>
           {item.sections.map((s) => (
             <div key={s.heading} className="col" style={{ gap: 6 }}>
@@ -156,6 +163,17 @@ export default function ContentDetail() {
             </div>
           ))}
         </div>
+
+        {item.sources?.length > 0 && (
+          <section className="card tint-indigo col" style={{ gap: 8 }}>
+            <h3>{t('knowledge.officialSources')}</h3>
+            {item.sources.map((source) => (
+              <a key={source.url} className="row small" style={{ gap: 8, color: 'var(--teal-800)' }} href={source.url} target="_blank" rel="noreferrer">
+                <ExternalLink size={15} style={{ flexShrink: 0 }} /> {source.label}
+              </a>
+            ))}
+          </section>
+        )}
       </div>
 
       <p className="disclaimer">{t('disclaimer')}</p>
