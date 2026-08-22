@@ -13,11 +13,19 @@ import { manifest, adminManifest } from './routes.js';
 import ScreensIndex from './screens/ScreensIndex.jsx';
 
 const NAV_PATHS = ['/home', '/chat', '/scanner', '/finance', '/knowledge', '/profile'];
+const GUEST_RESTRICTED_PREFIXES = [
+  '/chat', '/scanner', '/knowledge/exam-solver', '/documents', '/experts', '/team',
+  '/payment', '/billing', '/pricing', '/upgrade', '/profile/security', '/setup-complete',
+];
+
+function isGuestRestricted(pathname) {
+  return GUEST_RESTRICTED_PREFIXES.some((path) => pathname === path || pathname.startsWith(`${path}/`));
+}
 
 function MobileShell({ onboarded }) {
   const location = useLocation();
   const { state } = useStore();
-  const { user, ready, configured } = useAuth();
+  const { user, ready, configured, guest } = useAuth();
   const premiumUntil = state.settings.premiumUntil;
   const publicPath = ['/splash', '/welcome', '/language', '/user-type', '/business-info', '/tax-regime', '/ai-intro', '/subscription-select', '/permissions', '/setup-complete', '/login', '/register', '/forgot-password', '/otp', '/auth/callback', '/legal/terms', '/legal/privacy']
     .some((path) => location.pathname.startsWith(path));
@@ -39,11 +47,12 @@ function MobileShell({ onboarded }) {
   if (!ready) {
     return <div className="phone-frame"><div className="screen no-nav center"><p className="small muted">Connexion…</p></div></div>;
   }
-  if (!user && !publicPath) return <Navigate to="/login" replace />;
+  if (!user && !guest && !publicPath) return <Navigate to="/login" replace />;
+  if (guest && isGuestRestricted(location.pathname)) return <Navigate to="/home" replace />;
 
   // Once onboarding is done, using the app requires an active pass — except
   // for the screens that let you buy/activate one (see paywall.js).
-  const locked = onboarded && !isPremium(state.settings) && !isPaywallAllowed(location.pathname);
+  const locked = !guest && onboarded && !isPremium(state.settings) && !isPaywallAllowed(location.pathname);
   const showNav = !locked && NAV_PATHS.some((p) => location.pathname.startsWith(p));
   return (
     <div className="phone-frame">

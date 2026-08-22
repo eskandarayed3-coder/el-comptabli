@@ -77,6 +77,8 @@ export default {
     feat2: 'Scanne tes factures',
     feat3: 'Suis tes échéances',
     start: 'Commencer',
+    tryFree: 'Essayer gratuitement — sans compte',
+    tryFreeNote: 'Accès découverte immédiat. Tes données restent sur cet appareil.',
     haveAccount: 'J’ai déjà un compte',
     langTitle: 'Choisis ta langue',
     whoTitle: 'Tu es qui ?',
@@ -141,6 +143,11 @@ export default {
     resendSecureLink: 'Renvoyer le lien',
     useAnotherEmail: 'Utiliser une autre adresse',
     demoNote: 'Version démo : compte local sur cet appareil, aucun serveur.',
+  },
+  guest: {
+    title: 'Mode découverte actif',
+    body: 'Tu peux explorer et ajouter des données locales. Crée un compte pour sauvegarder, utiliser l’IA et scanner des documents.',
+    createAccount: 'Créer mon compte pour sauvegarder',
   },
   home: {
     greeting: 'Ahla, {name} 👋',

@@ -13,7 +13,7 @@ export default function SetupComplete() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const { state, patch, activatePlan, toast } = useStore();
-  const { user } = useAuth();
+  const { user, startGuestPreview } = useAuth();
   const { t } = useT();
   const startHandled = useRef(false);
 
@@ -34,6 +34,11 @@ export default function SetupComplete() {
     patch('settings', { onboarded: true });
     navigate('/home');
   }, [activatePlan, navigate, patch, state.profile.email, toast, user]);
+
+  const tryFree = () => {
+    startGuestPreview();
+    navigate('/home');
+  };
 
   useEffect(() => {
     if (!user || params.get('start') !== '1' || startHandled.current) return;
@@ -69,6 +74,7 @@ export default function SetupComplete() {
 
       <div style={{ flex: 1 }} />
       <button className="btn btn-primary btn-block" onClick={go}>{t('onboarding.goDash')}</button>
+      {!user && <button className="btn btn-ghost btn-block" onClick={tryFree}>{t('onboarding.tryFree')}</button>}
     </div>
   );
 }

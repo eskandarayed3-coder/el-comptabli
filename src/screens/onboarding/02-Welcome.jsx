@@ -1,11 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 import { MessageCircle, ScanLine, CalendarClock } from 'lucide-react';
 import { useT } from '../../i18n/index.js';
+import { useAuth } from '../../lib/auth.jsx';
 import Logo from '../../components/Logo.jsx';
 
 export default function Welcome() {
   const navigate = useNavigate();
   const { t } = useT();
+  const { startGuestPreview } = useAuth();
+
+  const startFreePreview = () => {
+    startGuestPreview();
+    navigate('/home');
+  };
 
   const features = [
     { icon: MessageCircle, text: t('onboarding.feat1') },
@@ -33,7 +40,11 @@ export default function Welcome() {
       </div>
 
       <div className="col" style={{ gap: 10 }}>
-        <button className="btn btn-primary btn-block" onClick={() => navigate('/language')}>
+        <button className="btn btn-primary btn-block" onClick={startFreePreview}>
+          {t('onboarding.tryFree')}
+        </button>
+        <p className="tiny center muted" style={{ margin: 0 }}>{t('onboarding.tryFreeNote')}</p>
+        <button className="btn btn-ghost btn-block" onClick={() => navigate('/language')}>
           {t('onboarding.start')}
         </button>
         <button className="btn btn-ghost btn-block" onClick={() => navigate('/login')}>

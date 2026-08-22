@@ -2,6 +2,24 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { supabase, supabaseConfigured } from './supabase.js';
 
 const AuthContext = createContext(null);
+const GUEST_PREVIEW_KEY = 'elcomptabli:guest-preview';
+
+function readGuestPreview() {
+  try {
+    return sessionStorage.getItem(GUEST_PREVIEW_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
+function writeGuestPreview(active) {
+  try {
+    if (active) sessionStorage.setItem(GUEST_PREVIEW_KEY, '1');
+    else sessionStorage.removeItem(GUEST_PREVIEW_KEY);
+  } catch {
+    // Private browsing can deny session storage. The in-memory state still works.
+  }
+}
 
 async function readJson(response) {
   const json = await response.json().catch(() => ({}));
@@ -13,6 +31,20 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [subscription, setSubscription] = useState({ plan: 'free', premium_until: null });
   const [ready, setReady] = useState(false);
+  const [guest, setGuest] = useState(readGuestPreview);
+
+  const startGuestPreview = useCallback(() => {
+    // A signed-in account must always remain subject to its server-owned plan.
+    if (user) return false;
+    writeGuestPreview(true);
+    setGuest(true);
+    return true;
+  }, [user]);
+
+  const endGuestPreview = useCallback(() => {
+    writeGuestPreview(false);
+    setGuest(false);
+  }, []);
 
   const restoreSession = useCallback(async () => {
     if (!supabaseConfigured) {
@@ -21,6 +53,7 @@ export function AuthProvider({ children }) {
     }
     try {
       const data = await readJson(await fetch('/api/auth/me', { credentials: 'same-origin' }));
+      if (data.user) endGuestPreview();
       setUser(data.user);
       setSubscription(data.subscription || { plan: 'free', premium_until: null });
       return data.user;
@@ -31,7 +64,7 @@ export function AuthProvider({ children }) {
     } finally {
       setReady(true);
     }
-  }, []);
+  }, [endGuestPreview]);
 
   const establishSession = useCallback(async (session) => {
     if (!session?.access_token || !session?.refresh_token) throw new Error('Lien de connexion invalide.');
@@ -41,10 +74,11 @@ export function AuthProvider({ children }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ accessToken: session.access_token, refreshToken: session.refresh_token }),
     }));
+    endGuestPreview();
     setUser(data.user);
     setReady(true);
     return data.user;
-  }, []);
+  }, [endGuestPreview]);
 
   useEffect(() => {
     restoreSession();
@@ -72,20 +106,23 @@ export function AuthProvider({ children }) {
 
   const signOut = useCallback(async () => {
     await fetch('/api/auth/signout', { method: 'POST', credentials: 'same-origin' });
+    endGuestPreview();
     setUser(null);
     setSubscription({ plan: 'free', premium_until: null });
-  }, []);
+  }, [endGuestPreview]);
 
   const deleteAccount = useCallback(async () => {
     await readJson(await fetch('/api/auth/account', { method: 'DELETE', credentials: 'same-origin' }));
+    endGuestPreview();
     setUser(null);
     setSubscription({ plan: 'free', premium_until: null });
-  }, []);
+  }, [endGuestPreview]);
 
   const value = useMemo(() => ({
     user, subscription, setSubscription, ready, configured: supabaseConfigured,
+    guest, startGuestPreview, endGuestPreview,
     requestMagicLink, completeMagicLink, restoreSession, signOut, deleteAccount,
-  }), [user, subscription, ready, requestMagicLink, completeMagicLink, restoreSession, signOut, deleteAccount]);
+  }), [user, subscription, ready, guest, startGuestPreview, endGuestPreview, requestMagicLink, completeMagicLink, restoreSession, signOut, deleteAccount]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

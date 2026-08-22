@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Bell, ChevronRight, Settings, MessageCircle, ScanLine, PlusCircle, X } from 'lucide-react';
 import { useStore, monthTotals } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
+import { useAuth } from '../../lib/auth.jsx';
 import { fmtDT, fmtDate, daysUntil, todayISO } from '../../lib/format.js';
 import HeroCard, { ProgressRing } from '../../components/HeroCard.jsx';
 import StatCard from '../../components/StatCard.jsx';
@@ -16,14 +17,17 @@ export default function Home() {
   const navigate = useNavigate();
   const { state, patch } = useStore();
   const { t, lang } = useT();
+  const { guest } = useAuth();
   const showTour = !state.settings.tourDone;
   const dismissTour = () => patch('settings', { tourDone: true });
   const tourStep = (to) => { dismissTour(); navigate(to); };
-  const TOUR = [
-    { icon: MessageCircle, key: 'tourAsk', to: '/chat' },
-    { icon: ScanLine, key: 'tourScan', to: '/scanner' },
-    { icon: PlusCircle, key: 'tourTrack', to: '/income/add' },
-  ];
+  const TOUR = guest
+    ? [{ icon: PlusCircle, key: 'tourTrack', to: '/income/add' }]
+    : [
+      { icon: MessageCircle, key: 'tourAsk', to: '/chat' },
+      { icon: ScanLine, key: 'tourScan', to: '/scanner' },
+      { icon: PlusCircle, key: 'tourTrack', to: '/income/add' },
+    ];
   const ym = new Date().toISOString().slice(0, 7);
   const hour = new Date().getHours();
   const greetKey = hour < 12 ? 'greetingMorning' : hour < 18 ? 'greetingAfternoon' : 'greetingEvening';
@@ -70,6 +74,16 @@ export default function Home() {
           </button>
         </div>
       </div>
+
+      {guest && (
+        <div className="card tint-amber col" style={{ gap: 8 }}>
+          <span className="small" style={{ fontWeight: 700 }}>{t('guest.title')}</span>
+          <span className="tiny muted">{t('guest.body')}</span>
+          <button className="btn btn-primary btn-sm" style={{ alignSelf: 'flex-start' }} onClick={() => navigate('/login?next=/home')}>
+            {t('guest.createAccount')}
+          </button>
+        </div>
+      )}
 
       {showTour && (
         <div className="card tint-teal" style={{ position: 'relative' }}>
