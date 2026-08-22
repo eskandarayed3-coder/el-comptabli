@@ -23,12 +23,20 @@ export default function BottomNav() {
     </NavLink>
   );
 
-  // Guests can explore the local app, but the costly upload/AI scanner stays
-  // behind authenticated server endpoints. Use an ordinary four-item bar.
+  // Keep the primary Scanner button visible for every visitor. A guest is
+  // asked to create an account before an upload reaches the protected API.
   if (guest) {
+    const guestLeftItems = [leftItems[0], rightItems[0]];
+    const guestRightItems = rightItems.slice(1);
     return (
       <nav className="bottom-nav">
-        {[leftItems[0], ...rightItems].map((item) => <NavItem key={item.to} {...item} />)}
+        <div className="bottom-nav-group bottom-nav-group-start">
+          {guestLeftItems.map((item) => <NavItem key={item.to} {...item} />)}
+        </div>
+        <NavItem to="/login?next=/scanner" icon={ScanLine} label={t('nav.scanner')} className="scan-center" />
+        <div className="bottom-nav-group bottom-nav-group-end">
+          {guestRightItems.map((item) => <NavItem key={item.to} {...item} />)}
+        </div>
       </nav>
     );
   }
