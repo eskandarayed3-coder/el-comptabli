@@ -11,6 +11,7 @@ import authRouter from './routes/auth.js';
 import stateRouter from './routes/state.js';
 import adminRouter from './routes/admin.js';
 import exportsRouter from './routes/exports.js';
+import documentsRouter from './routes/documents.js';
 import { providerInfo } from './ai.js';
 import { assertProductionConfig } from './lib/env.js';
 import { getServiceClient, requireUser, supabaseConfigured } from './lib/supabase.js';
@@ -21,8 +22,11 @@ assertProductionConfig();
 const app = express();
 app.set('trust proxy', 1);
 app.disable('x-powered-by');
+const supabaseOrigin = process.env.SUPABASE_URL ? (() => {
+  try { return new URL(process.env.SUPABASE_URL).origin; } catch { return 'https://*.supabase.co'; }
+})() : 'https://*.supabase.co';
 app.use((req, res, next) => {
-  res.setHeader('Content-Security-Policy', "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'");
+  res.setHeader('Content-Security-Policy', `default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: ${supabaseOrigin}; font-src 'self'; connect-src 'self' ${supabaseOrigin}`);
   res.setHeader('Referrer-Policy', 'no-referrer');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Permissions-Policy', 'camera=(self), microphone=(), geolocation=()');
@@ -45,6 +49,7 @@ app.use('/api/auth', rateLimit({ windowMs: 15 * 60 * 1000, max: 20, keyPrefix: '
 app.use('/api/state', stateRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/exports', exportsRouter);
+app.use('/api/documents', rateLimit({ windowMs: 60 * 1000, max: 30, keyPrefix: 'documents' }), documentsRouter);
 app.use('/api/chat', rateLimit({ windowMs: 60 * 1000, max: 20, keyPrefix: 'chat' }), requireUser, chatRouter);
 app.use('/api/scan', rateLimit({ windowMs: 60 * 1000, max: 10, keyPrefix: 'scan' }), requireUser, scanRouter);
 app.use('/api/insights', rateLimit({ windowMs: 60 * 1000, max: 12, keyPrefix: 'insights' }), requireUser, insightsRouter);

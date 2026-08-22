@@ -73,6 +73,29 @@ export async function scanDocument(file) {
   return (await json(res)).fields;
 }
 
+export async function uploadDocument(file, documentId) {
+  const payload = await filePayload(file);
+  const res = await apiFetch('/api/documents/upload', {
+    method: 'POST',
+    body: JSON.stringify({ ...payload, documentId, fileName: file.name }),
+  });
+  return json(res);
+}
+
+export async function getDocumentSignedUrl(storagePath) {
+  return json(await apiFetch('/api/documents/signed-url', {
+    method: 'POST',
+    body: JSON.stringify({ storagePath }),
+  }));
+}
+
+export async function deleteDocument(storagePath) {
+  await json(await apiFetch('/api/documents/delete', {
+    method: 'POST',
+    body: JSON.stringify({ storagePath }),
+  }));
+}
+
 export async function fileToImagePayload(file) {
   const payload = await filePayload(file);
   if (payload.mimeType === 'application/pdf') throw new Error('Choisis une image pour cet exercice.');

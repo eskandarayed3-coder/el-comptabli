@@ -478,6 +478,11 @@ export default {
     csvReady: 'ملف CSV تنزّل.',
     emailSent: 'CSV تبعث إلى {email}.',
     exportFailed: 'التصدير ما نجّمش يتم. عاود.',
+    uploadFailed: 'تعذر حفظ الوثيقة الأصلية. عاود جرّب.',
+    originalSaved: 'تم حفظ الوثيقة الأصلية بأمان.',
+    openOriginal: 'فتح الوثيقة الأصلية',
+    originalUnavailable: 'الوثيقة الأصلية غير متوفرة.',
+    deleteFailed: 'تعذر حذف الوثيقة. عاود جرّب.',
     exportDisclaimer: 'أداة تحضير محاسبي: ثبّت المبالغ والقواعد الجبائية قبل أي تصريح رسمي.',
   },
   notif: {

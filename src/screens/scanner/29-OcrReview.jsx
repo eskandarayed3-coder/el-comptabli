@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FileText, ZoomIn } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
-import { scanDocument } from '../../lib/api.js';
+import { scanDocument, uploadDocument } from '../../lib/api.js';
 import { CATEGORIES, TVA_RATES } from '../../lib/taxRules.js';
 import { uid } from '../../lib/format.js';
 import TopBar from '../../components/TopBar.jsx';
@@ -25,6 +25,7 @@ export default function OcrReview() {
   const { t, lang } = useT();
   const id = useId();
   const [busy, setBusy] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
   const [preview, setPreview] = useState(null);
   const [destination, setDestination] = useState('expense');
@@ -70,12 +71,13 @@ export default function OcrReview() {
 
   const canSave = fields.vendor.trim() && fields.amountTTC !== '' && Number.isFinite(Number(fields.amountTTC));
 
-  const save = () => {
+  const save = async () => {
     if (!canSave) return;
     const selectedFile = window.__pendingScanFile;
     const transactionId = uid();
+    const documentId = uid();
     const document = {
-      id: uid(),
+      id: documentId,
       name: selectedFile?.name || `${fields.vendor || 'Document'}.pdf`,
       type: 'facture',
       date: fields.date,
@@ -87,7 +89,21 @@ export default function OcrReview() {
       amountTTC: Number(fields.amountTTC) || 0,
       documentType: fields.documentType,
       source: 'ai-scan',
+      status: 'verified',
     };
+
+    if (!selectedFile) return;
+    setSaving(true);
+    setError(null);
+    let archived;
+    try {
+      archived = await uploadDocument(selectedFile, documentId);
+    } catch (e) {
+      setError(e.friendly?.message || t('docs.uploadFailed'));
+      setSaving(false);
+      return;
+    }
+    const archivedDocument = { ...document, ...archived.document, size: document.size };
 
     if (destination === 'invoice') {
       const amountHT = Number(fields.amountHT) || Math.max(0, (Number(fields.amountTTC) || 0) - (Number(fields.tva) || 0));
@@ -101,9 +117,10 @@ export default function OcrReview() {
         amountTTC: Number(fields.amountTTC) || 0,
         tvaRate: closestTvaRate(inferredRate),
       }));
-      add('documents', { ...document, convertedToInvoice: true });
+      add('documents', { ...archivedDocument, convertedToInvoice: true });
       logActivity(`Document ${fields.vendor} converti en brouillon de facture`, 'FileText');
       delete window.__pendingScanFile;
+      setSaving(false);
       toast(t('scanner.invoiceDraftReady'));
       navigate('/income/invoice?source=scan');
       return;
@@ -122,9 +139,10 @@ export default function OcrReview() {
       amountTTC: Number(fields.amountTTC) || 0,
       scanned: true,
     });
-    add('documents', { ...document, transactionId });
+    add('documents', { ...archivedDocument, transactionId });
     logActivity({ fr: `Facture ${fields.vendor} scannée`, ar: `فاتورة ${fields.vendor} تسكانات` }.fr, 'ScanLine');
     delete window.__pendingScanFile;
+    setSaving(false);
     toast(t('common.saved'));
     navigate('/documents');
   };
@@ -206,8 +224,8 @@ export default function OcrReview() {
         />
       </section>
 
-      <button type="button" className="btn btn-primary btn-block" disabled={!canSave} onClick={save}>
-        {destination === 'invoice' ? t('scanner.toInvoice') : `${t('scanner.saveAs')} ${t(`common.${destination}`)}`}
+      <button type="button" className="btn btn-primary btn-block" disabled={!canSave || saving} onClick={save}>
+        {saving ? t('common.loading') : destination === 'invoice' ? t('scanner.toInvoice') : `${t('scanner.saveAs')} ${t(`common.${destination}`)}`}
       </button>
     </div>
   );

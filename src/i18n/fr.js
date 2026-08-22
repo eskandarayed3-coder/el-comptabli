@@ -477,6 +477,11 @@ export default {
     csvReady: 'Fichier CSV téléchargé.',
     emailSent: 'CSV envoyé à {email}.',
     exportFailed: 'Export impossible. Réessaie.',
+    uploadFailed: 'Le document n’a pas pu être archivé. Réessaie.',
+    originalSaved: 'Original archivé en sécurité.',
+    openOriginal: 'Ouvrir l’original',
+    originalUnavailable: 'Original non disponible pour ce document.',
+    deleteFailed: 'Le document n’a pas pu être supprimé. Réessaie.',
     exportDisclaimer: 'Outil de préparation comptable : vérifie les montants et les règles fiscales avant toute déclaration officielle.',
   },
   notif: {
