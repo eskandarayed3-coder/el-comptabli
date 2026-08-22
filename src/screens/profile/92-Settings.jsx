@@ -5,10 +5,12 @@ import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import TopBar from '../../components/TopBar.jsx';
 import SegmentedControl from '../../components/SegmentedControl.jsx';
+import { useAuth } from '../../lib/auth.jsx';
 
 export default function Settings() {
   const navigate = useNavigate();
   const { state, patch, exportData, importData, reset, toast } = useStore();
+  const { deleteAccount } = useAuth();
   const { t } = useT();
   const fileRef = useRef(null);
   const theme = state.settings.theme || 'light';
@@ -82,7 +84,18 @@ export default function Settings() {
       <button className="card row between" style={{ width: '100%' }} onClick={() => { if (confirm(t('backup.resetConfirm'))) { reset(); toast(t('common.saved')); } }}>
         <span className="small row" style={{ gap: 10 }}><RotateCcw size={16} color="var(--text-2)" /> {t('backup.reset')}</span>
       </button>
-      <button className="card row between" style={{ width: '100%', color: 'var(--pill-danger-fg)' }} onClick={() => { if (confirm(t('backup.deleteConfirm'))) { localStorage.removeItem('elcomptabli:v1'); reset(); toast(t('common.deleted')); } }}>
+      <button className="card row between" style={{ width: '100%', color: 'var(--pill-danger-fg)' }} onClick={async () => {
+        if (!confirm(t('backup.deleteConfirm'))) return;
+        try {
+          await deleteAccount();
+          localStorage.removeItem('elcomptabli:v1');
+          reset();
+          toast(t('common.deleted'));
+          navigate('/splash');
+        } catch (error) {
+          toast(error.message || 'Suppression impossible.', 'error');
+        }
+      }}>
         <span className="small row" style={{ gap: 10 }}><Trash2 size={16} /> {t('backup.delete')}</span>
       </button>
 

@@ -1,19 +1,17 @@
-// One-time script: loads the CODE_BATCH codes into Supabase.
-// Run locally after setting SUPABASE_URL + SUPABASE_SERVICE_KEY + CODE_BATCH
-// in your .env:   node server/lib/seed-supabase.js
+// One-time script: creates random one-time activation codes in Supabase.
+// Run locally after setting SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY:
+// CODE_PLAN=mois CODE_COUNT=50 node server/lib/seed-supabase.js
 import 'dotenv/config';
 import { insertBatch, supabaseConfigured } from './supabaseCodes.js';
+import { generateCode, PLANS } from './codes.js';
 
 if (!supabaseConfigured()) {
-  console.error('Set SUPABASE_URL and SUPABASE_SERVICE_KEY in .env first.');
+  console.error('Set SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY and SUPABASE_SERVICE_ROLE_KEY in .env first.');
   process.exit(1);
 }
-if (!process.env.CODE_BATCH) {
-  console.error('Set CODE_BATCH in .env first (the same JSON array used for the file-based system).');
-  process.exit(1);
-}
-
-const batch = JSON.parse(process.env.CODE_BATCH).map(({ code, plan }) => ({ code, plan, used: false }));
-console.log(`Inserting ${batch.length} codes into Supabase...`);
-await insertBatch(batch);
-console.log('Done. Run again any time to add more codes (existing ones are left untouched by conflict).');
+const plan = PLANS[process.env.CODE_PLAN] ? process.env.CODE_PLAN : 'mois';
+const count = Math.min(500, Math.max(1, Number(process.env.CODE_COUNT) || 50));
+const batch = Array.from({ length: count }, () => ({ code: generateCode(), plan }));
+console.log(`Inserting ${batch.length} one-time ${plan} codes into Supabase...`);
+const created = await insertBatch(batch);
+console.log('Created codes:', created.map((row) => row.code).join(', '));

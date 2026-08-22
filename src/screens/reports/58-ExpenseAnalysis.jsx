@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
@@ -9,7 +10,8 @@ import TopBar from '../../components/TopBar.jsx';
 const COLORS = ['#0F766E', '#14B8A6', '#D97706', '#4F46E5', '#DC2626', '#6B7280'];
 
 export default function ExpenseAnalysis() {
-  const { state, toast } = useStore();
+  const navigate = useNavigate();
+  const { state } = useStore();
   const { t, lang } = useT();
   const ym = new Date().toISOString().slice(0, 7);
   const ymLast = (() => { const d = new Date(); d.setMonth(d.getMonth() - 1); return d.toISOString().slice(0, 7); })();
@@ -65,7 +67,7 @@ export default function ExpenseAnalysis() {
       {insight && (
         <div className="card tint-indigo"><span className="small">💡 {insight.label} en hausse : {insight.thisCount} opérations ce mois vs {insight.lastCount} le mois dernier</span></div>
       )}
-      <button className="btn btn-ghost btn-block" onClick={() => toast(t('reports.exported'))}>Exporter l’analyse</button>
+      <button className="btn btn-ghost btn-block" onClick={() => navigate('/documents/export')}>Exporter l’analyse</button>
     </div>
   );
 }

@@ -1,121 +1,70 @@
-// Supabase-backed single-use codes — same interface as singleUseCodes.js
-// (redeemSingleUseCode, batchStats, seedBatch), but permanent: redemption
-// state lives in Supabase's Postgres, not on Render's disk, so it survives
-// every redeploy and restart. activate.js auto-picks this over the file-
-// based version the moment SUPABASE_URL + SUPABASE_ANON_KEY are set —
-// no other code changes needed.
-//
-// Security note: redemption goes through the `redeem_activation_code` and
-// `activation_code_stats` Postgres functions (security definer, see
-// schema.sql), so only the PUBLIC anon key is ever needed here — never the
-// service_role secret. The anon key has zero direct table access (RLS with
-// no policies); it can only call these two narrow, single-purpose functions.
-//
-// Setup (one time):
-//   1. supabase.com → New project (free tier, no card required)
-//   2. SQL Editor → paste server/lib/schema.sql → Run
-//   3. Project Settings → API → copy "Project URL" and the "anon public" key
-//   4. Add to Render env: SUPABASE_URL=..., SUPABASE_ANON_KEY=...
-//   5. To seed codes into a fresh project, use `insertBatch` below with the
-//      service_role key set locally as SUPABASE_SERVICE_KEY (one-time only,
-//      never deployed) — see seed-supabase.js.
-import { createClient } from '@supabase/supabase-js';
 import { PLANS } from './codes.js';
+import { getServiceClient, supabaseConfigured } from './supabase.js';
 
-export function supabaseConfigured() {
-  return Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_KEY));
-}
+export { supabaseConfigured };
 
-let client = null;
-function getClient() {
-  if (!client) {
-    const key = process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_KEY;
-    client = createClient(process.env.SUPABASE_URL, key, {
-      auth: { persistSession: false },
-    });
-  }
-  return client;
-}
-
-export async function redeemSingleUseCode(rawCode) {
+export async function redeemSingleUseCode(rawCode, userId) {
   const code = String(rawCode || '').trim().toUpperCase();
-  if (!code) return null;
-  const sb = getClient();
-
-  // Atomic redemption via RPC (see redeem_activation_code in schema.sql) —
-  // the UPDATE inside only succeeds if the row is still used = false, so
-  // concurrent requests for the same code can't both win.
-  const { data, error } = await sb.rpc('redeem_activation_code', { p_code: code });
-
-  if (error) {
-    console.error('supabase redeem error:', error.message);
-    return null;
-  }
+  if (!code || !userId) return null;
+  const { data, error } = await getServiceClient().rpc('redeem_activation_code', {
+    p_code: code,
+    p_user_id: userId,
+  });
+  if (error) throw new Error(`Activation redemption failed: ${error.message}`);
   const row = data?.[0];
   if (!row) return null;
   if (row.already_used) return { alreadyUsed: true };
-  const p = PLANS[row.plan];
-  return { planId: p.id, days: p.days, price: p.price };
+  const plan = PLANS[row.plan];
+  return {
+    planId: row.plan,
+    days: Number(row.days || plan?.days || 0),
+    price: Number(row.price || plan?.price || 0),
+    premiumUntil: row.premium_until,
+  };
 }
 
-// Returns one still-unused code for a plan, without marking it used — see
-// peek_unused_code in schema.sql. Lets the owner hand out a guaranteed-fresh
-// code (e.g. via /admin/codes) with zero manual bookkeeping.
+export async function grantTrial(userId) {
+  const { data, error } = await getServiceClient().rpc('grant_trial_if_available', { p_user_id: userId });
+  if (error) throw new Error(`Trial activation failed: ${error.message}`);
+  const row = data?.[0];
+  if (!row) return { alreadyUsed: true };
+  return { alreadyUsed: false, premiumUntil: row.premium_until, days: Number(row.days) };
+}
+
 export async function peekUnusedCode(plan) {
-  const sb = getClient();
-  const { data, error } = await sb.rpc('peek_unused_code', { p_plan: plan });
-  if (error) {
-    console.error('supabase peek error:', error.message);
-    return null;
-  }
-  return data || null;
-}
-
-// Records one successful redemption in the append-only transaction log —
-// separate from activation_codes (which only tracks used/unused) so the
-// owner has a real purchase history: every sale, in order, with plan/price/
-// email. Fire-and-forget from the caller's perspective; failures here must
-// never block the activation the customer is waiting on.
-export async function logActivation({ code, plan, price, email }) {
-  const sb = getClient();
-  const { error } = await sb.rpc('log_activation', { p_code: code, p_plan: plan, p_price: price, p_email: email || null });
-  if (error) console.error('supabase log_activation error:', error.message);
-}
-
-export async function listActivationLog() {
-  const sb = getClient();
-  const { data, error } = await sb.rpc('list_activation_log');
-  if (error) {
-    console.error('supabase list_activation_log error:', error.message);
-    return [];
-  }
-  return data || [];
+  const { data, error } = await getServiceClient()
+    .from('activation_codes').select('code').eq('plan', plan).eq('used', false).order('created_at').limit(1);
+  if (error) throw new Error(`Code lookup failed: ${error.message}`);
+  return data?.[0]?.code || null;
 }
 
 export async function batchStats() {
-  const sb = getClient();
-  const { data, error } = await sb.rpc('activation_code_stats');
-  if (error) {
-    console.error('supabase stats error:', error.message);
-    return {};
-  }
+  const { data, error } = await getServiceClient().from('activation_codes').select('plan, used');
+  if (error) throw new Error(`Code stats failed: ${error.message}`);
   const byPlan = {};
   for (const row of data || []) {
-    byPlan[row.plan] = { total: Number(row.total), used: Number(row.used) };
+    byPlan[row.plan] ||= { total: 0, used: 0 };
+    byPlan[row.plan].total += 1;
+    if (row.used) byPlan[row.plan].used += 1;
   }
   return byPlan;
 }
 
-// One-time bulk insert, used by seed-supabase.js only. This needs the
-// service_role key specifically (RLS blocks anon from writing directly) —
-// run locally with SUPABASE_SERVICE_KEY set in your shell, never deployed.
-// ignoreDuplicates means re-running this is always safe — an already-
-// redeemed code's `used` flag is never touched, only new codes get added.
+export async function listActivationLog() {
+  const { data, error } = await getServiceClient()
+    .from('activation_events').select('id, plan, price, code, created_at, profiles(name, email)')
+    .order('created_at', { ascending: false }).limit(500);
+  if (error) throw new Error(`Activation history failed: ${error.message}`);
+  return data || [];
+}
+
 export async function insertBatch(rows) {
-  if (!process.env.SUPABASE_SERVICE_KEY) {
-    throw new Error('SUPABASE_SERVICE_KEY required for insertBatch (seeding), not for normal server operation.');
-  }
-  const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY, { auth: { persistSession: false } });
-  const { error } = await sb.from('activation_codes').upsert(rows, { onConflict: 'code', ignoreDuplicates: true });
-  if (error) throw new Error(error.message);
+  const valid = rows.filter((row) => PLANS[row.plan] && /^EC-[A-Z0-9]{16,64}$/.test(row.code));
+  if (!valid.length) return [];
+  const { data, error } = await getServiceClient()
+    .from('activation_codes')
+    .upsert(valid.map(({ code, plan }) => ({ code, plan })), { onConflict: 'code', ignoreDuplicates: true })
+    .select('code, plan');
+  if (error) throw new Error(`Code creation failed: ${error.message}`);
+  return data || [];
 }

@@ -6,6 +6,7 @@ import { useT } from '../../i18n/index.js';
 import TopBar from '../../components/TopBar.jsx';
 import Toggle from '../../components/Toggle.jsx';
 import StatusPill from '../../components/StatusPill.jsx';
+import { useAuth } from '../../lib/auth.jsx';
 
 const TXT = {
   password: { fr: 'Changer le mot de passe', ar: 'بدّل كلمة السر' },
@@ -23,6 +24,7 @@ const TXT = {
 export default function Security() {
   const navigate = useNavigate();
   const { toast } = useStore();
+  const { signOut, deleteAccount } = useAuth();
   const { t, lang } = useT();
   const L = (k) => TXT[k][lang] || TXT[k].fr;
   const [twofa, setTwofa] = useState(true);
@@ -44,7 +46,19 @@ export default function Security() {
       <div className="card row between"><span className="small">{L('thisDevice')}</span><StatusPill tone="success">{L('current')}</StatusPill></div>
       <p className="tiny muted">{L('sessionsNote')}</p>
 
-      <button className="card row between" style={{ width: '100%', color: 'var(--pill-danger-fg)' }}><span className="small">{L('deleteAcc')}</span></button>
+      <button className="card row between" style={{ width: '100%', color: 'var(--pill-danger-fg)' }} onClick={async () => {
+        if (!confirm(L('irreversible'))) return;
+        try {
+          await deleteAccount();
+          toast(t('common.deleted'));
+          navigate('/splash');
+        } catch (error) {
+          toast(error.message || 'Suppression impossible.', 'error');
+        }
+      }}><span className="small">{L('deleteAcc')}</span></button>
+      <button className="card row between" style={{ width: '100%' }} onClick={async () => { await signOut(); navigate('/login'); }}>
+        <span className="small">{L('logout')}</span><ChevronRight size={16} color="var(--text-2)" />
+      </button>
       <p className="tiny muted">{L('irreversible')}</p>
     </div>
   );

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { scanInvoice } from '../ai.js';
+import { validateImagePayload } from '../lib/validation.js';
 
 const router = Router();
 
@@ -27,12 +28,10 @@ const SCHEMA = {
 
 // POST /api/scan  { mimeType, dataBase64 }
 router.post('/', async (req, res) => {
-  const { mimeType, dataBase64 } = req.body || {};
-  if (!mimeType || !dataBase64) {
-    return res.status(400).json({ error: { code: 'no_file', message: 'Fichier manquant.' } });
-  }
+  const payload = validateImagePayload(req.body);
+  if (!payload.ok) return res.status(400).json({ error: { code: 'bad_file', message: payload.message } });
   try {
-    const fields = await scanInvoice({ mimeType, dataBase64, prompt: SCAN_PROMPT, schema: SCHEMA });
+    const fields = await scanInvoice({ ...payload, prompt: SCAN_PROMPT, schema: SCHEMA });
     res.json({ fields });
   } catch (e) {
     console.error('scan route error:', e?.message || e);

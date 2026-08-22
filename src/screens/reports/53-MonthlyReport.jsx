@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, ResponsiveContainer, XAxis } from 'recharts';
 import { useStore, monthTotals } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
@@ -7,6 +8,7 @@ import { categoryLabel } from '../../lib/taxRules.js';
 import TopBar from '../../components/TopBar.jsx';
 
 export default function MonthlyReport() {
+  const navigate = useNavigate();
   const { state, toast } = useStore();
   const { t, lang } = useT();
   const ym = new Date().toISOString().slice(0, 7);
@@ -75,8 +77,8 @@ export default function MonthlyReport() {
       </div>
 
       <div className="row" style={{ gap: 10 }}>
-        <button className="btn btn-primary grow" onClick={() => toast(t('reports.exported'))}>📥 {t('reports.exportExcel')}</button>
-        <button className="btn btn-ghost grow" onClick={() => toast(t('reports.exported'))}>PDF</button>
+        <button className="btn btn-primary grow" onClick={() => navigate('/documents/export')}>📥 {t('reports.exportExcel')}</button>
+        <button className="btn btn-ghost grow" onClick={() => navigate('/documents/export')}>PDF</button>
       </div>
       <p className="tiny center muted">Généré par El Comptabli · indicatif</p>
     </div>

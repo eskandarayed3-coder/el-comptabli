@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { MoreHorizontal } from 'lucide-react';
 import DataTable from '../../components/admin/DataTable.jsx';
-import { useAdminSecret } from '../../lib/adminAuth.jsx';
+import { adminFetch } from '../../lib/api.js';
 
 function fmtDate(iso) {
   if (!iso) return '—';
@@ -16,7 +16,6 @@ function fmtRelative(iso) {
 }
 
 export default function UsersManagement() {
-  const { secret } = useAdminSecret();
   const [users, setUsers] = useState(null); // null = loading
   const [errorMsg, setErrorMsg] = useState('');
   const [selected, setSelected] = useState(null);
@@ -25,17 +24,15 @@ export default function UsersManagement() {
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`/api/users?secret=${encodeURIComponent(secret)}`)
-      .then((r) => r.json().then((d) => ({ ok: r.ok, d })))
-      .then(({ ok, d }) => {
+    adminFetch('/users')
+      .then((d) => {
         if (cancelled) return;
-        if (!ok) { setErrorMsg(d?.error?.message || 'Erreur.'); setUsers([]); return; }
         setUsers(d);
         setSelected(d[0] || null);
       })
-      .catch(() => { if (!cancelled) { setErrorMsg('Impossible de contacter le serveur.'); setUsers([]); } });
+      .catch((error) => { if (!cancelled) { setErrorMsg(error.message || 'Impossible de contacter le serveur.'); setUsers([]); } });
     return () => { cancelled = true; };
-  }, [secret]);
+  }, []);
 
   const rows = useMemo(() => {
     if (!users) return [];

@@ -1,60 +1,38 @@
-// Admin section auth — the /admin/* React panel had zero gating (anyone
-// with the URL saw it), which was fine while it only showed mock data.
-// Now that it shows real customers, a gate is required before rendering
-// anything. Uses the same localStorage key as the static /admin/*.html
-// pages (same origin), so entering the secret once on either surface
-// carries over to the other.
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useAuth } from './auth.jsx';
 
-const KEY = 'ec_admin_secret';
-const AdminSecretContext = createContext(null);
+const AdminContext = createContext(null);
 
 export function AdminSecretProvider({ children }) {
-  const [secret, setSecretState] = useState(() => localStorage.getItem(KEY) || '');
+  const { user, ready, signOut } = useAuth();
   const [verified, setVerified] = useState(false);
-  const [checking, setChecking] = useState(false);
+  const [checking, setChecking] = useState(true);
   const [error, setError] = useState('');
 
-  const verify = async (candidate) => {
-    setChecking(true);
-    setError('');
-    try {
-      const res = await fetch(`/api/activate/stock?secret=${encodeURIComponent(candidate)}`);
-      if (res.ok) {
-        localStorage.setItem(KEY, candidate);
-        setSecretState(candidate);
-        setVerified(true);
-        return true;
-      }
-      setError('Code admin incorrect.');
-      return false;
-    } catch {
-      setError('Impossible de contacter le serveur.');
-      return false;
-    } finally {
-      setChecking(false);
-    }
-  };
-
-  // Auto-verify a secret already stored from a previous visit.
   useEffect(() => {
-    if (secret && !verified) verify(secret);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    let cancelled = false;
+    if (!ready) return undefined;
+    if (!user) {
+      setChecking(false);
+      setVerified(false);
+      setError('Connecte-toi avec un compte administrateur.');
+      return undefined;
+    }
+    setChecking(true);
+    fetch('/api/admin/health', { credentials: 'same-origin' })
+      .then((res) => {
+        if (cancelled) return;
+        setVerified(res.ok);
+        setError(res.ok ? '' : 'Ce compte n’a pas accès à l’administration.');
+      })
+      .catch(() => { if (!cancelled) { setVerified(false); setError('Impossible de vérifier les droits administrateur.'); } })
+      .finally(() => { if (!cancelled) setChecking(false); });
+    return () => { cancelled = true; };
+  }, [user?.id, ready]);
 
-  const logout = () => {
-    localStorage.removeItem(KEY);
-    setSecretState('');
-    setVerified(false);
-  };
-
-  return (
-    <AdminSecretContext.Provider value={{ secret, verified, checking, error, verify, logout }}>
-      {children}
-    </AdminSecretContext.Provider>
-  );
+  return <AdminContext.Provider value={{ verified, checking, error, logout: signOut }}>{children}</AdminContext.Provider>;
 }
 
 export function useAdminSecret() {
-  return useContext(AdminSecretContext);
+  return useContext(AdminContext);
 }

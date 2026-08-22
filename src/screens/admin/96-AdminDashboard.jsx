@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import KpiRow from '../../components/admin/KpiRow.jsx';
 import DataTable from '../../components/admin/DataTable.jsx';
-import { useAdminSecret } from '../../lib/adminAuth.jsx';
+import { adminFetch } from '../../lib/api.js';
 
 function fmtDate(iso) {
   if (!iso) return '—';
@@ -9,14 +9,13 @@ function fmtDate(iso) {
 }
 
 export default function AdminDashboard() {
-  const { secret } = useAdminSecret();
   const [users, setUsers] = useState(null);
   const [stock, setStock] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/users?secret=${encodeURIComponent(secret)}`).then((r) => r.json()).then(setUsers).catch(() => setUsers([]));
-    fetch(`/api/activate/stock?secret=${encodeURIComponent(secret)}`).then((r) => r.json()).then(setStock).catch(() => {});
-  }, [secret]);
+    adminFetch('/users').then(setUsers).catch(() => setUsers([]));
+    adminFetch('/activation/stock').then(setStock).catch(() => {});
+  }, []);
 
   const premiumCount = users?.filter((u) => u.plan === 'premium').length ?? 0;
   const codesUsed = stock ? (stock.jour?.used || 0) + (stock.semaine?.used || 0) + (stock.mois?.used || 0) : 0;

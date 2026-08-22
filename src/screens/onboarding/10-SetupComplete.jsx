@@ -2,20 +2,33 @@ import { useNavigate } from 'react-router-dom';
 import { CheckCircle2, Gift } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
+import { useAuth } from '../../lib/auth.jsx';
+import { activateTrial } from '../../lib/api.js';
 
 const REGIME_KEY = { forfaitaire: 'regimeForfait', reel: 'regimeReel', unknown: 'regimeUnknown' };
 const TYPE_KEY = { freelance: 'whoFreelance', micro: 'whoMicro', company: 'whoCompany', accountant: 'whoAccountant' };
 
 export default function SetupComplete() {
   const navigate = useNavigate();
-  const { state, patch, activatePlan } = useStore();
+  const { state, patch, activatePlan, toast } = useStore();
+  const { user, requestMagicLink } = useAuth();
   const { t } = useT();
 
   // Every real, freshly-onboarded account gets 1 free day before the
   // paywall kicks in — activatePlan already syncs the trial to Supabase.
-  const go = () => {
+  const go = async () => {
+    if (!user) {
+      await requestMagicLink(state.profile.email, '/setup-complete');
+      toast('Vérifie ta boîte mail pour terminer la création du compte.');
+      return;
+    }
+    try {
+      const result = await activateTrial();
+      activatePlan(result.premiumUntil);
+    } catch (error) {
+      if (error.friendly?.code !== 'trial_used') toast(error.message || 'Essai gratuit indisponible.', 'error');
+    }
     patch('settings', { onboarded: true });
-    activatePlan(1);
     navigate('/home');
   };
 

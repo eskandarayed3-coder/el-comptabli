@@ -1,15 +1,40 @@
-// Client for the local Express API (the Gemini key lives server-side only).
+const MAX_UPLOAD_BYTES = 8 * 1024 * 1024;
+const ALLOWED_UPLOAD_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'application/pdf']);
+
+async function json(response) {
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok) throw Object.assign(new Error(body?.error?.message || 'Erreur réseau'), { friendly: body?.error });
+  return body;
+}
+
+async function apiFetch(path, options = {}) {
+  const headers = { ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...options.headers };
+  return fetch(path, { credentials: 'same-origin', ...options, headers });
+}
+
+function validateFile(file) {
+  if (!file || !ALLOWED_UPLOAD_TYPES.has(file.type)) throw new Error('Format accepté : JPG, PNG, WebP ou PDF.');
+  if (file.size > MAX_UPLOAD_BYTES) throw new Error('Fichier trop volumineux (8 Mo maximum).');
+}
+
+async function filePayload(file) {
+  validateFile(file);
+  const dataBase64 = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(',')[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+  return { mimeType: file.type, dataBase64 };
+}
 
 export async function chatStream({ messages, profile, agentId, onChunk, signal }) {
-  const res = await fetch('/api/chat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages, profile, agentId }),
-    signal,
+  const res = await apiFetch('/api/chat', {
+    method: 'POST', body: JSON.stringify({ messages, profile, agentId }), signal,
   });
   if (!res.ok) {
-    const json = await res.json().catch(() => ({}));
-    throw Object.assign(new Error(json?.error?.message || 'Erreur réseau'), { friendly: json?.error });
+    const body = await res.json().catch(() => ({}));
+    throw Object.assign(new Error(body?.error?.message || 'Erreur réseau'), { friendly: body?.error });
   }
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
@@ -26,14 +51,11 @@ export async function chatStream({ messages, profile, agentId, onChunk, signal }
       const payload = line.slice(5).trim();
       if (!payload || payload === '[DONE]') continue;
       try {
-        const json = JSON.parse(payload);
-        if (json.error) throw Object.assign(new Error(json.error.message), { friendly: json.error });
-        if (json.t) {
-          full += json.t;
-          onChunk?.(full, json.t);
-        }
-      } catch (e) {
-        if (e.friendly) throw e;
+        const item = JSON.parse(payload);
+        if (item.error) throw Object.assign(new Error(item.error.message), { friendly: item.error });
+        if (item.t) { full += item.t; onChunk?.(full, item.t); }
+      } catch (error) {
+        if (error.friendly) throw error;
       }
     }
   }
@@ -41,92 +63,48 @@ export async function chatStream({ messages, profile, agentId, onChunk, signal }
 }
 
 export async function scanDocument(file) {
-  const dataBase64 = await new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(String(r.result).split(',')[1]);
-    r.onerror = reject;
-    r.readAsDataURL(file);
-  });
-  const res = await fetch('/api/scan', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ mimeType: file.type || 'image/jpeg', dataBase64 }),
-  });
-  const json = await res.json().catch(() => ({}));
-  if (!res.ok) throw Object.assign(new Error(json?.error?.message || 'Scan impossible'), { friendly: json?.error });
-  return json.fields;
+  const res = await apiFetch('/api/scan', { method: 'POST', body: JSON.stringify(await filePayload(file)) });
+  return (await json(res)).fields;
 }
 
-// Reads an image File → { mimeType, dataBase64 }, for vision-capable calls.
 export async function fileToImagePayload(file) {
-  const dataBase64 = await new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(String(r.result).split(',')[1]);
-    r.onerror = reject;
-    r.readAsDataURL(file);
-  });
-  return { mimeType: file.type || 'image/jpeg', dataBase64 };
+  const payload = await filePayload(file);
+  if (payload.mimeType === 'application/pdf') throw new Error('Choisis une image pour cet exercice.');
+  return payload;
 }
 
-// Solve an exercise from typed text and/or a photographed exercise (vision).
-export async function solveExam({ system, prompt, image, maxTokens }) {
-  const res = await fetch('/api/exam', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ system, prompt, image, maxTokens }),
-  });
-  const json = await res.json().catch(() => ({}));
-  if (!res.ok) throw Object.assign(new Error(json?.error?.message || 'Erreur IA'), { friendly: json?.error });
-  return json.text;
+export async function solveExam({ prompt, image, maxTokens }) {
+  const res = await apiFetch('/api/exam', { method: 'POST', body: JSON.stringify({ prompt, image, maxTokens }) });
+  return (await json(res)).text;
 }
 
-// Confirm an activation code with the server → { planId, days, price }.
-export async function activateCode(code, email) {
-  const res = await fetch('/api/activate', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ code, email }),
-  });
-  const json = await res.json().catch(() => ({}));
-  if (!res.ok) throw Object.assign(new Error(json?.error?.message || 'Code invalide'), { friendly: json?.error });
-  return json;
+export async function activateCode(code) {
+  const res = await apiFetch('/api/activate', { method: 'POST', body: JSON.stringify({ code }) });
+  return json(res);
 }
 
-// Best-effort sync of the local profile to the real users database — used
-// once onboarding collects a real email, and again whenever plan/regime
-// change. Never blocks the UI: failures (offline, DB not configured) are
-// swallowed since this is a background sync, not a user-facing action.
-export async function syncUser({ profile, plan, premiumUntil }) {
-  const email = String(profile?.email || '').trim();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
-  try {
-    await fetch('/api/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: profile.name, email, plan: plan || 'gratuit', regime: profile.regime,
-        userType: profile.userType, city: profile.city, activity: profile.activity, premiumUntil,
-      }),
-    });
-  } catch { /* offline or DB not configured — non-blocking */ }
+export async function activateTrial() {
+  return json(await apiFetch('/api/activate/trial', { method: 'POST', body: '{}' }));
 }
 
-// Recover access on a new device / after clearing browser data — looks up
-// the account by email and returns what's needed to restore local state.
-export async function recoverAccess(email) {
-  const res = await fetch(`/api/users/recover?email=${encodeURIComponent(email)}`);
-  const json = await res.json().catch(() => ({}));
-  if (!res.ok) throw Object.assign(new Error(json?.error?.message || 'Compte introuvable'), { friendly: json?.error });
-  return json;
+export async function loadCloudState() {
+  return json(await apiFetch('/api/state'));
 }
 
-export async function generateInsight({ prompt, data, profile, system, maxTokens }) {
-  const res = await fetch('/api/insights', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ prompt, data, profile, system, maxTokens }),
-  });
-  const json = await res.json().catch(() => ({}));
-  if (!res.ok) throw Object.assign(new Error(json?.error?.message || 'Erreur IA'), { friendly: json?.error });
-  return json.text;
+export async function saveCloudState(data) {
+  await json(await apiFetch('/api/state', { method: 'PUT', body: JSON.stringify({ data }) }));
+}
+
+export async function generateInsight({ prompt, data, profile, maxTokens }) {
+  const res = await apiFetch('/api/insights', { method: 'POST', body: JSON.stringify({ prompt, data, profile, maxTokens }) });
+  return (await json(res)).text;
+}
+
+export async function emailExport(email, rows) {
+  return json(await apiFetch('/api/exports/email', { method: 'POST', body: JSON.stringify({ email, rows }) }));
+}
+
+export async function adminFetch(path, options = {}) {
+  const response = await apiFetch(`/api/admin${path}`, options);
+  return json(response);
 }

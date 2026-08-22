@@ -13,6 +13,7 @@ import './styles/tokens.css';
 import './styles/base.css';
 import './styles/components.css';
 import { StoreProvider } from './lib/store.jsx';
+import { AuthProvider } from './lib/auth.jsx';
 import App from './App.jsx';
 import ErrorBoundary from './ErrorBoundary.jsx';
 
@@ -20,9 +21,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ErrorBoundary>
       <BrowserRouter>
-        <StoreProvider>
-          <App />
-        </StoreProvider>
+        <AuthProvider>
+          <StoreProvider>
+            <App />
+          </StoreProvider>
+        </AuthProvider>
       </BrowserRouter>
     </ErrorBoundary>
   </React.StrictMode>,

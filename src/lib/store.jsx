@@ -1,10 +1,16 @@
-import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { seedState } from './seed.js';
 import { uid } from './format.js';
-import { syncUser } from './api.js';
+import { loadCloudState, saveCloudState } from './api.js';
+import { useAuth } from './auth.jsx';
 
 const KEY = 'elcomptabli:v1';
 const StoreContext = createContext(null);
+
+function withoutUi(state) {
+  const { ui, ...persisted } = state;
+  return persisted;
+}
 
 function init() {
   try {
@@ -85,11 +91,77 @@ function reducer(state, action) {
 
 export function StoreProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, null, init);
+  const { user, subscription, setSubscription, ready: authReady } = useAuth();
+  const [cloudStatus, setCloudStatus] = useState('local');
+  const stateRef = useRef(state);
+  const cloudReadyRef = useRef(false);
+  const lastCloudState = useRef('');
 
   useEffect(() => {
-    const { ui, ...persisted } = state;
-    localStorage.setItem(KEY, JSON.stringify(persisted));
+    stateRef.current = state;
+    localStorage.setItem(KEY, JSON.stringify(withoutUi(state)));
   }, [state]);
+
+  // The server is the source of truth for account/subscription ownership;
+  // local storage is retained only as an offline cache and migration fallback.
+  useEffect(() => {
+    let cancelled = false;
+    cloudReadyRef.current = false;
+    if (!authReady || !user) {
+      setCloudStatus('local');
+      return undefined;
+    }
+    setCloudStatus('loading');
+    loadCloudState()
+      .then(async ({ data, subscription: remoteSubscription }) => {
+        if (cancelled) return;
+        const serverPlan = remoteSubscription?.plan === 'premium' && remoteSubscription?.premium_until && new Date(remoteSubscription.premium_until) > new Date()
+          ? 'premium' : 'free';
+        const merged = data && data.__v === 1
+          ? {
+            ...seedState(),
+            ...data,
+            profile: { ...seedState().profile, ...(data.profile || {}), email: user.email || '' },
+            settings: { ...seedState().settings, ...(data.settings || {}), plan: serverPlan, premiumUntil: remoteSubscription?.premium_until || null },
+            ui: { toast: null },
+          }
+          : {
+            ...stateRef.current,
+            profile: { ...stateRef.current.profile, email: user.email || '' },
+            settings: { ...stateRef.current.settings, plan: serverPlan, premiumUntil: remoteSubscription?.premium_until || null },
+          };
+        lastCloudState.current = JSON.stringify(withoutUi(merged));
+        if (data?.__v === 1) dispatch({ type: 'REPLACE', data: merged });
+        else await saveCloudState(withoutUi(merged));
+        setSubscription(remoteSubscription || { plan: 'free', premium_until: null });
+        cloudReadyRef.current = true;
+        setCloudStatus('synced');
+      })
+      .catch(() => { if (!cancelled) setCloudStatus('error'); });
+    return () => { cancelled = true; };
+  }, [authReady, user?.id, user?.email, setSubscription]);
+
+  useEffect(() => {
+    if (!user || !cloudReadyRef.current) return undefined;
+    const persisted = withoutUi(state);
+    const serialized = JSON.stringify(persisted);
+    if (serialized === lastCloudState.current) return undefined;
+    const timer = setTimeout(() => {
+      saveCloudState(persisted)
+        .then(() => { lastCloudState.current = serialized; setCloudStatus('synced'); })
+        .catch(() => setCloudStatus('error'));
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [state, user?.id]);
+
+  // A subscription response always wins over a stale local cache.
+  useEffect(() => {
+    if (!user || !subscription) return;
+    const plan = subscription.plan === 'premium' && subscription.premium_until && new Date(subscription.premium_until) > new Date() ? 'premium' : 'free';
+    if (state.settings.plan !== plan || state.settings.premiumUntil !== (subscription.premium_until || null)) {
+      dispatch({ type: 'PATCH', slice: 'settings', data: { plan, premiumUntil: subscription.premium_until || null } });
+    }
+  }, [subscription, user?.id, state.settings.plan, state.settings.premiumUntil]);
 
   useEffect(() => {
     const lang = state.settings.lang || 'fr';
@@ -119,7 +191,7 @@ export function StoreProvider({ children }) {
       dispatch({ type: 'ADD', coll: 'activities', item: { text, icon, at: new Date().toISOString() } });
     },
     exportData: () => {
-      const { ui, ...data } = state;
+      const data = withoutUi(state);
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -130,15 +202,16 @@ export function StoreProvider({ children }) {
     },
     importData: (json) => dispatch({ type: 'REPLACE', data: json }),
     reset: () => dispatch({ type: 'RESET' }),
-    // Unlock Premium for `days`, stacking on any time already left.
-    activatePlan: (days) => {
-      const now = Date.now();
-      const current = state.settings.premiumUntil ? new Date(state.settings.premiumUntil).getTime() : 0;
-      const until = new Date(Math.max(now, current) + days * 86400000).toISOString();
-      dispatch({ type: 'PATCH', slice: 'settings', data: { plan: 'premium', premiumUntil: until } });
-      syncUser({ profile: state.profile, plan: 'premium', premiumUntil: until });
+    // Subscription dates only come from the server after a redeemed code or
+    // trial. The browser never calculates or grants its own paid access.
+    activatePlan: (premiumUntil) => {
+      if (!premiumUntil) return;
+      const next = { plan: 'premium', premium_until: premiumUntil };
+      setSubscription(next);
+      dispatch({ type: 'PATCH', slice: 'settings', data: { plan: 'premium', premiumUntil } });
     },
-  }), [state]);
+    cloudStatus,
+  }), [state, setSubscription, cloudStatus]);
 
   return <StoreContext.Provider value={api}>{children}</StoreContext.Provider>;
 }

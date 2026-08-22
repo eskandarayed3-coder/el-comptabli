@@ -1,50 +1,65 @@
-// Real signed-up users — mirrors supabaseCodes.js's pattern: only the
-// public anon key is ever used, all access goes through narrow
-// security-definer RPCs (upsert_app_user, list_app_users) defined in
-// schema.sql, so the table itself stays fully locked behind RLS.
-import { createClient } from '@supabase/supabase-js';
+import { cleanText } from './validation.js';
+import { getServiceClient, supabaseConfigured } from './supabase.js';
 
 export function usersConfigured() {
-  return Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_KEY));
+  return supabaseConfigured();
 }
 
-let client = null;
-function getClient() {
-  if (!client) {
-    const key = process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_KEY;
-    client = createClient(process.env.SUPABASE_URL, key, { auth: { persistSession: false } });
-  }
-  return client;
+function profileFromState(user, state = {}) {
+  const profile = state.profile || {};
+  return {
+    id: user.id,
+    email: cleanText(user.email, 254).toLowerCase(),
+    name: cleanText(profile.name, 120),
+    regime: cleanText(profile.regime, 40),
+    user_type: cleanText(profile.userType, 40),
+    city: cleanText(profile.city, 100),
+    activity: cleanText(profile.activity, 160),
+    updated_at: new Date().toISOString(),
+    last_active_at: new Date().toISOString(),
+  };
 }
 
-export async function upsertUser({ name, email, plan, regime, userType, city, activity, premiumUntil }) {
-  const sb = getClient();
-  const { error } = await sb.rpc('upsert_app_user', {
-    p_name: name || '',
-    p_email: email,
-    p_plan: plan || 'gratuit',
-    p_regime: regime || '',
-    p_user_type: userType || '',
-    p_city: city || '',
-    p_activity: activity || '',
-    p_premium_until: premiumUntil || null,
-  });
-  if (error) throw new Error(error.message);
+export async function ensureAccount(user, state) {
+  const { error } = await getServiceClient().from('profiles').upsert(profileFromState(user, state), { onConflict: 'id' });
+  if (error) throw new Error(`Profile sync failed: ${error.message}`);
+}
+
+export async function saveState(user, state) {
+  await ensureAccount(user, state);
+  const { error } = await getServiceClient().from('app_state').upsert({
+    user_id: user.id,
+    data: state,
+    schema_version: Number(state.__v || 1),
+    updated_at: new Date().toISOString(),
+  }, { onConflict: 'user_id' });
+  if (error) throw new Error(`State sync failed: ${error.message}`);
+}
+
+export async function getState(user) {
+  await ensureAccount(user);
+  const [{ data: stateRow, error: stateError }, { data: subscription, error: subscriptionError }] = await Promise.all([
+    getServiceClient().from('app_state').select('data, updated_at').eq('user_id', user.id).maybeSingle(),
+    getServiceClient().from('subscriptions').select('plan, premium_until').eq('user_id', user.id).maybeSingle(),
+  ]);
+  if (stateError || subscriptionError) throw new Error('Account state lookup failed.');
+  return { data: stateRow?.data || null, updatedAt: stateRow?.updated_at || null, subscription: subscription || { plan: 'free', premium_until: null } };
+}
+
+export async function getSubscription(userId) {
+  const { data, error } = await getServiceClient().from('subscriptions').select('plan, premium_until').eq('user_id', userId).maybeSingle();
+  if (error) throw new Error(`Subscription lookup failed: ${error.message}`);
+  return data || { plan: 'free', premium_until: null };
 }
 
 export async function listUsers() {
-  const sb = getClient();
-  const { data, error } = await sb.rpc('list_app_users');
-  if (error) throw new Error(error.message);
-  return data || [];
-}
-
-// Used by account recovery: looks up plan/premiumUntil/profile basics by
-// email so a user can restore access on a new device or after clearing
-// their browser data — the one thing that was purely local-only before.
-export async function getUserByEmail(email) {
-  const sb = getClient();
-  const { data, error } = await sb.rpc('get_app_user_by_email', { p_email: email });
-  if (error) throw new Error(error.message);
-  return data?.[0] || null;
+  const { data, error } = await getServiceClient()
+    .from('profiles')
+    .select('id, name, email, regime, user_type, city, activity, created_at, last_active_at, subscriptions(plan, premium_until)')
+    .order('created_at', { ascending: false });
+  if (error) throw new Error(`User list failed: ${error.message}`);
+  return (data || []).map((row) => {
+    const subscription = Array.isArray(row.subscriptions) ? row.subscriptions[0] : row.subscriptions;
+    return { ...row, plan: subscription?.plan || 'free', premium_until: subscription?.premium_until || null };
+  });
 }

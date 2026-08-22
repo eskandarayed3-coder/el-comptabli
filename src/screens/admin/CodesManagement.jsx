@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Copy, Check } from 'lucide-react';
 import KpiRow from '../../components/admin/KpiRow.jsx';
-import { useAdminSecret } from '../../lib/adminAuth.jsx';
+import { adminFetch } from '../../lib/api.js';
 
 const PLANS = [
   { id: 'jour', label: '1 Jour', price: '1 DT' },
@@ -10,7 +10,6 @@ const PLANS = [
 ];
 
 export default function CodesManagement() {
-  const { secret } = useAdminSecret();
   const [stock, setStock] = useState(null);
   const [codes, setCodes] = useState({}); // { jour: 'EC-J-XXXXXX', ... }
   const [loadingPlan, setLoadingPlan] = useState(null);
@@ -18,21 +17,16 @@ export default function CodesManagement() {
   const [error, setError] = useState('');
 
   const loadStock = () => {
-    fetch(`/api/activate/stock?secret=${encodeURIComponent(secret)}`)
-      .then((r) => r.json())
-      .then((d) => setStock(d))
-      .catch(() => setError('Impossible de contacter le serveur.'));
+    adminFetch('/activation/stock').then(setStock).catch(() => setError('Impossible de contacter le serveur.'));
   };
 
-  useEffect(loadStock, [secret]);
+  useEffect(loadStock, []);
 
   const getNextCode = async (planId) => {
     setLoadingPlan(planId);
     setError('');
     try {
-      const res = await fetch(`/api/activate/next?secret=${encodeURIComponent(secret)}&plan=${planId}`);
-      const d = await res.json();
-      if (!res.ok) { setError(d?.error?.message || 'Erreur.'); return; }
+      const d = await adminFetch(`/activation/next?plan=${planId}`);
       setCodes((c) => ({ ...c, [planId]: d.code }));
     } catch {
       setError('Impossible de contacter le serveur.');

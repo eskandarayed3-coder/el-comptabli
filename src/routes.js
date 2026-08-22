@@ -46,6 +46,7 @@ export const manifest = [
 
   // ---- Module 2 — Authentication ----
   { path: '/login', Component: L('auth/11-Login'), label: '11. Login', module: 'Authentication', mvp: true },
+  { path: '/auth/callback', Component: L('auth/AuthCallback'), label: 'Secure sign-in callback', module: 'Authentication' },
   { path: '/register', Component: L('auth/12-Register'), label: '12. Register', module: 'Authentication', mvp: true },
   { path: '/forgot-password', Component: L('auth/13-ForgotPassword'), label: '13. Forgot Password', module: 'Authentication' },
   { path: '/otp', Component: L('auth/14-Otp'), label: '14. OTP Verification', module: 'Authentication', mvp: true },

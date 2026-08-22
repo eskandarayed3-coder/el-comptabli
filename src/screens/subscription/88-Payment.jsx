@@ -37,8 +37,8 @@ export default function Payment() {
     if (!code.trim() || busy) return;
     setBusy(true);
     try {
-      const { days } = await activateCode(code.trim(), state.profile.email);
-      activatePlan(days);
+      const { premiumUntil } = await activateCode(code.trim());
+      activatePlan(premiumUntil);
       toast(t('pay.activated'));
       navigate('/profile');
     } catch (e) {

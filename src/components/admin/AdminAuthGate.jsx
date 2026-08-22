@@ -1,10 +1,8 @@
-import { useState } from 'react';
 import { LogOut, ShieldCheck } from 'lucide-react';
 import { useAdminSecret } from '../../lib/adminAuth.jsx';
 
 export default function AdminAuthGate({ children }) {
-  const { verified, checking, error, verify } = useAdminSecret();
-  const [input, setInput] = useState('');
+  const { verified, checking, error } = useAdminSecret();
 
   if (verified) return children;
 
@@ -13,18 +11,9 @@ export default function AdminAuthGate({ children }) {
       <div className="card" style={{ padding: 32, maxWidth: 340, width: '100%', textAlign: 'center' }}>
         <ShieldCheck size={32} color="var(--teal-700)" style={{ marginBottom: 12 }} />
         <h2 style={{ marginBottom: 4 }}>Espace admin</h2>
-        <p className="tiny muted" style={{ marginBottom: 20 }}>Réservé au propriétaire de l’application.</p>
-        <input
-          className="input" type="password" placeholder="Code admin" value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => { if (e.key === 'Enter' && input) verify(input); }}
-          style={{ marginBottom: 12 }}
-          autoFocus
-        />
+        <p className="tiny muted" style={{ marginBottom: 20 }}>Réservé aux comptes administrateurs vérifiés.</p>
         {error && <p className="tiny" style={{ color: 'var(--pill-danger-fg)', marginBottom: 12 }}>{error}</p>}
-        <button className="btn btn-primary btn-block" disabled={!input || checking} onClick={() => verify(input)}>
-          {checking ? 'Vérification…' : 'Entrer'}
-        </button>
+        {checking && <p className="tiny muted">Vérification…</p>}
       </div>
     </div>
   );

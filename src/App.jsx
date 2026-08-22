@@ -7,6 +7,7 @@ import Sidebar from './components/admin/Sidebar.jsx';
 import AdminAuthGate from './components/admin/AdminAuthGate.jsx';
 import { AdminSecretProvider } from './lib/adminAuth.jsx';
 import { useStore, isPremium } from './lib/store.jsx';
+import { useAuth } from './lib/auth.jsx';
 import { isPaywallAllowed } from './lib/paywall.js';
 import { manifest, adminManifest } from './routes.js';
 import ScreensIndex from './screens/ScreensIndex.jsx';
@@ -16,7 +17,10 @@ const NAV_PATHS = ['/home', '/chat', '/scanner', '/finance', '/knowledge', '/pro
 function MobileShell({ onboarded }) {
   const location = useLocation();
   const { state } = useStore();
+  const { user, ready, configured } = useAuth();
   const premiumUntil = state.settings.premiumUntil;
+  const publicPath = ['/splash', '/welcome', '/language', '/user-type', '/business-info', '/tax-regime', '/ai-intro', '/subscription-select', '/permissions', '/setup-complete', '/login', '/register', '/forgot-password', '/otp', '/auth/callback', '/legal/terms', '/legal/privacy']
+    .some((path) => location.pathname.startsWith(path));
 
   // The instant the pass runs out, wake the shell so the lock screen takes
   // over immediately — even if the user is mid-screen and never navigates.
@@ -28,6 +32,14 @@ function MobileShell({ onboarded }) {
     const id = setTimeout(wake, ms + 250);
     return () => clearTimeout(id);
   }, [premiumUntil]);
+
+  if (!configured) {
+    return <div className="phone-frame"><div className="screen no-nav center" style={{ justifyContent: 'center', alignItems: 'center', gap: 12 }}><h2>Configuration requise</h2><p className="small muted">La connexion sécurisée n’est pas encore configurée.</p></div></div>;
+  }
+  if (!ready) {
+    return <div className="phone-frame"><div className="screen no-nav center"><p className="small muted">Connexion…</p></div></div>;
+  }
+  if (!user && !publicPath) return <Navigate to="/login" replace />;
 
   // Once onboarding is done, using the app requires an active pass — except
   // for the screens that let you buy/activate one (see paywall.js).
@@ -56,8 +68,8 @@ function MobileShell({ onboarded }) {
 
 function AdminShell() {
   // Admin is an internal French-only ops tool (per the design spec) — always LTR,
-  // independent of the mobile app's user-facing language setting. Now shows real
-  // customer data, so it's gated behind ADMIN_SECRET (see AdminAuthGate).
+  // independent of the mobile app's user-facing language setting. Real customer
+  // data is gated by the authenticated ADMIN_EMAILS allow-list.
   return (
     <AdminSecretProvider>
       <AdminAuthGate>
@@ -88,7 +100,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/admin/*" element={<AdminShell />} />
-      <Route path="/screens" element={<ScreensIndex />} />
+      <Route path="/screens" element={import.meta.env.DEV ? <ScreensIndex /> : <Navigate to="/home" replace />} />
       <Route path="/*" element={<MobileShell onboarded={state.settings.onboarded} />} />
     </Routes>
   );

@@ -68,8 +68,8 @@ export default function TrialBalance() {
       </div>
       <p className="tiny muted">Balance calculée automatiquement depuis le journal. Modifie une écriture dans le Journal pour la changer. Touche un compte 411/401 pour voir son détail.</p>
       <div className="row" style={{ gap: 10 }}>
-        <button className="btn btn-ghost grow" onClick={() => toast(t('reports.exported'))}>Excel</button>
-        <button className="btn btn-ghost grow" onClick={() => toast(t('reports.exported'))}>PDF</button>
+        <button className="btn btn-ghost grow" onClick={() => navigate('/documents/export')}>Excel</button>
+        <button className="btn btn-ghost grow" onClick={() => navigate('/documents/export')}>PDF</button>
       </div>
     </div>
   );
