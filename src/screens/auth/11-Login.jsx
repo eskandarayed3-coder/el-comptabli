@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { CheckCircle2, ExternalLink, Loader2, Mail } from 'lucide-react';
+import { CheckCircle2, ExternalLink, Gift, Loader2, Mail } from 'lucide-react';
 import { useT } from '../../i18n/index.js';
 import { useAuth } from '../../lib/auth.jsx';
 import { useStore } from '../../lib/store.jsx';
@@ -9,11 +9,12 @@ import Logo from '../../components/Logo.jsx';
 export default function Login() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const { requestMagicLink } = useAuth();
+  const { requestMagicLink, startFreeTrial } = useAuth();
   const { state } = useStore();
   const { t } = useT();
   const [email, setEmail] = useState(() => params.get('email') || state.profile.email || '');
   const [loading, setLoading] = useState(false);
+  const [startingTrial, setStartingTrial] = useState(false);
   const [error, setError] = useState('');
   const [sentTo, setSentTo] = useState('');
   const emailId = 'login-email';
@@ -35,6 +36,20 @@ export default function Login() {
       setError(e.friendly?.message || t('recover.notFound'));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const startTrial = async () => {
+    if (loading || startingTrial) return;
+    setStartingTrial(true);
+    setError('');
+    try {
+      await startFreeTrial();
+      navigate(next);
+    } catch (e) {
+      setError(e.friendly?.message || t('auth.trialUnavailable'));
+    } finally {
+      setStartingTrial(false);
     }
   };
 
@@ -95,6 +110,18 @@ export default function Login() {
         <button type="submit" className="btn btn-primary btn-block" disabled={!emailValid || loading}>
           {loading ? <Loader2 size={16} className="spin" /> : t('auth.continueWithEmail')}
         </button>
+        <button
+          type="button"
+          className="btn btn-ghost btn-block"
+          disabled={loading || startingTrial}
+          onClick={startTrial}
+        >
+          {startingTrial ? <Loader2 size={16} className="spin" /> : <Gift size={17} aria-hidden="true" />}
+          {t('onboarding.tryFree')}
+        </button>
+        <p className="tiny center muted" style={{ margin: -6 }}>
+          {t('onboarding.tryFreeNote')}
+        </p>
       </form>
 
       <p className="tiny center muted" style={{ margin: 0 }}>{t('auth.noPasswordNeeded')}</p>
