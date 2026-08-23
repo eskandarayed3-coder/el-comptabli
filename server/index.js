@@ -70,6 +70,8 @@ app.use('/api', (error, req, res, _next) => {
   return sendApiError(error, req, res);
 });
 
+app.use('/api', (_req, res) => res.status(404).json({ error: { code: 'NOT_FOUND', message: 'Route API introuvable.' } }));
+
 if (process.env.NODE_ENV === 'production') {
   const dist = path.join(__dirname, '..', 'dist');
   app.use(express.static(dist));
