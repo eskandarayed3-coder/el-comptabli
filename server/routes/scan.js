@@ -76,7 +76,15 @@ router.post('/', async (req, res) => {
     logEvent('info', 'ocr_success', { ...metadata, durationMs: Date.now() - startedAt });
     res.json({ fields, raw: safeOcrSnapshot(raw), pageInfo: payload.pdf });
   } catch (e) {
-    logEvent('error', 'ocr_failure', { ...metadata, durationMs: Date.now() - startedAt, category: e?.friendly?.code || e?.name || 'upstream_error' });
+    logEvent('error', 'ocr_failure', {
+      ...metadata,
+      durationMs: Date.now() - startedAt,
+      category: e?.friendly?.code || e?.name || 'upstream_error',
+      upstreamStatus: e?.status,
+      upstreamCode: e?.upstream?.code,
+      upstreamType: e?.upstream?.type,
+      upstreamParam: e?.upstream?.param,
+    });
     const friendly = e.friendly || { code: 'upstream_error', message: 'Le scan a échoué. Réessaie.' };
     res.status(e.status === 403 ? 403 : e.status === 400 ? 400 : 502).json({ error: friendly });
   }

@@ -92,6 +92,17 @@ function friendly(status, provider, raw) {
   return { code: 'upstream_error', message: "L'IA est momentanément indisponible. Réessaie." };
 }
 
+function safeUpstreamMetadata(json) {
+  const error = json?.error;
+  if (!error || typeof error !== 'object') return undefined;
+  const clean = (value) => typeof value === 'string' ? value.slice(0, 120) : undefined;
+  return {
+    code: clean(error.code),
+    type: clean(error.type),
+    param: clean(error.param),
+  };
+}
+
 // ---------- OpenAI-compatible helpers (Groq / Mistral / OpenRouter) ----------
 async function openaiChatStream({ cfg, key, provider, system, messages, onText }) {
   const body = {
@@ -202,7 +213,13 @@ export async function generateText({ system, prompt, maxTokens = 1024 }) {
     }),
   });
   const json = await res.json().catch(() => ({}));
-  if (!res.ok) { const e = new Error('upstream'); e.friendly = friendly(res.status, p, JSON.stringify(json)); e.status = res.status; throw e; }
+  if (!res.ok) {
+    const e = new Error('upstream');
+    e.friendly = friendly(res.status, p, JSON.stringify(json));
+    e.status = res.status;
+    e.upstream = safeUpstreamMetadata(json);
+    throw e;
+  }
   return sanitizeAiText(json?.choices?.[0]?.message?.content || '');
 }
 
@@ -250,7 +267,13 @@ export async function scanInvoice({ images, prompt, schema }) {
     signal: AbortSignal.timeout(45_000),
   });
   const json = await res.json().catch(() => ({}));
-  if (!res.ok) { const e = new Error('upstream'); e.friendly = friendly(res.status, p, JSON.stringify(json)); e.status = res.status; throw e; }
+  if (!res.ok) {
+    const e = new Error('upstream');
+    e.friendly = friendly(res.status, p, JSON.stringify(json));
+    e.status = res.status;
+    e.upstream = safeUpstreamMetadata(json);
+    throw e;
+  }
   const text = json?.choices?.[0]?.message?.content || '{}';
   return JSON.parse(text);
 }
