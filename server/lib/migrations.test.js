@@ -105,17 +105,17 @@ test('V1 migrations apply and enforce accounting and tenant invariants', async (
     await db.query(`insert into public.invoices(id,user_id,organization_id,document_id,transaction_id,fingerprint,kind,supplier,third_party_id,invoice_number,invoice_date,amount_ht,vat_amount,amount_ttc,storage_path,mime_type,validated_fields,validated_at,status)
       values($1,$2,$3,$4,$5,$6,'expense','Synthetic Supplier',$7,'INV-TEST','2026-08-23',100,19,119,$8,'application/pdf','{}',now(),'confirmed')`,
     [invoice, userA, orgA, `doc-${invoice}`, `tx-${invoice}`, `fp-${invoice}`, supplier, `${userA}/${invoice}.pdf`]);
-    const paymentPayload = { thirdPartyId: supplier, invoiceId: invoice, amount: '119.000', currency: 'TND', paymentDate: '2026-08-23', paymentMethod: 'bank_transfer', reference: 'PAY-TEST', idempotencyKey: 'pay-test-1' };
-    const payment = await db.query('select public.create_payment($1,$2,$3::jsonb,$4::jsonb,$5) result', [orgA, userA, JSON.stringify(paymentPayload), JSON.stringify([{ invoiceId: invoice, allocatedAmount: '119.000' }]), 'req-pay']);
+    const paymentPayload = { thirdPartyId: supplier, invoiceId: invoice, amount: '50.000', currency: 'TND', paymentDate: '2026-08-23', paymentMethod: 'bank_transfer', reference: 'PAY-TEST', idempotencyKey: 'pay-test-1' };
+    const payment = await db.query('select public.create_payment($1,$2,$3::jsonb,$4::jsonb,$5) result', [orgA, userA, JSON.stringify(paymentPayload), JSON.stringify([{ invoiceId: invoice, allocatedAmount: '50.000' }]), 'req-pay']);
     const paymentId = payment.rows[0].result.payment.id;
     assert.equal((await db.query('select public.create_payment($1,$2,$3::jsonb,$4::jsonb,$5) result', [orgA, userA, JSON.stringify(paymentPayload), '[]', 'req-pay-repeat'])).rows[0].result.idempotent, true);
     await assert.rejects(
-      db.query('select public.create_payment($1,$2,$3::jsonb,$4::jsonb,$5)', [orgA, userA, JSON.stringify({ ...paymentPayload, amount: '1.000', idempotencyKey: 'pay-test-overallocation' }), JSON.stringify([{ invoiceId: invoice, allocatedAmount: '1.000' }]), 'req-pay-overallocation']),
+      db.query('select public.create_payment($1,$2,$3::jsonb,$4::jsonb,$5)', [orgA, userA, JSON.stringify({ ...paymentPayload, amount: '70.000', idempotencyKey: 'pay-test-overallocation' }), JSON.stringify([{ invoiceId: invoice, allocatedAmount: '70.000' }]), 'req-pay-overallocation']),
       /INVOICE_OVERALLOCATED/,
     );
     assert.equal((await db.query('select public.post_payment($1,$2,$3,$4) result', [orgA, paymentId, userA, 'req-pay-post'])).rows[0].result.payment.status, 'posted');
     assert.equal((await db.query('select public.reverse_payment($1,$2,$3,$4,$5,$6) result', [orgA, paymentId, userA, null, null, 'req-pay-reverse'])).rows[0].result.payment.status, 'reversed');
-    const replacement = await db.query('select public.create_payment($1,$2,$3::jsonb,$4::jsonb,$5) result', [orgA, userA, JSON.stringify({ ...paymentPayload, idempotencyKey: 'pay-test-after-reversal' }), JSON.stringify([{ invoiceId: invoice, allocatedAmount: '119.000' }]), 'req-pay-after-reversal']);
+    const replacement = await db.query('select public.create_payment($1,$2,$3::jsonb,$4::jsonb,$5) result', [orgA, userA, JSON.stringify({ ...paymentPayload, amount: '119.000', idempotencyKey: 'pay-test-after-reversal' }), JSON.stringify([{ invoiceId: invoice, allocatedAmount: '119.000' }]), 'req-pay-after-reversal']);
     assert.equal(replacement.rows[0].result.payment.status, 'draft');
 
     const bankAccount = randomUUID();
