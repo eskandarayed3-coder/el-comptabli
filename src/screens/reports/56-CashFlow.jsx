@@ -10,17 +10,17 @@ export default function CashFlow() {
   const { state } = useStore();
   const { t } = useT();
   const ym = new Date().toISOString().slice(0, 7);
-  const totals = useMemo(() => monthTotals(state.transactions, ym), [state.transactions, ym]);
+  const totals = useMemo(() => monthTotals(state.transactions, ym, state.generalLedger), [state.transactions, state.generalLedger, ym]);
 
   const curve = useMemo(() => {
     let bal = 0;
     return Array.from({ length: 3 }, (_, i) => {
       const d = new Date(); d.setMonth(d.getMonth() - (2 - i));
-      const t2 = monthTotals(state.transactions, d.toISOString().slice(0, 7));
+      const t2 = monthTotals(state.transactions, d.toISOString().slice(0, 7), state.generalLedger);
       bal += t2.profit;
       return { name: d.toLocaleDateString('fr-FR', { month: 'short' }), value: Math.round(bal) };
     });
-  }, [state.transactions]);
+  }, [state.transactions, state.generalLedger]);
 
   return (
     <div className="screen stagger">

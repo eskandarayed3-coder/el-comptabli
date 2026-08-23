@@ -14,8 +14,8 @@ export default function BusinessPerformance() {
   const { state } = useStore();
 
   const { scores, hasData } = useMemo(() => {
-    const thisMonth = monthTotals(state.transactions, ym(0));
-    const lastMonth = monthTotals(state.transactions, ym(-1));
+    const thisMonth = monthTotals(state.transactions, ym(0), state.generalLedger);
+    const lastMonth = monthTotals(state.transactions, ym(-1), state.generalLedger);
     const rentabilite = thisMonth.income ? Math.max(0, Math.min(100, Math.round((thisMonth.profit / thisMonth.income) * 100))) : 0;
     const croissance = lastMonth.income ? Math.max(0, Math.min(100, Math.round(50 + ((thisMonth.income - lastMonth.income) / lastMonth.income) * 100))) : 50;
     const paidDeadlines = state.deadlines.filter((d) => d.status === 'paid').length;
@@ -27,10 +27,10 @@ export default function BusinessPerformance() {
         ['Croissance vs mois dernier', croissance],
         ['Régularité fiscale', regularite],
       ],
-      hasData: state.transactions.length > 0,
+      hasData: state.generalLedger.length > 0,
       avg: Math.round(vals.reduce((s, v) => s + v, 0) / vals.length),
     };
-  }, [state.transactions, state.deadlines]);
+  }, [state.transactions, state.generalLedger, state.deadlines]);
 
   const avg = Math.round(scores.reduce((s, [, v]) => s + v, 0) / scores.length);
 

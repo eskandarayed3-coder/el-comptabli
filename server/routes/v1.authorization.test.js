@@ -72,7 +72,7 @@ const request = (base, path, method = 'GET', body, headers = {}) => {
 
 test('V1 HTTP authorization and organization boundary matrix', async () => {
   await withServer({ authenticated: false }, async (base) => {
-    for (const [method, path] of [['GET','/context'],['GET','/bootstrap'],['POST','/transactions'],['POST','/journal-entries'],['GET','/audit']]) {
+    for (const [method, path] of [['GET','/context'],['GET','/bootstrap'],['POST','/transactions'],['POST','/journal-entries'],['POST','/accounting-mappings'],['POST',`/invoices/${ENTITY}/accounting-validation`],['GET','/audit']]) {
       const response = await request(base, path, method, method === 'GET' ? null : {});
       assert.equal(response.status, 401, `${method} ${path} must reject anonymous callers`);
     }
@@ -88,6 +88,7 @@ test('V1 HTTP authorization and organization boundary matrix', async () => {
   const viewerDenied = [
     ['PATCH','/organization'], ['PUT',`/organization/members/${ENTITY}`], ['POST','/third-parties'], ['PATCH',`/third-parties/${ENTITY}`],
     ['POST','/accounts'], ['PATCH',`/accounts/${ENTITY}`], ['POST','/journals'], ['POST','/bank-accounts'], ['POST','/fiscal-periods'], ['POST','/vat-periods'],
+    ['POST','/accounting-mappings'], ['PATCH',`/accounting-mappings/${ENTITY}`], ['POST',`/invoices/${ENTITY}/accounting-validation`],
     ['PATCH',`/documents/${ENTITY}`], ['POST','/invoices/duplicate-check'], ['PATCH',`/invoices/${ENTITY}`],
     ['POST','/transactions'], ['PATCH',`/transactions/${ENTITY}`], ['DELETE',`/transactions/${ENTITY}`], ['PATCH',`/deadlines/${ENTITY}`],
     ['POST','/journal-entries'], ['POST',`/journal-entries/${ENTITY}/review`], ['POST',`/journal-entries/${ENTITY}/post`], ['POST',`/journal-entries/${ENTITY}/reverse`],

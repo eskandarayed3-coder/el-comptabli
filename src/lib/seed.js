@@ -33,6 +33,7 @@ export function seedState() {
     trialBalance: [],
     generalLedger: [],
     financialStatements: [],
+    vatSummary: [],
     deadlines: [],
     tasks: [],
     chats: [],

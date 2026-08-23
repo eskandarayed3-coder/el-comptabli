@@ -38,7 +38,7 @@ export default function Home() {
   const greeting = state.profile.name
     ? t(`home.${greetKey}`, { name: state.profile.name })
     : t(`home.${greetKey}`, { name: '' }).replace(/[,،]/g, '').replace(/\s{2,}/g, ' ').trim();
-  const totals = useMemo(() => monthTotals(state.transactions, ym), [state.transactions, ym]);
+  const totals = useMemo(() => monthTotals(state.transactions, ym, state.generalLedger), [state.transactions, state.generalLedger, ym]);
 
   const nextDeadline = state.deadlines
     .filter((d) => d.status !== 'paid')

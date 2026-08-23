@@ -98,7 +98,7 @@ const legacyDocument = (row) => ({
 
 router.get('/bootstrap', asyncRoute(async (req, res) => {
   const client = getServiceClient();
-  const [profile, preferences, subscription, transactions, documents, accounts, journalEntries, trialBalance, generalLedger, financialStatements, tasks, deadlines, chats, notifications, activities, reports, calculations, dashboard] = await Promise.all([
+  const [profile, preferences, subscription, transactions, documents, accounts, journalEntries, trialBalance, generalLedger, financialStatements, vatSummary, tasks, deadlines, chats, notifications, activities, reports, calculations, dashboard] = await Promise.all([
     client.from('profiles').select('id,email,name,regime,user_type,city,activity,phone,sector,language,timezone').eq('id', req.user.id).single(),
     client.from('user_preferences').select('preferences').eq('user_id', req.user.id).maybeSingle(),
     client.from('subscriptions').select('plan,premium_until').eq('user_id', req.user.id).maybeSingle(),
@@ -109,6 +109,7 @@ router.get('/bootstrap', asyncRoute(async (req, res) => {
     client.from('trial_balance_v').select('*').eq('organization_id', req.organization.id).order('account_number').limit(1000),
     client.from('general_ledger_v').select('*').eq('organization_id', req.organization.id).order('entry_date', { ascending: false }).limit(1000),
     client.from('financial_statement_v').select('*').eq('organization_id', req.organization.id).order('statement').limit(500),
+    client.from('vat_summary_v').select('*').eq('organization_id', req.organization.id).order('period_month', { ascending: false }).limit(240),
     client.from('user_tasks').select('*').eq('organization_id', req.organization.id).eq('user_id', req.user.id).order('created_at', { ascending: false }).limit(200),
     client.from('tax_deadlines').select('*').eq('organization_id', req.organization.id).order('due_date').limit(200),
     client.from('chat_sessions').select('*').eq('organization_id', req.organization.id).eq('user_id', req.user.id).order('updated_at', { ascending: false }).limit(100),
@@ -118,7 +119,7 @@ router.get('/bootstrap', asyncRoute(async (req, res) => {
     client.from('calculation_history').select('*').eq('organization_id', req.organization.id).eq('user_id', req.user.id).order('created_at', { ascending: false }).limit(100),
     client.from('dashboard_v').select('*').eq('organization_id', req.organization.id).maybeSingle(),
   ]);
-  for (const result of [profile, preferences, subscription, transactions, documents, accounts, journalEntries, trialBalance, generalLedger, financialStatements, tasks, deadlines, chats, notifications, activities, reports, calculations, dashboard]) {
+  for (const result of [profile, preferences, subscription, transactions, documents, accounts, journalEntries, trialBalance, generalLedger, financialStatements, vatSummary, tasks, deadlines, chats, notifications, activities, reports, calculations, dashboard]) {
     if (result.error) throw result.error;
   }
   const prefs = preferences.data?.preferences || {};
@@ -137,6 +138,7 @@ router.get('/bootstrap', asyncRoute(async (req, res) => {
     trialBalance: trialBalance.data || [],
     generalLedger: generalLedger.data || [],
     financialStatements: financialStatements.data || [],
+    vatSummary: vatSummary.data || [],
     tasks: (tasks.data || []).map((x) => ({ id: x.id, title: x.title, date: x.due_date, done: x.status === 'done', status: x.status, ...(x.metadata || {}) })),
     deadlines: (deadlines.data || []).map((x) => ({ id: x.id, title: x.title, date: x.due_date, status: x.status, ...(x.metadata || {}) })),
     chats: (chats.data || []).map((x) => ({ id: x.id, title: x.title, messages: x.messages, agentId: x.agent_id, at: x.updated_at })),
@@ -366,6 +368,52 @@ const entityConfigs = {
       return data;
     },
   },
+  'accounting-mappings': {
+    table: 'accounting_mappings', order: 'created_at', roles: ACCOUNTING_ROLES,
+    create(body, req) {
+      const source = cleanString(body.source || 'human', 20);
+      if (source !== 'human') throw errors.validation({ source: 'Seule une validation humaine peut activer un mapping.' });
+      const sourceCondition = body.sourceCondition === undefined ? {} : body.sourceCondition;
+      if (!sourceCondition || typeof sourceCondition !== 'object' || Array.isArray(sourceCondition)) throw errors.validation({ sourceCondition: 'Condition invalide' });
+      const confidence = body.confidence === undefined || body.confidence === null || body.confidence === '' ? null : Number(body.confidence);
+      if (confidence !== null && (!Number.isFinite(confidence) || confidence < 0 || confidence > 1)) throw errors.validation({ confidence: 'La confiance doit être comprise entre 0 et 1.' });
+      return {
+        third_party_id: uuidOrNull(body.thirdPartyId, 'thirdPartyId'),
+        invoice_category: cleanString(body.invoiceCategory, 80) || null,
+        source_condition: sourceCondition,
+        target_account_id: requireUuid(body.targetAccountId, 'targetAccountId'),
+        vat_account_id: uuidOrNull(body.vatAccountId, 'vatAccountId'),
+        counterparty_account_id: requireUuid(body.counterpartyAccountId, 'counterpartyAccountId'),
+        journal_id: requireUuid(body.journalId, 'journalId'),
+        confidence,
+        source: 'human',
+        created_by: req.user.id,
+        last_confirmed_at: new Date().toISOString(),
+      };
+    },
+    patch(body) {
+      const changes = {};
+      if (body.invoiceCategory !== undefined) changes.invoice_category = cleanString(body.invoiceCategory, 80) || null;
+      if (body.sourceCondition !== undefined) {
+        if (!body.sourceCondition || typeof body.sourceCondition !== 'object' || Array.isArray(body.sourceCondition)) throw errors.validation({ sourceCondition: 'Condition invalide' });
+        changes.source_condition = body.sourceCondition;
+      }
+      if (body.targetAccountId !== undefined) changes.target_account_id = requireUuid(body.targetAccountId, 'targetAccountId');
+      if (body.vatAccountId !== undefined) changes.vat_account_id = uuidOrNull(body.vatAccountId, 'vatAccountId');
+      if (body.counterpartyAccountId !== undefined) changes.counterparty_account_id = requireUuid(body.counterpartyAccountId, 'counterpartyAccountId');
+      if (body.journalId !== undefined) changes.journal_id = requireUuid(body.journalId, 'journalId');
+      if (body.confidence !== undefined) {
+        const confidence = body.confidence === null || body.confidence === '' ? null : Number(body.confidence);
+        if (confidence !== null && (!Number.isFinite(confidence) || confidence < 0 || confidence > 1)) throw errors.validation({ confidence: 'La confiance doit être comprise entre 0 et 1.' });
+        changes.confidence = confidence;
+      }
+      if (Object.keys(changes).length) {
+        changes.source = 'human';
+        changes.last_confirmed_at = new Date().toISOString();
+      }
+      return changes;
+    },
+  },
   'bank-accounts': {
     table: 'bank_accounts', order: 'account_label', roles: MANAGER_ROLES,
     create(body) {
@@ -415,7 +463,7 @@ for (const [path, config] of Object.entries(entityConfigs)) {
     res.json({ data: result.data || [], page: { limit: page.limit, offset: page.offset, total: result.count || 0 } });
   }));
   router.post(`/${path}`, requireOrganizationRole(...config.roles), asyncRoute(async (req, res) => {
-    const payload = { organization_id: req.organization.id, ...config.create(req.body || {}) };
+    const payload = { organization_id: req.organization.id, ...config.create(req.body || {}, req) };
     const data = unwrap(await getServiceClient().from(config.table).insert(payload).select().single());
     res.status(201).json({ data });
   }));
@@ -456,7 +504,7 @@ router.patch('/documents/:id', requireOrganizationRole('owner','admin','accounta
 
 router.get('/invoices', asyncRoute(async (req, res) => {
   const page = pagination(req.query);
-  let query = getServiceClient().from('invoices').select('id,document_record_id,third_party_id,invoice_number,invoice_date,due_date,document_type,currency,amount_ht,vat_amount,amount_ttc,stamp_duty,discount,withholding_tax,status,validated_by,validated_at,created_at', { count: 'exact' })
+  let query = getServiceClient().from('invoices').select('id,document_record_id,third_party_id,invoice_number,invoice_date,due_date,document_type,currency,amount_ht,vat_amount,amount_ttc,stamp_duty,discount,withholding_tax,status,accounting_status,accounting_mapping_id,journal_entry_id,accounting_validated_by,accounting_validated_at,validated_by,validated_at,created_at', { count: 'exact' })
     .eq('organization_id', req.organization.id).order('invoice_date', { ascending: false }).range(page.from, page.to);
   if (req.query.status) query = query.eq('status', cleanString(req.query.status, 30));
   if (req.query.from) query = query.gte('invoice_date', validIsoDate(req.query.from, 'from'));
@@ -499,6 +547,18 @@ router.patch('/invoices/:id', requireOrganizationRole(...ACCOUNTING_ROLES), asyn
   if (!Object.keys(allowed).length) throw errors.validation({ body: 'Aucune modification autorisée' });
   const data = unwrap(await getServiceClient().rpc('update_invoice_review', { p_organization_id: req.organization.id, p_invoice_id: requireUuid(req.params.id), p_actor_id: req.user.id, p_changes: allowed, p_request_id: req.requestId }));
   res.json(data);
+}));
+
+router.post('/invoices/:id/accounting-validation', requireOrganizationRole(...ACCOUNTING_ROLES), asyncRoute(async (req, res) => {
+  const mappingId = requireUuid(req.body?.mappingId, 'mappingId');
+  const data = unwrap(await getServiceClient().rpc('validate_invoice_accounting', {
+    p_organization_id: req.organization.id,
+    p_invoice_id: requireUuid(req.params.id),
+    p_mapping_id: mappingId,
+    p_actor_id: req.user.id,
+    p_request_id: req.requestId,
+  }));
+  res.status(data?.idempotent ? 200 : 201).json(data);
 }));
 
 router.get('/journal-entries', asyncRoute(async (req, res) => {

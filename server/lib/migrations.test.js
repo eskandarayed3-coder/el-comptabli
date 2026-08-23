@@ -38,6 +38,7 @@ test('V1 migrations apply and enforce accounting and tenant invariants', async (
     await db.exec(await sqlFile('supabase/migrations/20260823085344_v1_rls_and_indexes_hardening.sql'));
     await db.exec(await sqlFile('supabase/migrations/20260823091316_beta_ready_authoritative_state.sql'));
     await db.exec(await sqlFile('supabase/migrations/20260823094059_beta_ready_advisor_hardening.sql'));
+    await db.exec(await sqlFile('supabase/migrations/20260823130000_invoice_accounting_posting_pipeline.sql'));
 
     const memberships = await db.query('select organization_id,user_id,role from public.organization_members order by user_id');
     assert.equal(memberships.rows.length, 2);
@@ -105,6 +106,26 @@ test('V1 migrations apply and enforce accounting and tenant invariants', async (
     await db.query(`insert into public.invoices(id,user_id,organization_id,document_id,transaction_id,fingerprint,kind,supplier,third_party_id,invoice_number,invoice_date,amount_ht,vat_amount,amount_ttc,storage_path,mime_type,validated_fields,validated_at,status)
       values($1,$2,$3,$4,$5,$6,'expense','Synthetic Supplier',$7,'INV-TEST','2026-08-23',100,19,119,$8,'application/pdf','{}',now(),'confirmed')`,
     [invoice, userA, orgA, `doc-${invoice}`, `tx-${invoice}`, `fp-${invoice}`, supplier, `${userA}/${invoice}.pdf`]);
+    const vatAccount = randomUUID();
+    await db.query(`insert into public.accounts(id,organization_id,account_number,label,normalized_label,class,category)
+      values($1,$2,'4457','TVA déductible','tva deductible',4,'tax')`, [vatAccount, orgA]);
+    const mapping = randomUUID();
+    await db.query(`insert into public.accounting_mappings(id,organization_id,third_party_id,invoice_category,source_condition,target_account_id,vat_account_id,counterparty_account_id,journal_id,source,created_by,last_confirmed_at)
+      values($1,$2,$3,'autres','{}',$4,$5,$6,$7,'human',$8,now())`, [mapping, orgA, supplier, account1, vatAccount, account2, journal, userA]);
+    const taxLine = randomUUID();
+    await db.query(`insert into public.invoice_tax_lines(id,organization_id,invoice_id,tax_rate,taxable_base,tax_amount,tax_type)
+      values($1,$2,$3,19,100,19,'vat')`, [taxLine, orgA, invoice]);
+    const postedInvoice = await db.query('select public.validate_invoice_accounting($1,$2,$3,$4,$5) result', [orgA, invoice, mapping, userA, 'req-invoice-accounting']);
+    assert.equal(postedInvoice.rows[0].result.invoice.accounting_status, 'posted');
+    assert.equal(postedInvoice.rows[0].result.idempotent, false);
+    assert.equal((await db.query('select count(*)::int count from public.journal_lines where entry_id=$1', [postedInvoice.rows[0].result.journalEntryId])).rows[0].count, 3);
+    const postedAgain = await db.query('select public.validate_invoice_accounting($1,$2,$3,$4,$5) result', [orgA, invoice, mapping, userA, 'req-invoice-accounting-repeat']);
+    assert.equal(postedAgain.rows[0].result.idempotent, true);
+    const accountingDashboard = (await db.query('select * from public.dashboard_v where organization_id=$1', [orgA])).rows[0];
+    assert.equal(String(accountingDashboard.invoice_count), '1');
+    assert.equal(String(accountingDashboard.posted_entry_count), '2');
+    assert.equal(String(accountingDashboard.expense_ttc), '200.000');
+    assert.equal(String((await db.query('select sum(tax_amount)::numeric(18,3) total from public.vat_summary_v where organization_id=$1', [orgA])).rows[0].total), '19.000');
     const paymentPayload = { thirdPartyId: supplier, invoiceId: invoice, amount: '50.000', currency: 'TND', paymentDate: '2026-08-23', paymentMethod: 'bank_transfer', reference: 'PAY-TEST', idempotencyKey: 'pay-test-1' };
     const payment = await db.query('select public.create_payment($1,$2,$3::jsonb,$4::jsonb,$5) result', [orgA, userA, JSON.stringify(paymentPayload), JSON.stringify([{ invoiceId: invoice, allocatedAmount: '50.000' }]), 'req-pay']);
     const paymentId = payment.rows[0].result.payment.id;
@@ -132,7 +153,7 @@ test('V1 migrations apply and enforce accounting and tenant invariants', async (
     await db.exec('grant select,insert on public.accounts to authenticated');
     await db.query(`select set_config('request.jwt.claim.sub',$1,false)`, [userA]);
     await db.exec('set role authenticated');
-    assert.equal(Number((await db.query('select count(*) count from public.accounts')).rows[0].count), 2);
+    assert.equal(Number((await db.query('select count(*) count from public.accounts')).rows[0].count), 3);
     await db.exec('reset role');
     await db.query(`select set_config('request.jwt.claim.sub',$1,false)`, [userB]);
     await db.exec('set role authenticated');

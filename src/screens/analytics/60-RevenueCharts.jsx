@@ -12,9 +12,9 @@ export default function RevenueCharts() {
 
   const trend = useMemo(() => Array.from({ length: 6 }, (_, i) => {
     const d = new Date(); d.setMonth(d.getMonth() - (5 - i));
-    const t2 = monthTotals(state.transactions, d.toISOString().slice(0, 7));
+    const t2 = monthTotals(state.transactions, d.toISOString().slice(0, 7), state.generalLedger);
     return { name: d.toLocaleDateString('fr-FR', { month: 'short' }), value: Math.round(t2.income) };
-  }), [state.transactions]);
+  }), [state.transactions, state.generalLedger]);
 
   const topClients = useMemo(() => {
     const map = {};

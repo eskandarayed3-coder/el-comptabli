@@ -18,8 +18,8 @@ export default function AiInsights() {
 
   const insights = useMemo(() => {
     const out = [];
-    const thisMonth = monthTotals(state.transactions, ym(0));
-    const lastMonth = monthTotals(state.transactions, ym(-1));
+    const thisMonth = monthTotals(state.transactions, ym(0), state.generalLedger);
+    const lastMonth = monthTotals(state.transactions, ym(-1), state.generalLedger);
 
     const unscanned = state.transactions.filter((tx) => tx.kind === 'expense' && !tx.scanned && (tx.date || '').startsWith(ym(0)));
     if (unscanned.length > 0) {
@@ -44,7 +44,7 @@ export default function AiInsights() {
     }
 
     return out;
-  }, [state.transactions, state.deadlines]);
+  }, [state.transactions, state.generalLedger, state.deadlines]);
 
   return (
     <div className="screen stagger">

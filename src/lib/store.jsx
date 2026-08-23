@@ -246,7 +246,18 @@ export function useStore() {
 }
 
 // Derived helpers
-export function monthTotals(transactions, ym) {
+export function monthTotals(transactions = [], ym, generalLedger = null) {
+  // Accounting KPIs are authoritative only when derived from posted journal
+  // lines. The legacy transaction stream remains available for operational
+  // lists, but must not be used as a competing source for financial totals.
+  if (Array.isArray(generalLedger)) {
+    const inMonth = generalLedger.filter((line) => String(line.entry_date || '').startsWith(ym));
+    const income = inMonth.filter((line) => Number(line.account_class) === 7)
+      .reduce((sum, line) => sum + Number(line.credit || 0) - Number(line.debit || 0), 0);
+    const expense = inMonth.filter((line) => Number(line.account_class) === 6)
+      .reduce((sum, line) => sum + Number(line.debit || 0) - Number(line.credit || 0), 0);
+    return { income, expense, profit: income - expense };
+  }
   const inMonth = transactions.filter((t) => (t.date || '').startsWith(ym));
   const income = inMonth.filter((t) => t.kind === 'income').reduce((s, t) => s + Number(t.amountTTC ?? t.amount ?? 0), 0);
   const expense = inMonth.filter((t) => t.kind === 'expense').reduce((s, t) => s + Number(t.amountTTC ?? t.amount ?? 0), 0);

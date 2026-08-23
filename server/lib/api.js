@@ -30,6 +30,8 @@ export function sendApiError(error, req, res) {
   if (databaseCode === '23505') return sendApiError(errors.duplicate(), req, res);
   if (databaseCode === '42501' || /FORBIDDEN/.test(databaseMessage)) return sendApiError(errors.forbidden(), req, res);
   if (/PERIOD_CLOSED/.test(databaseMessage)) return res.status(409).json({ error: { code: 'PERIOD_CLOSED', message: 'La période comptable est clôturée.', requestId: req.requestId } });
+  if (/ACCOUNTING_MAPPING_REQUIRES_HUMAN_VALIDATION/.test(databaseMessage)) return res.status(409).json({ error: { code: 'ACCOUNTING_MAPPING_REQUIRES_HUMAN_VALIDATION', message: 'Une validation humaine du mapping comptable est requise.', requestId: req.requestId } });
+  if (/ACCOUNTING_MAPPING_REQUIRED|JOURNAL_REQUIRED|MAPPING_MISMATCH|INVOICE_NOT_CONFIRMED/.test(databaseMessage)) return res.status(409).json({ error: { code: 'ACCOUNTING_MAPPING_REQUIRED', message: 'Le mapping comptable ou le journal ne permet pas encore de comptabiliser cette facture.', requestId: req.requestId } });
   if (/UNBALANCED_ENTRY/.test(databaseMessage)) return res.status(422).json({ error: { code: 'UNBALANCED_ENTRY', message: 'Le total débit doit être égal au total crédit.', requestId: req.requestId } });
   if (/INVALID_ACCOUNT|INVALID_JOURNAL/.test(databaseMessage)) return res.status(422).json({ error: { code: 'INVALID_ACCOUNT', message: 'Un compte ou journal sélectionné est invalide.', requestId: req.requestId } });
   if (/VALIDATION_ERROR|REVERSAL_ENTRY_REQUIRED/.test(databaseMessage)) return res.status(400).json({ error: { code: 'VALIDATION_ERROR', message: 'Les données envoyées sont invalides.', requestId: req.requestId } });

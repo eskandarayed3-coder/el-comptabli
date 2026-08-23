@@ -9,15 +9,16 @@ export default function ProfitLoss() {
   const { state } = useStore();
   const { t, lang } = useT();
   const ym = new Date().toISOString().slice(0, 7);
-  const totals = useMemo(() => monthTotals(state.transactions, ym), [state.transactions, ym]);
+  const totals = useMemo(() => monthTotals(state.transactions, ym, state.generalLedger), [state.transactions, state.generalLedger, ym]);
 
   const byCategory = useMemo(() => {
     const map = {};
-    state.transactions.filter((tx) => tx.kind === 'expense' && tx.date.startsWith(ym)).forEach((tx) => {
-      map[tx.category] = (map[tx.category] || 0) + tx.amountTTC;
+    state.generalLedger.filter((line) => Number(line.account_class) === 6 && String(line.entry_date || '').startsWith(ym)).forEach((line) => {
+      const category = line.reporting_category || line.account_label || 'autres';
+      map[category] = (map[category] || 0) + Number(line.debit || 0) - Number(line.credit || 0);
     });
     return Object.entries(map).map(([id, v]) => ({ label: categoryLabel(id, lang), v }));
-  }, [state.transactions, ym, lang]);
+  }, [state.generalLedger, ym, lang]);
 
   const tax = Math.round(totals.profit * 0.25);
 

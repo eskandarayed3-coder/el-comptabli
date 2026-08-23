@@ -23,7 +23,7 @@ export default function AiReports() {
       const ym = new Date().toISOString().slice(0, 7);
       const result = await generateInsight({
         prompt: p,
-        data: { transactions: state.transactions, totals: monthTotals(state.transactions, ym) },
+        data: { transactions: state.transactions, totals: monthTotals(state.transactions, ym, state.generalLedger) },
         profile: state.profile,
       });
       add('aiReports', { title: p.slice(0, 50), body: result, at: new Date().toISOString() });

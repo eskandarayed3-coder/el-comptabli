@@ -12,7 +12,7 @@ export default function MonthlyReport() {
   const { state, toast } = useStore();
   const { t, lang } = useT();
   const ym = new Date().toISOString().slice(0, 7);
-  const totals = useMemo(() => monthTotals(state.transactions, ym), [state.transactions, ym]);
+  const totals = useMemo(() => monthTotals(state.transactions, ym, state.generalLedger), [state.transactions, state.generalLedger, ym]);
 
   const weekly = useMemo(() => {
     const weeks = [0, 0, 0, 0];

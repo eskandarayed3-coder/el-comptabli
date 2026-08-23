@@ -21,25 +21,26 @@ export default function FinancialOverview() {
     return d.toISOString().slice(0, 7);
   }, [offset]);
 
-  const totals = useMemo(() => monthTotals(state.transactions, month), [state.transactions, month]);
+  const totals = useMemo(() => monthTotals(state.transactions, month, state.generalLedger), [state.transactions, state.generalLedger, month]);
 
   const byCategory = useMemo(() => {
     const map = {};
-    state.transactions.filter((tx) => tx.kind === 'expense' && tx.date.startsWith(month)).forEach((tx) => {
-      map[tx.category] = (map[tx.category] || 0) + Number(tx.amountTTC);
+    state.generalLedger.filter((line) => Number(line.account_class) === 6 && String(line.entry_date || '').startsWith(month)).forEach((line) => {
+      const category = line.reporting_category || line.account_label || 'autres';
+      map[category] = (map[category] || 0) + Number(line.debit || 0) - Number(line.credit || 0);
     });
     return Object.entries(map).map(([id, value]) => ({ id, name: categoryLabel(id, lang), value }));
-  }, [state.transactions, month, lang]);
+  }, [state.generalLedger, month, lang]);
 
   const trend = useMemo(() => {
     return Array.from({ length: 6 }, (_, i) => {
       const d = new Date();
       d.setMonth(d.getMonth() - (5 - i));
       const ym = d.toISOString().slice(0, 7);
-      const t2 = monthTotals(state.transactions, ym);
+      const t2 = monthTotals(state.transactions, ym, state.generalLedger);
       return { name: d.toLocaleDateString('fr-FR', { month: 'short' }), Revenus: Math.round(t2.income), Dépenses: Math.round(t2.expense) };
     });
-  }, [state.transactions]);
+  }, [state.transactions, state.generalLedger]);
 
   return (
     <div className="screen stagger">
@@ -68,7 +69,7 @@ export default function FinancialOverview() {
           <span className="label">{t('common.profit')}</span>
         </div>
         <div className="stat-card" style={{ background: 'var(--tint-amber)' }}>
-          <span className="value num">{fmtDT(totals.income * 0.19 * 0.25, { decimals: 0 })}</span>
+            <span className="value num">{fmtDT((state.vatSummary || []).filter((row) => String(row.period_month || '').startsWith(month)).reduce((sum, row) => sum + (row.kind === 'income' ? Number(row.tax_amount || 0) : -Number(row.tax_amount || 0)), 0), { decimals: 0 })}</span>
           <span className="label">{t('tax.vatToPay')}</span>
         </div>
       </div>

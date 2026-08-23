@@ -16,7 +16,7 @@ export default function IncomeList() {
   const { t, lang } = useT();
   const [filter, setFilter] = useState('all');
   const ym = new Date().toISOString().slice(0, 7);
-  const totals = useMemo(() => monthTotals(state.transactions, ym), [state.transactions, ym]);
+  const totals = useMemo(() => monthTotals(state.transactions, ym, state.generalLedger), [state.transactions, state.generalLedger, ym]);
 
   const incomes = state.transactions
     .filter((tx) => tx.kind === 'income')

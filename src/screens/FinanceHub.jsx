@@ -64,7 +64,7 @@ export default function FinanceHub() {
   const { state, patch } = useStore();
   const { t } = useT();
   const ym = new Date().toISOString().slice(0, 7);
-  const totals = useMemo(() => monthTotals(state.transactions, ym), [state.transactions, ym]);
+  const totals = useMemo(() => monthTotals(state.transactions, ym, state.generalLedger), [state.transactions, state.generalLedger, ym]);
   const view = state.settings.financeView || 'list';
   const setView = (v) => patch('settings', { financeView: v });
   const showAll = state.settings.financeAll || false;

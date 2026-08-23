@@ -11,24 +11,23 @@ export default function KpiDashboard() {
 
   const kpis = useMemo(() => {
     const ym = new Date().toISOString().slice(0, 7);
-    const { income, expense, profit } = monthTotals(state.transactions, ym);
-    const incomeTx = state.transactions.filter((tx) => tx.kind === 'income' && (tx.date || '').startsWith(ym));
-    const expenseTx = state.transactions.filter((tx) => tx.kind === 'expense' && (tx.date || '').startsWith(ym));
-    const panierMoyen = incomeTx.length ? income / incomeTx.length : 0;
-    const tvaRecuperee = expenseTx.reduce((s, tx) => s + (tx.tva ?? 0), 0);
-    const clientsActifs = new Set(incomeTx.map((tx) => tx.vendor).filter(Boolean)).size;
+    const { income, expense, profit } = monthTotals(state.transactions, ym, state.generalLedger);
+    const posted = state.generalLedger.filter((line) => String(line.entry_date || '').startsWith(ym));
+    const incomeEntries = new Set(posted.filter((line) => Number(line.account_class) === 7).map((line) => line.entry_id));
+    const panierMoyen = incomeEntries.size ? income / incomeEntries.size : 0;
+    const tvaRecuperee = (state.vatSummary || []).filter((row) => row.kind === 'expense' && String(row.period_month || '').startsWith(ym)).reduce((sum, row) => sum + Number(row.tax_amount || 0), 0);
 
     return [
       { label: 'CA mensuel', value: fmtDT(income, { decimals: 0 }) },
       { label: 'Marge', value: income ? `${Math.round((profit / income) * 100)}%` : '—' },
       { label: 'Panier moyen', value: incomeTx.length ? fmtDT(panierMoyen, { decimals: 0 }) : '—' },
       { label: 'TVA récupérée', value: fmtDT(tvaRecuperee, { decimals: 0 }) },
-      { label: 'Clients actifs', value: String(clientsActifs) },
+      { label: 'Écritures de vente', value: String(incomeEntries.size) },
       { label: 'Dépenses du mois', value: fmtDT(expense, { decimals: 0 }) },
     ];
-  }, [state.transactions]);
+  }, [state.generalLedger, state.vatSummary]);
 
-  const hasData = state.transactions.length > 0;
+  const hasData = state.generalLedger.length > 0;
 
   return (
     <div className="screen stagger">
