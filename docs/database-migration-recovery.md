@@ -23,10 +23,10 @@ On 23 August 2026, the Supabase migration API reported these applied versions fo
 20260823093629 beta_ready_authoritative_state
 20260823094133 beta_ready_advisor_hardening
 20260823112732 prevent_cross_payment_overallocation
-20260823130000 invoice_accounting_posting_pipeline
+20260823120144 invoice_accounting_posting_pipeline
 ```
 
-All 19 entries above are the authoritative production record. The repository does not contain the original SQL files for the nine historical entries before the V1 files. Those exact historical files cannot be reconstructed safely from names alone; no fabricated replacements are used. Their resulting legacy schema is captured by `server/lib/schema.sql`, which is now explicitly treated as an empty-database baseline only. The accounting pipeline migration is present in the repository and was applied successfully to production with the version above.
+All 19 entries above are the authoritative production record. The repository does not contain the original SQL files for the nine historical entries before the V1 files. Those exact historical files cannot be reconstructed safely from names alone; no fabricated replacements are used. Their resulting legacy schema is captured by `server/lib/schema.sql`, which is now explicitly treated as an empty-database baseline only. The accounting pipeline migration is present in the repository as `20260823130000_invoice_accounting_posting_pipeline.sql`; Supabase recorded its applied version as `20260823120144` and reported success.
 
 ## Replay evidence
 
