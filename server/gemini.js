@@ -37,6 +37,7 @@ export async function generateContent(body) {
     method: 'POST',
     headers: headers(),
     body: JSON.stringify(body),
+    signal: AbortSignal.timeout(45_000),
   });
   const json = await res.json().catch(() => ({}));
   if (!res.ok) {

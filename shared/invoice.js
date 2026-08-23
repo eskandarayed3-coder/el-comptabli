@@ -1,13 +1,13 @@
 const CATEGORIES = new Set(['loyer', 'achats', 'carburant', 'electricite', 'telecom', 'salaires', 'impots', 'ventes', 'autres']);
 const KINDS = new Set(['expense', 'income']);
-const CONFIDENCE_FIELDS = ['vendor', 'supplierTaxId', 'invoiceNumber', 'date', 'amountHT', 'tva', 'amountTTC', 'tvaRate'];
+const CONFIDENCE_FIELDS = ['vendor', 'supplierTaxId', 'invoiceNumber', 'date', 'amountHT', 'tva', 'amountTTC', 'tvaRate', 'discount', 'stampDuty', 'withholdingTax'];
 
 function text(value, max = 180) {
   return String(value ?? '').replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max);
 }
 
-export function parseTunisianAmount(value) {
-  if (typeof value === 'number') return Number.isFinite(value) && value >= 0 ? value : null;
+export function parseTunisianAmount(value, { allowNegative = false } = {}) {
+  if (typeof value === 'number') return Number.isFinite(value) && (allowNegative || value >= 0) ? Math.round(value * 1000) / 1000 : null;
   let raw = text(value, 80)
     .replace(/[٠-٩]/g, (digit) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(digit)))
     .replace(/[۰-۹]/g, (digit) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(digit)))
@@ -16,7 +16,9 @@ export function parseTunisianAmount(value) {
     .replace(/[\u00a0\u202f\s]/g, '')
     .replace(/(?:TND|DT|DINARS?|د\.?ت)/giu, '')
     .replace(/[^0-9,.'-]/g, '');
-  if (!raw || raw.startsWith('-')) return null;
+  const negative = /^-/.test(raw) || /^\(.*\)$/.test(text(value, 80));
+  if (!raw || (negative && !allowNegative)) return null;
+  raw = raw.replace(/^-/, '');
   raw = raw.replace(/'/g, '');
   const comma = raw.lastIndexOf(',');
   const dot = raw.lastIndexOf('.');
@@ -32,7 +34,9 @@ export function parseTunisianAmount(value) {
     raw = decimals.length <= 3 ? `${parts.join('')}.${decimals}` : `${parts.join('')}${decimals}`;
   }
   const amount = Number(raw);
-  return Number.isFinite(amount) && amount >= 0 ? Math.round(amount * 1000) / 1000 : null;
+  if (!Number.isFinite(amount)) return null;
+  const signed = negative ? -amount : amount;
+  return allowNegative || signed >= 0 ? Math.round(signed * 1000) / 1000 : null;
 }
 
 export function normalizeInvoiceDate(value) {
@@ -59,10 +63,13 @@ function confidenceMap(input) {
 
 export function normalizeOcrExtraction(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) throw new Error('OCR response must be an object');
+  const rawDocumentType = text(input.documentType ?? input.typeDocument, 40).toLocaleLowerCase('fr');
+  const documentType = /avoir|credit/.test(rawDocumentType) ? 'avoir' : 'facture';
+  const allowNegative = documentType === 'avoir';
   const vendor = text(input.vendor ?? input.supplier ?? input.fournisseur, 180);
   const invoiceNumber = text(input.invoiceNumber ?? input.reference ?? input.numeroFacture, 100);
   const vatRates = Array.isArray(input.vatRates)
-    ? input.vatRates.map(parseTunisianAmount).filter((value) => value !== null && value <= 100).slice(0, 8)
+    ? input.vatRates.map((value) => parseTunisianAmount(value)).filter((value) => value !== null && value <= 100).slice(0, 8)
     : [];
   const tvaRate = parseTunisianAmount(input.tvaRate);
   if (tvaRate !== null && tvaRate <= 100 && !vatRates.includes(tvaRate)) vatRates.unshift(tvaRate);
@@ -72,24 +79,32 @@ export function normalizeOcrExtraction(input) {
     invoiceNumber,
     reference: invoiceNumber,
     date: normalizeInvoiceDate(input.date) || '',
-    amountHT: parseTunisianAmount(input.amountHT),
-    tva: parseTunisianAmount(input.tva),
-    amountTTC: parseTunisianAmount(input.amountTTC),
+    amountHT: parseTunisianAmount(input.amountHT, { allowNegative }),
+    tva: parseTunisianAmount(input.tva, { allowNegative }),
+    amountTTC: parseTunisianAmount(input.amountTTC, { allowNegative }),
+    discount: parseTunisianAmount(input.discount ?? input.remise) ?? 0,
+    stampDuty: parseTunisianAmount(input.stampDuty ?? input.timbreFiscal ?? input.timbre) ?? 0,
+    withholdingTax: parseTunisianAmount(input.withholdingTax ?? input.retenueSource ?? input.retenue) ?? 0,
+    taxExempt: Boolean(input.taxExempt ?? input.exoneree ?? input.exempt),
     tvaRate: tvaRate !== null && tvaRate <= 100 ? tvaRate : null,
     vatRates,
     category: CATEGORIES.has(input.category) ? input.category : 'autres',
     kind: KINDS.has(input.kind) ? input.kind : 'expense',
-    documentType: text(input.documentType, 40) || 'facture',
+    documentType,
     confidence: confidenceMap(input.confidence),
   };
 }
 
-export function invoiceConsistency({ amountHT, tva, amountTTC }, tolerance = 0.02) {
-  const ht = parseTunisianAmount(amountHT);
-  const vat = parseTunisianAmount(tva);
-  const ttc = parseTunisianAmount(amountTTC);
+export function invoiceConsistency({ amountHT, tva, amountTTC, discount = 0, stampDuty = 0, withholdingTax = 0, documentType = 'facture' }, tolerance = 0.02) {
+  const allowNegative = documentType === 'avoir';
+  const ht = parseTunisianAmount(amountHT, { allowNegative });
+  const vat = parseTunisianAmount(tva, { allowNegative });
+  const ttc = parseTunisianAmount(amountTTC, { allowNegative });
   if (ht === null || vat === null || ttc === null) return { complete: false, consistent: true, difference: null };
-  const difference = Math.round(Math.abs((ht + vat) - ttc) * 1000) / 1000;
+  const rebate = parseTunisianAmount(discount) ?? 0;
+  const stamp = parseTunisianAmount(stampDuty) ?? 0;
+  const withholding = parseTunisianAmount(withholdingTax) ?? 0;
+  const difference = Math.round(Math.abs((ht - rebate + vat + stamp - withholding) - ttc) * 1000) / 1000;
   return { complete: true, consistent: difference <= tolerance, difference };
 }
 

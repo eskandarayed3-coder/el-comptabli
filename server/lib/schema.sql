@@ -43,7 +43,13 @@ create table if not exists public.invoices (
   invoice_date date not null,
   amount_ht numeric(18, 3),
   vat_amount numeric(18, 3),
-  amount_ttc numeric(18, 3) not null check (amount_ttc >= 0),
+  amount_ttc numeric(18, 3) not null,
+  discount numeric(18, 3) not null default 0,
+  stamp_duty numeric(18, 3) not null default 0,
+  withholding_tax numeric(18, 3) not null default 0,
+  tax_exempt boolean not null default false,
+  document_type text not null default 'facture' check (document_type in ('facture', 'avoir')),
+  status text not null default 'confirmed' check (status in ('uploaded', 'processing', 'review_required', 'confirmed', 'failed')),
   vat_rate numeric(8, 3),
   vat_rates jsonb not null default '[]'::jsonb,
   category text not null default 'autres',
@@ -61,6 +67,30 @@ create table if not exists public.invoices (
 );
 
 create index if not exists idx_invoices_user_date on public.invoices (user_id, invoice_date desc);
+
+alter table public.invoices add column if not exists discount numeric(18, 3) not null default 0;
+alter table public.invoices add column if not exists stamp_duty numeric(18, 3) not null default 0;
+alter table public.invoices add column if not exists withholding_tax numeric(18, 3) not null default 0;
+alter table public.invoices add column if not exists tax_exempt boolean not null default false;
+alter table public.invoices add column if not exists document_type text not null default 'facture';
+alter table public.invoices add column if not exists status text not null default 'confirmed';
+alter table public.invoices drop constraint if exists invoices_amount_ttc_check;
+alter table public.invoices drop constraint if exists invoices_document_type_check;
+alter table public.invoices drop constraint if exists invoices_status_check;
+alter table public.invoices add constraint invoices_amount_ttc_check check (amount_ttc >= 0 or document_type = 'avoir');
+alter table public.invoices add constraint invoices_document_type_check check (document_type in ('facture', 'avoir'));
+alter table public.invoices add constraint invoices_status_check check (status in ('uploaded', 'processing', 'review_required', 'confirmed', 'failed'));
+
+create table if not exists public.rate_limit_windows (
+  scope text not null,
+  key_hash text not null,
+  window_start timestamptz not null,
+  hits integer not null check (hits > 0),
+  expires_at timestamptz not null,
+  primary key (scope, key_hash, window_start)
+);
+alter table public.rate_limit_windows enable row level security;
+revoke all on table public.rate_limit_windows from anon, authenticated;
 
 create table if not exists public.subscriptions (
   user_id uuid primary key references public.profiles(id) on delete cascade,
@@ -200,7 +230,7 @@ create or replace function public.confirm_scanned_invoice(
 returns jsonb
 language plpgsql
 security definer
-set search_path = public
+set search_path = ''
 as $$
 declare
   v_invoice public.invoices%rowtype;
@@ -210,10 +240,20 @@ begin
     raise exception 'invalid invoice identity' using errcode = '22023';
   end if;
 
+  select * into v_invoice from public.invoices
+   where user_id = p_user_id
+     and (document_id = p_invoice->>'id' or transaction_id = p_transaction->>'id')
+   limit 1;
+  if found then
+    select data into v_state from public.app_state where user_id = p_user_id;
+    return jsonb_build_object('state', v_state, 'invoice', to_jsonb(v_invoice), 'idempotent', true);
+  end if;
+
   insert into public.invoices (
     user_id, document_id, transaction_id, fingerprint, kind, supplier,
     supplier_tax_id, invoice_number, invoice_date, amount_ht, vat_amount,
-    amount_ttc, vat_rate, vat_rates, category, storage_path, mime_type,
+    amount_ttc, discount, stamp_duty, withholding_tax, tax_exempt,
+    document_type, status, vat_rate, vat_rates, category, storage_path, mime_type,
     raw_ocr, validated_fields, confidence, validated_at
   ) values (
     p_user_id,
@@ -228,6 +268,12 @@ begin
     nullif(p_invoice->>'amountHT', '')::numeric,
     nullif(p_invoice->>'tva', '')::numeric,
     (p_invoice->>'amountTTC')::numeric,
+    coalesce(nullif(p_invoice->>'discount', '')::numeric, 0),
+    coalesce(nullif(p_invoice->>'stampDuty', '')::numeric, 0),
+    coalesce(nullif(p_invoice->>'withholdingTax', '')::numeric, 0),
+    coalesce((p_invoice->>'taxExempt')::boolean, false),
+    coalesce(p_invoice->>'documentType', 'facture'),
+    'confirmed',
     nullif(p_invoice->>'tvaRate', '')::numeric,
     coalesce(p_invoice->'vatRates', '[]'::jsonb),
     coalesce(p_invoice->>'category', 'autres'),
@@ -261,6 +307,44 @@ $$;
 
 revoke all on function public.confirm_scanned_invoice(uuid, text, jsonb, jsonb, jsonb, jsonb) from public, anon, authenticated;
 grant execute on function public.confirm_scanned_invoice(uuid, text, jsonb, jsonb, jsonb, jsonb) to service_role;
+
+create or replace function public.consume_rate_limit(
+  p_scope text,
+  p_key_hash text,
+  p_window_seconds integer,
+  p_max_hits integer
+)
+returns table(allowed boolean, retry_after integer, remaining integer)
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  v_start timestamptz;
+  v_hits integer;
+begin
+  if length(coalesce(p_scope, '')) > 80
+     or p_key_hash !~ '^[a-f0-9]{64}$'
+     or p_window_seconds < 1 or p_window_seconds > 86400
+     or p_max_hits < 1 or p_max_hits > 10000 then
+    raise exception 'invalid rate limit input' using errcode = '22023';
+  end if;
+  v_start := to_timestamp(floor(extract(epoch from clock_timestamp()) / p_window_seconds) * p_window_seconds);
+  insert into public.rate_limit_windows(scope, key_hash, window_start, hits, expires_at)
+  values (p_scope, p_key_hash, v_start, 1, v_start + make_interval(secs => p_window_seconds * 2))
+  on conflict (scope, key_hash, window_start)
+  do update set hits = public.rate_limit_windows.hits + 1
+  returning hits into v_hits;
+  delete from public.rate_limit_windows where expires_at < clock_timestamp();
+  return query select
+    v_hits <= p_max_hits,
+    greatest(1, ceil(extract(epoch from (v_start + make_interval(secs => p_window_seconds) - clock_timestamp())))::integer),
+    greatest(0, p_max_hits - v_hits);
+end;
+$$;
+
+revoke all on function public.consume_rate_limit(text, text, integer, integer) from public, anon, authenticated;
+grant execute on function public.consume_rate_limit(text, text, integer, integer) to service_role;
 
 -- Covers the activation-code foreign key and avoids a full scan when a user is
 -- removed or an administrator filters redeemed codes by account.

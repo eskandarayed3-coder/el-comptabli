@@ -8,7 +8,8 @@ import {
   validateConfirmedInvoice,
 } from '../../shared/invoice.js';
 import { ownedPath } from '../routes/documents.js';
-import { validateImagePayload } from './validation.js';
+import { validateImagePayload, validateScanPayload } from './validation.js';
+import { selectPdfPages } from '../../shared/pdfPages.js';
 
 test('1. normalizes French invoice fields without inventing values', () => {
   const invoice = normalizeOcrExtraction({
@@ -87,4 +88,62 @@ test('Arabic OCR aliases and multiple VAT rates remain reviewable', () => {
   assert.equal(invoice.vendor, 'شركة النور');
   assert.equal(invoice.amountTTC, 119);
   assert.deepEqual(invoice.vatRates, [7, 19]);
+});
+
+test('11. preserves the Tunisian VAT rates 7, 13 and 19', () => {
+  const invoice = normalizeOcrExtraction({ vendor: 'Test', invoiceNumber: 'TVA-1', date: '2026-08-23', amountTTC: 100, vatRates: [7, 13, 19] });
+  assert.deepEqual(invoice.vatRates, [7, 13, 19]);
+});
+
+test('12. accepts a VAT-exempt invoice with zero VAT', () => {
+  const invoice = normalizeOcrExtraction({ vendor: 'Test', invoiceNumber: 'EX-1', date: '2026-08-23', amountHT: 100, tva: 0, amountTTC: 100, taxExempt: true });
+  assert.equal(invoice.taxExempt, true);
+  assert.equal(validateConfirmedInvoice(invoice).consistency.consistent, true);
+});
+
+test('13. accounts for discount, stamp duty and withholding in total checks', () => {
+  const result = invoiceConsistency({ amountHT: 100, discount: 5, tva: 18.05, stampDuty: 1, withholdingTax: 1, amountTTC: 113.05 });
+  assert.equal(result.consistent, true);
+});
+
+test('14. accepts signed Tunisian amounts only for a credit note', () => {
+  assert.equal(parseTunisianAmount('-12,500'), null);
+  assert.equal(parseTunisianAmount('(12,500)', { allowNegative: true }), -12.5);
+  const credit = normalizeOcrExtraction({ documentType: 'avoir', amountHT: -100, tva: -19, amountTTC: -119 });
+  assert.equal(credit.documentType, 'avoir');
+  assert.equal(credit.amountTTC, -119);
+});
+
+test('15. normalizes bilingual French and Arabic digits without losing text', () => {
+  const invoice = normalizeOcrExtraction({ fournisseur: 'شركة Atlas', numeroFacture: 'AV-١٣', date: '23/08/2026', amountTTC: '١٢٣٫٤٥٠ د.ت' });
+  assert.equal(invoice.vendor, 'شركة Atlas');
+  assert.equal(invoice.amountTTC, 123.45);
+});
+
+test('16. selects the only page of a one-page PDF', () => {
+  assert.deepEqual(selectPdfPages(1), [1]);
+});
+
+test('17. selects both pages of a two-page PDF', () => {
+  assert.deepEqual(selectPdfPages(2), [1, 2]);
+});
+
+test('18. processes every page up to the controlled four-page limit', () => {
+  assert.deepEqual(selectPdfPages(4), [1, 2, 3, 4]);
+});
+
+test('19. keeps early context and the final totals page for a long PDF', () => {
+  assert.deepEqual(selectPdfPages(12), [1, 2, 3, 12]);
+});
+
+test('20. validates ordered multipage image payloads and rejects repeated pages', () => {
+  const jpeg = Buffer.from([0xff, 0xd8, 0xff, 0xdb]).toString('base64');
+  assert.equal(validateScanPayload({ images: [
+    { mimeType: 'image/jpeg', dataBase64: jpeg, pageNumber: 1 },
+    { mimeType: 'image/jpeg', dataBase64: jpeg, pageNumber: 2 },
+  ], pdf: { totalPages: 2 } }).ok, true);
+  assert.equal(validateScanPayload({ images: [
+    { mimeType: 'image/jpeg', dataBase64: jpeg, pageNumber: 1 },
+    { mimeType: 'image/jpeg', dataBase64: jpeg, pageNumber: 1 },
+  ] }).ok, false);
 });

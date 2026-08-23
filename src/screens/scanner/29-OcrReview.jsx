@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileText, ZoomIn } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
@@ -33,9 +33,15 @@ export default function OcrReview() {
   const [rawOcr, setRawOcr] = useState(null);
   const [confidence, setConfidence] = useState({});
   const [acceptInconsistency, setAcceptInconsistency] = useState(false);
+  const [processState, setProcessState] = useState('processing');
+  const [pageInfo, setPageInfo] = useState(null);
+  const [scanVersion, setScanVersion] = useState(0);
+  const scanPromiseRef = useRef(null);
+  const idsRef = useRef({ documentId: uid(), transactionId: uid() });
   const [fields, setFields] = useState({
     vendor: '', supplierTaxId: '', invoiceNumber: '', date: new Date().toISOString().slice(0, 10),
-    amountHT: '', tva: '', amountTTC: '', category: 'autres', kind: 'expense', tvaRate: '', documentType: 'facture',
+    amountHT: '', tva: '', amountTTC: '', discount: '', stampDuty: '', withholdingTax: '', taxExempt: false,
+    category: 'autres', kind: 'expense', tvaRate: '', documentType: 'facture',
   });
 
   useEffect(() => {
@@ -44,10 +50,12 @@ export default function OcrReview() {
     const previewUrl = file.type.startsWith('image/') ? URL.createObjectURL(file) : null;
     let active = true;
     setPreview(previewUrl);
-    scanDocument(file)
-      .then(({ fields: f, raw }) => {
+    if (!scanPromiseRef.current) scanPromiseRef.current = scanDocument(file);
+    scanPromiseRef.current
+      .then(({ fields: f, raw, pageInfo: pages }) => {
         if (!active) return;
         setRawOcr(raw || null);
+        setPageInfo(pages || null);
         setConfidence(f.confidence || {});
         setFields((prev) => ({
           ...prev,
@@ -58,21 +66,40 @@ export default function OcrReview() {
           amountHT: f.amountHT ?? '',
           tva: f.tva ?? '',
           amountTTC: f.amountTTC ?? '',
+          discount: f.discount ?? '',
+          stampDuty: f.stampDuty ?? '',
+          withholdingTax: f.withholdingTax ?? '',
+          taxExempt: Boolean(f.taxExempt),
           category: f.category || 'autres',
           kind: f.kind || 'expense',
           tvaRate: f.tvaRate ?? '',
           documentType: f.documentType || 'facture',
         }));
         setDestination(f.kind === 'income' ? 'income' : 'expense');
+        setProcessState('review_required');
       })
-      .catch((e) => { if (active) setError(e.friendly?.message || e.message || t('aiOff.codes.upstream_error')); })
+      .catch((e) => {
+        if (!active) return;
+        setProcessState('failed');
+        setError(e.friendly?.message || e.message || t('aiOff.codes.upstream_error'));
+      })
       .finally(() => { if (active) setBusy(false); });
     return () => {
       active = false;
       if (previewUrl) URL.revokeObjectURL(previewUrl);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [scanVersion]);
+
+  const retryScan = () => {
+    const file = window.__pendingScanFile;
+    if (!file) return navigate('/scanner');
+    setBusy(true);
+    setError(null);
+    setProcessState('processing');
+    scanPromiseRef.current = scanDocument(file);
+    setScanVersion((value) => value + 1);
+  };
 
   const set = (k) => (e) => {
     setAcceptInconsistency(false);
@@ -89,11 +116,11 @@ export default function OcrReview() {
   const save = async () => {
     if (!canSave) return;
     const selectedFile = window.__pendingScanFile;
-    const transactionId = uid();
-    const documentId = uid();
-    const amountHTValue = parseTunisianAmount(fields.amountHT) || 0;
-    const vatValue = parseTunisianAmount(fields.tva) || 0;
-    const amountTTCValue = parseTunisianAmount(fields.amountTTC) || 0;
+    const { transactionId, documentId } = idsRef.current;
+    const allowNegative = fields.documentType === 'avoir';
+    const amountHTValue = parseTunisianAmount(fields.amountHT, { allowNegative }) ?? 0;
+    const vatValue = parseTunisianAmount(fields.tva, { allowNegative }) ?? 0;
+    const amountTTCValue = parseTunisianAmount(fields.amountTTC, { allowNegative }) ?? 0;
     const document = {
       id: documentId,
       name: selectedFile?.name || `${fields.vendor || 'Document'}.pdf`,
@@ -112,6 +139,7 @@ export default function OcrReview() {
 
     if (!selectedFile) return;
     setSaving(true);
+    setProcessState('processing');
     setError(null);
     if (destination === 'invoice') {
       let archived;
@@ -138,6 +166,7 @@ export default function OcrReview() {
       logActivity(`Document ${fields.vendor} converti en brouillon de facture`, 'FileText');
       delete window.__pendingScanFile;
       setSaving(false);
+      setProcessState('confirmed');
       toast(t('scanner.invoiceDraftReady'));
       navigate('/income/invoice?source=scan');
       return;
@@ -154,10 +183,12 @@ export default function OcrReview() {
       });
       if (!result.state) throw new Error('La synchronisation du tableau de bord a échoué.');
       replaceCloudState(result.state);
+      setProcessState('confirmed');
       delete window.__pendingScanFile;
       toast(t('common.saved'));
       navigate('/documents');
     } catch (e) {
+      setProcessState('review_required');
       setError(e.friendly?.message || e.message || t('docs.uploadFailed'));
       setSaving(false);
     }
@@ -189,7 +220,13 @@ export default function OcrReview() {
       {error && (
         <div className="card tint-amber" role="alert">
           <p className="small" style={{ fontWeight: 600 }}>{error}</p>
-          <p className="tiny muted">{t('scanner.confidence')}</p>
+          {processState === 'failed' && <button type="button" className="btn btn-secondary btn-sm" onClick={retryScan}>{t('scanner.retryScan')}</button>}
+        </div>
+      )}
+
+      {pageInfo?.limited && (
+        <div className="card tint-amber" role="status">
+          <p className="small" style={{ margin: 0 }}>{t('scanner.pdfLimited', { pages: pageInfo.selectedPages.join(', '), total: pageInfo.totalPages })}</p>
         </div>
       )}
 
@@ -222,6 +259,13 @@ export default function OcrReview() {
           </select>
         </div>
         <div className="field">
+          <label htmlFor={`${id}-document-type`}>{t('scanner.documentType')}</label>
+          <select id={`${id}-document-type`} className="input" value={fields.documentType} onChange={set('documentType')}>
+            <option value="facture">{t('scanner.invoiceType')}</option>
+            <option value="avoir">{t('scanner.creditNote')}</option>
+          </select>
+        </div>
+        <div className="field">
           <label htmlFor={`${id}-ht`}>{t('common.ht')}</label>
           <input id={`${id}-ht`} className="input num" style={inputStyle('amountHT')} inputMode="decimal" value={fields.amountHT} onChange={set('amountHT')} placeholder="0,000" />
         </div>
@@ -237,6 +281,18 @@ export default function OcrReview() {
           <label htmlFor={`${id}-ttc`}>{t('common.ttc')}</label>
           <input id={`${id}-ttc`} className="input num" style={inputStyle('amountTTC')} inputMode="decimal" value={fields.amountTTC} onChange={set('amountTTC')} placeholder="0,000" />
           {validation.errors.amountTTC && <span className="tiny" style={{ color: 'var(--danger, #c62828)' }}>{t('scanner.invalidAmount')}</span>}
+        </div>
+        <div className="field">
+          <label htmlFor={`${id}-discount`}>{t('scanner.discount')}</label>
+          <input id={`${id}-discount`} className="input num" inputMode="decimal" value={fields.discount} onChange={set('discount')} placeholder="0,000" />
+        </div>
+        <div className="field">
+          <label htmlFor={`${id}-stamp-duty`}>{t('scanner.stampDuty')}</label>
+          <input id={`${id}-stamp-duty`} className="input num" inputMode="decimal" value={fields.stampDuty} onChange={set('stampDuty')} placeholder="0,000" />
+        </div>
+        <div className="field">
+          <label htmlFor={`${id}-withholding-tax`}>{t('scanner.withholdingTax')}</label>
+          <input id={`${id}-withholding-tax`} className="input num" inputMode="decimal" value={fields.withholdingTax} onChange={set('withholdingTax')} placeholder="0,000" />
         </div>
       </div>
 

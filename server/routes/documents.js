@@ -3,6 +3,8 @@ import { getServiceClient, requireUser } from '../lib/supabase.js';
 import { cleanText, validateImagePayload } from '../lib/validation.js';
 import { ensureAccount } from '../lib/users.js';
 import { safeOcrSnapshot, validateConfirmedInvoice } from '../../shared/invoice.js';
+import { sharedRateLimit } from '../lib/rateLimit.js';
+import { logEvent, userHash } from '../lib/observability.js';
 
 const router = Router();
 const BUCKET = 'documents';
@@ -64,9 +66,23 @@ async function ensureBucket() {
   }
 }
 
+async function existingConfirmation(userId, documentId, transactionId) {
+  const client = getServiceClient();
+  const { data: invoice, error } = await client.from('invoices')
+    .select('id,document_id,transaction_id,status,created_at')
+    .eq('user_id', userId)
+    .or(`document_id.eq.${documentId},transaction_id.eq.${transactionId}`)
+    .maybeSingle();
+  if (error) throw error;
+  if (!invoice) return null;
+  const { data: state, error: stateError } = await client.from('app_state').select('data').eq('user_id', userId).single();
+  if (stateError) throw stateError;
+  return { invoice, state: state.data };
+}
+
 router.use(requireUser);
 
-router.post('/upload', async (req, res) => {
+router.post('/upload', sharedRateLimit({ scope: 'document_upload', windowSeconds: 60, max: 20 }), async (req, res) => {
   const documentId = cleanText(req.body?.documentId, 64);
   const fileName = cleanText(req.body?.fileName, 180).replace(/[\u0000-\u001f\\/]/g, '').trim();
   if (!isDocumentId(documentId)) return res.status(400).json({ error: { code: 'bad_document_id', message: 'Identifiant de document invalide.' } });
@@ -74,6 +90,8 @@ router.post('/upload', async (req, res) => {
   if (!payload.ok) return res.status(400).json({ error: { code: 'bad_file', message: payload.message } });
   if (!validFileName(fileName, payload.mimeType)) return res.status(400).json({ error: { code: 'bad_file_extension', message: 'L’extension ne correspond pas au format du fichier.' } });
 
+  const metadata = { requestId: req.requestId, userHash: userHash(req.user?.id), mimeType: payload.mimeType };
+  logEvent('info', 'document_upload_attempt', metadata);
   try {
     await ensureBucket();
     const bytes = Buffer.from(payload.dataBase64, 'base64');
@@ -89,6 +107,7 @@ router.post('/upload', async (req, res) => {
       }
       throw error;
     }
+    logEvent('info', 'document_upload_success', { ...metadata, bytes: bytes.length });
     return res.status(201).json({
       document: {
         id: documentId,
@@ -100,7 +119,7 @@ router.post('/upload', async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('document upload error:', error?.message || error);
+    logEvent('error', 'document_upload_failure', { ...metadata, category: error?.name || 'storage_error' });
     return res.status(503).json({ error: { code: 'document_upload_failed', message: 'Le document n’a pas pu être archivé. Réessaie.' } });
   }
 });
@@ -108,7 +127,7 @@ router.post('/upload', async (req, res) => {
 // Archives the original and commits the reviewed invoice plus dashboard state.
 // Storage cannot participate in a Postgres transaction, so a failed database
 // commit is compensated immediately by deleting the uploaded object.
-router.post('/confirm', async (req, res) => {
+router.post('/confirm', sharedRateLimit({ scope: 'invoice_confirm', windowSeconds: 60, max: 10 }), async (req, res) => {
   const documentId = cleanText(req.body?.documentId, 64);
   const transactionId = cleanText(req.body?.transactionId, 64);
   const fileName = cleanText(req.body?.fileName, 180).replace(/[\u0000-\u001f\\/]/g, '').trim();
@@ -175,9 +194,21 @@ router.post('/confirm', async (req, res) => {
     documentId,
   };
   const rawOcr = safeOcrSnapshot(req.body?.rawOcr);
+  const metadata = {
+    requestId: req.requestId,
+    userHash: userHash(req.user?.id),
+    mimeType: payload.mimeType,
+    documentType: fields.documentType,
+  };
+  logEvent('info', 'invoice_confirm_attempt', metadata);
 
   try {
     await ensureAccount(req.user);
+    const existing = await existingConfirmation(req.user.id, documentId, transactionId);
+    if (existing) {
+      logEvent('info', 'invoice_confirm_idempotent', metadata);
+      return res.status(200).json({ ...existing, idempotent: true });
+    }
     await ensureBucket();
     const storage = getServiceClient().storage.from(BUCKET);
     const uploaded = await storage.upload(storagePath, bytes, {
@@ -187,7 +218,13 @@ router.post('/confirm', async (req, res) => {
     });
     if (uploaded.error) {
       if (/already exists|duplicate/i.test(uploaded.error.message || '')) {
-        return res.status(409).json({ error: { code: 'document_exists', message: 'Ce document est déjà archivé.' } });
+        const committed = await existingConfirmation(req.user.id, documentId, transactionId);
+        if (committed) {
+          logEvent('info', 'invoice_confirm_idempotent', metadata);
+          return res.status(200).json({ ...committed, idempotent: true });
+        }
+        res.setHeader('Retry-After', '3');
+        return res.status(409).json({ error: { code: 'confirmation_processing', message: 'Cette facture est déjà en cours de confirmation. Réessaie dans 3 s.' } });
       }
       throw uploaded.error;
     }
@@ -203,13 +240,15 @@ router.post('/confirm', async (req, res) => {
     if (error) {
       await storage.remove([storagePath]).catch(() => {});
       if (error.code === '23505' || /duplicate|unique/i.test(error.message || '')) {
+        logEvent('warn', 'invoice_confirm_duplicate', metadata);
         return res.status(409).json({ error: { code: 'duplicate_invoice', message: 'Cette facture existe déjà pour ce fournisseur et cette date.' } });
       }
       throw error;
     }
-    return res.status(201).json({ state: data?.state || data, invoice: data?.invoice || null, document, transaction });
+    logEvent('info', 'invoice_confirm_success', { ...metadata, idempotent: Boolean(data?.idempotent) });
+    return res.status(data?.idempotent ? 200 : 201).json({ state: data?.state || data, invoice: data?.invoice || null, document, transaction, idempotent: Boolean(data?.idempotent) });
   } catch (error) {
-    console.error('invoice confirmation error:', error?.message || error);
+    logEvent('error', 'invoice_confirm_failure', { ...metadata, category: error?.code || error?.name || 'database_error' });
     return res.status(503).json({ error: { code: 'invoice_save_failed', message: 'La facture n’a pas pu être enregistrée. Aucune donnée incomplète n’a été conservée.' } });
   }
 });

@@ -1,3 +1,5 @@
+import { MAX_OCR_PDF_PAGES, selectPdfPages } from '../../shared/pdfPages.js';
+
 const MAX_UPLOAD_BYTES = 8 * 1024 * 1024;
 const ALLOWED_UPLOAD_TYPES = new Map([
   ['image/jpeg', ['.jpg', '.jpeg']],
@@ -8,13 +10,28 @@ const ALLOWED_UPLOAD_TYPES = new Map([
 
 async function json(response) {
   const body = await response.json().catch(() => ({}));
-  if (!response.ok) throw Object.assign(new Error(body?.error?.message || 'Erreur réseau'), { friendly: body?.error });
+  if (!response.ok) {
+    const retryAfter = Number(response.headers.get('Retry-After')) || null;
+    const friendly = { ...body?.error, retryAfter };
+    throw Object.assign(new Error(body?.error?.message || 'Erreur réseau'), { friendly, retryAfter, status: response.status });
+  }
   return body;
 }
 
 async function apiFetch(path, options = {}) {
-  const headers = { ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...options.headers };
-  return fetch(path, { credentials: 'same-origin', ...options, headers });
+  const { timeoutMs = 20_000, ...fetchOptions } = options;
+  const headers = { ...(fetchOptions.body ? { 'Content-Type': 'application/json' } : {}), ...fetchOptions.headers };
+  const signal = fetchOptions.signal || AbortSignal.timeout(timeoutMs);
+  try {
+    return await fetch(path, { credentials: 'same-origin', ...fetchOptions, headers, signal });
+  } catch (error) {
+    if (error?.name === 'TimeoutError' || error?.name === 'AbortError') {
+      throw Object.assign(new Error('La demande a pris trop de temps. Réessaie.'), {
+        friendly: { code: 'request_timeout', message: 'La demande a pris trop de temps. Tes corrections sont conservées.' },
+      });
+    }
+    throw error;
+  }
 }
 
 function validateFile(file) {
@@ -24,7 +41,7 @@ function validateFile(file) {
   if (file.size > MAX_UPLOAD_BYTES) throw new Error('Fichier trop volumineux (8 Mo maximum).');
 }
 
-async function pdfToOcrImage(file) {
+async function pdfToOcrImages(file) {
   try {
     const [{ getDocument, GlobalWorkerOptions }, { default: workerSrc }] = await Promise.all([
       import('pdfjs-dist'),
@@ -33,21 +50,32 @@ async function pdfToOcrImage(file) {
     GlobalWorkerOptions.workerSrc = workerSrc;
     const pdf = await getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
     if (!pdf.numPages) throw new Error('empty pdf');
-    const page = await pdf.getPage(1);
-    const base = page.getViewport({ scale: 1 });
-    const scale = Math.min(2.5, 1800 / Math.max(base.width, base.height));
-    const viewport = page.getViewport({ scale: Math.max(1.25, scale) });
-    const canvas = document.createElement('canvas');
-    canvas.width = Math.ceil(viewport.width);
-    canvas.height = Math.ceil(viewport.height);
-    const context = canvas.getContext('2d', { alpha: false });
-    if (!context) throw new Error('canvas unavailable');
-    context.fillStyle = '#fff';
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    await page.render({ canvasContext: context, viewport }).promise;
-    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.92));
-    if (!blob?.size) throw new Error('pdf rendering failed');
-    return new File([blob], `${file.name.replace(/\.pdf$/i, '')}-page-1.jpg`, { type: 'image/jpeg' });
+    const selectedPages = selectPdfPages(pdf.numPages);
+    const images = [];
+    for (const pageNumber of selectedPages) {
+      const page = await pdf.getPage(pageNumber);
+      const base = page.getViewport({ scale: 1 });
+      const scale = Math.min(2.2, 1400 / Math.max(base.width, base.height));
+      const viewport = page.getViewport({ scale: Math.max(1.15, scale) });
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.ceil(viewport.width);
+      canvas.height = Math.ceil(viewport.height);
+      const context = canvas.getContext('2d', { alpha: false });
+      if (!context) throw new Error('canvas unavailable');
+      context.fillStyle = '#fff';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      await page.render({ canvasContext: context, viewport }).promise;
+      const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.84));
+      if (!blob?.size) throw new Error('pdf rendering failed');
+      images.push({
+        ...(await filePayload(new File([blob], `${file.name.replace(/\.pdf$/i, '')}-page-${pageNumber}.jpg`, { type: 'image/jpeg' }))),
+        pageNumber,
+      });
+    }
+    return {
+      images,
+      pdf: { totalPages: pdf.numPages, selectedPages, limited: pdf.numPages > MAX_OCR_PDF_PAGES },
+    };
   } catch {
     throw new Error('Ce PDF est vide, corrompu ou illisible. Essaie un autre fichier.');
   }
@@ -101,8 +129,10 @@ export async function chatStream({ messages, profile, agentId, onChunk, onMeta, 
 
 export async function scanDocument(file) {
   validateFile(file);
-  const ocrFile = file.type === 'application/pdf' ? await pdfToOcrImage(file) : file;
-  const res = await apiFetch('/api/scan', { method: 'POST', body: JSON.stringify(await filePayload(ocrFile)) });
+  const scanPayload = file.type === 'application/pdf'
+    ? await pdfToOcrImages(file)
+    : { images: [{ ...(await filePayload(file)), pageNumber: 1 }], pdf: { totalPages: 1, selectedPages: [1], limited: false } };
+  const res = await apiFetch('/api/scan', { method: 'POST', body: JSON.stringify(scanPayload), timeoutMs: 55_000 });
   return json(res);
 }
 
@@ -118,7 +148,7 @@ export async function confirmScannedInvoice({ file, documentId, transactionId, f
       fields,
       rawOcr,
       acceptInconsistency,
-    }),
+    }), timeoutMs: 55_000,
   }));
 }
 

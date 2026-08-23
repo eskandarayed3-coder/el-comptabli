@@ -1,4 +1,5 @@
 export const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
+export const MAX_OCR_PAGES = 4;
 const ALLOWED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'application/pdf']);
 
 function hasExpectedSignature(type, data) {
@@ -32,6 +33,42 @@ export function validateImagePayload({ mimeType, dataBase64 } = {}) {
   if (bytes > MAX_IMAGE_BYTES) return { ok: false, message: 'Fichier trop volumineux (8 Mo maximum).' };
   if (!hasExpectedSignature(type, data)) return { ok: false, message: 'Le contenu du fichier ne correspond pas au format annoncé.' };
   return { ok: true, mimeType: type, dataBase64: data };
+}
+
+export function validateScanPayload(body = {}) {
+  const source = Array.isArray(body.images)
+    ? body.images
+    : [{ mimeType: body.mimeType, dataBase64: body.dataBase64, pageNumber: 1 }];
+  if (!source.length || source.length > MAX_OCR_PAGES) {
+    return { ok: false, message: `Le scan accepte de 1 à ${MAX_OCR_PAGES} pages par analyse.` };
+  }
+  let totalBytes = 0;
+  let previousPage = 0;
+  const images = [];
+  for (const item of source) {
+    const pageNumber = Number(item?.pageNumber);
+    if (!Number.isInteger(pageNumber) || pageNumber <= previousPage) {
+      return { ok: false, message: 'Les pages du PDF sont invalides ou désordonnées.' };
+    }
+    const validated = validateImagePayload(item);
+    if (!validated.ok || validated.mimeType === 'application/pdf') {
+      return { ok: false, message: validated.message || 'Chaque page OCR doit être une image.' };
+    }
+    totalBytes += Buffer.from(validated.dataBase64, 'base64').length;
+    if (totalBytes > MAX_IMAGE_BYTES) return { ok: false, message: 'Pages trop volumineuses (8 Mo maximum au total).' };
+    previousPage = pageNumber;
+    images.push({ ...validated, pageNumber });
+  }
+  const totalPages = Math.max(Number(body?.pdf?.totalPages) || images.length, previousPage);
+  return {
+    ok: true,
+    images,
+    pdf: {
+      totalPages,
+      selectedPages: images.map((item) => item.pageNumber),
+      limited: Boolean(body?.pdf?.limited),
+    },
+  };
 }
 
 export function validateMessages(messages) {

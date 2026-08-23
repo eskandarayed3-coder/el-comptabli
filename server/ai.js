@@ -206,11 +206,22 @@ export async function generateText({ system, prompt, maxTokens = 1024 }) {
 }
 
 // Public: extract structured invoice fields from an image/PDF (vision).
-export async function scanInvoice({ mimeType, dataBase64, prompt, schema }) {
+export async function scanInvoice({ images, prompt, schema }) {
+  const orderedImages = Array.isArray(images) ? images : [];
+  if (!orderedImages.length) throw new Error('no OCR pages');
   const p = activeProvider();
   if (p === 'gemini') {
     const response = await generateContent({
-      contents: [{ role: 'user', parts: [{ text: prompt }, { inlineData: { mimeType, data: dataBase64 } }] }],
+      contents: [{
+        role: 'user',
+        parts: [
+          { text: prompt },
+          ...orderedImages.map(({ mimeType, dataBase64, pageNumber }) => ({
+            inlineData: { mimeType, data: dataBase64 },
+            pageNumber,
+          })).map(({ inlineData }) => ({ inlineData })),
+        ],
+      }],
       generationConfig: { temperature: 0, responseMimeType: 'application/json', responseSchema: schema },
     });
     const text = response?.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
@@ -230,11 +241,12 @@ export async function scanInvoice({ mimeType, dataBase64, prompt, schema }) {
       messages: [{
         role: 'user',
         content: [
-          { type: 'text', text: prompt + '\nRéponds UNIQUEMENT en JSON avec les clés: vendor, date, amountHT, tva, amountTTC, tvaRate, category, kind, reference.' },
-          { type: 'image_url', image_url: { url: `data:${mimeType};base64,${dataBase64}` } },
+          { type: 'text', text: prompt + '\nRéponds UNIQUEMENT en JSON avec les clés: vendor, supplierTaxId, invoiceNumber, date, amountHT, tva, amountTTC, discount, stampDuty, withholdingTax, taxExempt, tvaRate, vatRates, category, kind, reference, documentType, confidence.' },
+          ...orderedImages.map(({ mimeType, dataBase64 }) => ({ type: 'image_url', image_url: { url: `data:${mimeType};base64,${dataBase64}` } })),
         ],
       }],
     }),
+    signal: AbortSignal.timeout(45_000),
   });
   const json = await res.json().catch(() => ({}));
   if (!res.ok) { const e = new Error('upstream'); e.friendly = friendly(res.status, p, JSON.stringify(json)); e.status = res.status; throw e; }

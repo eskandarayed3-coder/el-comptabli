@@ -15,13 +15,15 @@ import documentsRouter from './routes/documents.js';
 import { providerInfo } from './ai.js';
 import { assertProductionConfig } from './lib/env.js';
 import { getServiceClient, requireUser, supabaseConfigured } from './lib/supabase.js';
-import { rateLimit } from './lib/rateLimit.js';
+import { rateLimit, sharedRateLimit } from './lib/rateLimit.js';
+import { logEvent, requestContext, userHash } from './lib/observability.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 assertProductionConfig();
 const app = express();
 app.set('trust proxy', 1);
 app.disable('x-powered-by');
+app.use(requestContext);
 const supabaseOrigin = process.env.SUPABASE_URL ? (() => {
   try { return new URL(process.env.SUPABASE_URL).origin; } catch { return 'https://*.supabase.co'; }
 })() : 'https://*.supabase.co';
@@ -45,16 +47,27 @@ app.get('/api/health', async (_req, res) => {
   const ok = database && info.keyPresent;
   res.status(ok ? 200 : 503).json({ ok, database, aiConfigured: info.keyPresent });
 });
-app.use('/api/auth', rateLimit({ windowMs: 15 * 60 * 1000, max: 20, keyPrefix: 'auth' }), authRouter);
+app.use('/api/auth', rateLimit({ windowMs: 15 * 60 * 1000, max: 20, keyPrefix: 'auth' }), sharedRateLimit({ scope: 'auth', windowSeconds: 900, max: 20, preferUser: false }), authRouter);
 app.use('/api/state', stateRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/exports', exportsRouter);
 app.use('/api/documents', rateLimit({ windowMs: 60 * 1000, max: 30, keyPrefix: 'documents' }), documentsRouter);
 app.use('/api/chat', rateLimit({ windowMs: 60 * 1000, max: 20, keyPrefix: 'chat' }), requireUser, chatRouter);
-app.use('/api/scan', rateLimit({ windowMs: 60 * 1000, max: 10, keyPrefix: 'scan' }), requireUser, scanRouter);
+app.use('/api/scan', rateLimit({ windowMs: 60 * 1000, max: 10, keyPrefix: 'scan' }), requireUser, sharedRateLimit({ scope: 'ocr', windowSeconds: 60, max: 6 }), scanRouter);
 app.use('/api/insights', rateLimit({ windowMs: 60 * 1000, max: 12, keyPrefix: 'insights' }), requireUser, insightsRouter);
 app.use('/api/exam', rateLimit({ windowMs: 60 * 1000, max: 8, keyPrefix: 'exam' }), requireUser, examRouter);
 app.use('/api/activate', activateRouter);
+
+app.use('/api', (error, req, res, _next) => {
+  logEvent('error', 'unhandled_api_error', {
+    requestId: req.requestId,
+    route: req.path,
+    userHash: userHash(req.user?.id),
+    category: error?.name || 'Error',
+  });
+  if (res.headersSent) return res.end();
+  return res.status(500).json({ error: { code: 'internal_error', message: 'Une erreur inattendue est survenue. Réessaie.', requestId: req.requestId } });
+});
 
 if (process.env.NODE_ENV === 'production') {
   const dist = path.join(__dirname, '..', 'dist');
