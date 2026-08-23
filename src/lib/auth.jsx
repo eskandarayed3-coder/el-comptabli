@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { supabase, supabaseConfigured } from './supabase.js';
+import { buildMagicLinkRedirect } from './authRedirect.js';
 
 const AuthContext = createContext(null);
 const GUEST_PREVIEW_KEY = 'elcomptabli:guest-preview';
@@ -96,12 +97,14 @@ export function AuthProvider({ children }) {
 
   const requestMagicLink = useCallback(async (email, next = '/home') => {
     if (!supabase) throw new Error('La connexion sécurisée n’est pas configurée.');
-    const safeNext = next.startsWith('/') && !next.startsWith('//') ? next : '/home';
-    const redirect = new URL('/auth/callback', window.location.origin);
-    redirect.searchParams.set('next', safeNext);
+    const emailRedirectTo = buildMagicLinkRedirect({
+      configuredOrigin: import.meta.env.VITE_APP_ORIGIN,
+      browserOrigin: window.location.origin,
+      next,
+    });
     const { error } = await supabase.auth.signInWithOtp({
       email: String(email || '').trim(),
-      options: { emailRedirectTo: redirect.toString(), shouldCreateUser: true },
+      options: { emailRedirectTo, shouldCreateUser: true },
     });
     if (error) throw error;
   }, []);

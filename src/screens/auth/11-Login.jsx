@@ -4,6 +4,7 @@ import { CheckCircle2, ExternalLink, Gift, Loader2, Mail } from 'lucide-react';
 import { useT } from '../../i18n/index.js';
 import { useAuth } from '../../lib/auth.jsx';
 import { useStore } from '../../lib/store.jsx';
+import { safeInternalNext } from '../../lib/authRedirect.js';
 import Logo from '../../components/Logo.jsx';
 
 export default function Login() {
@@ -23,7 +24,7 @@ export default function Login() {
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   const requestedNext = params.get('next') || '/home';
-  const next = requestedNext.startsWith('/') && !requestedNext.startsWith('//') ? requestedNext : '/home';
+  const next = safeInternalNext(requestedNext);
 
   const submit = async () => {
     if (!emailValid || loading) return;

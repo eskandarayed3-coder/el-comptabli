@@ -3,8 +3,10 @@
 ## 1. Create and secure Supabase
 
 1. Create a Supabase project in the EU region if possible.
-2. In Authentication → URL Configuration, add the production URL and the
-   callback URL: https://YOUR_DOMAIN/auth/callback.
+2. In Authentication → URL Configuration, set **Site URL** to the production
+   origin (for example `https://YOUR_DOMAIN`) and add the exact callback URL
+   `https://YOUR_DOMAIN/auth/callback` to **Redirect URLs**. Local development
+   may additionally allow `http://localhost:5173/auth/callback`.
 3. Configure a production SMTP provider in Authentication → SMTP so
    passwordless email links are reliably delivered.
 4. Run server/lib/schema.sql once in the SQL editor. It enables RLS on every

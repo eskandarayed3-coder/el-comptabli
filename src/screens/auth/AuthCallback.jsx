@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '../../lib/auth.jsx';
+import { authCallbackDestination } from '../../lib/authRedirect.js';
 
 export default function AuthCallback() {
   const navigate = useNavigate();
@@ -14,8 +15,7 @@ export default function AuthCallback() {
     completeMagicLink()
       .then(() => {
         if (!cancelled) {
-          const next = params.get('next');
-          navigate(next?.startsWith('/') && !next.startsWith('//') ? next : '/home', { replace: true });
+          navigate(authCallbackDestination(params), { replace: true });
         }
       })
       .catch((cause) => { if (!cancelled) setError(cause.message || 'Lien de connexion invalide.'); });
