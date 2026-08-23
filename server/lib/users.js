@@ -24,8 +24,23 @@ function profileFromState(user, state = {}) {
 }
 
 export async function ensureAccount(user, state) {
-  const { error } = await getServiceClient().from('profiles').upsert(profileFromState(user, state), { onConflict: 'id' });
-  if (error) throw new Error(`Profile sync failed: ${error.message}`);
+  const profile = profileFromState(user, state);
+  const client = getServiceClient();
+  const { error } = await client.from('profiles').upsert(profile, { onConflict: 'id' });
+  if (!error) return;
+  // Two parallel first requests can race on the secondary lower(email) index
+  // before the primary-key upsert sees the row. Once the winning insert is
+  // committed, updating that exact user is safe and makes initialization
+  // idempotent without weakening email uniqueness.
+  if (error.code === '23505') {
+    const { data, error: retryError } = await client.from('profiles')
+      .update(profile)
+      .eq('id', user.id)
+      .select('id')
+      .maybeSingle();
+    if (!retryError && data?.id === user.id) return;
+  }
+  throw new Error(`Profile sync failed: ${error.message}`);
 }
 
 export async function saveState(user, state) {
