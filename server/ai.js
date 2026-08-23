@@ -103,6 +103,18 @@ function safeUpstreamMetadata(json) {
   };
 }
 
+function parseJsonResponse(text) {
+  const raw = String(text || '').trim();
+  try {
+    return JSON.parse(raw || '{}');
+  } catch {
+    const start = raw.indexOf('{');
+    const end = raw.lastIndexOf('}');
+    if (start >= 0 && end > start) return JSON.parse(raw.slice(start, end + 1));
+    throw new SyntaxError('OCR response did not contain a JSON object');
+  }
+}
+
 // ---------- OpenAI-compatible helpers (Groq / Mistral / OpenRouter) ----------
 async function openaiChatStream({ cfg, key, provider, system, messages, onText }) {
   const body = {
@@ -250,23 +262,35 @@ export async function scanInvoice({ images, prompt, schema }) {
     const e = new Error('no vision'); e.friendly = { code: 'no_vision', message: `Le scan par IA nécessite Gemini ou un modèle vision. Le fournisseur ${p} n'en a pas de configuré.` }; e.status = 400; throw e;
   }
   const key = keyOf(cfg.keyEnv);
-  const res = await fetch(`${cfg.base}/chat/completions`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
-    body: JSON.stringify({
-      model: cfg.vision, temperature: 0,
-      response_format: { type: 'json_object' },
-      messages: [{
-        role: 'user',
-        content: [
-          { type: 'text', text: prompt + '\nRéponds UNIQUEMENT en JSON avec les clés: vendor, supplierTaxId, invoiceNumber, date, amountHT, tva, amountTTC, discount, stampDuty, withholdingTax, taxExempt, tvaRate, vatRates, category, kind, reference, documentType, confidence.' },
-          ...orderedImages.map(({ mimeType, dataBase64 }) => ({ type: 'image_url', image_url: { url: `data:${mimeType};base64,${dataBase64}` } })),
-        ],
-      }],
-    }),
-    signal: AbortSignal.timeout(45_000),
-  });
-  const json = await res.json().catch(() => ({}));
+  const messages = [{
+    role: 'user',
+    content: [
+      { type: 'text', text: prompt + '\nRéponds UNIQUEMENT en JSON avec les clés: vendor, supplierTaxId, invoiceNumber, date, amountHT, tva, amountTTC, discount, stampDuty, withholdingTax, taxExempt, tvaRate, vatRates, category, kind, reference, documentType, confidence.' },
+      ...orderedImages.map(({ mimeType, dataBase64 }) => ({ type: 'image_url', image_url: { url: `data:${mimeType};base64,${dataBase64}` } })),
+    ],
+  }];
+  const request = async (jsonMode) => {
+    const body = {
+      model: cfg.vision,
+      temperature: 0,
+      max_completion_tokens: 2048,
+      reasoning_effort: 'none',
+      messages,
+    };
+    if (jsonMode) body.response_format = { type: 'json_object' };
+    return fetch(`${cfg.base}/chat/completions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(45_000),
+    });
+  };
+  let res = await request(true);
+  let json = await res.json().catch(() => ({}));
+  if (!res.ok && json?.error?.code === 'json_validate_failed') {
+    res = await request(false);
+    json = await res.json().catch(() => ({}));
+  }
   if (!res.ok) {
     const e = new Error('upstream');
     e.friendly = friendly(res.status, p, JSON.stringify(json));
@@ -275,7 +299,7 @@ export async function scanInvoice({ images, prompt, schema }) {
     throw e;
   }
   const text = json?.choices?.[0]?.message?.content || '{}';
-  return JSON.parse(text);
+  return parseJsonResponse(text);
 }
 
 // Public: free-text answer from a system prompt + text + optional image (vision).
