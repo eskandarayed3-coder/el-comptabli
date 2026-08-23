@@ -2,14 +2,16 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
+import { getDisplayIdentity } from '../../../shared/displayIdentity.js';
 
 export default function BusinessInfo() {
   const navigate = useNavigate();
   const { state, patch } = useStore();
   const { t } = useT();
+  const identity = getDisplayIdentity({}, state.profile);
   const [form, setForm] = useState({
-    name: state.profile.name || '',
-    email: state.profile.email || '',
+    name: identity.nameSource === 'profile' ? state.profile.name : '',
+    email: identity.displayEmail,
     activity: state.profile.activity || '',
     city: state.profile.city || 'Nabeul',
     sector: state.profile.sector || 'Services numériques',

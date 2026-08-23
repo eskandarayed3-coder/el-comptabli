@@ -6,6 +6,7 @@ import { useAuth } from '../../lib/auth.jsx';
 import { useStore } from '../../lib/store.jsx';
 import { safeInternalNext } from '../../lib/authRedirect.js';
 import Logo from '../../components/Logo.jsx';
+import { getDisplayIdentity } from '../../../shared/displayIdentity.js';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function Login() {
   const { requestMagicLink, startFreeTrial } = useAuth();
   const { state } = useStore();
   const { t } = useT();
-  const [email, setEmail] = useState(() => params.get('email') || state.profile.email || '');
+  const [email, setEmail] = useState(() => getDisplayIdentity({}, { email: params.get('email') || state.profile.email }).displayEmail);
   const [loading, setLoading] = useState(false);
   const [startingTrial, setStartingTrial] = useState(false);
   const [emailError, setEmailError] = useState('');

@@ -3,6 +3,7 @@ import { seedState } from './seed.js';
 import { uid } from './format.js';
 import { deleteDocument, v1 } from './api.js';
 import { useAuth } from './auth.jsx';
+import { getDisplayIdentity } from '../../shared/displayIdentity.js';
 
 const StoreContext = createContext(null);
 
@@ -89,10 +90,11 @@ export function StoreProvider({ children }) {
     try {
       const data = await v1('/bootstrap');
       const remoteSubscription = data.subscription || { plan: 'free', premium_until: null };
+      const identity = getDisplayIdentity(user, data.profile || {}, data.settings?.lang || 'fr');
       const merged = {
         ...seedState(),
         ...data,
-        profile: { ...seedState().profile, ...(data.profile || {}), email: user.email || data.profile?.email || '' },
+        profile: { ...seedState().profile, ...(data.profile || {}), email: identity.displayEmail },
         settings: { ...seedState().settings, ...(data.settings || {}), plan: remoteSubscription.plan || 'free', premiumUntil: remoteSubscription.premium_until || null },
         ui: { toast: null },
       };

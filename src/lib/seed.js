@@ -29,6 +29,7 @@ export function seedState() {
     },
     transactions: [],
     journalEntries: [],
+    dashboard: { invoice_count: 0, posted_entry_count: 0, income_ttc: 0, expense_ttc: 0, vat_collected: 0, vat_deductible: 0, vat_to_pay: 0 },
     accounts: [],
     trialBalance: [],
     generalLedger: [],

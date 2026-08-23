@@ -102,6 +102,7 @@ export const manifest = [
 
   // ---- Module 8 — Accounting ----
   { path: '/accounting', Component: L('accounting/40-AccountingDashboard'), label: '40. Accounting Dashboard', module: 'Accounting' },
+  { path: '/accounting/mappings', Component: L('accounting/AccountingMappings'), label: 'Accounting mappings', module: 'Accounting' },
   { path: '/accounting/journal', Component: L('accounting/41-JournalEntries'), label: '41. Journal Entries', module: 'Accounting' },
   { path: '/accounting/accounts', Component: L('accounting/42-ChartOfAccounts'), label: '42. Chart of Accounts', module: 'Accounting' },
   { path: '/accounting/trial-balance', Component: L('accounting/43-TrialBalance'), label: '43. Trial Balance', module: 'Accounting' },

@@ -13,12 +13,14 @@ import SuggestionChips from '../../components/SuggestionChips.jsx';
 import AgentAvatar from '../../components/AgentAvatar.jsx';
 import AiQuickAsk from '../../components/AiQuickAsk.jsx';
 import { AGENTS } from '../../lib/agents.js';
+import { getDisplayIdentity } from '../../../shared/displayIdentity.js';
 
 export default function Home() {
   const navigate = useNavigate();
   const { state, patch } = useStore();
   const { t, lang } = useT();
   const { guest, user } = useAuth();
+  const identity = getDisplayIdentity(user, state.profile, lang);
   const trialActive = Boolean(user?.isAnonymous);
   const showTour = !state.settings.tourDone;
   const dismissTour = () => patch('settings', { tourDone: true });
@@ -35,8 +37,8 @@ export default function Home() {
   const greetKey = hour < 12 ? 'greetingMorning' : hour < 18 ? 'greetingAfternoon' : 'greetingEvening';
   // The greeting strings are "Hi, {name} 👋" — clean up the stray comma when
   // there's no name yet (e.g. right after a data reset, before onboarding).
-  const greeting = state.profile.name
-    ? t(`home.${greetKey}`, { name: state.profile.name })
+  const greeting = identity.displayName
+    ? t(`home.${greetKey}`, { name: identity.displayName })
     : t(`home.${greetKey}`, { name: '' }).replace(/[,،]/g, '').replace(/\s{2,}/g, ' ').trim();
   const totals = useMemo(() => monthTotals(state.transactions, ym, state.generalLedger), [state.transactions, state.generalLedger, ym]);
 
@@ -61,7 +63,7 @@ export default function Home() {
       <header className="row between">
         <div className="row" style={{ gap: 12 }}>
           <div className="avatar" aria-hidden="true">
-            {(state.profile.name || '?').slice(0, 1).toUpperCase()}
+            {identity.initials}
           </div>
           <h1>{greeting}</h1>
         </div>
