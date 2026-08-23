@@ -18,6 +18,8 @@ function profileFromState(user, state = {}) {
     user_type: cleanText(profile.userType, 40),
     city: cleanText(profile.city, 100),
     activity: cleanText(profile.activity, 160),
+    phone: cleanText(profile.phone, 40),
+    sector: cleanText(profile.sector, 120),
     updated_at: new Date().toISOString(),
     last_active_at: new Date().toISOString(),
   };
@@ -27,7 +29,7 @@ export async function ensureAccount(user, state) {
   const profile = profileFromState(user, state);
   const client = getServiceClient();
   const { error } = await client.from('profiles').upsert(profile, { onConflict: 'id' });
-  if (!error) return;
+  if (!error) return ensureOrganization(user, profile);
   // Two parallel first requests can race on the secondary lower(email) index
   // before the primary-key upsert sees the row. Once the winning insert is
   // committed, updating that exact user is safe and makes initialization
@@ -38,30 +40,21 @@ export async function ensureAccount(user, state) {
       .eq('id', user.id)
       .select('id')
       .maybeSingle();
-    if (!retryError && data?.id === user.id) return;
+    if (!retryError && data?.id === user.id) return ensureOrganization(user, profile);
   }
   throw new Error(`Profile sync failed: ${error.message}`);
 }
 
-export async function saveState(user, state) {
-  await ensureAccount(user, state);
-  const { error } = await getServiceClient().from('app_state').upsert({
-    user_id: user.id,
-    data: state,
-    schema_version: Number(state.__v || 1),
-    updated_at: new Date().toISOString(),
-  }, { onConflict: 'user_id' });
-  if (error) throw new Error(`State sync failed: ${error.message}`);
-}
-
-export async function getState(user) {
-  await ensureAccount(user);
-  const [{ data: stateRow, error: stateError }, { data: subscription, error: subscriptionError }] = await Promise.all([
-    getServiceClient().from('app_state').select('data, updated_at').eq('user_id', user.id).maybeSingle(),
-    getServiceClient().from('subscriptions').select('plan, premium_until').eq('user_id', user.id).maybeSingle(),
-  ]);
-  if (stateError || subscriptionError) throw new Error('Account state lookup failed.');
-  return { data: stateRow?.data || null, updatedAt: stateRow?.updated_at || null, subscription: subscription || { plan: 'free', premium_until: null } };
+async function ensureOrganization(user, profile) {
+  const client = getServiceClient();
+  const { data: membership, error } = await client.from('organization_members')
+    .select('organization_id').eq('user_id', user.id).eq('status', 'active').limit(1).maybeSingle();
+  if (error) throw new Error(`Organization lookup failed: ${error.message}`);
+  if (membership?.organization_id) return membership.organization_id;
+  const name = cleanText(profile.name, 160) || cleanText(String(profile.email || '').split('@')[0], 160) || 'Mon organisation';
+  const { data, error: createError } = await client.rpc('ensure_user_organization', { p_actor_id: user.id, p_name: name });
+  if (createError) throw new Error(`Organization initialization failed: ${createError.message}`);
+  return data || null;
 }
 
 export async function getSubscription(userId) {

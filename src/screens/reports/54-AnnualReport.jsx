@@ -16,11 +16,22 @@ export default function AnnualReport() {
     return { name: d.toLocaleDateString('fr-FR', { month: 'short' }), value: Math.round(income) };
   }), [state.transactions]);
 
-  const totals = { income: 38400, expense: 23500, profit: 14900 };
+  const year = String(new Date().getFullYear());
+  const yearTransactions = state.transactions.filter((x) => String(x.date || '').startsWith(year));
+  const totals = yearTransactions.reduce((acc, x) => {
+    const amount = Number(x.amountTTC || 0);
+    if (x.kind === 'income') acc.income += amount;
+    if (x.kind === 'expense') acc.expense += amount;
+    acc.profit = acc.income - acc.expense;
+    return acc;
+  }, { income: 0, expense: 0, profit: 0 });
+  const quarters = [0, 1, 2, 3].map((quarter) => yearTransactions
+    .filter((x) => Math.floor((Number(String(x.date).slice(5, 7)) - 1) / 3) === quarter)
+    .reduce((sum, x) => sum + (x.kind === 'income' ? Number(x.amountTTC || 0) : -Number(x.amountTTC || 0)), 0));
 
   return (
     <div className="screen stagger">
-      <TopBar title="Année 2026" />
+      <TopBar title={`Année ${year}`} />
       <div className="hero-card">
         <div className="grid-3">
           <div className="col"><span className="tiny">{t('common.incomes')}</span><span className="num" style={{ fontWeight: 700 }}>{fmtDT(totals.income, { decimals: 0 })}</span></div>
@@ -34,15 +45,14 @@ export default function AnnualReport() {
         </div>
       </div>
       <div className="grid-3">
-        {['T1', 'T2', 'T3'].map((q, i) => (
+        {['T1', 'T2', 'T3', 'T4'].map((q, i) => (
           <div key={q} className="stat-card" style={{ background: 'var(--tint-teal)' }}>
-            <span className="value num">{fmtDT(9000 + i * 1200, { decimals: 0 })}</span>
-            <span className="label">{q} {i > 0 ? '↑' : ''}</span>
+            <span className="value num">{fmtDT(quarters[i], { decimals: 0 })}</span>
+            <span className="label">{q}</span>
           </div>
         ))}
       </div>
-      <div className="card tint-gray"><span className="small">Impôts payés : <b className="num">{fmtDT(1664)}</b></span></div>
-      <button className="btn btn-primary btn-block">Rapport annuel complet PDF <span className="pill premium" style={{ marginInlineStart: 8 }}>Premium</span></button>
+      {!yearTransactions.length && <p className="small muted center">Aucune donnée pour cette année.</p>}
     </div>
   );
 }

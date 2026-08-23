@@ -5,7 +5,7 @@ import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { fmtDT, fmtDate } from '../../lib/format.js';
 import { categoryLabel } from '../../lib/taxRules.js';
-import { deleteDocument, getDocumentSignedUrl } from '../../lib/api.js';
+import { getDocumentSignedUrl } from '../../lib/api.js';
 import TopBar from '../../components/TopBar.jsx';
 import StatusPill from '../../components/StatusPill.jsx';
 
@@ -22,32 +22,26 @@ export default function DocumentDetails() {
 
   useEffect(() => {
     let active = true;
-    if (!doc?.storagePath) {
+    if (!doc?.id) {
       setOriginalUrl('');
       return undefined;
     }
     setLoadingOriginal(true);
-    getDocumentSignedUrl(doc.storagePath)
+    getDocumentSignedUrl(doc.id)
       .then(({ url }) => { if (active) setOriginalUrl(url); })
       .catch(() => { if (active) setOriginalUrl(''); })
       .finally(() => { if (active) setLoadingOriginal(false); });
     return () => { active = false; };
-  }, [doc?.storagePath]);
+  }, [doc?.id]);
 
   if (!doc) return null;
 
   const del = async () => {
-    if (doc.storagePath) {
-      try {
-        await deleteDocument(doc.storagePath);
-      } catch (error) {
-        toast(error.friendly?.message || t('docs.deleteFailed'), 'error');
-        return;
-      }
-    }
-    remove('documents', doc.id);
-    toast(t('common.deleted'));
-    navigate('/documents');
+    try {
+      await remove('documents', doc.id);
+      toast(t('common.deleted'));
+      navigate('/documents');
+    } catch { /* store displays the server error */ }
   };
 
   const markReviewed = () => {
@@ -69,7 +63,7 @@ export default function DocumentDetails() {
           <Download size={16} /> {t('docs.openOriginal')}
         </a>
       )}
-      {!doc.storagePath && <p className="tiny muted center">{t('docs.originalUnavailable')}</p>}
+      {!originalUrl && !loadingOriginal && <p className="tiny muted center">{t('docs.originalUnavailable')}</p>}
 
       <div className="row between">
         <h2>{doc.name}</h2>

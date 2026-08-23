@@ -15,7 +15,7 @@ export default function IncomeDetails() {
   const tx = state.transactions.find((x) => x.id === id);
   if (!tx) return null;
 
-  const del = () => { remove('transactions', tx.id); toast(t('common.deleted')); navigate('/income'); };
+  const del = async () => { try { await remove('transactions', tx.id); toast(t('common.deleted')); navigate('/income'); } catch { /* store reports */ } };
 
   return (
     <div className="screen stagger">

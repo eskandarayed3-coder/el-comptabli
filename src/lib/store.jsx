@@ -1,10 +1,9 @@
-import { createContext, useContext, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { seedState } from './seed.js';
 import { uid } from './format.js';
-import { loadCloudState, saveCloudState } from './api.js';
+import { deleteDocument, v1 } from './api.js';
 import { useAuth } from './auth.jsx';
 
-const KEY = 'elcomptabli:v1';
 const StoreContext = createContext(null);
 
 function withoutUi(state) {
@@ -12,21 +11,7 @@ function withoutUi(state) {
   return persisted;
 }
 
-function init() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
-    // `ui` is deliberately excluded from persistence (toasts shouldn't survive reload).
-    if (saved && saved.__v === 1) {
-      // A time-limited Premium plan that has run out reverts to Free on load.
-      if (saved.settings?.premiumUntil && new Date(saved.settings.premiumUntil) < new Date()) {
-        saved.settings.plan = 'free';
-        saved.settings.premiumUntil = null;
-      }
-      return { ...saved, ui: { toast: null } };
-    }
-  } catch { /* corrupt storage — reseed */ }
-  return seedState();
-}
+const init = () => seedState();
 
 // True while a paid plan is still within its validity window.
 export function isPremium(settings = {}) {
@@ -92,67 +77,39 @@ function reducer(state, action) {
 export function StoreProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, null, init);
   const { user, subscription, setSubscription, ready: authReady } = useAuth();
-  const [cloudStatus, setCloudStatus] = useState('local');
-  const stateRef = useRef(state);
-  const cloudReadyRef = useRef(false);
-  const lastCloudState = useRef('');
+  const [cloudStatus, setCloudStatus] = useState('loading');
 
-  useEffect(() => {
-    stateRef.current = state;
-    localStorage.setItem(KEY, JSON.stringify(withoutUi(state)));
-  }, [state]);
-
-  // The server is the source of truth for account/subscription ownership;
-  // local storage is retained only as an offline cache and migration fallback.
-  useEffect(() => {
-    let cancelled = false;
-    cloudReadyRef.current = false;
-    if (!authReady || !user) {
-      setCloudStatus('local');
-      return undefined;
+  const refresh = useCallback(async () => {
+    if (!user) {
+      dispatch({ type: 'RESET' });
+      setCloudStatus('signed-out');
+      return null;
     }
     setCloudStatus('loading');
-    loadCloudState()
-      .then(async ({ data, subscription: remoteSubscription }) => {
-        if (cancelled) return;
-        const serverPlan = remoteSubscription?.plan === 'premium' && remoteSubscription?.premium_until && new Date(remoteSubscription.premium_until) > new Date()
-          ? 'premium' : 'free';
-        const merged = data && data.__v === 1
-          ? {
-            ...seedState(),
-            ...data,
-            profile: { ...seedState().profile, ...(data.profile || {}), email: user.email || '' },
-            settings: { ...seedState().settings, ...(data.settings || {}), plan: serverPlan, premiumUntil: remoteSubscription?.premium_until || null },
-            ui: { toast: null },
-          }
-          : {
-            ...stateRef.current,
-            profile: { ...stateRef.current.profile, email: user.email || '' },
-            settings: { ...stateRef.current.settings, plan: serverPlan, premiumUntil: remoteSubscription?.premium_until || null },
-          };
-        lastCloudState.current = JSON.stringify(withoutUi(merged));
-        if (data?.__v === 1) dispatch({ type: 'REPLACE', data: merged });
-        else await saveCloudState(withoutUi(merged));
-        setSubscription(remoteSubscription || { plan: 'free', premium_until: null });
-        cloudReadyRef.current = true;
-        setCloudStatus('synced');
-      })
-      .catch(() => { if (!cancelled) setCloudStatus('error'); });
-    return () => { cancelled = true; };
-  }, [authReady, user?.id, user?.email, setSubscription]);
+    try {
+      const data = await v1('/bootstrap');
+      const remoteSubscription = data.subscription || { plan: 'free', premium_until: null };
+      const merged = {
+        ...seedState(),
+        ...data,
+        profile: { ...seedState().profile, ...(data.profile || {}), email: user.email || data.profile?.email || '' },
+        settings: { ...seedState().settings, ...(data.settings || {}), plan: remoteSubscription.plan || 'free', premiumUntil: remoteSubscription.premium_until || null },
+        ui: { toast: null },
+      };
+      dispatch({ type: 'REPLACE', data: merged });
+      setSubscription(remoteSubscription);
+      setCloudStatus('synced');
+      return merged;
+    } catch (error) {
+      setCloudStatus('error');
+      throw error;
+    }
+  }, [user?.id, user?.email, setSubscription]);
 
   useEffect(() => {
-    if (!user || !cloudReadyRef.current) return undefined;
-    const persisted = withoutUi(state);
-    const serialized = JSON.stringify(persisted);
-    if (serialized === lastCloudState.current) return undefined;
-    const timer = setTimeout(() => {
-      saveCloudState(persisted)
-        .then(() => { lastCloudState.current = serialized; setCloudStatus('synced'); })
-        .catch(() => setCloudStatus('error'));
-    }, 800);
-    return () => clearTimeout(timer);
-  }, [state, user?.id]);
+    if (!authReady) return;
+    refresh().catch(() => {});
+  }, [authReady, refresh]);
 
   // A subscription response always wins over a stale local cache.
   useEffect(() => {
@@ -177,19 +134,83 @@ export function StoreProvider({ children }) {
     document.documentElement.dataset.textSize = state.settings.textSize || 'normal';
   }, [state.settings.textSize]);
 
+  const persistError = (error) => {
+    dispatch({ type: 'TOAST', toast: { message: error?.friendly?.message || error?.message || 'Synchronisation impossible.', kind: 'error', id: uid() } });
+    setCloudStatus('error');
+  };
+
+  const patch = async (slice, data) => {
+    if (slice === 'ui') { dispatch({ type: 'PATCH', slice, data }); return; }
+    dispatch({ type: 'PATCH', slice, data });
+    try {
+      if (slice === 'settings') {
+        const { plan, premiumUntil, ...preferences } = data;
+        if (Object.keys(preferences).length) await v1('/preferences', { method: 'PATCH', body: JSON.stringify(preferences) });
+      } else if (slice === 'profile') {
+        const profileData = Object.fromEntries(Object.entries(data).filter(([key]) => ['name','regime','userType','city','activity','phone','sector','language','lang'].includes(key)));
+        const operations = [];
+        if (Object.keys(profileData).length) operations.push(v1('/profile', { method: 'PATCH', body: JSON.stringify(profileData) }));
+        if (data.taxId !== undefined || data.companyName !== undefined) operations.push(v1('/organization', { method: 'PATCH', body: JSON.stringify({ taxId: data.taxId, name: data.companyName }) }));
+        await Promise.all(operations);
+      }
+      setCloudStatus('synced');
+    } catch (error) { persistError(error); await refresh().catch(() => {}); }
+  };
+
+  const add = async (coll, item) => {
+    const routes = { transactions: '/transactions', tasks: '/tasks', chats: '/chats', aiReports: '/ai-reports', calcHistory: '/calculations', activities: '/activities' };
+    try {
+      if (coll === 'documents' && item.id) {
+        dispatch({ type: 'ADD', coll, item });
+        return item;
+      }
+      const route = routes[coll];
+      if (!route) throw new Error(`Collection non modifiable: ${coll}`);
+      const result = await v1(route, { method: 'POST', body: JSON.stringify(item) });
+      const saved = result.data;
+      dispatch({ type: 'ADD', coll, item: saved });
+      setCloudStatus('synced');
+      return saved;
+    } catch (error) { persistError(error); throw error; }
+  };
+
+  const update = async (coll, id, data) => {
+    const routes = { transactions: `/transactions/${id}`, tasks: `/tasks/${id}`, deadlines: `/deadlines/${id}`, documents: `/documents/${id}` };
+    try {
+      if (coll === 'notifications') {
+        await v1(`/notifications/${id}/read`, { method: 'POST', body: '{}' });
+        dispatch({ type: 'UPDATE', coll, id, data: { ...data, read: true } });
+        return;
+      }
+      const route = routes[coll];
+      if (!route) throw new Error(`Collection non modifiable: ${coll}`);
+      const result = await v1(route, { method: 'PATCH', body: JSON.stringify(data) });
+      dispatch({ type: 'UPDATE', coll, id, data: result.data });
+      setCloudStatus('synced');
+    } catch (error) { persistError(error); throw error; }
+  };
+
+  const remove = async (coll, id) => {
+    try {
+      if (coll === 'transactions') await v1(`/transactions/${id}`, { method: 'DELETE' });
+      else if (coll === 'documents') await deleteDocument(id);
+      else throw new Error(`Collection non supprimable: ${coll}`);
+      dispatch({ type: 'REMOVE', coll, id });
+      setCloudStatus('synced');
+    } catch (error) { persistError(error); throw error; }
+  };
+
   const api = useMemo(() => ({
     state,
     dispatch,
-    patch: (slice, data) => dispatch({ type: 'PATCH', slice, data }),
-    add: (coll, item) => dispatch({ type: 'ADD', coll, item }),
-    update: (coll, id, data) => dispatch({ type: 'UPDATE', coll, id, data }),
-    remove: (coll, id) => dispatch({ type: 'REMOVE', coll, id }),
+    patch,
+    add,
+    update,
+    remove,
     toast: (message, kind = 'success') => {
       dispatch({ type: 'TOAST', toast: { message, kind, id: uid() } });
     },
-    logActivity: (text, icon = 'Activity') => {
-      dispatch({ type: 'ADD', coll: 'activities', item: { text, icon, at: new Date().toISOString() } });
-    },
+    logActivity: (text, icon = 'Activity') => add('activities', { text, icon }),
     exportData: () => {
       const data = withoutUi(state);
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -200,15 +221,8 @@ export function StoreProvider({ children }) {
       a.click();
       URL.revokeObjectURL(url);
     },
-    importData: (json) => dispatch({ type: 'REPLACE', data: json }),
-    replaceCloudState: (data) => {
-      const merged = { ...seedState(), ...data, __v: 1, ui: { toast: null } };
-      lastCloudState.current = JSON.stringify(withoutUi(merged));
-      cloudReadyRef.current = true;
-      stateRef.current = merged;
-      dispatch({ type: 'REPLACE', data: merged });
-      setCloudStatus('synced');
-    },
+    importData: () => { throw new Error('La restauration directe est désactivée pour protéger les données comptables.'); },
+    replaceCloudState: refresh,
     reset: () => dispatch({ type: 'RESET' }),
     // Subscription dates only come from the server after a redeemed code or
     // trial. The browser never calculates or grants its own paid access.
@@ -219,7 +233,8 @@ export function StoreProvider({ children }) {
       dispatch({ type: 'PATCH', slice: 'settings', data: { plan: 'premium', premiumUntil } });
     },
     cloudStatus,
-  }), [state, setSubscription, cloudStatus]);
+    refresh,
+  }), [state, setSubscription, cloudStatus, refresh]);
 
   return <StoreContext.Provider value={api}>{children}</StoreContext.Provider>;
 }

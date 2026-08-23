@@ -33,8 +33,8 @@ export default function MonthlyReport() {
       .map(([id, v]) => ({ id, label: categoryLabel(id, lang), v, pct: Math.round((v / total) * 100) }));
   }, [state.transactions, ym, lang]);
 
-  const collected = totals.income * 0.19;
-  const deductible = totals.expense * 0.19 * 0.85;
+  const collected = state.transactions.filter((tx) => tx.kind === 'income' && tx.date.startsWith(ym)).reduce((sum, tx) => sum + Number(tx.tva || 0), 0);
+  const deductible = state.transactions.filter((tx) => tx.kind === 'expense' && tx.date.startsWith(ym)).reduce((sum, tx) => sum + Number(tx.tva || 0), 0);
 
   return (
     <div className="screen stagger">

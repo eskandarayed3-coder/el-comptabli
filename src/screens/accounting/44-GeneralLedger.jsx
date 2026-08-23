@@ -14,15 +14,14 @@ export default function GeneralLedger() {
   const [period, setPeriod] = useState('month');
 
   const movements = useMemo(() => {
-    const isClient = account === '411';
-    const tx = state.transactions.filter((x) => (isClient ? x.kind === 'income' : x.kind === 'expense'));
+    const tx = (state.generalLedger || []).filter((x) => x.account_number === account);
     let running = 0;
     return tx.map((x) => {
-      const amount = isClient ? x.amountTTC : -x.amountTTC;
+      const amount = Number(x.debit || 0) - Number(x.credit || 0);
       running += amount;
-      return { ...x, running };
+      return { ...x, id: x.line_id, date: x.entry_date, label: x.line_description || x.entry_description, amountTTC: amount, running };
     });
-  }, [state.transactions, account]);
+  }, [state.generalLedger, account]);
 
   return (
     <div className="screen stagger">

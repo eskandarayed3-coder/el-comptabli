@@ -36,6 +36,7 @@ test('V1 migrations apply and enforce accounting and tenant invariants', async (
     await db.exec(await sqlFile('supabase/migrations/20260823082947_v1_accounting_invariants.sql'));
     await db.exec(await sqlFile('supabase/migrations/20260823084601_v1_backend_workflows.sql'));
     await db.exec(await sqlFile('supabase/migrations/20260823085344_v1_rls_and_indexes_hardening.sql'));
+    await db.exec(await sqlFile('supabase/migrations/20260823091316_beta_ready_authoritative_state.sql'));
 
     const memberships = await db.query('select organization_id,user_id,role from public.organization_members order by user_id');
     assert.equal(memberships.rows.length, 2);
@@ -123,6 +124,19 @@ test('V1 migrations apply and enforce accounting and tenant invariants', async (
     await assert.rejects(db.query(`insert into public.accounts(organization_id,account_number,label,normalized_label,class,category) values($1,'998','Viewer denied','viewer denied',9,'other')`, [orgA]), /row-level security|policy/i);
     await db.exec('reset role');
 
+    const financialId = randomUUID();
+    await db.query(`insert into public.financial_transactions(id,organization_id,created_by,kind,counterparty,label,category,transaction_date,amount_ht,vat_amount,amount_ttc)
+      values($1,$2,$3,'income','Synthetic customer','Synthetic sale','services','2026-08-23',100,19,119)`, [financialId, orgA, userA]);
+    await db.exec('grant select,insert on public.financial_transactions to authenticated');
+    await db.query(`select set_config('request.jwt.claim.sub',$1,false)`, [userB]);
+    await db.exec('set role authenticated');
+    assert.equal(Number((await db.query('select count(*) count from public.financial_transactions')).rows[0].count), 0, 'user B cannot read user A financial transactions');
+    await db.exec('reset role');
+    await db.query(`select set_config('request.jwt.claim.sub',$1,false)`, [userC]);
+    await db.exec('set role authenticated');
+    await assert.rejects(db.query(`insert into public.financial_transactions(organization_id,created_by,kind,transaction_date,amount_ttc) values($1,$2,'income','2026-08-23',1)`, [orgA, userC]), /row-level security|policy/i);
+    await db.exec('reset role');
+
     await assert.rejects(
       db.query('select public.create_journal_entry($1,$2,$3::jsonb,$4::jsonb,$5)', [orgA, userA, JSON.stringify({ ...entryPayload, entryNumber: 'AC-0002', sourceId: randomUUID() }), JSON.stringify([{ accountId: account1, debit: '99', credit: '0' }, { accountId: account2, debit: '0', credit: '100' }]), 'req-bad']),
       /UNBALANCED_ENTRY/,
@@ -132,9 +146,11 @@ test('V1 migrations apply and enforce accounting and tenant invariants', async (
     assert.equal(Number((await db.query('select count(*) count from public.audit_events where organization_id=$1', [orgA])).rows[0].count) > 10, true);
 
     const tableNames = (await db.query(`select table_name from information_schema.tables where table_schema='public'`)).rows.map((row) => row.table_name);
-    for (const required of ['organizations','documents','ocr_results','third_parties','accounts','journals','journal_entries','journal_lines','payments','bank_transactions','vat_periods','audit_events']) {
+    for (const required of ['organizations','documents','ocr_results','third_parties','accounts','journals','journal_entries','journal_lines','payments','bank_transactions','vat_periods','audit_events','financial_transactions','user_preferences','user_tasks','tax_deadlines','chat_sessions','ai_reports','calculation_history','activity_events']) {
       assert.equal(tableNames.includes(required), true, `missing ${required}`);
     }
+    assert.equal(tableNames.includes('app_state'), false, 'legacy app_state must be removed');
+    assert.equal((await db.query(`select count(*)::int count from information_schema.tables where table_schema='private' and table_name='app_state_legacy_backup'`)).rows[0].count, 1, 'legacy rows remain recoverable outside public');
   } finally {
     await db.close();
   }

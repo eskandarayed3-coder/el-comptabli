@@ -1,8 +1,22 @@
 import { Router } from 'express';
 import { validateBalancedLines } from '../accounting/engine.js';
 import { ApiError, asyncRoute, cleanString, errors, moneyString, pagination, requireUuid, validIsoDate } from '../lib/api.js';
-import { listOrganizations, requireOrganization, requireOrganizationRole } from '../lib/organization.js';
-import { getServiceClient, requireUser } from '../lib/supabase.js';
+import { listOrganizations as defaultListOrganizations, requireOrganization as defaultRequireOrganization, requireOrganizationRole } from '../lib/organization.js';
+import { getServiceClient as defaultGetServiceClient, requireUser as defaultRequireUser } from '../lib/supabase.js';
+
+let getServiceClient = defaultGetServiceClient;
+let requireUser = defaultRequireUser;
+let requireOrganization = defaultRequireOrganization;
+let listOrganizations = defaultListOrganizations;
+
+// Dependency seams are intentionally limited to tests. Production never calls
+// this export; HTTP tests can exercise the real route stack without secrets.
+export function configureV1TestDependencies(overrides = {}) {
+  getServiceClient = overrides.getServiceClient || defaultGetServiceClient;
+  requireUser = overrides.requireUser || defaultRequireUser;
+  requireOrganization = overrides.requireOrganization || defaultRequireOrganization;
+  listOrganizations = overrides.listOrganizations || defaultListOrganizations;
+}
 
 const router = Router();
 const ACCOUNTING_ROLES = ['owner', 'admin', 'accountant'];
@@ -22,7 +36,7 @@ function mapDatabaseError(error) {
   return error;
 }
 
-router.use(requireUser);
+router.use((req, res, next) => requireUser(req, res, next));
 
 router.get('/context', asyncRoute(async (req, res) => {
   const organizations = await listOrganizations(req.user.id);
@@ -46,10 +60,236 @@ router.post('/organizations', asyncRoute(async (req, res) => {
   res.status(201).json(data);
 }));
 
-router.use(requireOrganization);
+router.use((req, res, next) => requireOrganization(req, res, next));
 
 router.get('/organization', asyncRoute(async (req, res) => {
   res.json({ organization: req.organization });
+}));
+
+const legacyTransaction = (row) => ({
+  id: row.id,
+  kind: row.kind,
+  vendor: row.vendor ?? row.counterparty ?? '',
+  label: row.label || row.vendor || row.counterparty || '',
+  category: row.category,
+  date: row.date ?? row.transaction_date,
+  amountHT: Number(row.amount_ht || 0),
+  tva: Number((row.tva ?? row.vat_amount) || 0),
+  amountTTC: Number(row.amount_ttc || 0),
+  status: row.status,
+  reference: row.reference || '',
+  scanned: Boolean(row.scanned),
+  documentId: row.document_id || null,
+  source: row.source,
+});
+
+const legacyDocument = (row) => ({
+  id: row.id,
+  sourceId: row.source_id,
+  name: row.original_filename,
+  type: row.document_type,
+  date: String(row.created_at || '').slice(0, 10),
+  size: row.file_size ? `${Math.max(1, Math.round(Number(row.file_size) / 1024))} Ko` : 'N/D',
+  scanned: row.ocr_status === 'succeeded',
+  reviewed: row.processing_status === 'confirmed',
+  status: row.processing_status,
+  mimeType: row.mime_type,
+});
+
+router.get('/bootstrap', asyncRoute(async (req, res) => {
+  const client = getServiceClient();
+  const [profile, preferences, subscription, transactions, documents, accounts, journalEntries, trialBalance, generalLedger, financialStatements, tasks, deadlines, chats, notifications, activities, reports, calculations, dashboard] = await Promise.all([
+    client.from('profiles').select('id,email,name,regime,user_type,city,activity,phone,sector,language,timezone').eq('id', req.user.id).single(),
+    client.from('user_preferences').select('preferences').eq('user_id', req.user.id).maybeSingle(),
+    client.from('subscriptions').select('plan,premium_until').eq('user_id', req.user.id).maybeSingle(),
+    client.from('business_transactions_v').select('*').eq('organization_id', req.organization.id).order('date', { ascending: false }).limit(200),
+    client.from('documents').select('id,source_id,original_filename,mime_type,file_size,document_type,processing_status,ocr_status,created_at').eq('organization_id', req.organization.id).order('created_at', { ascending: false }).limit(200),
+    client.from('accounts').select('id,account_number,label,class,category,parent_id,is_system,is_active,reporting_category').eq('organization_id', req.organization.id).order('account_number').limit(1000),
+    client.from('journal_entries').select('id,entry_number,entry_date,reference,description,status,source_type,created_at').eq('organization_id', req.organization.id).order('entry_date', { ascending: false }).limit(200),
+    client.from('trial_balance_v').select('*').eq('organization_id', req.organization.id).order('account_number').limit(1000),
+    client.from('general_ledger_v').select('*').eq('organization_id', req.organization.id).order('entry_date', { ascending: false }).limit(1000),
+    client.from('financial_statement_v').select('*').eq('organization_id', req.organization.id).order('statement').limit(500),
+    client.from('user_tasks').select('*').eq('organization_id', req.organization.id).eq('user_id', req.user.id).order('created_at', { ascending: false }).limit(200),
+    client.from('tax_deadlines').select('*').eq('organization_id', req.organization.id).order('due_date').limit(200),
+    client.from('chat_sessions').select('*').eq('organization_id', req.organization.id).eq('user_id', req.user.id).order('updated_at', { ascending: false }).limit(100),
+    client.from('notifications').select('*').eq('organization_id', req.organization.id).eq('user_id', req.user.id).order('created_at', { ascending: false }).limit(200),
+    client.from('activity_events').select('*').eq('organization_id', req.organization.id).order('created_at', { ascending: false }).limit(200),
+    client.from('ai_reports').select('*').eq('organization_id', req.organization.id).eq('user_id', req.user.id).order('created_at', { ascending: false }).limit(100),
+    client.from('calculation_history').select('*').eq('organization_id', req.organization.id).eq('user_id', req.user.id).order('created_at', { ascending: false }).limit(100),
+    client.from('dashboard_v').select('*').eq('organization_id', req.organization.id).maybeSingle(),
+  ]);
+  for (const result of [profile, preferences, subscription, transactions, documents, accounts, journalEntries, trialBalance, generalLedger, financialStatements, tasks, deadlines, chats, notifications, activities, reports, calculations, dashboard]) {
+    if (result.error) throw result.error;
+  }
+  const prefs = preferences.data?.preferences || {};
+  res.json({
+    organization: req.organization,
+    profile: {
+      name: profile.data.name || '', email: profile.data.email || req.user.email || '', regime: profile.data.regime || 'reel',
+      userType: profile.data.user_type || 'freelance', city: profile.data.city || '', activity: profile.data.activity || '', phone: profile.data.phone || '', sector: profile.data.sector || '',
+      taxId: req.organization.tax_id || '', language: profile.data.language || 'fr',
+    },
+    settings: { ...prefs, lang: prefs.lang || profile.data.language || 'fr', plan: subscription.data?.plan || 'free', premiumUntil: subscription.data?.premium_until || null },
+    transactions: (transactions.data || []).map(legacyTransaction),
+    documents: (documents.data || []).map(legacyDocument),
+    accounts: accounts.data || [],
+    journalEntries: (journalEntries.data || []).map((x) => ({ id: x.id, number: x.entry_number, date: x.entry_date, reference: x.reference, label: x.description, status: x.status, source: x.source_type, at: x.created_at })),
+    trialBalance: trialBalance.data || [],
+    generalLedger: generalLedger.data || [],
+    financialStatements: financialStatements.data || [],
+    tasks: (tasks.data || []).map((x) => ({ id: x.id, title: x.title, date: x.due_date, done: x.status === 'done', status: x.status, ...(x.metadata || {}) })),
+    deadlines: (deadlines.data || []).map((x) => ({ id: x.id, title: x.title, date: x.due_date, status: x.status, ...(x.metadata || {}) })),
+    chats: (chats.data || []).map((x) => ({ id: x.id, title: x.title, messages: x.messages, agentId: x.agent_id, at: x.updated_at })),
+    notifications: (notifications.data || []).map((x) => ({ id: x.id, title: x.title, body: x.body, type: x.type, read: Boolean(x.read_at), at: x.created_at })),
+    activities: (activities.data || []).map((x) => ({ id: x.id, text: x.text, icon: x.icon, at: x.created_at })),
+    aiReports: (reports.data || []).map((x) => ({ id: x.id, title: x.title, body: x.body, at: x.created_at })),
+    calcHistory: (calculations.data || []).map((x) => ({ id: x.id, type: x.calculation_type, at: x.created_at, ...(x.inputs || {}), ...(x.result || {}) })),
+    dashboard: dashboard.data || { organization_id: req.organization.id, invoice_count: 0, posted_entry_count: 0, income_ttc: 0, expense_ttc: 0 },
+    subscription: subscription.data || { plan: 'free', premium_until: null },
+  });
+}));
+
+router.patch('/profile', asyncRoute(async (req, res) => {
+  const body = req.body || {};
+  const changes = {};
+  if (body.name !== undefined) changes.name = cleanString(body.name, 120);
+  if (body.regime !== undefined) changes.regime = cleanString(body.regime, 40);
+  if (body.userType !== undefined) changes.user_type = cleanString(body.userType, 40);
+  if (body.city !== undefined) changes.city = cleanString(body.city, 100);
+  if (body.activity !== undefined) changes.activity = cleanString(body.activity, 160);
+  if (body.phone !== undefined) changes.phone = cleanString(body.phone, 40);
+  if (body.sector !== undefined) changes.sector = cleanString(body.sector, 120);
+  if (body.language !== undefined || body.lang !== undefined) {
+    const language = cleanString(body.language ?? body.lang, 2);
+    if (!['fr','ar','en'].includes(language)) throw errors.validation({ language: 'Langue invalide' });
+    changes.language = language;
+  }
+  if (!Object.keys(changes).length) throw errors.validation({ body: 'Aucune modification' });
+  const data = unwrap(await getServiceClient().from('profiles').update(changes).eq('id', req.user.id).select('id,email,name,regime,user_type,city,activity,phone,sector,language').single());
+  res.json({ data });
+}));
+
+router.patch('/preferences', asyncRoute(async (req, res) => {
+  const allowed = ['lang','onboarded','notifications','camera','storage','theme','currency','textSize','financeView','financeAll','tourDone','quizBest','aiQuestionsUsed','invoiceSeq'];
+  const patch = {};
+  for (const key of allowed) if (req.body?.[key] !== undefined) patch[key] = req.body[key];
+  if (!Object.keys(patch).length) throw errors.validation({ body: 'Aucune préférence autorisée' });
+  const current = unwrap(await getServiceClient().from('user_preferences').select('preferences').eq('user_id', req.user.id).maybeSingle());
+  const data = unwrap(await getServiceClient().from('user_preferences').upsert({ user_id: req.user.id, preferences: { ...(current?.preferences || {}), ...patch } }, { onConflict: 'user_id' }).select().single());
+  if (patch.lang) await getServiceClient().from('profiles').update({ language: patch.lang }).eq('id', req.user.id);
+  res.json({ data });
+}));
+
+router.post('/transactions', requireOrganizationRole(...ACCOUNTING_ROLES), asyncRoute(async (req, res) => {
+  const kind = cleanString(req.body?.kind, 10, { required: true });
+  if (!['income','expense'].includes(kind)) throw errors.validation({ kind: 'Type invalide' });
+  const payload = {
+    organization_id: req.organization.id, created_by: req.user.id, kind,
+    counterparty: cleanString(req.body?.vendor, 200), label: cleanString(req.body?.label, 500), category: cleanString(req.body?.category || 'autres', 80),
+    transaction_date: validIsoDate(req.body?.date, 'date'), amount_ht: moneyString(req.body?.amountHT ?? 0),
+    vat_amount: moneyString(req.body?.tva ?? 0), amount_ttc: moneyString(req.body?.amountTTC, { positive: true }),
+    status: ['pending','paid'].includes(req.body?.status) ? req.body.status : 'paid', reference: cleanString(req.body?.reference, 160) || null,
+    source: req.body?.source === 'generated_invoice' ? 'generated_invoice' : 'manual', idempotency_key: cleanString(req.body?.idempotencyKey, 160) || null,
+  };
+  const data = unwrap(await getServiceClient().from('financial_transactions').insert(payload).select().single());
+  res.status(201).json({ data: legacyTransaction(data) });
+}));
+
+router.patch('/transactions/:id', requireOrganizationRole(...ACCOUNTING_ROLES), asyncRoute(async (req, res) => {
+  const changes = {};
+  if (req.body?.vendor !== undefined) changes.counterparty = cleanString(req.body.vendor, 200);
+  if (req.body?.label !== undefined) changes.label = cleanString(req.body.label, 500);
+  if (req.body?.category !== undefined) changes.category = cleanString(req.body.category, 80);
+  if (req.body?.date !== undefined) changes.transaction_date = validIsoDate(req.body.date, 'date');
+  if (req.body?.amountHT !== undefined) changes.amount_ht = moneyString(req.body.amountHT);
+  if (req.body?.tva !== undefined) changes.vat_amount = moneyString(req.body.tva);
+  if (req.body?.amountTTC !== undefined) changes.amount_ttc = moneyString(req.body.amountTTC, { positive: true });
+  if (req.body?.status !== undefined) { if (!['pending','paid','cancelled'].includes(req.body.status)) throw errors.validation({ status: 'Statut invalide' }); changes.status = req.body.status; }
+  if (!Object.keys(changes).length) throw errors.validation({ body: 'Aucune modification' });
+  const data = unwrap(await getServiceClient().from('financial_transactions').update(changes).eq('id', requireUuid(req.params.id)).eq('organization_id', req.organization.id).select().maybeSingle());
+  if (!data) throw errors.notFound();
+  res.json({ data: legacyTransaction(data) });
+}));
+
+router.delete('/transactions/:id', requireOrganizationRole(...ACCOUNTING_ROLES), asyncRoute(async (req, res) => {
+  const data = unwrap(await getServiceClient().from('financial_transactions').update({ status: 'cancelled' }).eq('id', requireUuid(req.params.id)).eq('organization_id', req.organization.id).select('id').maybeSingle());
+  if (!data) throw errors.notFound();
+  res.status(204).end();
+}));
+
+router.patch('/organization', requireOrganizationRole(...MANAGER_ROLES), asyncRoute(async (req, res) => {
+  const changes = {};
+  if (req.body?.name !== undefined) changes.name = cleanString(req.body.name, 160, { required: true });
+  if (req.body?.legalName !== undefined) changes.legal_name = cleanString(req.body.legalName, 200) || null;
+  if (req.body?.taxId !== undefined) changes.tax_id = cleanString(req.body.taxId, 40) || null;
+  if (!Object.keys(changes).length) throw errors.validation({ body: 'Aucune modification' });
+  const data = unwrap(await getServiceClient().from('organizations').update(changes).eq('id', req.organization.id).select().single());
+  res.json({ data });
+}));
+
+router.post('/tasks', requireOrganizationRole('owner','admin','accountant','employee'), asyncRoute(async (req, res) => {
+  const data = unwrap(await getServiceClient().from('user_tasks').insert({
+    organization_id: req.organization.id, user_id: req.user.id,
+    title: cleanString(req.body?.title, 240, { required: true }),
+    due_date: req.body?.date ? validIsoDate(req.body.date, 'date') : null,
+    status: req.body?.done ? 'done' : 'upcoming', metadata: req.body?.metadata && typeof req.body.metadata === 'object' ? req.body.metadata : {},
+  }).select().single());
+  res.status(201).json({ data: { id: data.id, title: data.title, date: data.due_date, done: data.status === 'done', status: data.status, ...(data.metadata || {}) } });
+}));
+
+router.patch('/tasks/:id', requireOrganizationRole('owner','admin','accountant','employee'), asyncRoute(async (req, res) => {
+  const changes = {};
+  if (req.body?.title !== undefined) changes.title = cleanString(req.body.title, 240, { required: true });
+  if (req.body?.date !== undefined) changes.due_date = req.body.date ? validIsoDate(req.body.date, 'date') : null;
+  if (req.body?.done !== undefined) changes.status = req.body.done ? 'done' : 'upcoming';
+  if (req.body?.status !== undefined) { if (!['upcoming','done','cancelled'].includes(req.body.status)) throw errors.validation({ status: 'Statut invalide' }); changes.status = req.body.status; }
+  const data = unwrap(await getServiceClient().from('user_tasks').update(changes).eq('id', requireUuid(req.params.id)).eq('organization_id', req.organization.id).eq('user_id', req.user.id).select().maybeSingle());
+  if (!data) throw errors.notFound();
+  res.json({ data: { id: data.id, title: data.title, date: data.due_date, done: data.status === 'done', status: data.status, ...(data.metadata || {}) } });
+}));
+
+router.patch('/deadlines/:id', requireOrganizationRole(...ACCOUNTING_ROLES), asyncRoute(async (req, res) => {
+  const status = cleanString(req.body?.status, 20, { required: true });
+  if (!['upcoming','paid','overdue','cancelled'].includes(status)) throw errors.validation({ status: 'Statut invalide' });
+  const data = unwrap(await getServiceClient().from('tax_deadlines').update({ status }).eq('id', requireUuid(req.params.id)).eq('organization_id', req.organization.id).select().maybeSingle());
+  if (!data) throw errors.notFound();
+  res.json({ data: { id: data.id, title: data.title, date: data.due_date, status: data.status, ...(data.metadata || {}) } });
+}));
+
+router.post('/chats', requireOrganizationRole('owner','admin','accountant','employee'), asyncRoute(async (req, res) => {
+  const messages = Array.isArray(req.body?.messages) ? req.body.messages.slice(-200) : [];
+  const data = unwrap(await getServiceClient().from('chat_sessions').insert({
+    organization_id: req.organization.id, user_id: req.user.id,
+    title: cleanString(req.body?.title || 'Conversation', 240), messages,
+    agent_id: cleanString(req.body?.agentId, 80) || null,
+  }).select().single());
+  res.status(201).json({ data: { id: data.id, title: data.title, messages: data.messages, agentId: data.agent_id, at: data.updated_at } });
+}));
+
+router.post('/ai-reports', requireOrganizationRole('owner','admin','accountant','employee'), asyncRoute(async (req, res) => {
+  const data = unwrap(await getServiceClient().from('ai_reports').insert({
+    organization_id: req.organization.id, user_id: req.user.id,
+    title: cleanString(req.body?.title, 240, { required: true }), body: cleanString(req.body?.body, 20000, { required: true }),
+  }).select().single());
+  res.status(201).json({ data: { id: data.id, title: data.title, body: data.body, at: data.created_at } });
+}));
+
+router.post('/calculations', requireOrganizationRole('owner','admin','accountant','employee'), asyncRoute(async (req, res) => {
+  const type = cleanString(req.body?.type, 80, { required: true });
+  const payload = { ...req.body };
+  delete payload.type; delete payload.at; delete payload.id;
+  const data = unwrap(await getServiceClient().from('calculation_history').insert({
+    organization_id: req.organization.id, user_id: req.user.id, calculation_type: type, inputs: payload, result: {},
+  }).select().single());
+  res.status(201).json({ data: { id: data.id, type: data.calculation_type, at: data.created_at, ...(data.inputs || {}), ...(data.result || {}) } });
+}));
+
+router.post('/activities', requireOrganizationRole('owner','admin','accountant','employee'), asyncRoute(async (req, res) => {
+  const data = unwrap(await getServiceClient().from('activity_events').insert({
+    organization_id: req.organization.id, actor_id: req.user.id,
+    text: cleanString(req.body?.text, 500, { required: true }), icon: cleanString(req.body?.icon || 'Activity', 80),
+  }).select().single());
+  res.status(201).json({ data: { id: data.id, text: data.text, icon: data.icon, at: data.created_at } });
 }));
 
 router.get('/organization/members', requireOrganizationRole(...MANAGER_ROLES), asyncRoute(async (req, res) => {
@@ -203,6 +443,15 @@ router.get('/documents/:id', asyncRoute(async (req, res) => {
     .eq('id', id).eq('organization_id', req.organization.id).maybeSingle());
   if (!document) throw errors.notFound();
   res.json({ data: document });
+}));
+
+router.patch('/documents/:id', requireOrganizationRole('owner','admin','accountant','employee'), asyncRoute(async (req, res) => {
+  const status = req.body?.reviewed === true ? 'confirmed' : cleanString(req.body?.status, 30, { required: true });
+  if (!['uploaded','review_required','confirmed','archived'].includes(status)) throw errors.validation({ status: 'Statut invalide' });
+  const data = unwrap(await getServiceClient().from('documents').update({ processing_status: status }).eq('id', requireUuid(req.params.id)).eq('organization_id', req.organization.id)
+    .select('id,source_id,original_filename,mime_type,file_size,document_type,processing_status,ocr_status,created_at').maybeSingle());
+  if (!data) throw errors.notFound();
+  res.json({ data: legacyDocument(data) });
 }));
 
 router.get('/invoices', asyncRoute(async (req, res) => {
@@ -421,6 +670,12 @@ router.post('/notifications/:id/read', asyncRoute(async (req, res) => {
   const data = unwrap(await getServiceClient().from('notifications').update({ read_at: new Date().toISOString() }).eq('id', requireUuid(req.params.id)).eq('organization_id', req.organization.id).eq('user_id', req.user.id).select().maybeSingle());
   if (!data) throw errors.notFound();
   res.json({ data });
+}));
+
+router.post('/notifications/read-all', asyncRoute(async (req, res) => {
+  const data = unwrap(await getServiceClient().from('notifications').update({ read_at: new Date().toISOString() })
+    .eq('organization_id', req.organization.id).eq('user_id', req.user.id).is('read_at', null).select('id'));
+  res.json({ updated: data?.length || 0 });
 }));
 
 const aiTools = {

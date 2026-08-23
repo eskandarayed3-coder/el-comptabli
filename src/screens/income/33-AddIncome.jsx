@@ -24,14 +24,16 @@ export default function AddIncome() {
   const amountNum = Number(amount) || 0;
   const tva = withTva ? amountNum - amountNum / 1.19 : 0;
 
-  const save = () => {
-    add('transactions', {
+  const save = async () => {
+    try {
+      await add('transactions', {
       kind: 'income', vendor: client, label: client || 'Recette', category: category.toLowerCase(),
       date, amountTTC: amountNum, amountHT: amountNum - tva, tva, status: status === 'pending' ? 'pending' : 'paid',
-    });
-    logActivity(`Recette +${amountNum} DT ajoutée`, 'TrendingUp');
-    toast(t('common.saved'));
-    navigate('/income');
+      });
+      await logActivity(`Recette +${amountNum} DT ajoutée`, 'TrendingUp');
+      toast(t('common.saved'));
+      navigate('/income');
+    } catch { /* the store displays the server error */ }
   };
 
   return (

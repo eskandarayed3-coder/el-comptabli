@@ -16,7 +16,7 @@ export default function ExpenseDetails() {
 
   const sameCategoryCount = state.transactions.filter((x) => x.kind === 'expense' && x.category === tx.category).length;
 
-  const del = () => { remove('transactions', tx.id); toast(t('common.deleted')); navigate('/expenses'); };
+  const del = async () => { try { await remove('transactions', tx.id); toast(t('common.deleted')); navigate('/expenses'); } catch { /* store reports */ } };
 
   return (
     <div className="screen stagger">

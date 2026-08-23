@@ -18,10 +18,12 @@ export default function EditIncome() {
 
   if (!tx) return null;
 
-  const save = () => {
-    update('transactions', tx.id, { amountTTC: Number(amount), vendor: client, label: client, status });
-    toast(t('common.saved'));
-    navigate(`/income/${tx.id}`);
+  const save = async () => {
+    try {
+      await update('transactions', tx.id, { amountTTC: Number(amount), vendor: client, label: client, status });
+      toast(t('common.saved'));
+      navigate(`/income/${tx.id}`);
+    } catch { /* the store displays the server error */ }
   };
 
   return (

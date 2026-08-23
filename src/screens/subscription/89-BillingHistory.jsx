@@ -4,11 +4,9 @@ import { fmtDate } from '../../lib/format.js';
 import TopBar from '../../components/TopBar.jsx';
 
 export default function BillingHistory() {
-  const { state, patch, toast } = useStore();
+  const { state } = useStore();
   const { t, lang } = useT();
   const isPremium = checkPremium(state.settings);
-
-  const cancel = () => { patch('settings', { plan: 'free' }); toast(t('common.saved')); };
 
   return (
     <div className="screen stagger">
@@ -30,9 +28,6 @@ export default function BillingHistory() {
           : 'Aucune activation pour l’instant.'}
       </p>
 
-      {isPremium && (
-        <button className="btn btn-danger-soft btn-block" onClick={cancel}>Annuler mon abonnement</button>
-      )}
     </div>
   );
 }

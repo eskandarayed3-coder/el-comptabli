@@ -40,9 +40,6 @@ export default function CashFlow() {
         <StatCard label="Sorties" value={fmtDT(totals.expense, { decimals: 0 })} tone="coral" />
         <StatCard label="Solde fin de mois" value={fmtDT(totals.profit, { decimals: 0 })} tone="indigo" />
       </div>
-      <div className="card tint-amber">
-        <span className="small">⚠️ Le 28 juillet, après ta TVA (312 DT), ton solde projeté = {fmtDT(totals.profit - 312, { decimals: 0 })}</span>
-      </div>
     </div>
   );
 }

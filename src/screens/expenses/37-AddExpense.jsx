@@ -22,14 +22,16 @@ export default function AddExpense() {
   const amountNum = Number(amount) || 0;
   const tva = recoverable ? amountNum - amountNum / 1.19 : 0;
 
-  const save = () => {
-    add('transactions', {
+  const save = async () => {
+    try {
+      await add('transactions', {
       kind: 'expense', vendor, label: note || vendor || categoryLabelFallback(category, lang),
       category, date, amountTTC: amountNum, amountHT: amountNum - tva, tva,
-    });
-    logActivity(`Dépense -${amountNum} DT ajoutée`, 'TrendingDown');
-    toast(t('common.saved'));
-    navigate('/expenses');
+      });
+      await logActivity(`Dépense -${amountNum} DT ajoutée`, 'TrendingDown');
+      toast(t('common.saved'));
+      navigate('/expenses');
+    } catch { /* the store displays the server error */ }
   };
 
   return (

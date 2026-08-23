@@ -18,7 +18,7 @@ async function json(response) {
   return body;
 }
 
-async function apiFetch(path, options = {}) {
+export async function apiFetch(path, options = {}) {
   const { timeoutMs = 20_000, ...fetchOptions } = options;
   const headers = { ...(fetchOptions.body ? { 'Content-Type': 'application/json' } : {}), ...fetchOptions.headers };
   const signal = fetchOptions.signal || AbortSignal.timeout(timeoutMs);
@@ -161,17 +161,17 @@ export async function uploadDocument(file, documentId) {
   return json(res);
 }
 
-export async function getDocumentSignedUrl(storagePath) {
+export async function getDocumentSignedUrl(documentId) {
   return json(await apiFetch('/api/documents/signed-url', {
     method: 'POST',
-    body: JSON.stringify({ storagePath }),
+    body: JSON.stringify({ documentId }),
   }));
 }
 
-export async function deleteDocument(storagePath) {
+export async function deleteDocument(documentId) {
   await json(await apiFetch('/api/documents/delete', {
     method: 'POST',
-    body: JSON.stringify({ storagePath }),
+    body: JSON.stringify({ documentId }),
   }));
 }
 
@@ -195,12 +195,9 @@ export async function activateTrial() {
   return json(await apiFetch('/api/activate/trial', { method: 'POST', body: '{}' }));
 }
 
-export async function loadCloudState() {
-  return json(await apiFetch('/api/state'));
-}
-
-export async function saveCloudState(data) {
-  await json(await apiFetch('/api/state', { method: 'PUT', body: JSON.stringify({ data }) }));
+export async function v1(path, options = {}) {
+  const response = await apiFetch(`/api/v1${path}`, options);
+  return response.status === 204 ? null : json(response);
 }
 
 export async function generateInsight({ prompt, data, profile, maxTokens }) {

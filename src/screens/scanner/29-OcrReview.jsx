@@ -181,8 +181,7 @@ export default function OcrReview() {
         rawOcr,
         acceptInconsistency,
       });
-      if (!result.state) throw new Error('La synchronisation du tableau de bord a échoué.');
-      replaceCloudState(result.state);
+      await replaceCloudState();
       setProcessState('confirmed');
       delete window.__pendingScanFile;
       toast(t('common.saved'));

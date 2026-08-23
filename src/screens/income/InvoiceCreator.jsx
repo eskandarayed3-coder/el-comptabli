@@ -64,9 +64,10 @@ export default function InvoiceCreator() {
 
   const valid = client.trim() && totals.ht > 0;
 
-  const save = () => {
+  const save = async () => {
     if (!valid) return;
-    add('transactions', {
+    try {
+      await add('transactions', {
       kind: 'income',
       vendor: client.trim(),
       label: `${t('invoice.label')} ${number}`,
@@ -75,13 +76,14 @@ export default function InvoiceCreator() {
       amountHT: Math.round(totals.ht * 1000) / 1000,
       tva: Math.round(totals.tva * 1000) / 1000,
       amountTTC: Math.round(totals.ttc * 1000) / 1000,
-      invoice: { number, mf: mf.trim(), lines, withTva, timbre: totals.timbre },
-    });
-    add('documents', { name: `${number} · ${client.trim()}.pdf`, type: 'facture', date, size: 'N/D' });
-    patch('settings', { invoiceSeq: seq });
-    logActivity(`${t('invoice.label')} ${number} · ${client.trim()}`, 'FileText');
-    toast(t('invoice.saved', { number }));
-    navigate('/income');
+      reference: number,
+      source: 'generated_invoice',
+      });
+      await patch('settings', { invoiceSeq: seq });
+      await logActivity(`${t('invoice.label')} ${number} · ${client.trim()}`, 'FileText');
+      toast(t('invoice.saved', { number }));
+      navigate('/income');
+    } catch { /* the store displays the server error */ }
   };
 
   return (

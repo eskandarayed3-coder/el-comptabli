@@ -8,7 +8,6 @@ import insightsRouter from './routes/insights.js';
 import examRouter from './routes/exam.js';
 import activateRouter from './routes/activate.js';
 import authRouter from './routes/auth.js';
-import stateRouter from './routes/state.js';
 import adminRouter from './routes/admin.js';
 import exportsRouter from './routes/exports.js';
 import documentsRouter from './routes/documents.js';
@@ -50,7 +49,6 @@ app.get('/api/health', async (_req, res) => {
   res.status(ok ? 200 : 503).json({ ok, database, aiConfigured: info.keyPresent });
 });
 app.use('/api/auth', rateLimit({ windowMs: 15 * 60 * 1000, max: 20, keyPrefix: 'auth' }), sharedRateLimit({ scope: 'auth', windowSeconds: 900, max: 20, preferUser: false }), authRouter);
-app.use('/api/state', stateRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/exports', exportsRouter);
 app.use('/api/documents', rateLimit({ windowMs: 60 * 1000, max: 30, keyPrefix: 'documents' }), documentsRouter);

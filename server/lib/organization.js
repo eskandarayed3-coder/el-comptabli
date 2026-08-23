@@ -19,7 +19,7 @@ export async function requireOrganization(req, _res, next) {
     const requested = String(req.headers['x-organization-id'] || req.query?.organizationId || req.body?.organizationId || '');
     if (requested && !isUuid(requested)) throw errors.validation({ organizationId: 'UUID invalide' });
     let query = getServiceClient().from('organization_members')
-      .select('organization_id,role,status,organizations(id,name,currency,status)')
+      .select('organization_id,role,status,organizations(id,name,legal_name,tax_id,country,currency,fiscal_year_start,status)')
       .eq('user_id', req.user.id).eq('status', 'active');
     if (requested) query = query.eq('organization_id', requested);
     const { data, error } = await query.order('created_at', { ascending: true }).limit(1).maybeSingle();

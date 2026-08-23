@@ -66,18 +66,26 @@ async function ensureBucket() {
   }
 }
 
-async function existingConfirmation(userId, documentId, transactionId) {
+async function organizationForUser(user) {
+  const organizationId = await ensureAccount(user);
+  const { data, error } = await getServiceClient().from('organization_members')
+    .select('organization_id,role').eq('user_id', user.id).eq('organization_id', organizationId).eq('status', 'active').maybeSingle();
+  if (error) throw error;
+  return data || null;
+}
+
+async function existingConfirmation(userId, organizationId, documentId, transactionId) {
   const client = getServiceClient();
   const { data: invoice, error } = await client.from('invoices')
-    .select('id,document_id,transaction_id,status,created_at')
-    .eq('user_id', userId)
+    .select('id,document_id,document_record_id,transaction_id,status,created_at')
+    .eq('organization_id', organizationId)
     .or(`document_id.eq.${documentId},transaction_id.eq.${transactionId}`)
     .maybeSingle();
   if (error) throw error;
   if (!invoice) return null;
-  const { data: state, error: stateError } = await client.from('app_state').select('data').eq('user_id', userId).single();
-  if (stateError) throw stateError;
-  return { invoice, state: state.data };
+  const { data: document } = await client.from('documents').select('id,source_id,original_filename,mime_type,file_size,document_type,processing_status,ocr_status,created_at')
+    .eq('id', invoice.document_record_id).eq('organization_id', organizationId).maybeSingle();
+  return { invoice, documentRecord: document, transaction: null };
 }
 
 router.use(requireUser);
@@ -93,9 +101,11 @@ router.post('/upload', sharedRateLimit({ scope: 'document_upload', windowSeconds
   const metadata = { requestId: req.requestId, userHash: userHash(req.user?.id), mimeType: payload.mimeType };
   logEvent('info', 'document_upload_attempt', metadata);
   try {
+    const membership = await organizationForUser(req.user);
+    if (!membership || membership.role === 'viewer') return res.status(403).json({ error: { code: 'forbidden', message: 'Action non autorisée.' } });
     await ensureBucket();
     const bytes = Buffer.from(payload.dataBase64, 'base64');
-    const storagePath = `${req.user.id}/${documentId}.${MIME_EXTENSIONS[payload.mimeType]}`;
+    const storagePath = `${membership.organization_id}/${documentId}.${MIME_EXTENSIONS[payload.mimeType]}`;
     const { error } = await getServiceClient().storage.from(BUCKET).upload(storagePath, bytes, {
       contentType: payload.mimeType,
       cacheControl: '3600',
@@ -107,12 +117,21 @@ router.post('/upload', sharedRateLimit({ scope: 'document_upload', windowSeconds
       }
       throw error;
     }
+    const { data: record, error: recordError } = await getServiceClient().from('documents').insert({
+      organization_id: membership.organization_id, uploader_id: req.user.id, source_id: documentId, storage_path: storagePath,
+      original_filename: fileName || `document.${MIME_EXTENSIONS[payload.mimeType]}`, mime_type: payload.mimeType,
+      file_size: bytes.length, document_type: 'unknown', processing_status: 'uploaded', ocr_status: 'not_required',
+    }).select('id,source_id,original_filename,mime_type,file_size,document_type,processing_status,ocr_status,created_at').single();
+    if (recordError) {
+      await getServiceClient().storage.from(BUCKET).remove([storagePath]).catch(() => {});
+      throw recordError;
+    }
     logEvent('info', 'document_upload_success', { ...metadata, bytes: bytes.length });
     return res.status(201).json({
       document: {
-        id: documentId,
+        id: record.id,
+        sourceId: record.source_id,
         name: fileName || `document.${MIME_EXTENSIONS[payload.mimeType]}`,
-        storagePath,
         mimeType: payload.mimeType,
         storageSizeBytes: bytes.length,
         uploadedAt: new Date().toISOString(),
@@ -152,7 +171,6 @@ router.post('/confirm', sharedRateLimit({ scope: 'invoice_confirm', windowSecond
   }
 
   const bytes = Buffer.from(payload.dataBase64, 'base64');
-  const storagePath = `${req.user.id}/${documentId}.${MIME_EXTENSIONS[payload.mimeType]}`;
   const now = new Date().toISOString();
   const fields = confirmation.normalized;
   const document = {
@@ -170,7 +188,6 @@ router.post('/confirm', sharedRateLimit({ scope: 'invoice_confirm', windowSecond
     documentType: fields.documentType,
     source: 'ai-scan',
     status: 'verified',
-    storagePath,
     mimeType: payload.mimeType,
     storageSizeBytes: bytes.length,
     uploadedAt: now,
@@ -203,8 +220,11 @@ router.post('/confirm', sharedRateLimit({ scope: 'invoice_confirm', windowSecond
   logEvent('info', 'invoice_confirm_attempt', metadata);
 
   try {
-    await ensureAccount(req.user);
-    const existing = await existingConfirmation(req.user.id, documentId, transactionId);
+    const membership = await organizationForUser(req.user);
+    if (!membership || !['owner','admin','accountant'].includes(membership.role)) return res.status(403).json({ error: { code: 'forbidden', message: 'Action comptable non autorisée.' } });
+    const storagePath = `${membership.organization_id}/${documentId}.${MIME_EXTENSIONS[payload.mimeType]}`;
+    document.storagePath = storagePath;
+    const existing = await existingConfirmation(req.user.id, membership.organization_id, documentId, transactionId);
     if (existing) {
       logEvent('info', 'invoice_confirm_idempotent', metadata);
       return res.status(200).json({ ...existing, idempotent: true });
@@ -218,7 +238,7 @@ router.post('/confirm', sharedRateLimit({ scope: 'invoice_confirm', windowSecond
     });
     if (uploaded.error) {
       if (/already exists|duplicate/i.test(uploaded.error.message || '')) {
-        const committed = await existingConfirmation(req.user.id, documentId, transactionId);
+        const committed = await existingConfirmation(req.user.id, membership.organization_id, documentId, transactionId);
         if (committed) {
           logEvent('info', 'invoice_confirm_idempotent', metadata);
           return res.status(200).json({ ...committed, idempotent: true });
@@ -246,7 +266,7 @@ router.post('/confirm', sharedRateLimit({ scope: 'invoice_confirm', windowSecond
       throw error;
     }
     logEvent('info', 'invoice_confirm_success', { ...metadata, idempotent: Boolean(data?.idempotent) });
-    return res.status(data?.idempotent ? 200 : 201).json({ state: data?.state || data, invoice: data?.invoice || null, document, transaction, idempotent: Boolean(data?.idempotent) });
+    return res.status(data?.idempotent ? 200 : 201).json({ invoice: data?.invoice || null, document: { ...document, id: data?.documentRecordId || document.id }, transaction: data?.transaction || transaction, idempotent: Boolean(data?.idempotent) });
   } catch (error) {
     logEvent('error', 'invoice_confirm_failure', { ...metadata, category: error?.code || error?.name || 'database_error' });
     return res.status(503).json({ error: { code: 'invoice_save_failed', message: 'La facture n’a pas pu être enregistrée. Aucune donnée incomplète n’a été conservée.' } });
@@ -254,9 +274,13 @@ router.post('/confirm', sharedRateLimit({ scope: 'invoice_confirm', windowSecond
 });
 
 router.post('/signed-url', async (req, res) => {
-  const storagePath = ownedPath(req.user.id, req.body?.storagePath);
-  if (!storagePath) return res.status(403).json({ error: { code: 'forbidden_document', message: 'Document non autorisé.' } });
   try {
+    const membership = await organizationForUser(req.user);
+    const documentId = cleanText(req.body?.documentId, 64);
+    const { data: document, error: lookupError } = await getServiceClient().from('documents').select('storage_path')
+      .eq('id', documentId).eq('organization_id', membership?.organization_id || '').maybeSingle();
+    if (lookupError || !document) return res.status(404).json({ error: { code: 'document_not_found', message: 'Original introuvable.' } });
+    const storagePath = document.storage_path;
     const { data, error } = await getServiceClient().storage.from(BUCKET).createSignedUrl(storagePath, 10 * 60);
     if (error || !data?.signedUrl) throw error || new Error('signed url unavailable');
     return res.json({ url: data.signedUrl, expiresIn: 600 });
@@ -266,11 +290,14 @@ router.post('/signed-url', async (req, res) => {
 });
 
 router.post('/delete', async (req, res) => {
-  const storagePath = ownedPath(req.user.id, req.body?.storagePath);
-  if (!storagePath) return res.status(403).json({ error: { code: 'forbidden_document', message: 'Document non autorisé.' } });
   try {
-    const { error } = await getServiceClient().storage.from(BUCKET).remove([storagePath]);
+    const membership = await organizationForUser(req.user);
+    if (!membership || membership.role === 'viewer') return res.status(403).json({ error: { code: 'forbidden', message: 'Action non autorisée.' } });
+    const documentId = cleanText(req.body?.documentId, 64);
+    const { data, error } = await getServiceClient().from('documents').update({ processing_status: 'archived' })
+      .eq('id', documentId).eq('organization_id', membership.organization_id).select('id').maybeSingle();
     if (error) throw error;
+    if (!data) return res.status(404).json({ error: { code: 'document_not_found', message: 'Document introuvable.' } });
     return res.status(204).end();
   } catch {
     return res.status(503).json({ error: { code: 'document_delete_failed', message: 'Suppression impossible pour le moment.' } });

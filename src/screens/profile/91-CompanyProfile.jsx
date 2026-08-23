@@ -20,7 +20,7 @@ export default function CompanyProfile() {
         </div>
       </div>
       <div className="field"><label>{t('onboarding.yourName')}</label><input className="input" value={form.name} onChange={set('name')} /></div>
-      <div className="field"><label>{t('onboarding.yourEmail')}</label><input className="input" type="email" value={form.email} onChange={set('email')} /></div>
+      <div className="field"><label>{t('onboarding.yourEmail')}</label><input className="input" type="email" value={form.email} readOnly aria-readonly="true" /></div>
       <div className="field"><label>{t('onboarding.bizName')}</label><input className="input" value={form.activity} onChange={set('activity')} /></div>
       <div className="field row between">
         <label style={{ marginBottom: 0 }}>Type</label>
