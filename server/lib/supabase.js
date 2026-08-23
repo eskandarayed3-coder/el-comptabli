@@ -16,6 +16,16 @@ export function getServiceClient() {
   return serviceClient;
 }
 
+// User access/refresh tokens must never be installed on the singleton
+// service-role client. Supabase auth.refreshSession mutates its client session;
+// sharing that client would make later privileged queries run as the user.
+export function createRequestAuthClient(factory = createClient) {
+  if (!supabaseConfigured()) throw new Error('Supabase is not configured.');
+  return factory(process.env.SUPABASE_URL, publishableKey(), {
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+  });
+}
+
 function readCookie(req, name) {
   const header = String(req.headers.cookie || '');
   const item = header.split(';').map((part) => part.trim()).find((part) => part.startsWith(`${name}=`));
@@ -31,13 +41,14 @@ export function accessTokenFromRequest(req) {
 export async function getRequestUser(req, res) {
   const token = accessTokenFromRequest(req);
   if (!supabaseConfigured()) return null;
+  const authClient = createRequestAuthClient();
   if (token) {
-    const { data, error } = await getServiceClient().auth.getUser(token);
+    const { data, error } = await authClient.auth.getUser(token);
     if (!error && data?.user) return data.user;
   }
   const refreshToken = readCookie(req, 'ec_refresh');
   if (!refreshToken) return null;
-  const refreshed = await getServiceClient().auth.refreshSession({ refresh_token: refreshToken });
+  const refreshed = await authClient.auth.refreshSession({ refresh_token: refreshToken });
   if (refreshed.error || !refreshed.data?.session?.user) return null;
   if (res) setSessionCookies(res, refreshed.data.session.access_token, refreshed.data.session.refresh_token);
   return refreshed.data.session.user;
