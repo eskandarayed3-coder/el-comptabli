@@ -37,6 +37,7 @@ test('V1 migrations apply and enforce accounting and tenant invariants', async (
     await db.exec(await sqlFile('supabase/migrations/20260823084601_v1_backend_workflows.sql'));
     await db.exec(await sqlFile('supabase/migrations/20260823085344_v1_rls_and_indexes_hardening.sql'));
     await db.exec(await sqlFile('supabase/migrations/20260823091316_beta_ready_authoritative_state.sql'));
+    await db.exec(await sqlFile('supabase/migrations/20260823094059_beta_ready_advisor_hardening.sql'));
 
     const memberships = await db.query('select organization_id,user_id,role from public.organization_members order by user_id');
     assert.equal(memberships.rows.length, 2);
