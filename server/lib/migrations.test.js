@@ -84,6 +84,19 @@ test('V1 migrations apply and enforce accounting and tenant invariants', async (
     const balance = await db.query('select sum(total_debit) debit,sum(total_credit) credit from public.trial_balance_v where organization_id=$1', [orgA]);
     assert.equal(String(balance.rows[0].debit), String(balance.rows[0].credit));
 
+    await db.query(`insert into public.fiscal_periods(organization_id,start_date,end_date,status)
+      values($1,'2026-08-24','2026-08-24','closed')`, [orgA]);
+    const closedDraft = await db.query(
+      'select public.create_journal_entry($1,$2,$3::jsonb,$4::jsonb,$5) result',
+      [orgA, userA, JSON.stringify({ ...entryPayload, entryNumber: 'AC-CLOSED', entryDate: '2026-08-24', sourceId: randomUUID() }), JSON.stringify(lines), 'req-closed-period'],
+    );
+    const closedEntryId = closedDraft.rows[0].result.entry.id;
+    await db.query('select public.review_journal_entry($1,$2,$3,$4)', [orgA, closedEntryId, userA, 'req-closed-review']);
+    await assert.rejects(
+      db.query('select public.post_journal_entry($1,$2,$3,$4)', [orgA, closedEntryId, userA, 'req-closed-post']),
+      /PERIOD_CLOSED/,
+    );
+
     const supplier = randomUUID();
     const customer = randomUUID();
     await db.query(`insert into public.third_parties(id,organization_id,type,name,normalized_name) values
@@ -96,8 +109,14 @@ test('V1 migrations apply and enforce accounting and tenant invariants', async (
     const payment = await db.query('select public.create_payment($1,$2,$3::jsonb,$4::jsonb,$5) result', [orgA, userA, JSON.stringify(paymentPayload), JSON.stringify([{ invoiceId: invoice, allocatedAmount: '119.000' }]), 'req-pay']);
     const paymentId = payment.rows[0].result.payment.id;
     assert.equal((await db.query('select public.create_payment($1,$2,$3::jsonb,$4::jsonb,$5) result', [orgA, userA, JSON.stringify(paymentPayload), '[]', 'req-pay-repeat'])).rows[0].result.idempotent, true);
+    await assert.rejects(
+      db.query('select public.create_payment($1,$2,$3::jsonb,$4::jsonb,$5)', [orgA, userA, JSON.stringify({ ...paymentPayload, amount: '1.000', idempotencyKey: 'pay-test-overallocation' }), JSON.stringify([{ invoiceId: invoice, allocatedAmount: '1.000' }]), 'req-pay-overallocation']),
+      /INVOICE_OVERALLOCATED/,
+    );
     assert.equal((await db.query('select public.post_payment($1,$2,$3,$4) result', [orgA, paymentId, userA, 'req-pay-post'])).rows[0].result.payment.status, 'posted');
     assert.equal((await db.query('select public.reverse_payment($1,$2,$3,$4,$5,$6) result', [orgA, paymentId, userA, null, null, 'req-pay-reverse'])).rows[0].result.payment.status, 'reversed');
+    const replacement = await db.query('select public.create_payment($1,$2,$3::jsonb,$4::jsonb,$5) result', [orgA, userA, JSON.stringify({ ...paymentPayload, idempotencyKey: 'pay-test-after-reversal' }), JSON.stringify([{ invoiceId: invoice, allocatedAmount: '119.000' }]), 'req-pay-after-reversal']);
+    assert.equal(replacement.rows[0].result.payment.status, 'draft');
 
     const bankAccount = randomUUID();
     await db.query(`insert into public.bank_accounts(id,organization_id,bank_name,account_label,currency) values($1,$2,'Synthetic Bank','Test account','TND')`, [bankAccount, orgA]);
