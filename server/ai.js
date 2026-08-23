@@ -14,7 +14,7 @@ const OPENAI_COMPAT = {
   groq: {
     base: 'https://api.groq.com/openai/v1',
     chat: process.env.AI_CHAT_MODEL || 'llama-3.3-70b-versatile',
-    vision: process.env.AI_VISION_MODEL || 'meta-llama/llama-4-scout-17b-16e-instruct',
+    vision: process.env.AI_VISION_MODEL || 'qwen/qwen3.6-27b',
     keyEnv: 'GROQ_API_KEY',
   },
   mistral: {
@@ -74,7 +74,8 @@ export function providerInfo() {
   const p = activeProvider();
   const cfg = OPENAI_COMPAT[p];
   const keyPresent = p === 'gemini' ? Boolean(keyOf('GEMINI_API_KEY')) : Boolean(keyOf(cfg?.keyEnv));
-  return { provider: p, model: p === 'gemini' ? (process.env.GEMINI_MODEL || 'gemini-2.5-flash') : cfg?.chat, keyPresent };
+  const model = p === 'gemini' ? (process.env.GEMINI_MODEL || 'gemini-2.5-flash') : cfg?.chat;
+  return { provider: p, model, visionModel: p === 'gemini' ? model : cfg?.vision || null, keyPresent };
 }
 
 function friendly(status, provider, raw) {

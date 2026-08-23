@@ -59,10 +59,12 @@ router.post('/', async (req, res) => {
   const payload = validateScanPayload(req.body);
   if (!payload.ok) return res.status(400).json({ error: { code: 'bad_file', message: payload.message } });
   const startedAt = Date.now();
+  const provider = providerInfo();
   const metadata = {
     requestId: req.requestId,
     userHash: userHash(req.user?.id),
-    provider: providerInfo().provider,
+    provider: provider.provider,
+    model: provider.visionModel,
     pages: payload.images.length,
     totalPages: payload.pdf.totalPages,
     limited: payload.pdf.limited,
