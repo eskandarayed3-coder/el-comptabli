@@ -23,6 +23,9 @@ test('V1 migrations apply and enforce accounting and tenant invariants', async (
       create or replace function auth.uid() returns uuid language sql stable as $$
         select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid
       $$;
+      create or replace function auth.jwt() returns jsonb language sql stable as $$
+        select '{"is_anonymous":false}'::jsonb
+      $$;
     `);
     await db.exec(await sqlFile('server/lib/schema.sql'));
     await db.query('insert into auth.users(id,email) values ($1,$2),($3,$4),($5,$6)', [userA, 'a@example.test', userB, 'b@example.test', userC, 'viewer@example.test']);
@@ -32,6 +35,7 @@ test('V1 migrations apply and enforce accounting and tenant invariants', async (
     await db.exec(await sqlFile('supabase/migrations/20260823082312_v1_backend_foundation.sql'));
     await db.exec(await sqlFile('supabase/migrations/20260823082947_v1_accounting_invariants.sql'));
     await db.exec(await sqlFile('supabase/migrations/20260823084601_v1_backend_workflows.sql'));
+    await db.exec(await sqlFile('supabase/migrations/20260823085344_v1_rls_and_indexes_hardening.sql'));
 
     const memberships = await db.query('select organization_id,user_id,role from public.organization_members order by user_id');
     assert.equal(memberships.rows.length, 2);
