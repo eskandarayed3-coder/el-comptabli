@@ -12,7 +12,9 @@ import stateRouter from './routes/state.js';
 import adminRouter from './routes/admin.js';
 import exportsRouter from './routes/exports.js';
 import documentsRouter from './routes/documents.js';
+import v1Router from './routes/v1.js';
 import { providerInfo } from './ai.js';
+import { sendApiError } from './lib/api.js';
 import { assertProductionConfig } from './lib/env.js';
 import { getServiceClient, requireUser, supabaseConfigured } from './lib/supabase.js';
 import { rateLimit, sharedRateLimit } from './lib/rateLimit.js';
@@ -52,6 +54,7 @@ app.use('/api/state', stateRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/exports', exportsRouter);
 app.use('/api/documents', rateLimit({ windowMs: 60 * 1000, max: 30, keyPrefix: 'documents' }), documentsRouter);
+app.use('/api/v1', rateLimit({ windowMs: 60 * 1000, max: 120, keyPrefix: 'v1' }), v1Router);
 app.use('/api/chat', rateLimit({ windowMs: 60 * 1000, max: 20, keyPrefix: 'chat' }), requireUser, chatRouter);
 app.use('/api/scan', rateLimit({ windowMs: 60 * 1000, max: 10, keyPrefix: 'scan' }), requireUser, sharedRateLimit({ scope: 'ocr', windowSeconds: 60, max: 6 }), scanRouter);
 app.use('/api/insights', rateLimit({ windowMs: 60 * 1000, max: 12, keyPrefix: 'insights' }), requireUser, insightsRouter);
@@ -66,7 +69,7 @@ app.use('/api', (error, req, res, _next) => {
     category: error?.name || 'Error',
   });
   if (res.headersSent) return res.end();
-  return res.status(500).json({ error: { code: 'internal_error', message: 'Une erreur inattendue est survenue. Réessaie.', requestId: req.requestId } });
+  return sendApiError(error, req, res);
 });
 
 if (process.env.NODE_ENV === 'production') {
