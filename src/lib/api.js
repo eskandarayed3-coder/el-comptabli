@@ -20,7 +20,37 @@ async function apiFetch(path, options = {}) {
 function validateFile(file) {
   const extension = `.${String(file?.name || '').split('.').pop().toLowerCase()}`;
   if (!file || !ALLOWED_UPLOAD_TYPES.get(file.type)?.includes(extension)) throw new Error('Format accepté : JPG, PNG, WebP ou PDF.');
+  if (!file.size) throw new Error('Le fichier est vide.');
   if (file.size > MAX_UPLOAD_BYTES) throw new Error('Fichier trop volumineux (8 Mo maximum).');
+}
+
+async function pdfToOcrImage(file) {
+  try {
+    const [{ getDocument, GlobalWorkerOptions }, { default: workerSrc }] = await Promise.all([
+      import('pdfjs-dist'),
+      import('pdfjs-dist/build/pdf.worker.min.mjs?url'),
+    ]);
+    GlobalWorkerOptions.workerSrc = workerSrc;
+    const pdf = await getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+    if (!pdf.numPages) throw new Error('empty pdf');
+    const page = await pdf.getPage(1);
+    const base = page.getViewport({ scale: 1 });
+    const scale = Math.min(2.5, 1800 / Math.max(base.width, base.height));
+    const viewport = page.getViewport({ scale: Math.max(1.25, scale) });
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.ceil(viewport.width);
+    canvas.height = Math.ceil(viewport.height);
+    const context = canvas.getContext('2d', { alpha: false });
+    if (!context) throw new Error('canvas unavailable');
+    context.fillStyle = '#fff';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    await page.render({ canvasContext: context, viewport }).promise;
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.92));
+    if (!blob?.size) throw new Error('pdf rendering failed');
+    return new File([blob], `${file.name.replace(/\.pdf$/i, '')}-page-1.jpg`, { type: 'image/jpeg' });
+  } catch {
+    throw new Error('Ce PDF est vide, corrompu ou illisible. Essaie un autre fichier.');
+  }
 }
 
 async function filePayload(file) {
@@ -70,8 +100,26 @@ export async function chatStream({ messages, profile, agentId, onChunk, onMeta, 
 }
 
 export async function scanDocument(file) {
-  const res = await apiFetch('/api/scan', { method: 'POST', body: JSON.stringify(await filePayload(file)) });
-  return (await json(res)).fields;
+  validateFile(file);
+  const ocrFile = file.type === 'application/pdf' ? await pdfToOcrImage(file) : file;
+  const res = await apiFetch('/api/scan', { method: 'POST', body: JSON.stringify(await filePayload(ocrFile)) });
+  return json(res);
+}
+
+export async function confirmScannedInvoice({ file, documentId, transactionId, fields, rawOcr, acceptInconsistency = false }) {
+  const payload = await filePayload(file);
+  return json(await apiFetch('/api/documents/confirm', {
+    method: 'POST',
+    body: JSON.stringify({
+      ...payload,
+      documentId,
+      transactionId,
+      fileName: file.name,
+      fields,
+      rawOcr,
+      acceptInconsistency,
+    }),
+  }));
 }
 
 export async function uploadDocument(file, documentId) {

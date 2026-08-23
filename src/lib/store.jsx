@@ -201,6 +201,14 @@ export function StoreProvider({ children }) {
       URL.revokeObjectURL(url);
     },
     importData: (json) => dispatch({ type: 'REPLACE', data: json }),
+    replaceCloudState: (data) => {
+      const merged = { ...seedState(), ...data, __v: 1, ui: { toast: null } };
+      lastCloudState.current = JSON.stringify(withoutUi(merged));
+      cloudReadyRef.current = true;
+      stateRef.current = merged;
+      dispatch({ type: 'REPLACE', data: merged });
+      setCloudStatus('synced');
+    },
     reset: () => dispatch({ type: 'RESET' }),
     // Subscription dates only come from the server after a redeemed code or
     // trial. The browser never calculates or grants its own paid access.

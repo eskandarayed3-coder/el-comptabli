@@ -23,7 +23,7 @@ export default function ScanInvoice() {
     event.target.value = '';
     if (!file) return;
     const extension = `.${String(file.name || '').split('.').pop().toLowerCase()}`;
-    if (!ACCEPTED_TYPES.get(file.type)?.includes(extension) || file.size > MAX_FILE_SIZE) {
+    if (!file.size || !ACCEPTED_TYPES.get(file.type)?.includes(extension) || file.size > MAX_FILE_SIZE) {
       toast(t('scanner.fileHint'), 'error');
       return;
     }

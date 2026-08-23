@@ -115,6 +115,7 @@ export function AuthProvider({ children }) {
   }, [establishSession]);
 
   const signOut = useCallback(async () => {
+    if (supabase) await supabase.auth.signOut({ scope: 'local' });
     await readJson(await fetch('/api/auth/signout', { method: 'POST', credentials: 'same-origin' }));
     endGuestPreview();
     setUser(null);

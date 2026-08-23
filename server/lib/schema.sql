@@ -27,6 +27,41 @@ create table if not exists public.app_state (
   updated_at timestamptz not null default now()
 );
 
+-- Immutable audit record for invoices confirmed by a human after OCR. The
+-- dashboard remains backward-compatible through app_state, updated atomically
+-- by confirm_scanned_invoice below.
+create table if not exists public.invoices (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  document_id text not null,
+  transaction_id text not null,
+  fingerprint text not null,
+  kind text not null check (kind in ('expense', 'income')),
+  supplier text not null,
+  supplier_tax_id text not null default '',
+  invoice_number text not null,
+  invoice_date date not null,
+  amount_ht numeric(18, 3),
+  vat_amount numeric(18, 3),
+  amount_ttc numeric(18, 3) not null check (amount_ttc >= 0),
+  vat_rate numeric(8, 3),
+  vat_rates jsonb not null default '[]'::jsonb,
+  category text not null default 'autres',
+  storage_path text not null,
+  mime_type text not null,
+  raw_ocr jsonb,
+  validated_fields jsonb not null,
+  confidence jsonb not null default '{}'::jsonb,
+  validated_at timestamptz not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (user_id, fingerprint),
+  unique (user_id, document_id),
+  unique (user_id, transaction_id)
+);
+
+create index if not exists idx_invoices_user_date on public.invoices (user_id, invoice_date desc);
+
 create table if not exists public.subscriptions (
   user_id uuid primary key references public.profiles(id) on delete cascade,
   plan text not null default 'free' check (plan in ('free', 'premium')),
@@ -61,11 +96,12 @@ create index if not exists idx_activation_events_user_created on public.activati
 -- Defense in depth: no data table is callable from the browser Data API.
 alter table public.profiles enable row level security;
 alter table public.app_state enable row level security;
+alter table public.invoices enable row level security;
 alter table public.subscriptions enable row level security;
 alter table public.activation_codes enable row level security;
 alter table public.activation_events enable row level security;
 
-revoke all on table public.profiles, public.app_state, public.subscriptions, public.activation_codes, public.activation_events from anon, authenticated;
+revoke all on table public.profiles, public.app_state, public.invoices, public.subscriptions, public.activation_codes, public.activation_events from anon, authenticated;
 
 -- Remove the public activation-code RPCs used by the pre-auth prototype.
 -- Keeping an overloaded function would leave an unintended callable endpoint.
@@ -150,6 +186,81 @@ $$;
 
 revoke all on function public.redeem_activation_code(text, uuid), public.grant_trial_if_available(uuid) from public, anon, authenticated;
 grant execute on function public.redeem_activation_code(text, uuid), public.grant_trial_if_available(uuid) to service_role;
+
+-- The invoice row and its three dashboard projections commit together. Only
+-- the trusted Express server (service_role) can call this RPC.
+create or replace function public.confirm_scanned_invoice(
+  p_user_id uuid,
+  p_fingerprint text,
+  p_invoice jsonb,
+  p_transaction jsonb,
+  p_document jsonb,
+  p_activity jsonb
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_invoice public.invoices%rowtype;
+  v_state jsonb;
+begin
+  if p_user_id is null or length(coalesce(p_fingerprint, '')) < 5 then
+    raise exception 'invalid invoice identity' using errcode = '22023';
+  end if;
+
+  insert into public.invoices (
+    user_id, document_id, transaction_id, fingerprint, kind, supplier,
+    supplier_tax_id, invoice_number, invoice_date, amount_ht, vat_amount,
+    amount_ttc, vat_rate, vat_rates, category, storage_path, mime_type,
+    raw_ocr, validated_fields, confidence, validated_at
+  ) values (
+    p_user_id,
+    p_invoice->>'id',
+    p_transaction->>'id',
+    p_fingerprint,
+    p_invoice->>'kind',
+    p_invoice->>'vendor',
+    coalesce(p_invoice->>'supplierTaxId', ''),
+    p_invoice->>'invoiceNumber',
+    (p_invoice->>'date')::date,
+    nullif(p_invoice->>'amountHT', '')::numeric,
+    nullif(p_invoice->>'tva', '')::numeric,
+    (p_invoice->>'amountTTC')::numeric,
+    nullif(p_invoice->>'tvaRate', '')::numeric,
+    coalesce(p_invoice->'vatRates', '[]'::jsonb),
+    coalesce(p_invoice->>'category', 'autres'),
+    p_invoice->>'storagePath',
+    p_document->>'mimeType',
+    p_invoice->'rawOcr',
+    p_invoice - 'rawOcr',
+    coalesce(p_invoice->'confidence', '{}'::jsonb),
+    (p_invoice->>'validatedAt')::timestamptz
+  ) returning * into v_invoice;
+
+  update public.app_state
+     set data = jsonb_set(
+       jsonb_set(
+         jsonb_set(data, '{transactions}', jsonb_build_array(p_transaction) || coalesce(data->'transactions', '[]'::jsonb), true),
+         '{documents}', jsonb_build_array(p_document) || coalesce(data->'documents', '[]'::jsonb), true
+       ),
+       '{activities}', jsonb_build_array(p_activity) || coalesce(data->'activities', '[]'::jsonb), true
+     ),
+     updated_at = now()
+   where user_id = p_user_id
+   returning data into v_state;
+
+  if v_state is null then
+    raise exception 'account state is not initialized' using errcode = '55000';
+  end if;
+
+  return jsonb_build_object('state', v_state, 'invoice', to_jsonb(v_invoice));
+end;
+$$;
+
+revoke all on function public.confirm_scanned_invoice(uuid, text, jsonb, jsonb, jsonb, jsonb) from public, anon, authenticated;
+grant execute on function public.confirm_scanned_invoice(uuid, text, jsonb, jsonb, jsonb, jsonb) to service_role;
 
 -- Covers the activation-code foreign key and avoids a full scan when a user is
 -- removed or an administrator filters redeemed codes by account.

@@ -25,9 +25,11 @@ export function validateImagePayload({ mimeType, dataBase64 } = {}) {
   const type = String(mimeType || '').toLowerCase();
   const data = String(dataBase64 || '');
   if (!ALLOWED_IMAGE_TYPES.has(type)) return { ok: false, message: 'Format de fichier non pris en charge.' };
+  if (!data) return { ok: false, message: 'Le fichier est vide.' };
   if (!/^[a-z0-9+/=\r\n]+$/i.test(data)) return { ok: false, message: 'Fichier invalide.' };
-  const bytes = Math.floor((data.length * 3) / 4);
-  if (!data || bytes > MAX_IMAGE_BYTES) return { ok: false, message: 'Fichier trop volumineux (8 Mo maximum).' };
+  const bytes = Buffer.from(data, 'base64').length;
+  if (!bytes) return { ok: false, message: 'Le fichier est vide.' };
+  if (bytes > MAX_IMAGE_BYTES) return { ok: false, message: 'Fichier trop volumineux (8 Mo maximum).' };
   if (!hasExpectedSignature(type, data)) return { ok: false, message: 'Le contenu du fichier ne correspond pas au format annoncé.' };
   return { ok: true, mimeType: type, dataBase64: data };
 }

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { clearSessionCookie, getRequestUser, getServiceClient, requireUser, setSessionCookies } from '../lib/supabase.js';
+import { accessTokenFromRequest, clearSessionCookie, getRequestUser, getServiceClient, requireUser, setSessionCookies } from '../lib/supabase.js';
 import * as users from '../lib/users.js';
 import * as codes from '../lib/supabaseCodes.js';
 import { cleanText } from '../lib/validation.js';
@@ -57,7 +57,12 @@ router.get('/me', async (req, res) => {
   }
 });
 
-router.post('/signout', (_req, res) => {
+router.post('/signout', async (req, res) => {
+  const accessToken = accessTokenFromRequest(req);
+  if (accessToken) {
+    const { error } = await getServiceClient().auth.admin.signOut(accessToken, 'local');
+    if (error) console.warn('session revocation failed:', error.message);
+  }
   clearSessionCookie(res);
   return res.status(204).end();
 });
