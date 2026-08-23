@@ -11,6 +11,7 @@ import TintCard from '../../components/TintCard.jsx';
 import StatusPill from '../../components/StatusPill.jsx';
 import SuggestionChips from '../../components/SuggestionChips.jsx';
 import AgentAvatar from '../../components/AgentAvatar.jsx';
+import AiQuickAsk from '../../components/AiQuickAsk.jsx';
 import { AGENTS } from '../../lib/agents.js';
 
 export default function Home() {
@@ -131,6 +132,8 @@ export default function Home() {
           <div className="summary-metric"><span>{t('common.expenses')}</span><strong className="num">{fmtDT(totals.expense, { decimals: 0 })}</strong></div>
         </div>
       </HeroCard>
+
+      <AiQuickAsk guest={guest} />
 
       <div className="grid-3">
         <StatCard label={t('home.statDeadlines')} value={monthDeadlines} tone="amber" onClick={() => navigate('/tax/calendar')} />
