@@ -5,6 +5,7 @@ import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { useAuth } from '../../lib/auth.jsx';
 import { activateTrial } from '../../lib/api.js';
+import { getDisplayIdentity } from '../../../shared/displayIdentity.js';
 
 const REGIME_KEY = { forfaitaire: 'regimeForfait', reel: 'regimeReel', unknown: 'regimeUnknown' };
 const TYPE_KEY = { freelance: 'whoFreelance', micro: 'whoMicro', company: 'whoCompany', accountant: 'whoAccountant' };
@@ -14,7 +15,8 @@ export default function SetupComplete() {
   const [params] = useSearchParams();
   const { state, patch, activatePlan, toast } = useStore();
   const { user, startFreeTrial } = useAuth();
-  const { t } = useT();
+  const { t, lang } = useT();
+  const identity = getDisplayIdentity(user, state.profile, lang);
   const startHandled = useRef(false);
 
   // Every newly onboarded account gets one full day before the paywall kicks
@@ -58,7 +60,7 @@ export default function SetupComplete() {
       >
         <CheckCircle2 size={48} color="var(--teal-700)" />
       </div>
-      <h1>{t('onboarding.doneTitle', { name: state.profile.name })}</h1>
+      <h1>{t('onboarding.doneTitle', { name: identity.displayName })}</h1>
 
       <div className="card tint-gray" style={{ width: '100%' }}>
         <div className="row" style={{ gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>

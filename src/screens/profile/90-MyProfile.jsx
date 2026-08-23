@@ -3,6 +3,7 @@ import { Languages, Building2, Bell, Download, Shield, FileText, UserCog, LogOut
 import { useStore, isPremium as checkPremium, premiumDaysLeft } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { useAuth } from '../../lib/auth.jsx';
+import { getDisplayIdentity } from '../../../shared/displayIdentity.js';
 
 const REGIME_KEY = { forfaitaire: 'regimeForfait', reel: 'regimeReel', unknown: 'regimeUnknown' };
 const TYPE_KEY = { freelance: 'whoFreelance', micro: 'whoMicro', company: 'whoCompany', accountant: 'whoAccountant' };
@@ -10,8 +11,9 @@ const TYPE_KEY = { freelance: 'whoFreelance', micro: 'whoMicro', company: 'whoCo
 export default function MyProfile() {
   const navigate = useNavigate();
   const { state, toast, reset } = useStore();
-  const { signOut } = useAuth();
-  const { t } = useT();
+  const { signOut, user } = useAuth();
+  const { t, lang } = useT();
+  const identity = getDisplayIdentity(user, state.profile, lang);
   const isPremium = checkPremium(state.settings);
   const daysLeft = premiumDaysLeft(state.settings);
 
@@ -34,11 +36,11 @@ export default function MyProfile() {
     <div className="screen stagger">
       <header className="profile-hero">
         <div className="avatar" aria-hidden="true">
-          {(state.profile.name || '?').slice(0, 1).toUpperCase()}
+          {identity.initials}
         </div>
         <div className="col grow" style={{ gap: 4, textAlign: 'start' }}>
-          <h1 style={{ font: 'var(--h2)' }}>{state.profile.name || t('profile.noName')}</h1>
-          <span className="tiny muted">{state.profile.email || t('profile.noEmail')}</span>
+          <h1 style={{ font: 'var(--h2)' }}>{identity.displayName}</h1>
+          {identity.showEmail && <span className="tiny muted">{identity.displayEmail}</span>}
           <span className="pill teal" style={{ alignSelf: 'flex-start' }}>
             {t(`onboarding.${REGIME_KEY[state.profile.regime] || 'regimeReel'}`)} · {t(`onboarding.${TYPE_KEY[state.profile.userType] || 'whoFreelance'}`)}
           </span>

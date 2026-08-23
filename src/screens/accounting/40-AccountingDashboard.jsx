@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
+import { v1 } from '../../lib/api.js';
 import StatCard from '../../components/StatCard.jsx';
 import TintCard from '../../components/TintCard.jsx';
 
@@ -9,9 +11,25 @@ export default function AccountingDashboard() {
   const { state, toast } = useStore();
   const { t } = useT();
   const ym = new Date().toISOString().slice(0, 7);
-  const entries = state.transactions.filter((tx) => tx.date.startsWith(ym)).length;
+  const postedThisMonth = (state.journalEntries || []).filter((entry) => entry.status === 'posted' && entry.date?.startsWith(ym)).length;
+  const [pendingMappings, setPendingMappings] = useState(null);
+  const [loadError, setLoadError] = useState('');
+
+  useEffect(() => {
+    let active = true;
+    v1('/invoices?limit=100').then((result) => {
+      if (!active) return;
+      setPendingMappings((result.data || []).filter((invoice) => ['confirmed', 'paid'].includes(invoice.status) && invoice.accounting_status !== 'posted').length);
+      setLoadError('');
+    }).catch((error) => {
+      if (!active) return;
+      setLoadError(error.friendly?.message || 'Les factures en attente sont momentanément indisponibles.');
+    });
+    return () => { active = false; };
+  }, []);
 
   const QUICK = [
+    { label: 'Valider les imputations', to: '/accounting/mappings', tone: 'amber' },
     { label: 'Journal des ventes', to: '/accounting/journal' },
     { label: 'Journal des achats', to: '/accounting/journal' },
     { label: 'Grand livre', to: '/accounting/ledger' },
@@ -22,13 +40,14 @@ export default function AccountingDashboard() {
     <div className="screen stagger">
       <div className="top-bar"><h1 className="grow">{t('accounting.title')} 📒</h1></div>
       <div className="grid-3">
-        <StatCard label="Écritures ce mois" value={entries * 2} tone="teal" />
-        <StatCard label="À catégoriser" value={2} tone="amber" />
-        <StatCard label="Journaux" value={3} tone="indigo" />
+        <StatCard label="Écritures publiées ce mois" value={postedThisMonth} tone="teal" />
+        <StatCard label="Factures à comptabiliser" value={pendingMappings ?? '…'} tone="amber" />
+        <StatCard label="Total des écritures publiées" value={state.dashboard?.posted_entry_count || 0} tone="indigo" />
       </div>
+      {loadError && <p className="small" role="alert" style={{ color: 'var(--coral-700)' }}>{loadError}</p>}
       <div className="col" style={{ gap: 10 }}>
         {QUICK.map((q) => (
-          <TintCard key={q.label} tone="gray" onClick={() => navigate(q.to)}><span style={{ fontWeight: 600 }}>{q.label}</span></TintCard>
+          <TintCard key={q.label} tone={q.tone || 'gray'} onClick={() => navigate(q.to)}><span style={{ fontWeight: 600 }}>{q.label}</span></TintCard>
         ))}
       </div>
       <p className="disclaimer">{t('accounting.v2')}</p>

@@ -3,6 +3,7 @@ import { validateBalancedLines } from '../accounting/engine.js';
 import { ApiError, asyncRoute, cleanString, errors, moneyString, pagination, requireUuid, validIsoDate } from '../lib/api.js';
 import { listOrganizations as defaultListOrganizations, requireOrganization as defaultRequireOrganization, requireOrganizationRole } from '../lib/organization.js';
 import { getServiceClient as defaultGetServiceClient, requireUser as defaultRequireUser } from '../lib/supabase.js';
+import { profilePresentation } from '../lib/profilePresentation.js';
 
 let getServiceClient = defaultGetServiceClient;
 let requireUser = defaultRequireUser;
@@ -123,13 +124,10 @@ router.get('/bootstrap', asyncRoute(async (req, res) => {
     if (result.error) throw result.error;
   }
   const prefs = preferences.data?.preferences || {};
+  const safeProfile = profilePresentation(profile.data, req.user, prefs.lang || profile.data.language || 'fr');
   res.json({
     organization: req.organization,
-    profile: {
-      name: profile.data.name || '', email: profile.data.email || req.user.email || '', regime: profile.data.regime || 'reel',
-      userType: profile.data.user_type || 'freelance', city: profile.data.city || '', activity: profile.data.activity || '', phone: profile.data.phone || '', sector: profile.data.sector || '',
-      taxId: req.organization.tax_id || '', language: profile.data.language || 'fr',
-    },
+    profile: { ...safeProfile, taxId: req.organization.tax_id || '', language: profile.data.language || 'fr' },
     settings: { ...prefs, lang: prefs.lang || profile.data.language || 'fr', plan: subscription.data?.plan || 'free', premiumUntil: subscription.data?.premium_until || null },
     transactions: (transactions.data || []).map(legacyTransaction),
     documents: (documents.data || []).map(legacyDocument),
@@ -504,7 +502,7 @@ router.patch('/documents/:id', requireOrganizationRole('owner','admin','accounta
 
 router.get('/invoices', asyncRoute(async (req, res) => {
   const page = pagination(req.query);
-  let query = getServiceClient().from('invoices').select('id,document_record_id,third_party_id,invoice_number,invoice_date,due_date,document_type,currency,amount_ht,vat_amount,amount_ttc,stamp_duty,discount,withholding_tax,status,accounting_status,accounting_mapping_id,journal_entry_id,accounting_validated_by,accounting_validated_at,validated_by,validated_at,created_at', { count: 'exact' })
+  let query = getServiceClient().from('invoices').select('id,document_record_id,third_party_id,invoice_number,invoice_date,due_date,document_type,kind,supplier,category,currency,amount_ht,vat_amount,amount_ttc,stamp_duty,discount,withholding_tax,status,accounting_status,accounting_mapping_id,journal_entry_id,accounting_validated_by,accounting_validated_at,validated_by,validated_at,created_at,invoice_tax_lines(tax_type,tax_rate,taxable_base,tax_amount),third_parties(type,name,tax_id)', { count: 'exact' })
     .eq('organization_id', req.organization.id).order('invoice_date', { ascending: false }).range(page.from, page.to);
   if (req.query.status) query = query.eq('status', cleanString(req.query.status, 30));
   if (req.query.from) query = query.gte('invoice_date', validIsoDate(req.query.from, 'from'));
