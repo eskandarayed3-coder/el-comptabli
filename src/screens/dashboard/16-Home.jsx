@@ -60,14 +60,14 @@ export default function Home() {
 
   return (
     <div className="screen stagger">
-      <header className="row between">
-        <div className="row" style={{ gap: 12 }}>
+      <header className="home-header">
+        <div className="home-identity">
           <div className="avatar" aria-hidden="true">
             {identity.initials}
           </div>
-          <h1>{greeting}</h1>
+          <h1 className="home-greeting">{greeting}</h1>
         </div>
-        <div className="row" style={{ gap: 8 }}>
+        <div className="home-tools">
           <button className="icon-btn" type="button" onClick={() => navigate('/profile/settings')} aria-label={t('profile.settings')} title={t('profile.settings')}>
             <Settings size={18} aria-hidden="true" />
           </button>

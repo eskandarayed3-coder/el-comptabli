@@ -427,6 +427,39 @@ textarea.input { resize: vertical; min-height: 96px; }
 .hero-card .progress-track { background: rgba(255, 255, 255, 0.25); }
 .hero-card .progress-fill { background: #fff; }
 
+/* Home header: long translated identities must stay inside the phone frame. */
+.home-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+.home-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.home-greeting {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  line-height: 1.2;
+}
+.home-tools {
+  display: flex;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+@media (max-width: 360px) {
+  .home-header { gap: 8px; }
+  .home-identity { gap: 8px; }
+  .home-greeting { font-size: 24px; }
+}
+
 /* ============ Toast ============ */
 .toast-wrap {
   position: fixed; bottom: calc(var(--nav-h) + 32px); left: 0; right: 0;
