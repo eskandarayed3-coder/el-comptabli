@@ -20,8 +20,6 @@ export default function ChatHistory() {
     .filter((c) => c.title.toLowerCase().includes(q.toLowerCase()))
     .sort((a, b) => (b.pinned - a.pinned) || b.updatedAt.localeCompare(a.updatedAt));
 
-  const openChat = (chat) => navigate('/chat?q=' + encodeURIComponent(chat.messages[chat.messages.length - 1]?.text.slice(0, 0) || ''));
-
   return (
     <div className="screen stagger">
       <TopBar title={t('chat.historyTitle')} />

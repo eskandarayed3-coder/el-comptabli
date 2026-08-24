@@ -19,8 +19,8 @@ const METHODS = [
 export default function Payment() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const { state, activatePlan, toast } = useStore();
-  const { t, lang } = useT();
+  const { activatePlan, toast } = useStore();
+  const { t } = useT();
 
   const plan = PRICE[params.get('plan')] ? params.get('plan') : 'semaine';
   const price = PRICE[plan];

@@ -9,10 +9,18 @@
    may additionally allow `http://localhost:5173/auth/callback`.
 3. Configure a production SMTP provider in Authentication → SMTP so
    passwordless email links are reliably delivered.
-4. Run server/lib/schema.sql once in the SQL editor. It enables RLS on every
-   business-data table and only grants the backend service role access.
-5. In the SQL editor, verify that anonymous reads fail and that the two RPCs
-   can only be executed by service_role.
+4. For a new empty database only, apply `server/lib/schema.sql` as the checked-in
+   legacy baseline, then apply every file in `supabase/migrations/` in lexical
+   order. Never apply the baseline to an existing project and never reset
+   production. `npm test` replays this exact sequence in an isolated PGlite
+   database.
+5. For an existing environment, compare its migration ledger with
+   `docs/database-migration-recovery.md`, then apply only unapplied migrations
+   through the Supabase migration workflow. The final authoritative schema has
+   no public `app_state`; the baseline alone is not a deployable current schema.
+6. Verify that anonymous and authenticated Data API roles have no direct table
+   grants, the `documents` bucket is private, and public workflow RPCs are
+   executable only by `service_role`.
 
 ## 2. Configure Vercel
 
@@ -55,6 +63,10 @@ configured; it never falsely claims an email was sent.
 
 ## 5. Validate before launch
 
+Use Node.js 22, matching `package.json` and Vercel:
+
+    node --version
+
     npm ci
     npm test
     npm run build
@@ -66,6 +78,9 @@ Manually verify:
 - Code: redeem once; attempt again; verify the second attempt fails.
 - Wrong account: cannot access another account, admin routes, state, AI, or
   activation endpoint.
+- Accounting: confirm a synthetic invoice, choose a human-validated mapping,
+  post it, and verify the same totals in Journal, Grand Livre, Balance, TVA and
+  Dashboard. Repeating the posting request must return the same journal entry.
 - Export: Excel opens; PDF print dialog opens; Resend email arrives when
   configured.
 

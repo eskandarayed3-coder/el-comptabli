@@ -2,7 +2,20 @@ import { lazy } from 'react';
 
 // Vite can only statically analyze dynamic import() one path segment deep,
 // so subfoldered screens need import.meta.glob instead of a templated import().
-const modules = import.meta.glob('./screens/**/*.jsx');
+const modules = import.meta.glob([
+  './screens/**/*.jsx',
+  '!./screens/experts/**',
+  '!./screens/team/**',
+  '!./screens/admin/98-SubscriptionsManagement.jsx',
+  '!./screens/admin/99-KnowledgeBaseManagement.jsx',
+  '!./screens/admin/100-AiLogs.jsx',
+  '!./screens/admin/101-AccountantManagement.jsx',
+  '!./screens/admin/102-ContentManagement.jsx',
+  '!./screens/admin/103-NotificationsManagement.jsx',
+  '!./screens/admin/104-AdminAnalytics.jsx',
+  '!./screens/admin/105-SystemSettings.jsx',
+  '!./screens/future/1*.jsx',
+]);
 
 // After a dev-server restart or redeploy, old code-split chunk URLs 404, which
 // would blank the screen. Reload the page once (guarded to avoid a loop) so the
@@ -137,12 +150,6 @@ export const manifest = [
   { path: '/knowledge/search', Component: L('knowledge/69-SearchKnowledge'), label: '69. Search Knowledge', module: 'Knowledge' },
 
   // ---- Module 13 — Expert Accountants ----
-  { path: '/experts', Component: L('experts/70-FindAccountant'), label: '70. Find Accountant', module: 'Experts' },
-  { path: '/experts/:id', Component: L('experts/71-AccountantProfile'), label: '71. Accountant Profile', module: 'Experts' },
-  { path: '/experts/:id/book', Component: L('experts/72-AppointmentBooking'), label: '72. Appointment Booking', module: 'Experts' },
-  { path: '/experts/:id/chat', Component: L('experts/73-ChatWithAccountant'), label: '73. Chat with Accountant', module: 'Experts' },
-  { path: '/experts/:id/video', Component: L('experts/74-VideoConsultation'), label: '74. Video Consultation', module: 'Experts' },
-  { path: '/experts/history', Component: L('experts/75-ConsultationHistory'), label: '75. Consultation History', module: 'Experts' },
 
   // ---- Module 14 — Documents ----
   { path: '/documents', Component: L('documents/76-AllDocuments'), label: '76. All Documents', module: 'Documents', mvp: true },
@@ -157,8 +164,6 @@ export const manifest = [
   { path: '/notifications/ai-alerts', Component: L('notifications/83-AiAlerts'), label: '83. AI Alerts', module: 'Notifications' },
 
   // ---- Module 16 — Team ----
-  { path: '/team', Component: L('team/84-TeamMembers'), label: '84. Team Members', module: 'Team' },
-  { path: '/team/roles', Component: L('team/85-RolesPermissions'), label: '85. Roles & Permissions', module: 'Team' },
 
   // ---- Module 17 — Subscription ----
   { path: '/pricing', Component: L('subscription/86-Pricing'), label: '86. Pricing', module: 'Subscription', mvp: true },
@@ -180,33 +185,10 @@ export const manifest = [
 
   // ---- Module 20 — Future Features ----
   { path: '/future/roadmap', Component: L('future/Roadmap'), label: 'Roadmap (consolidated)', module: 'Future' },
-  { path: '/future/bank', Component: L('future/106-BankConnection'), label: '106. Bank Account Connection', module: 'Future' },
-  { path: '/future/bank-import', Component: L('future/107-BankImport'), label: '107. Bank Transaction Import', module: 'Future' },
-  { path: '/future/einvoice', Component: L('future/108-EInvoice'), label: '108. E-Invoice', module: 'Future' },
-  { path: '/future/signature', Component: L('future/109-DigitalSignature'), label: '109. Digital Signature', module: 'Future' },
-  { path: '/future/payroll', Component: L('future/110-Payroll'), label: '110. Payroll', module: 'Future' },
-  { path: '/future/employees', Component: L('future/111-EmployeeManagement'), label: '111. Employee Management', module: 'Future' },
-  { path: '/future/inventory', Component: L('future/112-Inventory'), label: '112. Inventory', module: 'Future' },
-  { path: '/future/sales', Component: L('future/113-SalesManagement'), label: '113. Sales Management', module: 'Future' },
-  { path: '/future/purchases', Component: L('future/114-PurchaseManagement'), label: '114. Purchase Management', module: 'Future' },
-  { path: '/future/crm', Component: L('future/115-ClientCrm'), label: '115. Client CRM', module: 'Future' },
-  { path: '/future/suppliers', Component: L('future/116-SupplierManagement'), label: '116. Supplier Management', module: 'Future' },
-  { path: '/future/multi-company', Component: L('future/117-MultiCompany'), label: '117. Multi-Company', module: 'Future' },
-  { path: '/future/forecast', Component: L('future/118-AiForecasting'), label: '118. AI Forecasting', module: 'Future' },
-  { path: '/future/budget', Component: L('future/119-BudgetPlanning'), label: '119. Budget Planning', module: 'Future' },
-  { path: '/future/audit', Component: L('future/120-AuditAssistant'), label: '120. Audit Assistant', module: 'Future' },
 ];
 
 export const adminManifest = [
   { path: '/admin', Component: L('admin/96-AdminDashboard'), label: '96. Admin Dashboard' },
   { path: '/admin/users', Component: L('admin/97-UsersManagement'), label: '97. Users Management' },
   { path: '/admin/codes', Component: L('admin/CodesManagement'), label: 'Activation Codes' },
-  { path: '/admin/subscriptions', Component: L('admin/98-SubscriptionsManagement'), label: '98. Subscriptions Management' },
-  { path: '/admin/knowledge', Component: L('admin/99-KnowledgeBaseManagement'), label: '99. Knowledge Base Management' },
-  { path: '/admin/ai-logs', Component: L('admin/100-AiLogs'), label: '100. AI Logs' },
-  { path: '/admin/accountants', Component: L('admin/101-AccountantManagement'), label: '101. Accountant Management' },
-  { path: '/admin/content', Component: L('admin/102-ContentManagement'), label: '102. Content Management' },
-  { path: '/admin/notifications', Component: L('admin/103-NotificationsManagement'), label: '103. Notifications Management' },
-  { path: '/admin/analytics', Component: L('admin/104-AdminAnalytics'), label: '104. Admin Analytics' },
-  { path: '/admin/settings', Component: L('admin/105-SystemSettings'), label: '105. System Settings' },
 ];

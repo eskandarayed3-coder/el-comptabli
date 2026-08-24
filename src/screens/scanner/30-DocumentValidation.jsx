@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
-import { fmtDT, fmtDate } from '../../lib/format.js';
+import { fmtDate } from '../../lib/format.js';
 import TopBar from '../../components/TopBar.jsx';
 import EmptyState from '../../components/EmptyState.jsx';
 

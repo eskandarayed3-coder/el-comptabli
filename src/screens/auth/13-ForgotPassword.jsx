@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useT } from '../../i18n/index.js';
 import TopBar from '../../components/TopBar.jsx';
 import { useAuth } from '../../lib/auth.jsx';
 
 export default function ForgotPassword() {
-  const navigate = useNavigate();
   const { t } = useT();
   const { requestMagicLink } = useAuth();
   const [dest, setDest] = useState('');

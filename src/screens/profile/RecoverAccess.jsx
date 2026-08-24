@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { MailSearch, Loader2 } from 'lucide-react';
 import { useT } from '../../i18n/index.js';
 import { useAuth } from '../../lib/auth.jsx';
 import TopBar from '../../components/TopBar.jsx';
 
 export default function RecoverAccess() {
-  const navigate = useNavigate();
   const { requestMagicLink } = useAuth();
   const { t } = useT();
   const [email, setEmail] = useState('');

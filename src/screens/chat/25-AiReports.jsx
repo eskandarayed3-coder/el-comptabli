@@ -4,7 +4,6 @@ import { useStore, monthTotals } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { generateInsight } from '../../lib/api.js';
 import { fmtDate } from '../../lib/format.js';
-import TopBar from '../../components/TopBar.jsx';
 import SuggestionChips from '../../components/SuggestionChips.jsx';
 import TintCard from '../../components/TintCard.jsx';
 import MarkdownLite from '../../components/MarkdownLite.jsx';

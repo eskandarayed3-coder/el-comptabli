@@ -5,6 +5,7 @@ server/data/
 
 # Dependencies / build output
 node_modules/
+.npm-cache/
 dist/
 build/
 supabase/.temp/

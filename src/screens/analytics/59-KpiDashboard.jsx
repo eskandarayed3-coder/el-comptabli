@@ -3,6 +3,7 @@ import { useT } from '../../i18n/index.js';
 import { useStore, monthTotals } from '../../lib/store.jsx';
 import { fmtDT } from '../../lib/format.js';
 import FilterPills from '../../components/FilterPills.jsx';
+import { postedEntryCount, postedVatPosition } from '../../../shared/accountingReporting.js';
 
 export default function KpiDashboard() {
   const { t } = useT();
@@ -13,19 +14,19 @@ export default function KpiDashboard() {
     const ym = new Date().toISOString().slice(0, 7);
     const { income, expense, profit } = monthTotals(state.transactions, ym, state.generalLedger);
     const posted = state.generalLedger.filter((line) => String(line.entry_date || '').startsWith(ym));
-    const incomeEntries = new Set(posted.filter((line) => Number(line.account_class) === 7).map((line) => line.entry_id));
-    const panierMoyen = incomeEntries.size ? income / incomeEntries.size : 0;
-    const tvaRecuperee = (state.vatSummary || []).filter((row) => row.kind === 'expense' && String(row.period_month || '').startsWith(ym)).reduce((sum, row) => sum + Number(row.tax_amount || 0), 0);
+    const incomeEntryCount = postedEntryCount(posted, ym, 7);
+    const panierMoyen = incomeEntryCount ? income / incomeEntryCount : 0;
+    const { deductible: tvaRecuperee } = postedVatPosition(state.vatSummary, ym);
 
     return [
       { label: 'CA mensuel', value: fmtDT(income, { decimals: 0 }) },
       { label: 'Marge', value: income ? `${Math.round((profit / income) * 100)}%` : '—' },
-      { label: 'Panier moyen', value: incomeTx.length ? fmtDT(panierMoyen, { decimals: 0 }) : '—' },
+      { label: 'Panier moyen', value: incomeEntryCount ? fmtDT(panierMoyen, { decimals: 0 }) : '—' },
       { label: 'TVA récupérée', value: fmtDT(tvaRecuperee, { decimals: 0 }) },
-      { label: 'Écritures de vente', value: String(incomeEntries.size) },
+      { label: 'Écritures de vente', value: String(incomeEntryCount) },
       { label: 'Dépenses du mois', value: fmtDT(expense, { decimals: 0 }) },
     ];
-  }, [state.generalLedger, state.vatSummary]);
+  }, [state.transactions, state.generalLedger, state.vatSummary]);
 
   const hasData = state.generalLedger.length > 0;
 

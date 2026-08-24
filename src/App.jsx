@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useReducer } from 'react';
+import { Suspense, lazy, useEffect, useReducer } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import BottomNav from './components/BottomNav.jsx';
 import Toast from './components/Toast.jsx';
@@ -10,7 +10,8 @@ import { useStore, isPremium } from './lib/store.jsx';
 import { useAuth } from './lib/auth.jsx';
 import { isPaywallAllowed } from './lib/paywall.js';
 import { manifest, adminManifest } from './routes.js';
-import ScreensIndex from './screens/ScreensIndex.jsx';
+
+const ScreensIndex = import.meta.env.DEV ? lazy(() => import('./screens/ScreensIndex.jsx')) : null;
 
 const NAV_PATHS = ['/home', '/chat', '/scanner', '/finance', '/knowledge', '/profile'];
 const GUEST_RESTRICTED_PREFIXES = [
@@ -95,6 +96,7 @@ function AdminShell() {
                     ? <Route key={path} index element={<Component />} />
                     : <Route key={path} path={rel} element={<Component />} />;
                 })}
+                <Route path="*" element={<Navigate to="/admin" replace />} />
               </Routes>
             </Suspense>
           </div>
@@ -109,7 +111,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/admin/*" element={<AdminShell />} />
-      <Route path="/screens" element={import.meta.env.DEV ? <ScreensIndex /> : <Navigate to="/home" replace />} />
+      <Route path="/screens" element={ScreensIndex ? <Suspense fallback={null}><ScreensIndex /></Suspense> : <Navigate to="/home" replace />} />
       <Route path="/*" element={<MobileShell onboarded={state.settings.onboarded} />} />
     </Routes>
   );

@@ -4,6 +4,7 @@ import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { CATEGORIES } from '../../lib/taxRules.js';
 import FilterPills from '../../components/FilterPills.jsx';
+import { postedCategoryTotals } from '../../../shared/accountingReporting.js';
 
 export default function ExpenseCharts() {
   const { state } = useStore();
@@ -13,9 +14,10 @@ export default function ExpenseCharts() {
   const trend = useMemo(() => Array.from({ length: 6 }, (_, i) => {
     const d = new Date(); d.setMonth(d.getMonth() - (5 - i));
     const ym = d.toISOString().slice(0, 7);
-    const v = state.transactions.filter((x) => x.kind === 'expense' && x.date.startsWith(ym) && (cat === 'all' || x.category === cat)).reduce((s, x) => s + x.amountTTC, 0);
+    const categories = postedCategoryTotals(state.generalLedger, ym, 6);
+    const v = categories.filter((row) => cat === 'all' || row.id === cat).reduce((sum, row) => sum + row.value, 0);
     return { name: d.toLocaleDateString('fr-FR', { month: 'short' }), value: Math.round(v) };
-  }), [state.transactions, cat]);
+  }), [state.generalLedger, cat]);
 
   return (
     <div className="screen stagger">
@@ -26,7 +28,7 @@ export default function ExpenseCharts() {
           <ResponsiveContainer><BarChart data={trend}><XAxis dataKey="name" fontSize={11} stroke="var(--text-2)" /><Bar dataKey="value" fill="#DC2626" radius={[4, 4, 0, 0]} /></BarChart></ResponsiveContainer>
         </div>
       </div>
-      <div className="card tint-coral"><span className="small">Carburant a doublé depuis mai</span></div>
+      {!trend.some((row) => row.value) && <p className="small muted center">Aucune charge comptabilisée pour cette période.</p>}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useT } from '../../i18n/index.js';
 
 export default function ScanReceipt() {
   const navigate = useNavigate();
-  const { t, lang } = useT();
+  const { lang } = useT();
 
   const pickFile = (e) => {
     const file = e.target.files?.[0];

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Languages, Building2, Bell, Download, Shield, FileText, UserCog, LogOut, ChevronRight, Settings, CreditCard, LayoutGrid, Activity, BookOpen } from 'lucide-react';
+import { Languages, Building2, Bell, Download, Shield, FileText, LogOut, ChevronRight, Settings, CreditCard, LayoutGrid, Activity, BookOpen } from 'lucide-react';
 import { useStore, isPremium as checkPremium, premiumDaysLeft } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { useAuth } from '../../lib/auth.jsx';
@@ -28,7 +28,6 @@ export default function MyProfile() {
     { icon: CreditCard, label: t('sub.billing'), to: '/billing' },
     { icon: Shield, label: t('profile.security'), to: '/profile/security' },
     { icon: FileText, label: t('profile.disclaimerMentions'), to: '/profile/about' },
-    { icon: UserCog, label: t('profile.contactExpert'), to: '/experts', badge: t('common.soon') },
     ...(import.meta.env.DEV ? [{ icon: LayoutGrid, label: t('profile.allScreens'), to: '/screens' }] : []),
   ];
 

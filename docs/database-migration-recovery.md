@@ -26,13 +26,13 @@ On 23 August 2026, the Supabase migration API reported these applied versions fo
 20260823130000 invoice_accounting_posting_pipeline
 ```
 
-The first 18 entries are the authoritative production record. The repository does not contain the SQL for the nine historical entries before the V1 files. Those SQL files cannot be reconstructed safely from names alone; no fabricated replacements are used. The new pipeline migration is present in the repository and was applied successfully to production with the version above.
+All 19 entries above are the authoritative production record. The repository does not contain the original SQL files for the nine historical entries before the V1 files. Those exact historical files cannot be reconstructed safely from names alone; no fabricated replacements are used. Their resulting legacy schema is captured by `server/lib/schema.sql`, which is now explicitly treated as an empty-database baseline only. The accounting pipeline migration is present in the repository and was applied successfully to production with the version above.
 
 ## Replay evidence
 
-`server/lib/migrations.test.js` applies the repository schema and migrations in an isolated PGlite database, including `invoice_accounting_posting_pipeline`. It verifies RLS, tenant boundaries, balanced posting, human mapping validation, idempotent confirmation, dashboard totals and VAT lineage. This proves repository replay from the checked-in schema snapshot, not a clean Supabase project replay of the nine missing historical SQL files.
+`server/lib/migrations.test.js` applies the checked-in empty-database baseline and every repository migration in lexical order in an isolated PGlite database, including `invoice_accounting_posting_pipeline`. It verifies RLS, tenant boundaries, balanced posting, human mapping validation, idempotent confirmation, dashboard totals and VAT lineage. This proves deterministic repository replay from the captured baseline. It does not claim byte-for-byte recovery of the nine unavailable historical migration files or a provider-level Supabase restore.
 
-To close the remaining migration gate, export the production schema with the Supabase CLI or dashboard, commit the export as an explicit baseline, and replay that baseline plus every checked-in migration in a disposable Supabase branch/project. Do not merge the branch or run destructive reset commands against production.
+To close the remaining provider-parity gate, replay the captured baseline plus every checked-in migration in a disposable Supabase branch/project, then compare tables, constraints, policies, functions, views and indexes with production. Do not merge the branch or run destructive reset commands against production.
 
 ## Recovery runbook
 

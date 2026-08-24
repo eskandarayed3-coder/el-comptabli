@@ -20,13 +20,13 @@ export function computeTRI(invest, flows) {
   let lo = -0.9;
   let hi = 10;
   let flo = f(lo);
-  let fhi = f(hi);
+  const fhi = f(hi);
   if (flo * fhi > 0) return null; // no sign change → no IRR found
   for (let k = 0; k < 200; k++) {
     const mid = (lo + hi) / 2;
     const fmid = f(mid);
     if (Math.abs(fmid) < 1e-6) return mid;
-    if (flo * fmid < 0) { hi = mid; fhi = fmid; }
+    if (flo * fmid < 0) { hi = mid; }
     else { lo = mid; flo = fmid; }
   }
   return (lo + hi) / 2;

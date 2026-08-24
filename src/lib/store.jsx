@@ -1,14 +1,15 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import { seedState } from './seed.js';
 import { uid } from './format.js';
 import { deleteDocument, v1 } from './api.js';
 import { useAuth } from './auth.jsx';
 import { getDisplayIdentity } from '../../shared/displayIdentity.js';
+import { postedMonthTotals } from '../../shared/accountingReporting.js';
 
 const StoreContext = createContext(null);
 
 function withoutUi(state) {
-  const { ui, ...persisted } = state;
+  const { ui: _ui, ...persisted } = state;
   return persisted;
 }
 
@@ -106,7 +107,7 @@ export function StoreProvider({ children }) {
       setCloudStatus('error');
       throw error;
     }
-  }, [user?.id, user?.email, setSubscription]);
+  }, [user, setSubscription]);
 
   useEffect(() => {
     if (!authReady) return;
@@ -120,7 +121,7 @@ export function StoreProvider({ children }) {
     if (state.settings.plan !== plan || state.settings.premiumUntil !== (subscription.premium_until || null)) {
       dispatch({ type: 'PATCH', slice: 'settings', data: { plan, premiumUntil: subscription.premium_until || null } });
     }
-  }, [subscription, user?.id, state.settings.plan, state.settings.premiumUntil]);
+  }, [subscription, user, state.settings.plan, state.settings.premiumUntil]);
 
   useEffect(() => {
     const lang = state.settings.lang || 'fr';
@@ -142,11 +143,11 @@ export function StoreProvider({ children }) {
   };
 
   const patch = async (slice, data) => {
-    if (slice === 'ui') { dispatch({ type: 'PATCH', slice, data }); return; }
+    if (slice === 'ui') { dispatch({ type: 'PATCH', slice, data }); return true; }
     dispatch({ type: 'PATCH', slice, data });
     try {
       if (slice === 'settings') {
-        const { plan, premiumUntil, ...preferences } = data;
+        const { plan: _plan, premiumUntil: _premiumUntil, ...preferences } = data;
         if (Object.keys(preferences).length) await v1('/preferences', { method: 'PATCH', body: JSON.stringify(preferences) });
       } else if (slice === 'profile') {
         const profileData = Object.fromEntries(Object.entries(data).filter(([key]) => ['name','regime','userType','city','activity','phone','sector','language','lang'].includes(key)));
@@ -156,7 +157,12 @@ export function StoreProvider({ children }) {
         await Promise.all(operations);
       }
       setCloudStatus('synced');
-    } catch (error) { persistError(error); await refresh().catch(() => {}); }
+      return true;
+    } catch (error) {
+      persistError(error);
+      await refresh().catch(() => {});
+      return false;
+    }
   };
 
   const add = async (coll, item) => {
@@ -202,7 +208,7 @@ export function StoreProvider({ children }) {
     } catch (error) { persistError(error); throw error; }
   };
 
-  const api = useMemo(() => ({
+  const api = {
     state,
     dispatch,
     patch,
@@ -236,7 +242,7 @@ export function StoreProvider({ children }) {
     },
     cloudStatus,
     refresh,
-  }), [state, setSubscription, cloudStatus, refresh]);
+  };
 
   return <StoreContext.Provider value={api}>{children}</StoreContext.Provider>;
 }
@@ -253,12 +259,7 @@ export function monthTotals(transactions = [], ym, generalLedger = null) {
   // lines. The legacy transaction stream remains available for operational
   // lists, but must not be used as a competing source for financial totals.
   if (Array.isArray(generalLedger)) {
-    const inMonth = generalLedger.filter((line) => String(line.entry_date || '').startsWith(ym));
-    const income = inMonth.filter((line) => Number(line.account_class) === 7)
-      .reduce((sum, line) => sum + Number(line.credit || 0) - Number(line.debit || 0), 0);
-    const expense = inMonth.filter((line) => Number(line.account_class) === 6)
-      .reduce((sum, line) => sum + Number(line.debit || 0) - Number(line.credit || 0), 0);
-    return { income, expense, profit: income - expense };
+    return postedMonthTotals(generalLedger, ym);
   }
   const inMonth = transactions.filter((t) => (t.date || '').startsWith(ym));
   const income = inMonth.filter((t) => t.kind === 'income').reduce((s, t) => s + Number(t.amountTTC ?? t.amount ?? 0), 0);

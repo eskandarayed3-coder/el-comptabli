@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Laptop, Store, Building2, UserCog } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
-import OptionCard from '../../components/OptionCard.jsx';
 
 export default function UserType() {
   const navigate = useNavigate();

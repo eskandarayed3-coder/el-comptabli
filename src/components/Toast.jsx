@@ -6,7 +6,7 @@ const ICONS = { success: CheckCircle2, error: XCircle, info: Info };
 const EXIT_MS = 180;
 
 export default function Toast() {
-  const { state, patch } = useStore();
+  const { state, dispatch } = useStore();
   const toast = state.ui.toast;
   const [shown, setShown] = useState(null);
   const [leaving, setLeaving] = useState(false);
@@ -15,7 +15,7 @@ export default function Toast() {
     if (toast) {
       setShown(toast);
       setLeaving(false);
-      const t = setTimeout(() => patch('ui', { toast: null }), 2400);
+      const t = setTimeout(() => dispatch({ type: 'PATCH', slice: 'ui', data: { toast: null } }), 2400);
       return () => clearTimeout(t);
     }
     if (shown) {
@@ -24,7 +24,7 @@ export default function Toast() {
       return () => clearTimeout(t);
     }
     return undefined;
-  }, [toast]);
+  }, [toast, shown, dispatch]);
 
   if (!shown) return null;
   const Icon = ICONS[shown.kind] || Info;

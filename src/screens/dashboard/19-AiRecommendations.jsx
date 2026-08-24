@@ -76,7 +76,7 @@ export default function AiRecommendations() {
     }
 
     return out;
-  }, [state.transactions, state.deadlines]);
+  }, [state.transactions, state.deadlines, navigate]);
 
   return (
     <div className="screen stagger">

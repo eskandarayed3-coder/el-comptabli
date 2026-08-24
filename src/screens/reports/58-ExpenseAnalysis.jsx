@@ -6,6 +6,7 @@ import { useT } from '../../i18n/index.js';
 import { fmtDT } from '../../lib/format.js';
 import { categoryLabel } from '../../lib/taxRules.js';
 import TopBar from '../../components/TopBar.jsx';
+import { postedCategoryTotals } from '../../../shared/accountingReporting.js';
 
 const COLORS = ['#0F766E', '#14B8A6', '#D97706', '#4F46E5', '#DC2626', '#6B7280'];
 
@@ -17,27 +18,23 @@ export default function ExpenseAnalysis() {
   const ymLast = (() => { const d = new Date(); d.setMonth(d.getMonth() - 1); return d.toISOString().slice(0, 7); })();
 
   const data = useMemo(() => {
-    const map = {};
-    state.transactions.filter((tx) => tx.kind === 'expense' && tx.date.startsWith(ym)).forEach((tx) => {
-      map[tx.category] = (map[tx.category] || 0) + tx.amountTTC;
-    });
-    const total = Object.values(map).reduce((a, b) => a + b, 0) || 1;
-    return { total, items: Object.entries(map).map(([id, v]) => ({ id, label: categoryLabel(id, lang), v, pct: Math.round((v / total) * 100) })) };
-  }, [state.transactions, ym, lang]);
+    const rows = postedCategoryTotals(state.generalLedger, ym, 6);
+    const total = rows.reduce((sum, row) => sum + row.value, 0);
+    return { total, items: rows.map(({ id, value }) => ({ id, label: categoryLabel(id, lang), v: value, pct: total ? Math.round((value / total) * 100) : 0 })) };
+  }, [state.generalLedger, ym, lang]);
 
   const insight = useMemo(() => {
     // Only surfaces if a category genuinely grew month-over-month — no
     // fixed example text.
     let best = null;
     for (const c of data.items) {
-      const lastCount = state.transactions.filter((tx) => tx.kind === 'expense' && tx.category === c.id && tx.date.startsWith(ymLast)).length;
-      const thisCount = state.transactions.filter((tx) => tx.kind === 'expense' && tx.category === c.id && tx.date.startsWith(ym)).length;
-      if (thisCount > lastCount && (!best || thisCount - lastCount > best.diff)) {
-        best = { label: c.label, thisCount, lastCount, diff: thisCount - lastCount };
+      const lastValue = postedCategoryTotals(state.generalLedger, ymLast, 6).find((row) => row.id === c.id)?.value || 0;
+      if (lastValue > 0 && c.v > lastValue * 1.15 && (!best || c.v - lastValue > best.diff)) {
+        best = { label: c.label, thisValue: c.v, lastValue, diff: c.v - lastValue };
       }
     }
     return best;
-  }, [data.items, state.transactions, ym, ymLast]);
+  }, [data.items, state.generalLedger, ymLast]);
 
   return (
     <div className="screen stagger">
@@ -65,7 +62,7 @@ export default function ExpenseAnalysis() {
         ))}
       </div>
       {insight && (
-        <div className="card tint-indigo"><span className="small">💡 {insight.label} en hausse : {insight.thisCount} opérations ce mois vs {insight.lastCount} le mois dernier</span></div>
+        <div className="card tint-indigo"><span className="small">💡 {insight.label} en hausse : {fmtDT(insight.thisValue, { decimals: 0 })} ce mois vs {fmtDT(insight.lastValue, { decimals: 0 })} le mois dernier</span></div>
       )}
       <button className="btn btn-ghost btn-block" onClick={() => navigate('/documents/export')}>Exporter l’analyse</button>
     </div>

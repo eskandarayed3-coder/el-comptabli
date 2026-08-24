@@ -28,7 +28,7 @@ export function AdminSecretProvider({ children }) {
       .catch(() => { if (!cancelled) { setVerified(false); setError('Impossible de vérifier les droits administrateur.'); } })
       .finally(() => { if (!cancelled) setChecking(false); });
     return () => { cancelled = true; };
-  }, [user?.id, ready]);
+  }, [user, ready]);
 
   return <AdminContext.Provider value={{ verified, checking, error, logout: signOut }}>{children}</AdminContext.Provider>;
 }

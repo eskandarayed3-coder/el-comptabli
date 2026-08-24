@@ -29,7 +29,7 @@ export default function AdminAnalytics() {
       <div className="card" style={{ padding: 20 }}>
         <h3 style={{ marginBottom: 12 }}>Funnel</h3>
         <div className="col" style={{ gap: 10 }}>
-          {FUNNEL.map(([label, v], i) => (
+          {FUNNEL.map(([label, v]) => (
             <div key={label} className="col" style={{ gap: 4 }}>
               <div className="row between small"><span>{label}</span><span className="num">{v.toLocaleString('fr-FR')}</span></div>
               <div className="progress-track"><div className="progress-fill" style={{ width: `${(v / FUNNEL[0][1]) * 100}%` }} /></div>

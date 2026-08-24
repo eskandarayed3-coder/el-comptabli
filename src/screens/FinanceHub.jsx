@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   TrendingUp, TrendingDown, Landmark, BookOpen, FileSpreadsheet, BarChart3,
   Calculator, CalendarClock, FolderOpen, Receipt, PieChart, Wallet,
-  Users, Sparkles, Target, Search, Settings, ChevronRight,
+  Sparkles, Target, Search, Settings, ChevronRight,
   LayoutGrid, List,
 } from 'lucide-react';
 import { useStore, monthTotals } from '../lib/store.jsx';
@@ -175,11 +175,6 @@ export default function FinanceHub() {
       <Section view={view} title={t('docs.title')} navigate={navigate} items={[
         { to: '/documents', icon: FolderOpen, label: t('docs.title') },
         { to: '/documents/export', icon: FileSpreadsheet, label: t('docs.exportTitle') },
-      ]} />
-
-      <Section view={view} title={t('experts.find') + ' & ' + t('team.title')} navigate={navigate} items={[
-        { to: '/experts', icon: Users, label: t('experts.find') },
-        { to: '/team', icon: Users, label: t('team.title') },
       ]} />
 
       {/* One honest roadmap card instead of 15 dead-end buttons (Payroll,

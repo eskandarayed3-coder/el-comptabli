@@ -30,7 +30,7 @@ export default function ChatBubble({ role, text, agent, sources, complexCase, on
           )) : <span className="pill teal">{t('chat.sources', { s: sources })}</span>}
         </div>
       )}
-      {!isUser && complexCase && (
+      {!isUser && complexCase && onFindExpert && (
         <div className="card tint-coral inner" style={{ marginTop: 10, padding: 12 }}>
           <div className="row small" style={{ gap: 8, fontWeight: 600 }}>
             <AlertTriangle size={16} color="var(--pill-danger-fg)" />

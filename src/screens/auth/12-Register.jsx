@@ -1,19 +1,16 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useT } from '../../i18n/index.js';
 import TopBar from '../../components/TopBar.jsx';
 import { useAuth } from '../../lib/auth.jsx';
 
 export default function Register() {
-  const navigate = useNavigate();
   const { requestMagicLink } = useAuth();
   const { t } = useT();
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
-  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  const [email, setEmail] = useState('');
 
   const submit = async () => {
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) return;
-    await requestMagicLink(form.email.trim(), '/language');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return;
+    await requestMagicLink(email.trim(), '/language');
   };
 
   return (
@@ -21,16 +18,8 @@ export default function Register() {
       <TopBar title={t('auth.registerTitle')} />
       <div className="col" style={{ gap: 14 }}>
         <div className="field">
-          <label>{t('auth.name')}</label>
-          <input className="input" value={form.name} onChange={set('name')} placeholder="Eskandar" />
-        </div>
-        <div className="field">
-          <label>{t('auth.email')}</label>
-          <input className="input" type="email" value={form.email} onChange={set('email')} placeholder="ton@email.com" />
-        </div>
-        <div className="field">
-          <label>{t('auth.password')}</label>
-          <input className="input" type="password" value={form.password} onChange={set('password')} placeholder="Non utilisé : connexion sans mot de passe" disabled />
+          <label htmlFor="register-email">{t('auth.email')}</label>
+          <input id="register-email" className="input" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="ton@email.com" />
         </div>
       </div>
       <div style={{ flex: 1 }} />

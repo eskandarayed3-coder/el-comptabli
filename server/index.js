@@ -53,10 +53,10 @@ app.use('/api/admin', adminRouter);
 app.use('/api/exports', exportsRouter);
 app.use('/api/documents', rateLimit({ windowMs: 60 * 1000, max: 30, keyPrefix: 'documents' }), documentsRouter);
 app.use('/api/v1', rateLimit({ windowMs: 60 * 1000, max: 120, keyPrefix: 'v1' }), v1Router);
-app.use('/api/chat', rateLimit({ windowMs: 60 * 1000, max: 20, keyPrefix: 'chat' }), requireUser, chatRouter);
+app.use('/api/chat', rateLimit({ windowMs: 60 * 1000, max: 20, keyPrefix: 'chat' }), requireUser, sharedRateLimit({ scope: 'chat', windowSeconds: 60, max: 12 }), chatRouter);
 app.use('/api/scan', rateLimit({ windowMs: 60 * 1000, max: 10, keyPrefix: 'scan' }), requireUser, sharedRateLimit({ scope: 'ocr', windowSeconds: 60, max: 6 }), scanRouter);
-app.use('/api/insights', rateLimit({ windowMs: 60 * 1000, max: 12, keyPrefix: 'insights' }), requireUser, insightsRouter);
-app.use('/api/exam', rateLimit({ windowMs: 60 * 1000, max: 8, keyPrefix: 'exam' }), requireUser, examRouter);
+app.use('/api/insights', rateLimit({ windowMs: 60 * 1000, max: 12, keyPrefix: 'insights' }), requireUser, sharedRateLimit({ scope: 'insights', windowSeconds: 60, max: 8 }), insightsRouter);
+app.use('/api/exam', rateLimit({ windowMs: 60 * 1000, max: 8, keyPrefix: 'exam' }), requireUser, sharedRateLimit({ scope: 'exam', windowSeconds: 60, max: 4 }), examRouter);
 app.use('/api/activate', activateRouter);
 
 app.use('/api', (error, req, res, _next) => {

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useT } from '../../i18n/index.js';
-import TopBar from '../../components/TopBar.jsx';
 import Toggle from '../../components/Toggle.jsx';
 
 export default function AiAlerts() {

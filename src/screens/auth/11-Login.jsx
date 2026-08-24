@@ -49,7 +49,7 @@ export default function Login() {
     try {
       await startFreeTrial();
       navigate(next);
-    } catch (e) {
+    } catch {
       setTrialError(t('auth.trialUnavailable'));
     } finally {
       setStartingTrial(false);

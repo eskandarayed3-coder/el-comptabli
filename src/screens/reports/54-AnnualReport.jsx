@@ -4,30 +4,21 @@ import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { fmtDT } from '../../lib/format.js';
 import TopBar from '../../components/TopBar.jsx';
+import { postedYearTotals } from '../../../shared/accountingReporting.js';
 
 export default function AnnualReport() {
   const { state } = useStore();
   const { t } = useT();
-
-  const monthly = useMemo(() => Array.from({ length: 12 }, (_, i) => {
-    const d = new Date(); d.setMonth(i);
-    const ym = d.toISOString().slice(0, 7);
-    const income = state.transactions.filter((x) => x.kind === 'income' && x.date.startsWith(ym)).reduce((s, x) => s + x.amountTTC, 0);
-    return { name: d.toLocaleDateString('fr-FR', { month: 'short' }), value: Math.round(income) };
-  }), [state.transactions]);
-
   const year = String(new Date().getFullYear());
-  const yearTransactions = state.transactions.filter((x) => String(x.date || '').startsWith(year));
-  const totals = yearTransactions.reduce((acc, x) => {
-    const amount = Number(x.amountTTC || 0);
-    if (x.kind === 'income') acc.income += amount;
-    if (x.kind === 'expense') acc.expense += amount;
-    acc.profit = acc.income - acc.expense;
-    return acc;
-  }, { income: 0, expense: 0, profit: 0 });
-  const quarters = [0, 1, 2, 3].map((quarter) => yearTransactions
-    .filter((x) => Math.floor((Number(String(x.date).slice(5, 7)) - 1) / 3) === quarter)
-    .reduce((sum, x) => sum + (x.kind === 'income' ? Number(x.amountTTC || 0) : -Number(x.amountTTC || 0)), 0));
+  const yearTotals = useMemo(() => postedYearTotals(state.generalLedger, year), [state.generalLedger, year]);
+
+  const monthly = yearTotals.map((row, monthIndex) => ({
+    name: new Date(Number(year), monthIndex, 1).toLocaleDateString('fr-FR', { month: 'short' }),
+    value: Math.round(row.income),
+  }));
+
+  const totals = yearTotals.reduce((sum, row) => ({ income: sum.income + row.income, expense: sum.expense + row.expense, profit: sum.profit + row.profit }), { income: 0, expense: 0, profit: 0 });
+  const quarters = [0, 1, 2, 3].map((quarter) => yearTotals.slice(quarter * 3, quarter * 3 + 3).reduce((sum, row) => sum + row.profit, 0));
 
   return (
     <div className="screen stagger">
@@ -52,7 +43,7 @@ export default function AnnualReport() {
           </div>
         ))}
       </div>
-      {!yearTransactions.length && <p className="small muted center">Aucune donnée pour cette année.</p>}
+      {!state.generalLedger.some((line) => String(line.entry_date || '').startsWith(year)) && <p className="small muted center">Aucune écriture publiée pour cette année.</p>}
     </div>
   );
 }

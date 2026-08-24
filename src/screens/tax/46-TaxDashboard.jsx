@@ -7,6 +7,7 @@ import TopBar from '../../components/TopBar.jsx';
 import StatCard from '../../components/StatCard.jsx';
 import TintCard from '../../components/TintCard.jsx';
 import StatusPill from '../../components/StatusPill.jsx';
+import { postedVatPosition } from '../../../shared/accountingReporting.js';
 
 export default function TaxDashboard() {
   const navigate = useNavigate();
@@ -14,15 +15,12 @@ export default function TaxDashboard() {
   const { t, lang } = useT();
   const ym = new Date().toISOString().slice(0, 7);
 
-  // Real TVA position for the month = TVA collectée (ventes) − TVA déductible (achats).
-  const tva = useMemo(() => {
-    const inMonth = state.transactions.filter((x) => (x.date || '').startsWith(ym));
-    const collected = inMonth.filter((x) => x.kind === 'income').reduce((s, x) => s + Number(x.tva || 0), 0);
-    const deductible = inMonth.filter((x) => x.kind === 'expense').reduce((s, x) => s + Number(x.tva || 0), 0);
-    return { collected, deductible, due: Math.max(0, collected - deductible) };
-  }, [state.transactions, ym]);
+  const tva = useMemo(() => postedVatPosition(state.vatSummary, ym), [state.vatSummary, ym]);
 
   const paidTva = state.deadlines.filter((d) => d.kind === 'tva' && d.status === 'paid');
+  const vatPositionLabel = tva.due < 0
+    ? `${lang === 'ar' ? 'رصيد الأداء على القيمة المضافة للترحيل' : 'Crédit de TVA à reporter'} : ${fmtDT(Math.abs(tva.due), { decimals: 0 })}`
+    : t('tax.vatThisMonth', { amount: fmtDT(tva.due, { decimals: 0 }) });
 
   const QUICK = [
     { label: t('tax.quickVat'), to: '/tax/vat' },
@@ -37,7 +35,7 @@ export default function TaxDashboard() {
       <TopBar title={t('tax.dashTitle')} />
 
       <div className="hero-card amber">
-        <span className="small" style={{ fontWeight: 700 }}>{t('tax.vatThisMonth', { amount: fmtDT(tva.due, { decimals: 0 }) })}</span>
+        <span className="small" style={{ fontWeight: 700 }}>{vatPositionLabel}</span>
         <div className="row between" style={{ marginTop: 10 }}>
           <span className="tiny num">{t('tax.collected')} {fmtDT(tva.collected, { decimals: 0 })} − {t('tax.deductible')} {fmtDT(tva.deductible, { decimals: 0 })}</span>
         </div>
@@ -45,8 +43,8 @@ export default function TaxDashboard() {
       </div>
 
       <div className="grid-2">
-        <StatCard label={t('tax.irppEstimated', { year: 2026 })} value={fmtDT(2350, { decimals: 0 })} tone="indigo" onClick={() => navigate('/tax/irpp')} />
-        <StatCard label={t('tax.installments')} value="2/3" tone="teal" />
+        <StatCard label={t('tax.collected')} value={fmtDT(tva.collected, { decimals: 0 })} tone="indigo" />
+        <StatCard label={t('tax.deductible')} value={fmtDT(tva.deductible, { decimals: 0 })} tone="teal" />
       </div>
 
       <div className="col" style={{ gap: 10 }}>

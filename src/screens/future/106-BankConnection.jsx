@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Lock } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
-import TopBar from '../../components/TopBar.jsx';
 
 const BANKS = ['BIAT', 'BNA', 'Attijari', 'STB', 'Amen', 'Zitouna'];
 

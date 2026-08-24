@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Icons from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
-import { fmtDate, todayISO } from '../../lib/format.js';
+import { todayISO } from '../../lib/format.js';
 import TopBar from '../../components/TopBar.jsx';
 import FilterPills from '../../components/FilterPills.jsx';
 import TintCard from '../../components/TintCard.jsx';
@@ -11,7 +11,7 @@ import EmptyState from '../../components/EmptyState.jsx';
 
 export default function Notifications() {
   const navigate = useNavigate();
-  const { state, update, toast } = useStore();
+  const { state, update } = useStore();
   const { t, lang } = useT();
   const [filter, setFilter] = useState('all');
 

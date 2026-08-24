@@ -6,35 +6,28 @@ import { useT } from '../../i18n/index.js';
 import { fmtDT, fmtMonth } from '../../lib/format.js';
 import { categoryLabel } from '../../lib/taxRules.js';
 import TopBar from '../../components/TopBar.jsx';
+import { postedCategoryTotals, postedVatPosition, postedWeeklyRevenue } from '../../../shared/accountingReporting.js';
 
 export default function MonthlyReport() {
   const navigate = useNavigate();
-  const { state, toast } = useStore();
+  const { state } = useStore();
   const { t, lang } = useT();
   const ym = new Date().toISOString().slice(0, 7);
   const totals = useMemo(() => monthTotals(state.transactions, ym, state.generalLedger), [state.transactions, state.generalLedger, ym]);
 
   const weekly = useMemo(() => {
-    const weeks = [0, 0, 0, 0];
-    state.transactions.filter((tx) => tx.date.startsWith(ym) && tx.kind === 'income').forEach((tx) => {
-      const day = Number(tx.date.slice(8, 10));
-      weeks[Math.min(3, Math.floor((day - 1) / 7))] += Number(tx.amountTTC);
-    });
+    const weeks = postedWeeklyRevenue(state.generalLedger, ym);
     return weeks.map((v, i) => ({ name: `S${i + 1}`, value: Math.round(v) }));
-  }, [state.transactions, ym]);
+  }, [state.generalLedger, ym]);
 
   const topCategories = useMemo(() => {
-    const map = {};
-    state.transactions.filter((tx) => tx.kind === 'expense' && tx.date.startsWith(ym)).forEach((tx) => {
-      map[tx.category] = (map[tx.category] || 0) + Number(tx.amountTTC);
-    });
-    const total = Object.values(map).reduce((a, b) => a + b, 0) || 1;
-    return Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, 3)
-      .map(([id, v]) => ({ id, label: categoryLabel(id, lang), v, pct: Math.round((v / total) * 100) }));
-  }, [state.transactions, ym, lang]);
+    const categories = postedCategoryTotals(state.generalLedger, ym, 6);
+    const total = categories.reduce((sum, row) => sum + row.value, 0) || 1;
+    return categories.sort((a, b) => b.value - a.value).slice(0, 3)
+      .map(({ id, value }) => ({ id, label: categoryLabel(id, lang), v: value, pct: Math.round((value / total) * 100) }));
+  }, [state.generalLedger, ym, lang]);
 
-  const collected = state.transactions.filter((tx) => tx.kind === 'income' && tx.date.startsWith(ym)).reduce((sum, tx) => sum + Number(tx.tva || 0), 0);
-  const deductible = state.transactions.filter((tx) => tx.kind === 'expense' && tx.date.startsWith(ym)).reduce((sum, tx) => sum + Number(tx.tva || 0), 0);
+  const { collected, deductible } = postedVatPosition(state.vatSummary, ym);
 
   return (
     <div className="screen stagger">

@@ -173,7 +173,7 @@ export default function OcrReview() {
     }
 
     try {
-      const result = await confirmScannedInvoice({
+      await confirmScannedInvoice({
         file: selectedFile,
         documentId,
         transactionId,

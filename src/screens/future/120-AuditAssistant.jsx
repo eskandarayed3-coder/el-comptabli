@@ -1,6 +1,5 @@
 import { useT } from '../../i18n/index.js';
 import { ProgressRing } from '../../components/HeroCard.jsx';
-import TopBar from '../../components/TopBar.jsx';
 
 export default function AuditAssistant() {
   const { t } = useT();

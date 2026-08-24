@@ -81,7 +81,10 @@ export default function Quiz() {
   const [run, setRun] = useState(0); // reshuffle key
 
   const questions = useMemo(
-    () => [...BANK].sort(() => Math.random() - 0.5),
+    () => {
+      void run;
+      return [...BANK].sort(() => Math.random() - 0.5);
+    },
     [run],
   );
   const q = questions[i];

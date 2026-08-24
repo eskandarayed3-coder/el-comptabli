@@ -33,11 +33,10 @@ router.post('/', async (req, res) => {
 
     res.write(`data: ${JSON.stringify({ meta: { sources: knowledge.sources, matches: knowledge.matches } })}\n\n`);
 
-    let started = false;
     await streamChat({
       system,
       messages,
-      onText: (t) => { started = true; res.write(`data: ${JSON.stringify({ t })}\n\n`); },
+      onText: (t) => { res.write(`data: ${JSON.stringify({ t })}\n\n`); },
     });
 
     res.write('data: [DONE]\n\n');

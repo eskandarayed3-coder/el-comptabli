@@ -1,11 +1,8 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Paperclip, Send, FileText } from 'lucide-react';
 import { useT } from '../../i18n/index.js';
-import TopBar from '../../components/TopBar.jsx';
 
 export default function ChatWithAccountant() {
-  const { id } = useParams();
   const { t } = useT();
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([

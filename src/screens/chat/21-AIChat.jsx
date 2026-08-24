@@ -17,7 +17,7 @@ export default function AIChat() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const { state, patch, add, toast } = useStore();
-  const { t, lang } = useT();
+  const { t } = useT();
   const [agentId, setAgentId] = useState(params.get('agent') || 'general');
   const [pickerOpen, setPickerOpen] = useState(false);
   const agent = agentById(agentId);
@@ -60,12 +60,11 @@ export default function AIChat() {
     setBusy(true);
     patch('settings', { aiQuestionsUsed: (state.settings.aiQuestionsUsed || 0) + 1 });
 
-    let full = '';
     let responseSources = [];
     setMessages((m) => [...m, { role: 'model', text: '' }]);
     try {
       abortRef.current = new AbortController();
-      full = await chatStream({
+      const full = await chatStream({
         messages: next,
         profile: state.profile,
         agentId,
@@ -140,7 +139,6 @@ export default function AIChat() {
             agent={agent}
             sources={m.role === 'model' && i > 0 ? m.sources : null}
             complexCase={m.role === 'model' && i === messages.length - 1 && complex(m.text)}
-            onFindExpert={() => navigate('/experts')}
           />
         ))}
         {busy && messages[messages.length - 1]?.text === '' && <TypingBubble agent={agent} />}

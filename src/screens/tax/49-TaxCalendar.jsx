@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Bell, Plus } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
-import { fmtDT, fmtDate, fmtMonth, todayISO } from '../../lib/format.js';
+import { fmtDate, fmtMonth, todayISO } from '../../lib/format.js';
 import TopBar from '../../components/TopBar.jsx';
 import DayStrip from '../../components/DayStrip.jsx';
 import StatCard from '../../components/StatCard.jsx';

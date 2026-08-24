@@ -1,7 +1,6 @@
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { fmtDT } from '../../lib/format.js';
-import TopBar from '../../components/TopBar.jsx';
 
 const EMPLOYEES = [
   { name: 'Sana M.', role: 'Assistante', brut: 1200, net: 942 },

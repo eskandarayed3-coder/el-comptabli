@@ -1,14 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { LineChart, Line, ResponsiveContainer, XAxis } from 'recharts';
 import { useStore, monthTotals } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';
 import { fmtDT } from '../../lib/format.js';
-import FilterPills from '../../components/FilterPills.jsx';
+import { postedCategoryTotals } from '../../../shared/accountingReporting.js';
 
 export default function RevenueCharts() {
   const { state } = useStore();
   const { t } = useT();
-  const [breakdown, setBreakdown] = useState('client');
 
   const trend = useMemo(() => Array.from({ length: 6 }, (_, i) => {
     const d = new Date(); d.setMonth(d.getMonth() - (5 - i));
@@ -16,11 +15,16 @@ export default function RevenueCharts() {
     return { name: d.toLocaleDateString('fr-FR', { month: 'short' }), value: Math.round(t2.income) };
   }), [state.transactions, state.generalLedger]);
 
-  const topClients = useMemo(() => {
-    const map = {};
-    state.transactions.filter((x) => x.kind === 'income').forEach((x) => { map[x.vendor] = (map[x.vendor] || 0) + x.amountTTC; });
-    return Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, 3);
-  }, [state.transactions]);
+  const topRevenueCategories = useMemo(() => {
+    const map = new Map();
+    for (let offset = 0; offset < 12; offset += 1) {
+      const date = new Date(); date.setMonth(date.getMonth() - offset);
+      for (const row of postedCategoryTotals(state.generalLedger, date.toISOString().slice(0, 7), 7)) {
+        map.set(row.id, (map.get(row.id) || 0) + row.value);
+      }
+    }
+    return [...map.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3);
+  }, [state.generalLedger]);
 
   return (
     <div className="screen stagger">
@@ -30,10 +34,10 @@ export default function RevenueCharts() {
           <ResponsiveContainer><LineChart data={trend}><XAxis dataKey="name" fontSize={11} stroke="var(--text-2)" /><Line type="monotone" dataKey="value" stroke="#0F766E" strokeWidth={3} dot={false} /></LineChart></ResponsiveContainer>
         </div>
       </div>
-      <FilterPills options={[{ id: 'client', label: 'Par client' }, { id: 'category', label: 'Par catégorie' }, { id: 'month', label: 'Par mois' }]} value={breakdown} onChange={setBreakdown} />
+      <p className="tiny muted">Répartition par catégorie comptable sur les 12 derniers mois publiés.</p>
       <div className="col" style={{ gap: 8 }}>
-        {topClients.map(([name, v], i) => {
-          const max = topClients[0][1];
+        {topRevenueCategories.map(([name, v]) => {
+          const max = topRevenueCategories[0][1];
           return (
             <div key={name} className="col" style={{ gap: 4 }}>
               <div className="row between small"><span>{name || 'Client'}</span><span className="num">{fmtDT(v, { decimals: 0 })}</span></div>
@@ -42,7 +46,7 @@ export default function RevenueCharts() {
           );
         })}
       </div>
-      <div className="card tint-teal"><span className="small">Meilleur mois : {trend.reduce((a, b) => (b.value > a.value ? b : a), trend[0]).name}</span></div>
+      {trend.some((row) => row.value) ? <div className="card tint-teal"><span className="small">Meilleur mois : {trend.reduce((a, b) => (b.value > a.value ? b : a), trend[0]).name}</span></div> : <p className="small muted center">Aucun produit comptabilisé pour cette période.</p>}
     </div>
   );
 }

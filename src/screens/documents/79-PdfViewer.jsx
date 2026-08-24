@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { ZoomIn, Pencil, Share2, Download, Sparkles } from 'lucide-react';
 import { useStore } from '../../lib/store.jsx';
 import { useT } from '../../i18n/index.js';

@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Plus } from 'lucide-react';
 import { useT } from '../../i18n/index.js';
 import TopBar from '../../components/TopBar.jsx';
-import StatusPill from '../../components/StatusPill.jsx';
 
 const MEMBERS = [
   { name: 'Eskandar', role: 'Propriétaire', tone: 'teal', active: 'Actif maintenant' },
