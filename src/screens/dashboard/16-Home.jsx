@@ -37,8 +37,11 @@ export default function Home() {
   const greetKey = hour < 12 ? 'greetingMorning' : hour < 18 ? 'greetingAfternoon' : 'greetingEvening';
   // The greeting strings are "Hi, {name} 👋" — clean up the stray comma when
   // there's no name yet (e.g. right after a data reset, before onboarding).
-  const greeting = identity.displayName
-    ? t(`home.${greetKey}`, { name: identity.displayName })
+  // The trial status is already explained by the card below. Repeating its
+  // long localized label in the hero makes the mobile/RTL header unreadable.
+  const greetingName = trialActive ? '' : identity.displayName;
+  const greeting = greetingName
+    ? t(`home.${greetKey}`, { name: greetingName })
     : t(`home.${greetKey}`, { name: '' }).replace(/[,،]/g, '').replace(/\s{2,}/g, ' ').trim();
   const totals = useMemo(() => monthTotals(state.transactions, ym, state.generalLedger), [state.transactions, state.generalLedger, ym]);
 

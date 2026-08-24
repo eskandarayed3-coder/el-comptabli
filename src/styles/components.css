@@ -445,6 +445,7 @@ textarea.input { resize: vertical; min-height: 96px; }
 .home-greeting {
   min-width: 0;
   max-width: 100%;
+  font-size: clamp(26px, 7vw, 32px);
   overflow-wrap: anywhere;
   word-break: normal;
   line-height: 1.2;
