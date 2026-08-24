@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { providerInfo, resolveGroqChatModel, scanInvoice } from '../ai.js';
+import { providerInfo, resolveGroqChatModel, scanInvoice, streamChat } from '../ai.js';
 
 test('Groq chat replaces retired models with the supported multilingual model', () => {
   assert.equal(resolveGroqChatModel(''), 'qwen/qwen3.6-27b');
@@ -30,6 +30,35 @@ test('Groq OCR defaults to the current supported vision model', () => {
     if (previous.provider === undefined) delete process.env.AI_PROVIDER; else process.env.AI_PROVIDER = previous.provider;
     if (previous.chat === undefined) delete process.env.AI_CHAT_MODEL; else process.env.AI_CHAT_MODEL = previous.chat;
     if (previous.vision === undefined) delete process.env.AI_VISION_MODEL; else process.env.AI_VISION_MODEL = previous.vision;
+    if (previous.groq === undefined) delete process.env.GROQ_API_KEY; else process.env.GROQ_API_KEY = previous.groq;
+  }
+});
+
+test('Groq chat disables visible Qwen reasoning', async () => {
+  const previous = {
+    provider: process.env.AI_PROVIDER,
+    groq: process.env.GROQ_API_KEY,
+    fetch: globalThis.fetch,
+  };
+  process.env.AI_PROVIDER = 'groq';
+  process.env.GROQ_API_KEY = 'phase0-test-key';
+  let request;
+  globalThis.fetch = async (_url, options) => {
+    request = JSON.parse(options.body);
+    return new Response('data: {"choices":[{"delta":{"content":"جاهز"}}]}\n\ndata: [DONE]\n\n', {
+      status: 200,
+      headers: { 'Content-Type': 'text/event-stream' },
+    });
+  };
+  const chunks = [];
+  try {
+    await streamChat({ system: 'Test', messages: [{ role: 'user', text: 'Test' }], onText: (text) => chunks.push(text) });
+    assert.equal(request.model, 'qwen/qwen3.6-27b');
+    assert.equal(request.reasoning_effort, 'none');
+    assert.deepEqual(chunks, ['جاهز']);
+  } finally {
+    globalThis.fetch = previous.fetch;
+    if (previous.provider === undefined) delete process.env.AI_PROVIDER; else process.env.AI_PROVIDER = previous.provider;
     if (previous.groq === undefined) delete process.env.GROQ_API_KEY; else process.env.GROQ_API_KEY = previous.groq;
   }
 });

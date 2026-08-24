@@ -20,6 +20,12 @@ export function resolveGroqChatModel(requested = process.env.AI_CHAT_MODEL) {
   return !model || RETIRED_GROQ_CHAT_MODELS.has(model) ? 'qwen/qwen3.6-27b' : model;
 }
 
+function nonThinkingOptions(provider, model) {
+  return provider === 'groq' && model === 'qwen/qwen3.6-27b'
+    ? { reasoning_effort: 'none' }
+    : {};
+}
+
 const OPENAI_COMPAT = {
   groq: {
     base: 'https://api.groq.com/openai/v1',
@@ -132,6 +138,7 @@ async function openaiChatStream({ cfg, key, provider, system, messages, onText }
     stream: true,
     temperature: 0.4,
     max_tokens: 1024,
+    ...nonThinkingOptions(provider, cfg.chat),
     messages: [
       { role: 'system', content: system },
       ...messages.slice(-20).map((m) => ({ role: m.role === 'model' ? 'assistant' : 'user', content: String(m.text || '').slice(0, 8000) })),
@@ -231,6 +238,7 @@ export async function generateText({ system, prompt, maxTokens = 1024 }) {
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
     body: JSON.stringify({
       model: cfg.chat, temperature: 0.4, max_tokens: maxTokens,
+      ...nonThinkingOptions(p, cfg.chat),
       messages: [{ role: 'system', content: system }, { role: 'user', content: prompt }],
     }),
   });
@@ -340,6 +348,7 @@ export async function generateTextWithImage({ system, prompt, image, maxTokens =
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
     body: JSON.stringify({
       model: image ? cfg.vision : cfg.chat, temperature: 0.3, max_tokens: maxTokens,
+      ...nonThinkingOptions(p, image ? cfg.vision : cfg.chat),
       messages: [{ role: 'system', content: system }, { role: 'user', content }],
     }),
   });
