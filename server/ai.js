@@ -10,10 +10,20 @@
 // Force one with AI_PROVIDER=groq|mistral|openrouter|xai|gemini.
 import { streamGenerateContent, generateContent, textOf } from './gemini.js';
 
+const RETIRED_GROQ_CHAT_MODELS = new Set([
+  'llama-3.1-8b-instant',
+  'llama-3.3-70b-versatile',
+]);
+
+export function resolveGroqChatModel(requested = process.env.AI_CHAT_MODEL) {
+  const model = String(requested || '').trim();
+  return !model || RETIRED_GROQ_CHAT_MODELS.has(model) ? 'qwen/qwen3.6-27b' : model;
+}
+
 const OPENAI_COMPAT = {
   groq: {
     base: 'https://api.groq.com/openai/v1',
-    chat: process.env.AI_CHAT_MODEL || 'llama-3.3-70b-versatile',
+    chat: resolveGroqChatModel(),
     vision: process.env.AI_VISION_MODEL || 'qwen/qwen3.6-27b',
     keyEnv: 'GROQ_API_KEY',
   },
