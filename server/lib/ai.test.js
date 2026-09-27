@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 import { providerInfo, resolveGroqChatModel, scanInvoice, streamChat } from '../ai.js';
 
 test('Groq chat replaces retired models with the supported multilingual model', () => {
-  assert.equal(resolveGroqChatModel(''), 'qwen/qwen3.6-27b');
-  assert.equal(resolveGroqChatModel('llama-3.3-70b-versatile'), 'qwen/qwen3.6-27b');
-  assert.equal(resolveGroqChatModel('llama-3.1-8b-instant'), 'qwen/qwen3.6-27b');
+  assert.equal(resolveGroqChatModel(''), 'qwen/qwen3.8-27b');
+  assert.equal(resolveGroqChatModel('llama-3.3-70b-versatile'), 'qwen/qwen3.8-27b');
+  assert.equal(resolveGroqChatModel('llama-3.1-8b-instant'), 'qwen/qwen3.8-27b');
+  assert.equal(resolveGroqChatModel('qwen/qwen3.6-27b'), 'qwen/qwen3.8-27b');
   assert.equal(resolveGroqChatModel('openai/gpt-oss-120b'), 'openai/gpt-oss-120b');
 });
 
@@ -23,8 +24,8 @@ test('Groq OCR defaults to the current supported vision model', () => {
   try {
     const info = providerInfo();
     assert.equal(info.provider, 'groq');
-    assert.equal(info.model, 'qwen/qwen3.6-27b');
-    assert.equal(info.visionModel, 'qwen/qwen3.6-27b');
+    assert.equal(info.model, 'qwen/qwen3.8-27b');
+    assert.equal(info.visionModel, 'qwen/qwen3.8-27b');
     assert.equal(info.keyPresent, true);
   } finally {
     if (previous.provider === undefined) delete process.env.AI_PROVIDER; else process.env.AI_PROVIDER = previous.provider;
@@ -53,7 +54,7 @@ test('Groq chat disables visible Qwen reasoning', async () => {
   const chunks = [];
   try {
     await streamChat({ system: 'Test', messages: [{ role: 'user', text: 'Test' }], onText: (text) => chunks.push(text) });
-    assert.equal(request.model, 'qwen/qwen3.6-27b');
+    assert.equal(request.model, 'qwen/qwen3.8-27b');
     assert.equal(request.reasoning_effort, 'none');
     assert.deepEqual(chunks, ['جاهز']);
   } finally {

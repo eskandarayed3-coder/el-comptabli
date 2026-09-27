@@ -13,15 +13,21 @@ import { streamGenerateContent, generateContent, textOf } from './gemini.js';
 const RETIRED_GROQ_CHAT_MODELS = new Set([
   'llama-3.1-8b-instant',
   'llama-3.3-70b-versatile',
+  'qwen/qwen3.6-27b',
 ]);
+const CURRENT_GROQ_QWEN_MODEL = 'qwen/qwen3.8-27b';
 
 export function resolveGroqChatModel(requested = process.env.AI_CHAT_MODEL) {
   const model = String(requested || '').trim();
-  return !model || RETIRED_GROQ_CHAT_MODELS.has(model) ? 'qwen/qwen3.6-27b' : model;
+  return !model || RETIRED_GROQ_CHAT_MODELS.has(model) ? CURRENT_GROQ_QWEN_MODEL : model;
 }
 
+// Groq renames/bumps the Qwen model line every few weeks (3.6 -> 3.8 broke
+// this the same way 3.1/3.3 llama retirement did before it). Match by
+// family prefix, not an exact pinned string, so the next routine bump
+// doesn't silently stop suppressing visible reasoning tokens again.
 function nonThinkingOptions(provider, model) {
-  return provider === 'groq' && model === 'qwen/qwen3.6-27b'
+  return provider === 'groq' && /^qwen\//.test(model)
     ? { reasoning_effort: 'none' }
     : {};
 }
@@ -30,7 +36,7 @@ const OPENAI_COMPAT = {
   groq: {
     base: 'https://api.groq.com/openai/v1',
     chat: resolveGroqChatModel(),
-    vision: process.env.AI_VISION_MODEL || 'qwen/qwen3.6-27b',
+    vision: process.env.AI_VISION_MODEL || CURRENT_GROQ_QWEN_MODEL,
     keyEnv: 'GROQ_API_KEY',
   },
   mistral: {
